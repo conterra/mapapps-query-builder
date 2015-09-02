@@ -1,6 +1,6 @@
 {
   "Bundle-SymbolicName": "query_builder-config",
-  "Bundle-Version": "1.0.0",
+  "Bundle-Version": "2.0.0",
   "Bundle-Name": "${bundleName}",
   "Bundle-Description": "${bundleDescription}",
   "Bundle-Vendor": "con terra GmbH",
@@ -21,10 +21,15 @@
       "properties": {
         "parentNodeId": "appBuilderToolsNode",
         "children": [
+          /*{
+            "title": "QueryBuilderWidget",
+            "widget": "queryBuilderWidget",
+            "title": "${windowTitle1}"
+          },*/
           {
             "title": "ToolsBuilderWidget",
             "widget": "toolsBuilderwidget",
-            "title": "${windowTitle}"
+            "title": "${windowTitle2}"
           }
         ]
       }

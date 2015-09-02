@@ -8,11 +8,12 @@ define([
     "ct/Exception",
     "ct/_string",
     "./ToolsBuilderWidget",
+    "./ToolsBuilderWizard",
     "ct/store/ComplexMemory",
     "ct/_when",
     "ct/Hash",
     "./ToolsBuilderWizardDefinition"
-], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ComplexMemoryStore, ct_when, Hash, ToolsBuilderWizardDefinition) {
+], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ToolsBuilderWizardDefinition) {
     /*
      * COPYRIGHT 2012 con terra GmbH Germany
      */
@@ -105,9 +106,7 @@ define([
                             configStore.setData(data);
                         },
                         _applyConfig: function (properties) {
-
                             properties = d_lang.clone(properties);
-                            debugger
                             var props = this._properties.widgetProperties;
                             var config = this._configAdminService.createFactoryConfiguration(props.pid, props.bid);
 
@@ -118,6 +117,38 @@ define([
                             properties = d_lang.clone(properties);
                             var config = this._getConfiguration(properties.pid);
                             config.update(properties);
+                        },
+                        _createWizard2: function (config) {
+                            var properties = this._properties || {};
+                            // time & default icon
+                            var date = new Date();
+                            if (config.id === undefined) {
+                                properties.id = "fc_" + date.getTime();
+                                properties.title = "";
+                                properties.iconClass = "icon-custom-info";
+                                properties.customquery = {};
+                                properties._wizardGUI = {
+                                    mode: "new"
+                                };
+                            } else {
+                                properties.id = config.id;
+                                properties.title = config.title;
+                                properties.iconClass = config.iconClass;
+                                properties.pid = config.pid;
+                                properties.storeIdForCustomQuery = config.storeIdForCustomQuery;
+                                properties.customquery = config.customquery;
+                                properties._wizardGUI = config._wizardGUI;
+                            }
+                            // search stores
+                            var stores = this._agsstores;
+                            var storeData = this._getStoreData(stores);
+
+                            // i18n
+                            var wizardI18n = this._i18n.get().widget.wizard;
+
+                            var wizard = new ToolsBuilderWizard({storeData: storeData, properties: properties, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, agsstores: this._agsstores, mapState: this._mapState});
+
+                            return wizard;
                         },
                         _createWizard: function (config) {
                             var properties = this._properties || {};
@@ -135,6 +166,7 @@ define([
                                 properties.pid = config.pid;
                                 properties.storeIdForCustomQuery = config.storeIdForCustomQuery;
                                 properties.customquery = config.customquery;
+                                properties._wizardGUI = config._wizardGUI;
                             }
                             // search stores
                             var stores = this._agsstores;
@@ -172,6 +204,43 @@ define([
                             });
                             dataform.set("dataBinding", binding);
                             return dataform;
+                        },
+                        _openWizardWindow2: function (wizard, edit) {
+                            var properties = this._properties || {};
+                            var windowManager = this._windowManager;
+                            var i18n = this._i18n.get().widget.wizard;
+                            var title;
+                            if (edit === true) {
+                                title = i18n.windowtitleEdit;
+                            } else {
+                                title = i18n.windowtitleAdd;
+                            }
+                            var window = windowManager.createModalWindow({
+                                title: title,
+                                marginBox: {
+                                    w: 600,
+                                    h: 500
+                                },
+                                content: wizard,
+                                closable: true,
+                                attachToDom: this._appCtx.builderWindowRoot
+                            });
+                            window.show();
+
+                            this.connect(wizard, "_onReady", function () {
+                                if (edit) {
+                                    this._updateConfig(properties);
+                                } else {
+                                    this._applyConfig(properties);
+                                }
+                                this._updateGrid();
+                                wizard.disconnect();
+                                window.close();
+                            });
+                            this.connect(wizard, "_onCancel", function () {
+                                wizard.disconnect();
+                                window.close();
+                            });
                         },
                         _openWizardWindow: function (wizard, edit) {
                             var properties = this._properties || {};
@@ -223,8 +292,8 @@ define([
                             });
                         },
                         _onCreateQueryTool: function (event) {
-                            var wizard = this._createWizard({});
-                            this._openWizardWindow(wizard, false);
+                            var wizard = this._createWizard2({});
+                            this._openWizardWindow2(wizard, false);
                         },
                         _onRemoveQueryTool: function (event) {
                             var ids = event.ids || [];
@@ -233,7 +302,6 @@ define([
                                 attachToDom: this._appCtx.builderWindowRoot
                             }), function () {
                                 var store = this._getConfigStore();
-                                debugger
                                 d_array.forEach(
                                         ids,
                                         function (pid) {
@@ -250,8 +318,8 @@ define([
                         _onEditQueryTool: function (event) {
                             var store = this._getConfigStore();
                             var config = store.get(event.id);
-                            var wizard = this._createWizard(config);
-                            this._openWizardWindow(wizard, true);
+                            var wizard = this._createWizard2(config);
+                            this._openWizardWindow2(wizard, true);
                         },
                         _substituteDefintion: function (templateWidetDefinition, params) {
                             return new Hash(templateWidetDefinition).substitute(params, true).asMap();

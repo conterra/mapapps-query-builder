@@ -19,6 +19,13 @@ and open the template in the editor.
     overflow: hidden;
     text-overflow:ellipsis;
 }
+.queryBuilderWizard .settings label{
+    display: inline-block;
+    min-width: 160px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
 
 .queryBuilderWizard .rightFloatingButton{
     float: right;
