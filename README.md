@@ -1,6 +1,9 @@
 # Query Builder Bundle
 The Query Builder Bundle allows you to create your own Query Tools, that perform custom queries to a store. For example, you can choose all cities with more than 1 million inhabitants. The results are shown in the resultcenter. In this version, you can add custom queries in a text format. In future versions we plan to enable you to create complex queries by an interactive graphical user interface.
 
+### Sample App ###
+http://www.mapapps.de/mapapps/resources/apps/downloads_query_builder/index.html
+
 Installation Guide
 ------------------
 1. At first, you need to add the bundles "agssearch", "resultcenter" and "dn_query_builder" to your app.
