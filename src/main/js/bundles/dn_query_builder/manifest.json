@@ -1,0 +1,93 @@
+{
+    "Bundle-SymbolicName": "dn_query_builder",
+    "Bundle-Version": "2.0.0",
+    "Bundle-Name": "${bundleName}",
+    "Bundle-Description": "${bundleDescription}",
+    "Bundle-Vendor": "con terra GmbH",
+    "Product-Name": "map.apps Developer Network",
+    "Config-Bundle-Location": "/config",
+    "Require-Bundle": [
+        {
+            "name": "map"
+        },
+        {
+            "name": "resultcenter"
+        },
+        {
+            "name": "agssearch"
+        }
+    ],
+    "CSS-Themes-Extension": [
+        {
+            "name": "*",
+            "files": ["./styles/styles.css"]
+        }
+    ],
+    "Components": [
+        {
+            "name": "QueryTools",
+            "impl": "ct.tools.Tool",
+            "provides": ["ct.tools.Tool"],
+            "propertiesConstructor": true,
+            "componentFactory": true,
+            "properties": {
+                "id": "",
+                "title": "",
+                "tooltip": "",
+                "toolRole": "toolset",
+                "iconClass": "icon-info",
+                "togglable": true,
+                "activateHandler": "activateAction",
+                "deactivateHandler": "deactivateAction",
+                "customquery": {},
+                "storeIdForCustomQuery": ""
+            },
+            "references": [
+                {
+                    "name": "handlerScope",
+                    "providing": "filter_query.FilterQuery"
+                }
+            ]
+        },
+        {
+            "name": "FilterQuery",
+            "provides": ["filter_query.FilterQuery"],
+            "propertiesConstructor": true,
+            "properties": {
+                "filterqueryscore": "500"
+            },
+            "references": [
+                {
+                    "name": "_stores",
+                    "providing": "ct.api.Store",
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
+                },
+                {
+                    "name": "_resultCenterDataModel",
+                    "providing": "ct.resultcenter.DataModel"
+                },
+                {
+                    "name": "dataFormService",
+                    "providing": "dataform.DataFormService"
+                },
+                {
+                    "name": "_mapState",
+                    "providing": "ct.mapping.map.MapState"
+                },
+                {
+                    "name": "_drawController",
+                    "providing": "ct.mapping.edit.DrawStateController"
+                },
+                {
+                    "name": "_eventService",
+                    "providing": "ct.framework.api.EventService"
+                },
+                {
+                    "name": "_coordinateTransformer",
+                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
+                }
+            ]
+        }
+    ]
+}

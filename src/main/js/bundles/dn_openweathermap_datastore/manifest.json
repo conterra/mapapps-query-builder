@@ -1,0 +1,100 @@
+{
+    "Bundle-SymbolicName": "dn_openweathermap_datastore",
+    "Bundle-Version": "1.0.0",
+    "Bundle-Name": "OpenWeatherMap DataStore",
+    "Bundle-Description": "Datastore for OpenWeatherMap API",
+    "Bundle-Vendor": "con terra GmbH",
+    "Bundle-Category": ["mapping", "search"],
+    "Bundle-Icon": {},
+    "Bundle-License": {},
+    "Bundle-Localization": [],
+    "Require-Bundle": [],
+    "Components": [{
+            "name": "OpenWeatherMapStoreFactory",
+            "provides": ["ct.api.Store"],
+            "immediate" : true,
+            "instanceFactory" : true,
+            "properties": {
+                "id": "owm_datastore",
+                "title": "OpenWeatherMap Search Store",
+                "description": "Datastore for OpenWeatherMap API",
+                "useIn": ["omnisearch", "selection"],
+                "omniSearchDefaultLabel": "Keyword",
+                "omniSearchSearchAttr": "name",
+                "omniSearchLabelAttr": "name",
+                "omniSearchTypingDelay": 500,
+                "url": "http://api.openweathermap.org/data/2.5/box/city",
+                "metadata": {
+                    "title": "OpenWeatherMap DataStore",
+                    "name": "title",
+                    "fields": [
+                        {
+                            "title": "ID",
+                            "name": "id",
+                            "type": "number"
+                        },
+                        {
+                            "title": "City Name",
+                            "name": "name",
+                            "type": "string"
+                        },
+                        {
+                            "title": "Date",
+                            "name": "date",
+                            "type": "string"
+                        },
+                        {
+                            "title": "Weather-ID",
+                            "name": "weather_id",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Main Description",
+                            "name": "main",
+                            "type": "string"
+                        },
+                        {
+                            "title": "Detailed Description",
+                            "name": "description",
+                            "type": "string"
+                        },
+                        {
+                            "title": "Temperature [°C]",
+                            "name": "temp",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Pressure [hPa]",
+                            "name": "pressure",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Humidity [%]",
+                            "name": "humidity",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Clouds [%]",
+                            "name": "clouds",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Windspeed [m/s]",
+                            "name": "windspeed",
+                            "type": "number"
+                        }
+                    ]
+                }
+            },
+            "references": [
+                {
+                    "name": "_mapState",
+                    "providing": "ct.mapping.map.MapState"
+                },
+                {
+                    "name": "_coordinateTransformer",
+                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
+                }
+            ]
+        }]
+}

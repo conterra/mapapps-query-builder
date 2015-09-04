@@ -1,0 +1,14 @@
+{
+  "dataform-version": "1.0.0",
+  "type": "gridpanel",
+  "showLabels": true,
+  "cols": 1,
+  "children": [
+    {
+      "type": "textbox",
+      "title": "Platzhalter für 'Name'-Feld",
+      "field": "filterqueryscore",
+      "required": true
+    }
+  ]
+}
