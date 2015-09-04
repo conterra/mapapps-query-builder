@@ -24,7 +24,7 @@
         "i18n": ["bundle"]
     },
     "properties": {
-        "id": "query_testapp",
+        "id": "sample",
         "title": "QueryBuilder Sample",
         "description": "",
         "editorState": "DRAFT",
