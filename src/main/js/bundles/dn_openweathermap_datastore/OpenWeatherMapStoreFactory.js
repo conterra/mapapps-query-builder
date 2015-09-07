@@ -44,15 +44,16 @@ define([
             var params = {};
             params.units = "metric";
             params.cluster = "yes";
-            //request.bbox = "0.0,180.0,360.0,-180.0,1";
-            params.bbox = "-180.0,90.0,180.0,-90.0";
+            //default:
+            //params.bbox = "-180.0,90.0,180.0,-90.0,5";
+            params.bbox = "-180.0,90.0,180.0,-90.0,5";
             if (properties.apikey) {
                 params.APPID = properties.apikey;
             }
             return ct_when(ct_request({
                 url: properties.url,
                 content: params,
-                timeout: properties.timeout || 5000,
+                timeout: properties.timeout || 10000,
                 jsonp: "callback"
             }), function(response) {
                 var list = response.list;
