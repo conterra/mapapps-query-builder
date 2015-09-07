@@ -20,6 +20,7 @@ define([
     "esri/tasks/DistanceParameters",
     "dojo/_base/array",
     "dojo/Deferred",
+    "dojo/date/locale",
     "ct/_lang", "ct/_when",
     "ct/request",
     "ct/store/StoreUtil",
@@ -28,7 +29,7 @@ define([
     "dojo/store/util/QueryResults",
     "esri/symbols/PictureMarkerSymbol",
     "esri/graphic"
-], function(d_lang, declare, ct_geometry, DistanceParameters, d_array, Deferred, ct_lang, ct_when, ct_request, StoreUtil, ComplexQuery, ComplexMemory, QueryResults, PictureMarkerSymbol, Graphic) {
+], function (d_lang, declare, ct_geometry, DistanceParameters, d_array, Deferred, locale, ct_lang, ct_when, ct_request, StoreUtil, ComplexQuery, ComplexMemory, QueryResults, PictureMarkerSymbol, Graphic) {
     /*
      * COPYRIGHT 2015 con terra GmbH Germany
      */
@@ -36,17 +37,17 @@ define([
      * @fileOverview This file implements the dojo store interface to provide a search store for Open Weather Map search service.
      */
     return declare([], {
-        activate: function() {
+        activate: function () {
             var properties = this._properties || {};
             // check mandatory parameters
             ct_lang.hasProp(properties, "url", true);
 
             var params = {};
             params.units = "metric";
-            params.cluster = "yes";
+            params.cluster = "no";
             //default:
             //params.bbox = "-180.0,90.0,180.0,-90.0,5";
-            params.bbox = "-180.0,90.0,180.0,-90.0,5";
+            params.bbox = "-180.0,90.0,180.0,-90.0,6";
             if (properties.apikey) {
                 params.APPID = properties.apikey;
             }
@@ -55,9 +56,9 @@ define([
                 content: params,
                 timeout: properties.timeout || 10000,
                 jsonp: "callback"
-            }), function(response) {
+            }), function (response) {
                 var list = response.list;
-                return ct_when(this._transformItemsToGraphics(list), function(items) {
+                return ct_when(this._transformItemsToGraphics(list), function (items) {
                     this._cachingStore = new ComplexMemory({
                         id: properties.id,
                         idProperty: "id",
@@ -67,15 +68,15 @@ define([
                 }, this);
             }, this);
         },
-        createInstance: function() {
+        createInstance: function () {
             return this._cachingStore;
         },
-        destroyInstance: function() {
+        destroyInstance: function () {
             this._cachingStore = null;
         },
-        _transformItemsToGraphics: function(list) {
+        _transformItemsToGraphics: function (list) {
             var items = [];
-            d_array.forEach(list, function(obj) {
+            d_array.forEach(list, function (obj) {
                 var lat = obj.coord.lat;
                 var lon = obj.coord.lon;
                 var point = ct_geometry.createPoint({
@@ -89,8 +90,7 @@ define([
                 attr.name = obj.name;
                 var time = obj.dt;
                 var date = new Date(time * 1000);
-                date = date.toString();
-                attr.date = date;
+                var date = attr.date = locale.format(date, "MMM d, yyyy");
                 attr.weather_id = obj.weather[0].id;
                 attr.main = obj.weather[0].main;
                 attr.description = obj.weather[0].description;
@@ -99,7 +99,7 @@ define([
                 attr.humidity = obj.main.humidity;
                 attr.clouds = obj.clouds.all;
                 attr.windspeed = obj.wind.speed;
-                var icon = obj.weather[0].icon;
+                var icon = attr.icon = obj.weather[0].icon;
                 var url = "http://openweathermap.org/img/w/" + icon + ".png";
                 var symbol = new PictureMarkerSymbol(url, 30, 30);
                 var item = new Graphic(geometry, symbol, attr);
@@ -116,12 +116,12 @@ define([
                 item.windspeed = obj.wind.speed;
                 items.push(item);
             });
-            var geometries = d_array.map(items, function(item) {
+            var geometries = d_array.map(items, function (item) {
                 return item.geometry;
             });
             var wkid = this._mapState.getSpatialReference().wkid;
-            return ct_when(this._coordinateTransformer.transform(geometries, wkid), function(transformedGeometries) {
-                d_array.forEach(transformedGeometries, function(tg, index) {
+            return ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
+                d_array.forEach(transformedGeometries, function (tg, index) {
                     items[index].geometry = tg;
                 });
                 return items;
