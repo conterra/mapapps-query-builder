@@ -22,14 +22,13 @@
                 "parentNodeId": "appBuilderToolsNode",
                         "children": [
                                 /*{
-                                "title": "QueryBuilderWidget",
-                                        "widget": "queryBuilderWidget",
+                                "widget": "queryBuilderWidget",
                                         "title": "${windowTitle1}"
                                 }, */
                         {
-                        "title": "ToolsBuilderWidget",
-                                "widget": "toolsBuilderwidget",
-                                "title": "${windowTitle2}"
+                        "widget": "toolsBuilderwidget",
+                                "title": "${windowTitle2}",
+                                "iconUrl": "resource('styles/images/bundleIcon.png')"
                         }
                         ]
                 }

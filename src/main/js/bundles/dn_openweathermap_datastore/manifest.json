@@ -12,8 +12,8 @@
     "Components": [{
             "name": "OpenWeatherMapStoreFactory",
             "provides": ["ct.api.Store"],
-            "immediate" : true,
-            "instanceFactory" : true,
+            "immediate": true,
+            "instanceFactory": true,
             "properties": {
                 "id": "owm_datastore",
                 "title": "OpenWeatherMap Search Store",
@@ -46,7 +46,303 @@
                         {
                             "title": "Weather-ID",
                             "name": "weather_id",
-                            "type": "number"
+                            "type": "codedValue",
+                            "domain": {
+                                "codedValues": [
+                                    {
+                                        "code": 200,
+                                        "name": "thunderstorm with light rain"
+                                    },
+                                    {
+                                        "code": 201,
+                                        "name": "thunderstorm with rain"
+                                    },
+                                    {
+                                        "code": 202,
+                                        "name": "thunderstorm with heavy rain"
+                                    },
+                                    {
+                                        "code": 210,
+                                        "name": "light thunderstorm"
+                                    },
+                                    {
+                                        "code": 211,
+                                        "name": "thunderstorm"
+                                    },
+                                    {
+                                        "code": 212,
+                                        "name": "heavy thunderstorm"
+                                    },
+                                    {
+                                        "code": 221,
+                                        "name": "ragged thunderstorm"
+                                    },
+                                    {
+                                        "code": 230,
+                                        "name": "thunderstorm with light drizzle"
+                                    },
+                                    {
+                                        "code": 231,
+                                        "name": "thunderstorm with drizzle"
+                                    },
+                                    {
+                                        "code": 232,
+                                        "name": "thunderstorm with heavy drizzle"
+                                    },
+                                    {
+                                        "code": 300,
+                                        "name": "light intensity drizzle"
+                                    },
+                                    {
+                                        "code": 301,
+                                        "name": "drizzle"
+                                    },
+                                    {
+                                        "code": 302,
+                                        "name": "heavy intensity drizzle"
+                                    },
+                                    {
+                                        "code": 310,
+                                        "name": "light intensity drizzle rain"
+                                    },
+                                    {
+                                        "code": 311,
+                                        "name": "drizzle rain"
+                                    },
+                                    {
+                                        "code": 312,
+                                        "name": "heavy intensity drizzle rain"
+                                    },
+                                    {
+                                        "code": 313,
+                                        "name": "shower rain and drizzle"
+                                    },
+                                    {
+                                        "code": 314,
+                                        "name": "heavy shower rain and drizzle"
+                                    },
+                                    {
+                                        "code": 321,
+                                        "name": "shower drizzle"
+                                    },
+                                    {
+                                        "code": 500,
+                                        "name": "light rain"
+                                    },
+                                    {
+                                        "code": 501,
+                                        "name": "moderate rain"
+                                    },
+                                    {
+                                        "code": 502,
+                                        "name": "heavy intensity rain"
+                                    },
+                                    {
+                                        "code": 503,
+                                        "name": "very heavy rain"
+                                    },
+                                    {
+                                        "code": 504,
+                                        "name": "extreme rain"
+                                    },
+                                    {
+                                        "code": 511,
+                                        "name": "freezing rain"
+                                    },
+                                    {
+                                        "code": 520,
+                                        "name": "light intensity shower rain"
+                                    },
+                                    {
+                                        "code": 521,
+                                        "name": "shower rain"
+                                    },
+                                    {
+                                        "code": 522,
+                                        "name": "heavy intensity shower rain"
+                                    },
+                                    {
+                                        "code": 531,
+                                        "name": "ragged shower rain"
+                                    },
+                                    {
+                                        "code": 600,
+                                        "name": "light snow"
+                                    },
+                                    {
+                                        "code": 601,
+                                        "name": "snow"
+                                    },
+                                    {
+                                        "code": 602,
+                                        "name": "heavy snow"
+                                    },
+                                    {
+                                        "code": 611,
+                                        "name": "sleet"
+                                    },
+                                    {
+                                        "code": 612,
+                                        "name": "shower sleet"
+                                    },
+                                    {
+                                        "code": 615,
+                                        "name": "light rain and snow"
+                                    },
+                                    {
+                                        "code": 616,
+                                        "name": "rain and snow"
+                                    },
+                                    {
+                                        "code": 620,
+                                        "name": "light shower snow"
+                                    },
+                                    {
+                                        "code": 621,
+                                        "name": "shower snow"
+                                    },
+                                    {
+                                        "code": 622,
+                                        "name": "heavy shower snow"
+                                    },
+                                    {
+                                        "code": 701,
+                                        "name": "mist"
+                                    },
+                                    {
+                                        "code": 711,
+                                        "name": "smoke"
+                                    },
+                                    {
+                                        "code": 721,
+                                        "name": "haze"
+                                    },
+                                    {
+                                        "code": 731,
+                                        "name": "sand, dust whirls"
+                                    },
+                                    {
+                                        "code": 741,
+                                        "name": "fog"
+                                    },
+                                    {
+                                        "code": 751,
+                                        "name": "sand"
+                                    },
+                                    {
+                                        "code": 761,
+                                        "name": "dust"
+                                    },
+                                    {
+                                        "code": 762,
+                                        "name": "volcanic ash"
+                                    },
+                                    {
+                                        "code": 771,
+                                        "name": "squalls"
+                                    },
+                                    {
+                                        "code": 781,
+                                        "name": "tornado"
+                                    },
+                                    {
+                                        "code": 800,
+                                        "name": "clear sky"
+                                    },
+                                    {
+                                        "code": 801,
+                                        "name": "few clouds"
+                                    },
+                                    {
+                                        "code": 802,
+                                        "name": "scattered clouds"
+                                    },
+                                    {
+                                        "code": 803,
+                                        "name": "broken clouds"
+                                    },
+                                    {
+                                        "code": 804,
+                                        "name": "overcast clouds"
+                                    },
+                                    {
+                                        "code": 900,
+                                        "name": "tornado"
+                                    },
+                                    {
+                                        "code": 901,
+                                        "name": "tropical storm"
+                                    },
+                                    {
+                                        "code": 902,
+                                        "name": "hurricane"
+                                    },
+                                    {
+                                        "code": 903,
+                                        "name": "cold"
+                                    },
+                                    {
+                                        "code": 904,
+                                        "name": "hot"
+                                    },
+                                    {
+                                        "code": 905,
+                                        "name": "windy"
+                                    },
+                                    {
+                                        "code": 906,
+                                        "name": "hail"
+                                    },
+                                    {
+                                        "code": 951,
+                                        "name": "calm"
+                                    },
+                                    {
+                                        "code": 952,
+                                        "name": "light breeze"
+                                    },
+                                    {
+                                        "code": 953,
+                                        "name": "gentle breeze"
+                                    },
+                                    {
+                                        "code": 954,
+                                        "name": "moderate breeze"
+                                    },
+                                    {
+                                        "code": 955,
+                                        "name": "fresh breeze"
+                                    },
+                                    {
+                                        "code": 956,
+                                        "name": "strong breeze"
+                                    },
+                                    {
+                                        "code": 957,
+                                        "name": "high wind, near gale"
+                                    },
+                                    {
+                                        "code": 958,
+                                        "name": "gale"
+                                    },
+                                    {
+                                        "code": 959,
+                                        "name": "severe gale"
+                                    },
+                                    {
+                                        "code": 960,
+                                        "name": "storm"
+                                    },
+                                    {
+                                        "code": 961,
+                                        "name": "violent storm"
+                                    },
+                                    {
+                                        "code": 962,
+                                        "name": "hurricane"
+                                    }
+                                ]
+                            }
                         },
                         {
                             "title": "Main Description",
