@@ -19,8 +19,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.conterra.mapapps.sampleProj</groupId>
-    <artifactId>queryProjRemote</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>mapapps-query-builder</artifactId>
+    <version>2.0.0</version>
     <packaging>jar</packaging>
     <repositories>
         <repository>
@@ -384,7 +384,7 @@
                             <templateFile>${project.build.directory}/${project.artifactId}-${project.version}.zip</templateFile>
                             <templateResources>
                                 <templateResource>
-                                    <directory>${js.build.outputPath}/apps/query_testapp</directory>
+                                    <directory>${js.build.outputPath}/apps/sample</directory>
                                     <includes>
                                         <include>**/*</include>
                                     </includes>
@@ -444,7 +444,7 @@
         <ct.jsrt-test.version>1.0.5</ct.jsrt-test.version>
         
         <!-- the default app, replaced in the *.html files to switch app names-->
-        <default.app.name>query_testapp</default.app.name>
+        <default.app.name>sample</default.app.name>
         <client.config.initjs>$\{mapapps.remote.base\}/resources/jsregistry/root/ct/${mapapps.version}/dojo-init.js</client.config.initjs>
 
         <!-- don't do this in production configuration! This allows to go any http traffic over the /proxy endpoint -->
