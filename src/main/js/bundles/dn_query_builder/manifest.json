@@ -6,88 +6,39 @@
     "Bundle-Vendor": "con terra GmbH",
     "Product-Name": "map.apps Developer Network",
     "Config-Bundle-Location": "/config",
-    "Require-Bundle": [
-        {
-            "name": "map"
-        },
-        {
-            "name": "resultcenter"
-        },
-        {
-            "name": "agssearch"
-        }
-    ],
-    "CSS-Themes-Extension": [
-        {
+    "CSS-Themes-Extension": [{
             "name": "*",
             "files": ["./styles/styles.css"]
-        }
-    ],
-    "Components": [
-        {
+        }],
+    "Components": [{
             "name": "QueryTools",
             "impl": "ct.tools.Tool",
             "provides": ["ct.tools.Tool"],
             "propertiesConstructor": true,
             "componentFactory": true,
             "properties": {
-                "id": "",
-                "title": "",
-                "tooltip": "",
+                "id": "querytool",
+                "title": "Query a Store",
                 "toolRole": "toolset",
                 "iconClass": "icon-info",
-                "togglable": true,
-                "activateHandler": "activateAction",
-                "deactivateHandler": "deactivateAction",
+                "clickHandler": "onFilterStoreClicked",
                 "customquery": {},
-                "storeIdForCustomQuery": ""
+                "storeId": "*"
             },
-            "references": [
-                {
+            "references": [{
                     "name": "handlerScope",
                     "providing": "filter_query.FilterQuery"
-                }
-            ]
-        },
-        {
+                }, {
+                    "name": "store",
+                    "providing": "ct.api.Store",
+                    "filter": "(id={storeId})"
+                }]
+        }, {
             "name": "FilterQuery",
             "provides": ["filter_query.FilterQuery"],
-            "propertiesConstructor": true,
-            "properties": {
-                "filterqueryscore": "500"
-            },
-            "references": [
-                {
-                    "name": "_stores",
-                    "providing": "ct.api.Store",
-                    "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
-                },
-                {
-                    "name": "_resultCenterDataModel",
-                    "providing": "ct.resultcenter.DataModel"
-                },
-                {
-                    "name": "dataFormService",
-                    "providing": "dataform.DataFormService"
-                },
-                {
-                    "name": "_mapState",
-                    "providing": "ct.mapping.map.MapState"
-                },
-                {
-                    "name": "_drawController",
-                    "providing": "ct.mapping.edit.DrawStateController"
-                },
-                {
+            "references": [{
                     "name": "_eventService",
                     "providing": "ct.framework.api.EventService"
-                },
-                {
-                    "name": "_coordinateTransformer",
-                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
-                }
-            ]
-        }
-    ]
+                }]
+        }]
 }

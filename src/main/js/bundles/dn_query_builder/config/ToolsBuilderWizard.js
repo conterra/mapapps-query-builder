@@ -306,7 +306,7 @@ define([
             }
             this._properties.title = this._titleTextBox.get("value");
             this._properties.iconClass = this._iconClassTextBox.get("value");
-            this._properties.storeIdForCustomQuery = this._filteringSelect.get("value");
+            this._properties.storeId = this._filteringSelect.get("value");
 
             return def;
         },

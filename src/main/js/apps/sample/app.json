@@ -1,14 +1,12 @@
 {
     "properties": {
-        "id": "sample",
         "title": "Query Builder Sample"
     },
     "load": {
-        "bundleLocations": ["localbundles",
-            "bundles"],
+        "bundleLocations": ["localbundles", "bundles"],
         "styles": ["${app}:app.css"],
-        "allowedBundles": ["contentviewer",
-            "dn_query_builder@2.0.0",
+        "allowedBundles": [
+            "contentviewer",
             "infoservice",
             "coordinatetransformer",
             "geometryservice",
@@ -25,7 +23,9 @@
             "windowmanager",
             "toolset",
             "basemaptoggler",
-            "dn_openweathermap_datastore"]
+            "dn_query_builder@2.0.0",
+            "dn_openweathermap_datastore"
+        ]
     },
     "bundles": {
         "agssearch": {
@@ -148,74 +148,30 @@
                     }
                 }]
         },
-        "dn_openweathermap_datastore": {
-            "enabled": true
+        "resultcenter" : {
+            "ActionController" : {
+                "zoomToFeatures" : true
+            }
         },
         "dn_query_builder": {
             "QueryTools": [{
-                    "widgetProperties": {
-                        "bid": "dn_query_builder",
-                        "pid": "dn_query_builder-QueryTools-Factory",
-                        "id": "toolsBuilderwidget",
-                        "description": "Einstellungen für das Query Builder Bundle"
-                    },
-                    "Component-Name": "ToolsBuilder",
-                    "Component-Id": 191,
-                    "_windowManager-Target": "",
-                    "_appCtx-Target": "",
-                    "_configAdminService-Target": "",
-                    "_toolbar-Target": "",
-                    "_dataformService-Target": "",
-                    "_mapState-Target": "",
-                    "_mapModel-Target": "",
-                    "_coordinateTransformer-Target": "",
-                    "_agsstores-Target": "(useIn=selection)",
                     "id": "fc_1441279619509",
                     "title": "In which cities is it warmer than 25°C",
                     "iconClass": "icon-cog",
-                    "pid": "dn_query_builder-QueryTools-0",
-                    "storeIdForCustomQuery": "owm_datastore",
+                    "storeId": "owm_datastore",
                     "customquery": {
                         "$and": [{
                                 "temp": {
                                     "$gt": 25
                                 }
                             }]
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [{
-                                "fieldId": "temp",
-                                "compareId": "is_greater_number",
-                                "value": "25"
-                            }]
                     }
                 },
                 {
-                    "widgetProperties": {
-                        "bid": "dn_query_builder",
-                        "pid": "dn_query_builder-QueryTools-Factory",
-                        "id": "toolsBuilderwidget",
-                        "description": "Einstellungen für das Query Builder Bundle"
-                    },
-                    "Component-Name": "ToolsBuilder",
-                    "Component-Id": 195,
-                    "_windowManager-Target": "",
-                    "_appCtx-Target": "",
-                    "_configAdminService-Target": "",
-                    "_toolbar-Target": "",
-                    "_dataformService-Target": "",
-                    "_mapState-Target": "",
-                    "_mapModel-Target": "",
-                    "_coordinateTransformer-Target": "",
-                    "_agsstores-Target": "(useIn=selection)",
                     "id": "fc_1441021732534",
                     "title": "Show reported street damages that are not yet fixed in Münster",
                     "iconClass": "icon-toolcase",
-                    "pid": "dn_query_builder-QueryTools-2",
-                    "storeIdForCustomQuery": "stoerungen",
+                    "storeId": "stoerungen",
                     "customquery": {
                         "$and": [{
                                 "art": {
@@ -229,119 +185,34 @@
                                     }
                                 }
                             }]
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [{
-                                "fieldId": "art",
-                                "compareId": "is",
-                                "value": 5
-                            },
-                            {
-                                "fieldId": "status",
-                                "compareId": "is_not",
-                                "value": 3
-                            }]
                     }
                 },
                 {
-                    "widgetProperties": {
-                        "bid": "dn_query_builder",
-                        "pid": "dn_query_builder-QueryTools-Factory",
-                        "id": "toolsBuilderwidget",
-                        "description": "Einstellungen für das Query Builder Bundle"
-                    },
-                    "Component-Name": "ToolsBuilder",
-                    "Component-Id": 195,
-                    "_windowManager-Target": "",
-                    "_appCtx-Target": "",
-                    "_configAdminService-Target": "",
-                    "_toolbar-Target": "",
-                    "_dataformService-Target": "",
-                    "_mapState-Target": "",
-                    "_mapModel-Target": "",
-                    "_coordinateTransformer-Target": "",
-                    "_agsstores-Target": "(useIn=selection)",
                     "id": "fc_1441023863926",
                     "title": "Which are the capitals of the U.S. states?",
                     "iconClass": "icon-house",
-                    "pid": "dn_query_builder-QueryTools-3",
-                    "storeIdForCustomQuery": "usa_cities",
+                    "storeId": "usa_cities",
                     "customquery": {
                         "$and": [{
                                 "capital": {
                                     "$eq": "Y"
                                 }
                             }]
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [{
-                                "fieldId": "capital",
-                                "compareId": "is",
-                                "value": "Y"
-                            }]
                     }
                 },
                 {
-                    "widgetProperties": {
-                        "bid": "dn_query_builder",
-                        "pid": "dn_query_builder-QueryTools-Factory",
-                        "id": "toolsBuilderwidget",
-                        "description": "Einstellungen für das Query Builder Bundle"
-                    },
-                    "Component-Name": "ToolsBuilder",
-                    "Component-Id": 195,
-                    "_windowManager-Target": "",
-                    "_appCtx-Target": "",
-                    "_configAdminService-Target": "",
-                    "_toolbar-Target": "",
-                    "_dataformService-Target": "",
-                    "_mapState-Target": "",
-                    "_mapModel-Target": "",
-                    "_coordinateTransformer-Target": "",
-                    "_agsstores-Target": "(useIn=selection)",
                     "id": "fc_1441023991013",
                     "title": "Where are Germany's airports?",
                     "iconClass": "icon-heliport",
-                    "pid": "dn_query_builder-QueryTools-4",
-                    "storeIdForCustomQuery": "airtraffic",
+                    "storeId": "airtraffic",
                     "customquery": {
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": []
                     }
                 },
                 {
-                    "widgetProperties": {
-                        "bid": "dn_query_builder",
-                        "pid": "dn_query_builder-QueryTools-Factory",
-                        "id": "toolsBuilderwidget",
-                        "description": "Einstellungen für das Query Builder Bundle"
-                    },
-                    "Component-Name": "ToolsBuilder",
-                    "Component-Id": 195,
-                    "_windowManager-Target": "",
-                    "_appCtx-Target": "",
-                    "_configAdminService-Target": "",
-                    "_toolbar-Target": "",
-                    "_dataformService-Target": "",
-                    "_mapState-Target": "",
-                    "_mapModel-Target": "",
-                    "_coordinateTransformer-Target": "",
-                    "_agsstores-Target": "(useIn=selection)",
                     "id": "fc_1441300105443",
                     "title": "Which cities do have nice weather conditions right now?",
                     "iconClass": "icon-thumb-up",
-                    "pid": "dn_query_builder-QueryTools-6",
-                    "storeIdForCustomQuery": "owm_datastore",
+                    "storeId": "owm_datastore",
                     "customquery": {
                         "$and": [{
                                 "temp": {
@@ -358,66 +229,18 @@
                                     "$lt": 20
                                 }
                             }]
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [{
-                                "fieldId": "temp",
-                                "compareId": "is_greater_or_equal_number",
-                                "value": "20"
-                            },
-                            {
-                                "fieldId": "temp",
-                                "compareId": "is_less_or_equal_number",
-                                "value": "30"
-                            },
-                            {
-                                "fieldId": "clouds",
-                                "compareId": "is_less_number",
-                                "value": "20"
-                            }]
                     }
                 },
                 {
-                    "widgetProperties": {
-                        "bid": "dn_query_builder",
-                        "pid": "dn_query_builder-QueryTools-Factory",
-                        "id": "toolsBuilderwidget",
-                        "description": "Einstellungen für das Query Builder Bundle"
-                    },
-                    "Component-Name": "ToolsBuilder",
-                    "Component-Id": 191,
-                    "_windowManager-Target": "",
-                    "_appCtx-Target": "",
-                    "_configAdminService-Target": "",
-                    "_toolbar-Target": "",
-                    "_dataformService-Target": "",
-                    "_mapState-Target": "",
-                    "_mapModel-Target": "",
-                    "_coordinateTransformer-Target": "",
-                    "_agsstores-Target": "(useIn=selection)",
                     "id": "fc_1441656488839",
                     "title": "Clear Sky",
                     "iconClass": "icon-custom-info",
-                    "pid": "dn_query_builder-QueryTools-7",
-                    "storeIdForCustomQuery": "owm_datastore",
+                    "storeId": "owm_datastore",
                     "customquery": {
                         "$and": [{
                                 "weather_id": {
                                     "$eq": 800
                                 }
-                            }]
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [{
-                                "fieldId": "weather_id",
-                                "compareId": "is",
-                                "value": 800
                             }]
                     }
                 }]
