@@ -1,685 +1,681 @@
 {
-	"load": {
-		"bundleLocations": ["localbundles",
-		"bundles"],
-		"styles": ["${app}:app.css"],
-		"allowedBundles": ["contentviewer",
-		"dn_query_builder@2.0.0",
-		"infoservice",
-		"coordinatetransformer",
-		"geometryservice",
-		"notifier",
-		"resultcenter",
-		"agssearch",
-		"console",
-		"system",
-		"map",
-		"themes",
-		"toolrules",
-		"templates",
-		"templatelayout",
-		"windowmanager",
-		"toolset",
-		"basemaptoggler",
-		"dn_openweathermap_datastore"],
-		"i18n": ["bundle"]
-	},
-	"bundles": {
-		"agssearch": {
-			"AGSStore": [{
-				"id": "stoerungen",
-				"title": "Stoerungen",
-				"useIn": "selection",
-				"idProperty": "OBJECTID",
-				"url": "http://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0"
-			},
-			{
-				"title": "Airtraffic",
-				"description": "",
-				"omniSearchLabelAttr": "osm_name",
-				"omniSearchSearchAttr": "osm_name",
-				"idProperty": "OBJECTID",
-				"url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/0",
-				"useIn": "selection",
-				"filterOptions": {
-					"suggestContains": true
-				},
-				"omniSearchTypingDelay": 500,
-				"omniSearchPageSize": 20,
-				"omniSearchDefaultLabel": "Suchbegriff eingeben...",
-				"fetchIdProperty": true,
-				"enablePagination": false,
-				"id": "airtraffic",
-				"pid": "agssearch-AGSStore-1",
-				"type": "Unbekannt"
-			},
-			{
-				"id": "airtraffic_helipad",
-				"title": "Airtraffic Helipad",
-				"useIn": "selection",
-				"idProperty": "OBJECTID",
-				"url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/3"
-			},
-			{
-				"id": "usa_cities",
-				"title": "Cities in the USA",
-				"useIn": "selection",
-				"idProperty": "OBJECTID",
-				"url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0"
-			},
-			{
-				"title": "USA (Counties)",
-				"description": "",
-				"omniSearchLabelAttr": "name",
-				"omniSearchSearchAttr": "name",
-				"idProperty": "objectid",
-				"url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/3",
-				"useIn": ["omnisearch",
-				"selection"],
-				"filterOptions": {
-					"suggestContains": true
-				},
-				"omniSearchTypingDelay": 500,
-				"omniSearchPageSize": 20,
-				"omniSearchDefaultLabel": "Suchbegriff eingeben...",
-				"fetchIdProperty": true,
-				"enablePagination": false,
-				"id": "_AGS_STORE_1441195340629"
-			},
-			{
-				"title": "USA (Highways)",
-				"description": "",
-				"omniSearchLabelAttr": "type",
-				"omniSearchSearchAttr": "type",
-				"idProperty": "objectid",
-				"url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1",
-				"useIn": ["omnisearch",
-				"selection"],
-				"filterOptions": {
-					"suggestContains": true
-				},
-				"omniSearchTypingDelay": 500,
-				"omniSearchPageSize": 20,
-				"omniSearchDefaultLabel": "Suchbegriff eingeben...",
-				"fetchIdProperty": true,
-				"enablePagination": false,
-				"id": "_AGS_STORE_1441195356941"
-			},
-			{
-				"title": "USA (States)",
-				"description": "",
-				"omniSearchLabelAttr": "state_name",
-				"omniSearchSearchAttr": "state_name",
-				"idProperty": "objectid",
-				"url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2",
-				"useIn": ["omnisearch",
-				"selection"],
-				"filterOptions": {
-					"suggestContains": true
-				},
-				"omniSearchTypingDelay": 500,
-				"omniSearchPageSize": 20,
-				"omniSearchDefaultLabel": "Suchbegriff eingeben...",
-				"fetchIdProperty": true,
-				"enablePagination": false,
-				"id": "_AGS_STORE_1441195705828"
-			}],
-			"enabled": true
-		},
-		"contentviewer": {
-			"ContentRegistration": {
-				"contentRules": []
-			},
-			"enabled": true
-		},
-		"custominfo": {
-			"CustomInfoToggleTool": [{
-				"id": "copyrightCustomInfoTool",
-				"title": "Copyright",
-				"tooltip": "Open copyright information",
-				"widgetSettings": {
-					"content": "Copyright 2013 con terra GmbH",
-					"window": {
-						"title": "Copyright"
-					}
-				}
-			}]
-		},
-		"dn_openweathermap_datastore": {
-			"enabled": true
-		},
-		"dn_query_builder": {
-			"QueryTools": [{
-				"widgetProperties": {
-					"bid": "dn_query_builder",
-					"pid": "dn_query_builder-QueryTools-Factory",
-					"id": "toolsBuilderwidget",
-					"description": "Einstellungen für das Query Builder Bundle"
-				},
-				"Component-Name": "ToolsBuilder",
-				"Component-Id": 191,
-				"_windowManager-Target": "",
-				"_appCtx-Target": "",
-				"_configAdminService-Target": "",
-				"_toolbar-Target": "",
-				"_dataformService-Target": "",
-				"_mapState-Target": "",
-				"_mapModel-Target": "",
-				"_coordinateTransformer-Target": "",
-				"_agsstores-Target": "(useIn=selection)",
-				"id": "fc_1441279619509",
-				"title": "In which cities is it warmer than 25°C",
-				"iconClass": "icon-cog",
-				"pid": "dn_query_builder-QueryTools-0",
-				"storeIdForCustomQuery": "owm_datastore",
-				"customquery": {
-					"$and": [{
-						"temp": {
-							"$gt": 25
-						}
-					}]
-				},
-				"_wizardGUI": {
-					"mode": "builder",
-					"match": "$and",
-					"extent": "no",
-					"fields": [{
-						"fieldId": "temp",
-						"compareId": "is_greater_number",
-						"value": "25"
-					}]
-				}
-			},
-			{
-				"widgetProperties": {
-					"bid": "dn_query_builder",
-					"pid": "dn_query_builder-QueryTools-Factory",
-					"id": "toolsBuilderwidget",
-					"description": "Einstellungen für das Query Builder Bundle"
-				},
-				"Component-Name": "ToolsBuilder",
-				"Component-Id": 195,
-				"_windowManager-Target": "",
-				"_appCtx-Target": "",
-				"_configAdminService-Target": "",
-				"_toolbar-Target": "",
-				"_dataformService-Target": "",
-				"_mapState-Target": "",
-				"_mapModel-Target": "",
-				"_coordinateTransformer-Target": "",
-				"_agsstores-Target": "(useIn=selection)",
-				"id": "fc_1441021732534",
-				"title": "Show reported street damages that are not yet fixed in Münster",
-				"iconClass": "icon-toolcase",
-				"pid": "dn_query_builder-QueryTools-2",
-				"storeIdForCustomQuery": "stoerungen",
-				"customquery": {
-					"$and": [{
-						"art": {
-							"$eq": 5
-						}
-					},
-					{
-						"status": {
-							"$not": {
-								"$eq": 3
-							}
-						}
-					}]
-				},
-				"_wizardGUI": {
-					"mode": "builder",
-					"match": "$and",
-					"extent": "no",
-					"fields": [{
-						"fieldId": "art",
-						"compareId": "is",
-						"value": 5
-					},
-					{
-						"fieldId": "status",
-						"compareId": "is_not",
-						"value": 3
-					}]
-				}
-			},
-			{
-				"widgetProperties": {
-					"bid": "dn_query_builder",
-					"pid": "dn_query_builder-QueryTools-Factory",
-					"id": "toolsBuilderwidget",
-					"description": "Einstellungen für das Query Builder Bundle"
-				},
-				"Component-Name": "ToolsBuilder",
-				"Component-Id": 195,
-				"_windowManager-Target": "",
-				"_appCtx-Target": "",
-				"_configAdminService-Target": "",
-				"_toolbar-Target": "",
-				"_dataformService-Target": "",
-				"_mapState-Target": "",
-				"_mapModel-Target": "",
-				"_coordinateTransformer-Target": "",
-				"_agsstores-Target": "(useIn=selection)",
-				"id": "fc_1441023863926",
-				"title": "Which are the capitals of the U.S. states?",
-				"iconClass": "icon-house",
-				"pid": "dn_query_builder-QueryTools-3",
-				"storeIdForCustomQuery": "usa_cities",
-				"customquery": {
-					"$and": [{
-						"capital": {
-							"$eq": "Y"
-						}
-					}]
-				},
-				"_wizardGUI": {
-					"mode": "builder",
-					"match": "$and",
-					"extent": "no",
-					"fields": [{
-						"fieldId": "capital",
-						"compareId": "is",
-						"value": "Y"
-					}]
-				}
-			},
-			{
-				"widgetProperties": {
-					"bid": "dn_query_builder",
-					"pid": "dn_query_builder-QueryTools-Factory",
-					"id": "toolsBuilderwidget",
-					"description": "Einstellungen für das Query Builder Bundle"
-				},
-				"Component-Name": "ToolsBuilder",
-				"Component-Id": 195,
-				"_windowManager-Target": "",
-				"_appCtx-Target": "",
-				"_configAdminService-Target": "",
-				"_toolbar-Target": "",
-				"_dataformService-Target": "",
-				"_mapState-Target": "",
-				"_mapModel-Target": "",
-				"_coordinateTransformer-Target": "",
-				"_agsstores-Target": "(useIn=selection)",
-				"id": "fc_1441023991013",
-				"title": "Where are Germany's airports?",
-				"iconClass": "icon-heliport",
-				"pid": "dn_query_builder-QueryTools-4",
-				"storeIdForCustomQuery": "airtraffic",
-				"customquery": {
-					
-				},
-				"_wizardGUI": {
-					"mode": "builder",
-					"match": "$and",
-					"extent": "no",
-					"fields": []
-				}
-			},
-			{
-				"widgetProperties": {
-					"bid": "dn_query_builder",
-					"pid": "dn_query_builder-QueryTools-Factory",
-					"id": "toolsBuilderwidget",
-					"description": "Einstellungen für das Query Builder Bundle"
-				},
-				"Component-Name": "ToolsBuilder",
-				"Component-Id": 195,
-				"_windowManager-Target": "",
-				"_appCtx-Target": "",
-				"_configAdminService-Target": "",
-				"_toolbar-Target": "",
-				"_dataformService-Target": "",
-				"_mapState-Target": "",
-				"_mapModel-Target": "",
-				"_coordinateTransformer-Target": "",
-				"_agsstores-Target": "(useIn=selection)",
-				"id": "fc_1441300105443",
-				"title": "Which cities do have nice weather conditions right now?",
-				"iconClass": "icon-thumb-up",
-				"pid": "dn_query_builder-QueryTools-6",
-				"storeIdForCustomQuery": "owm_datastore",
-				"customquery": {
-					"$and": [{
-						"temp": {
-							"$gte": 20
-						}
-					},
-					{
-						"temp": {
-							"$lte": 30
-						}
-					},
-					{
-						"clouds": {
-							"$lt": 20
-						}
-					}]
-				},
-				"_wizardGUI": {
-					"mode": "builder",
-					"match": "$and",
-					"extent": "no",
-					"fields": [{
-						"fieldId": "temp",
-						"compareId": "is_greater_or_equal_number",
-						"value": "20"
-					},
-					{
-						"fieldId": "temp",
-						"compareId": "is_less_or_equal_number",
-						"value": "30"
-					},
-					{
-						"fieldId": "clouds",
-						"compareId": "is_less_number",
-						"value": "20"
-					}]
-				}
-			},
-			{
-				"widgetProperties": {
-					"bid": "dn_query_builder",
-					"pid": "dn_query_builder-QueryTools-Factory",
-					"id": "toolsBuilderwidget",
-					"description": "Einstellungen für das Query Builder Bundle"
-				},
-				"Component-Name": "ToolsBuilder",
-				"Component-Id": 191,
-				"_windowManager-Target": "",
-				"_appCtx-Target": "",
-				"_configAdminService-Target": "",
-				"_toolbar-Target": "",
-				"_dataformService-Target": "",
-				"_mapState-Target": "",
-				"_mapModel-Target": "",
-				"_coordinateTransformer-Target": "",
-				"_agsstores-Target": "(useIn=selection)",
-				"id": "fc_1441656488839",
-				"title": "Clear Sky",
-				"iconClass": "icon-custom-info",
-				"pid": "dn_query_builder-QueryTools-7",
-				"storeIdForCustomQuery": "owm_datastore",
-				"customquery": {
-					"$and": [{
-						"weather_id": {
-							"$eq": 800
-						}
-					}]
-				},
-				"_wizardGUI": {
-					"mode": "builder",
-					"match": "$and",
-					"extent": "no",
-					"fields": [{
-						"fieldId": "weather_id",
-						"compareId": "is",
-						"value": 800
-					}]
-				}
-			}]
-		},
-		"map": {
-			"MapModelFactory": {
-				"_configData": {
-					"maps": [{
-						"id": "default",
-						"glass_pane": [],
-						"operationalLayer": [],
-						"baseLayer": [{
-							"title": "Canvas Base",
-							"enabled": true,
-							"service": "service_43687"
-						},
-						{
-							"title": "Topographic",
-							"enabled": false,
-							"service": "service_40216"
-						},
-						{
-							"title": "Streets",
-							"enabled": false,
-							"service": "service_11893"
-						}]
-					}]
-				}
-			},
-			"MapState": {
-				"initialExtent": {
-					"xmin": -1100000,
-					"ymin": 4000000,
-					"xmax": 3500000,
-					"ymax": 8800000,
-					"spatialReference": {
-						"wkid": 3857
-					}
-				}
-			},
-			"MappingResourceRegistryFactory": {
-				"_knownServices": {
-					"services": [{
-						"id": "service_43687",
-						"url": "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer",
-						"type": "AGS_TILED"
-					},
-					{
-						"id": "service_40216",
-						"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
-						"type": "AGS_TILED"
-					},
-					{
-						"id": "service_11893",
-						"url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
-						"type": "AGS_TILED"
-					},
-					{
-						"id": "stoerungen",
-						"url": "http://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer",
-						"type": "AGS_DYNAMIC",
-						"title": "Stoerungen",
-						"description": "Karte mit fiktiven Störungsmeldungen für map.apps Trainings.",
-						"layers": [{
-							"id": "0",
-							"title": "Störungen",
-							"enabled": true
-						},
-						{
-							"id": "1",
-							"title": "Status",
-							"enabled": true
-						}],
-						"options": {
-							
-						}
-					},
-					{
-						"id": "service_54006",
-						"url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
-						"type": "AGS_DYNAMIC",
-						"title": "USA",
-						"description": "This map contains sample data of the United States.\n\nThis is a sample service hosted by ESRI, powered by ArcGIS Server. ESRI reserves the right to change or remove this service at any time and without notice.",
-						"layers": [{
-							"id": "0",
-							"title": "Cities",
-							"enabled": true
-						},
-						{
-							"id": "1",
-							"title": "Highways",
-							"enabled": true
-						},
-						{
-							"id": "2",
-							"title": "States",
-							"enabled": true
-						},
-						{
-							"id": "3",
-							"title": "Counties",
-							"enabled": true
-						}],
-						"options": {
-							
-						}
-					},
-					{
-						"id": "service_44082",
-						"url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer",
-						"type": "AGS_DYNAMIC",
-						"title": "Airtraffic",
-						"description": "",
-						"layers": [{
-							"id": "0",
-							"title": "aerodrome2",
-							"maxScale": 50000,
-							"enabled": true
-						},
-						{
-							"id": "1",
-							"title": "aerodrome1",
-							"maxScale": 50000,
-							"enabled": true
-						},
-						{
-							"id": "2",
-							"title": "terminal",
-							"minScale": 24000,
-							"enabled": true
-						},
-						{
-							"id": "3",
-							"title": "Helipad",
-							"minScale": 50000,
-							"enabled": true
-						},
-						{
-							"id": "4",
-							"title": "runway",
-							"minScale": 500000,
-							"enabled": true
-						},
-						{
-							"id": "5",
-							"title": "taxiway",
-							"minScale": 200000,
-							"enabled": true
-						},
-						{
-							"id": "6",
-							"title": "runway",
-							"minScale": 500000,
-							"enabled": true
-						},
-						{
-							"id": "7",
-							"title": "taxiway",
-							"minScale": 200000,
-							"enabled": true
-						},
-						{
-							"id": "8",
-							"title": "terminal",
-							"minScale": 2000000,
-							"enabled": true
-						},
-						{
-							"id": "9",
-							"title": "apron",
-							"minScale": 2000000,
-							"enabled": true
-						},
-						{
-							"id": "10",
-							"title": "aerodrome",
-							"minScale": 2000000,
-							"enabled": true
-						}],
-						"options": {
-							
-						}
-					}]
-				}
-			},
-			"enabled": true
-		},
-		"selection": {
-			"SelectionTool": [{
-				"geoType": "Extent",
-				"iconClass": "icon-select-extend",
-				"clickTolerance": 0,
-				"id": "selectionTool_1441024426716",
-				"storeId": "_AGS_STORE_1441024426700",
-				"title": "Infrastructure (Facility Type)"
-			},
-			{
-				"geoType": "Extent",
-				"iconClass": "icon-select-extend",
-				"clickTolerance": 0,
-				"id": "selectionTool_1441025566349",
-				"storeId": "_AGS_STORE_1441025566339",
-				"title": "Wind Turbines (TurbineInspections)"
-			},
-			{
-				"geoType": "Extent",
-				"iconClass": "icon-select-extend",
-				"clickTolerance": 0,
-				"id": "selectionTool_1441195340653",
-				"storeId": "_AGS_STORE_1441195340629",
-				"title": "USA (Counties)"
-			},
-			{
-				"geoType": "Extent",
-				"iconClass": "icon-select-extend",
-				"clickTolerance": 0,
-				"id": "selectionTool_1441195356968",
-				"storeId": "_AGS_STORE_1441195356941",
-				"title": "USA (Highways)"
-			},
-			{
-				"geoType": "Extent",
-				"iconClass": "icon-select-extend",
-				"clickTolerance": 0,
-				"id": "selectionTool_1441195705851",
-				"storeId": "_AGS_STORE_1441195705828",
-				"title": "USA (States)"
-			}]
-		},
-		"templates": {
-			"TemplateSelector": {
-				"componentEnabled": false
-			}
-		},
-		"themes": {
-			"ThemeSelector": {
-				"componentEnabled": false
-			}
-		},
-		"toolset": {
-			"ToolsetManager": {
-				"toolsets": [{
-					"id": "toolset_1437464739023",
-					"title": "Questions And Answers",
-					"container": "map",
-					"window": {
-						"closable": true
-					},
-					"tooltip": "List of predefined questions, click to see the answer",
-					"cssClass": "ctWDYWBtn ctPrimaryInput",
-					"max_horizontal": 1,
-					"windowType": "dropdown",
-					"position": {
-						"rel_l": 20,
-						"rel_t": 20
-					},
-					"tools": ["fc_1441300105443",
-					"fc_1441023991013",
-					"fc_1441023863926",
-					"fc_1441021732534",
-					"fc_1441279619509"]
-				}]
-			},
-			"enabled": true
-		}
-	}
+    "properties": {
+        "id": "sample",
+        "title": "Query Builder Sample"
+    },
+    "load": {
+        "bundleLocations": ["localbundles",
+            "bundles"],
+        "styles": ["${app}:app.css"],
+        "allowedBundles": ["contentviewer",
+            "dn_query_builder@2.0.0",
+            "infoservice",
+            "coordinatetransformer",
+            "geometryservice",
+            "notifier",
+            "resultcenter",
+            "agssearch",
+            "console",
+            "system",
+            "map",
+            "themes",
+            "toolrules",
+            "templates",
+            "templatelayout",
+            "windowmanager",
+            "toolset",
+            "basemaptoggler",
+            "dn_openweathermap_datastore"],
+        "i18n": ["bundle"]
+    },
+    "bundles": {
+        "agssearch": {
+            "AGSStore": [{
+                    "id": "stoerungen",
+                    "title": "Stoerungen",
+                    "useIn": "selection",
+                    "idProperty": "OBJECTID",
+                    "url": "http://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0"
+                },
+                {
+                    "title": "Airtraffic",
+                    "description": "",
+                    "omniSearchLabelAttr": "osm_name",
+                    "omniSearchSearchAttr": "osm_name",
+                    "idProperty": "OBJECTID",
+                    "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/0",
+                    "useIn": "selection",
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "airtraffic",
+                    "pid": "agssearch-AGSStore-1",
+                    "type": "Unbekannt"
+                },
+                {
+                    "id": "airtraffic_helipad",
+                    "title": "Airtraffic Helipad",
+                    "useIn": "selection",
+                    "idProperty": "OBJECTID",
+                    "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/3"
+                },
+                {
+                    "id": "usa_cities",
+                    "title": "Cities in the USA",
+                    "useIn": "selection",
+                    "idProperty": "OBJECTID",
+                    "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0"
+                },
+                {
+                    "title": "USA (Counties)",
+                    "description": "",
+                    "omniSearchLabelAttr": "name",
+                    "omniSearchSearchAttr": "name",
+                    "idProperty": "objectid",
+                    "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/3",
+                    "useIn": ["omnisearch",
+                        "selection"],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1441195340629"
+                },
+                {
+                    "title": "USA (Highways)",
+                    "description": "",
+                    "omniSearchLabelAttr": "type",
+                    "omniSearchSearchAttr": "type",
+                    "idProperty": "objectid",
+                    "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1",
+                    "useIn": ["omnisearch",
+                        "selection"],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1441195356941"
+                },
+                {
+                    "title": "USA (States)",
+                    "description": "",
+                    "omniSearchLabelAttr": "state_name",
+                    "omniSearchSearchAttr": "state_name",
+                    "idProperty": "objectid",
+                    "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2",
+                    "useIn": ["omnisearch",
+                        "selection"],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1441195705828"
+                }],
+            "enabled": true
+        },
+        "contentviewer": {
+            "ContentRegistration": {
+                "contentRules": []
+            },
+            "enabled": true
+        },
+        "custominfo": {
+            "CustomInfoToggleTool": [{
+                    "id": "copyrightCustomInfoTool",
+                    "title": "Copyright",
+                    "tooltip": "Open copyright information",
+                    "widgetSettings": {
+                        "content": "Copyright 2013 con terra GmbH",
+                        "window": {
+                            "title": "Copyright"
+                        }
+                    }
+                }]
+        },
+        "dn_openweathermap_datastore": {
+            "enabled": true
+        },
+        "dn_query_builder": {
+            "QueryTools": [{
+                    "widgetProperties": {
+                        "bid": "dn_query_builder",
+                        "pid": "dn_query_builder-QueryTools-Factory",
+                        "id": "toolsBuilderwidget",
+                        "description": "Einstellungen für das Query Builder Bundle"
+                    },
+                    "Component-Name": "ToolsBuilder",
+                    "Component-Id": 191,
+                    "_windowManager-Target": "",
+                    "_appCtx-Target": "",
+                    "_configAdminService-Target": "",
+                    "_toolbar-Target": "",
+                    "_dataformService-Target": "",
+                    "_mapState-Target": "",
+                    "_mapModel-Target": "",
+                    "_coordinateTransformer-Target": "",
+                    "_agsstores-Target": "(useIn=selection)",
+                    "id": "fc_1441279619509",
+                    "title": "In which cities is it warmer than 25°C",
+                    "iconClass": "icon-cog",
+                    "pid": "dn_query_builder-QueryTools-0",
+                    "storeIdForCustomQuery": "owm_datastore",
+                    "customquery": {
+                        "$and": [{
+                                "temp": {
+                                    "$gt": 25
+                                }
+                            }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [{
+                                "fieldId": "temp",
+                                "compareId": "is_greater_number",
+                                "value": "25"
+                            }]
+                    }
+                },
+                {
+                    "widgetProperties": {
+                        "bid": "dn_query_builder",
+                        "pid": "dn_query_builder-QueryTools-Factory",
+                        "id": "toolsBuilderwidget",
+                        "description": "Einstellungen für das Query Builder Bundle"
+                    },
+                    "Component-Name": "ToolsBuilder",
+                    "Component-Id": 195,
+                    "_windowManager-Target": "",
+                    "_appCtx-Target": "",
+                    "_configAdminService-Target": "",
+                    "_toolbar-Target": "",
+                    "_dataformService-Target": "",
+                    "_mapState-Target": "",
+                    "_mapModel-Target": "",
+                    "_coordinateTransformer-Target": "",
+                    "_agsstores-Target": "(useIn=selection)",
+                    "id": "fc_1441021732534",
+                    "title": "Show reported street damages that are not yet fixed in Münster",
+                    "iconClass": "icon-toolcase",
+                    "pid": "dn_query_builder-QueryTools-2",
+                    "storeIdForCustomQuery": "stoerungen",
+                    "customquery": {
+                        "$and": [{
+                                "art": {
+                                    "$eq": 5
+                                }
+                            },
+                            {
+                                "status": {
+                                    "$not": {
+                                        "$eq": 3
+                                    }
+                                }
+                            }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [{
+                                "fieldId": "art",
+                                "compareId": "is",
+                                "value": 5
+                            },
+                            {
+                                "fieldId": "status",
+                                "compareId": "is_not",
+                                "value": 3
+                            }]
+                    }
+                },
+                {
+                    "widgetProperties": {
+                        "bid": "dn_query_builder",
+                        "pid": "dn_query_builder-QueryTools-Factory",
+                        "id": "toolsBuilderwidget",
+                        "description": "Einstellungen für das Query Builder Bundle"
+                    },
+                    "Component-Name": "ToolsBuilder",
+                    "Component-Id": 195,
+                    "_windowManager-Target": "",
+                    "_appCtx-Target": "",
+                    "_configAdminService-Target": "",
+                    "_toolbar-Target": "",
+                    "_dataformService-Target": "",
+                    "_mapState-Target": "",
+                    "_mapModel-Target": "",
+                    "_coordinateTransformer-Target": "",
+                    "_agsstores-Target": "(useIn=selection)",
+                    "id": "fc_1441023863926",
+                    "title": "Which are the capitals of the U.S. states?",
+                    "iconClass": "icon-house",
+                    "pid": "dn_query_builder-QueryTools-3",
+                    "storeIdForCustomQuery": "usa_cities",
+                    "customquery": {
+                        "$and": [{
+                                "capital": {
+                                    "$eq": "Y"
+                                }
+                            }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [{
+                                "fieldId": "capital",
+                                "compareId": "is",
+                                "value": "Y"
+                            }]
+                    }
+                },
+                {
+                    "widgetProperties": {
+                        "bid": "dn_query_builder",
+                        "pid": "dn_query_builder-QueryTools-Factory",
+                        "id": "toolsBuilderwidget",
+                        "description": "Einstellungen für das Query Builder Bundle"
+                    },
+                    "Component-Name": "ToolsBuilder",
+                    "Component-Id": 195,
+                    "_windowManager-Target": "",
+                    "_appCtx-Target": "",
+                    "_configAdminService-Target": "",
+                    "_toolbar-Target": "",
+                    "_dataformService-Target": "",
+                    "_mapState-Target": "",
+                    "_mapModel-Target": "",
+                    "_coordinateTransformer-Target": "",
+                    "_agsstores-Target": "(useIn=selection)",
+                    "id": "fc_1441023991013",
+                    "title": "Where are Germany's airports?",
+                    "iconClass": "icon-heliport",
+                    "pid": "dn_query_builder-QueryTools-4",
+                    "storeIdForCustomQuery": "airtraffic",
+                    "customquery": {
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": []
+                    }
+                },
+                {
+                    "widgetProperties": {
+                        "bid": "dn_query_builder",
+                        "pid": "dn_query_builder-QueryTools-Factory",
+                        "id": "toolsBuilderwidget",
+                        "description": "Einstellungen für das Query Builder Bundle"
+                    },
+                    "Component-Name": "ToolsBuilder",
+                    "Component-Id": 195,
+                    "_windowManager-Target": "",
+                    "_appCtx-Target": "",
+                    "_configAdminService-Target": "",
+                    "_toolbar-Target": "",
+                    "_dataformService-Target": "",
+                    "_mapState-Target": "",
+                    "_mapModel-Target": "",
+                    "_coordinateTransformer-Target": "",
+                    "_agsstores-Target": "(useIn=selection)",
+                    "id": "fc_1441300105443",
+                    "title": "Which cities do have nice weather conditions right now?",
+                    "iconClass": "icon-thumb-up",
+                    "pid": "dn_query_builder-QueryTools-6",
+                    "storeIdForCustomQuery": "owm_datastore",
+                    "customquery": {
+                        "$and": [{
+                                "temp": {
+                                    "$gte": 20
+                                }
+                            },
+                            {
+                                "temp": {
+                                    "$lte": 30
+                                }
+                            },
+                            {
+                                "clouds": {
+                                    "$lt": 20
+                                }
+                            }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [{
+                                "fieldId": "temp",
+                                "compareId": "is_greater_or_equal_number",
+                                "value": "20"
+                            },
+                            {
+                                "fieldId": "temp",
+                                "compareId": "is_less_or_equal_number",
+                                "value": "30"
+                            },
+                            {
+                                "fieldId": "clouds",
+                                "compareId": "is_less_number",
+                                "value": "20"
+                            }]
+                    }
+                },
+                {
+                    "widgetProperties": {
+                        "bid": "dn_query_builder",
+                        "pid": "dn_query_builder-QueryTools-Factory",
+                        "id": "toolsBuilderwidget",
+                        "description": "Einstellungen für das Query Builder Bundle"
+                    },
+                    "Component-Name": "ToolsBuilder",
+                    "Component-Id": 191,
+                    "_windowManager-Target": "",
+                    "_appCtx-Target": "",
+                    "_configAdminService-Target": "",
+                    "_toolbar-Target": "",
+                    "_dataformService-Target": "",
+                    "_mapState-Target": "",
+                    "_mapModel-Target": "",
+                    "_coordinateTransformer-Target": "",
+                    "_agsstores-Target": "(useIn=selection)",
+                    "id": "fc_1441656488839",
+                    "title": "Clear Sky",
+                    "iconClass": "icon-custom-info",
+                    "pid": "dn_query_builder-QueryTools-7",
+                    "storeIdForCustomQuery": "owm_datastore",
+                    "customquery": {
+                        "$and": [{
+                                "weather_id": {
+                                    "$eq": 800
+                                }
+                            }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [{
+                                "fieldId": "weather_id",
+                                "compareId": "is",
+                                "value": 800
+                            }]
+                    }
+                }]
+        },
+        "map": {
+            "MapModelFactory": {
+                "_configData": {
+                    "maps": [{
+                            "id": "default",
+                            "glass_pane": [],
+                            "operationalLayer": [],
+                            "baseLayer": [{
+                                    "title": "Canvas Base",
+                                    "enabled": true,
+                                    "service": "service_43687"
+                                },
+                                {
+                                    "title": "Topographic",
+                                    "enabled": false,
+                                    "service": "service_40216"
+                                },
+                                {
+                                    "title": "Streets",
+                                    "enabled": false,
+                                    "service": "service_11893"
+                                }]
+                        }]
+                }
+            },
+            "MapState": {
+                "initialExtent": {
+                    "xmin": -1100000,
+                    "ymin": 4000000,
+                    "xmax": 3500000,
+                    "ymax": 8800000,
+                    "spatialReference": {
+                        "wkid": 3857
+                    }
+                }
+            },
+            "MappingResourceRegistryFactory": {
+                "_knownServices": {
+                    "services": [{
+                            "id": "service_43687",
+                            "url": "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer",
+                            "type": "AGS_TILED"
+                        },
+                        {
+                            "id": "service_40216",
+                            "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
+                            "type": "AGS_TILED"
+                        },
+                        {
+                            "id": "service_11893",
+                            "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
+                            "type": "AGS_TILED"
+                        },
+                        {
+                            "id": "stoerungen",
+                            "url": "http://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "Stoerungen",
+                            "description": "Karte mit fiktiven Störungsmeldungen für map.apps Trainings.",
+                            "layers": [{
+                                    "id": "0",
+                                    "title": "Störungen",
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "1",
+                                    "title": "Status",
+                                    "enabled": true
+                                }],
+                            "options": {
+                            }
+                        },
+                        {
+                            "id": "service_54006",
+                            "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "USA",
+                            "description": "This map contains sample data of the United States.\n\nThis is a sample service hosted by ESRI, powered by ArcGIS Server. ESRI reserves the right to change or remove this service at any time and without notice.",
+                            "layers": [{
+                                    "id": "0",
+                                    "title": "Cities",
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "1",
+                                    "title": "Highways",
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "2",
+                                    "title": "States",
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "3",
+                                    "title": "Counties",
+                                    "enabled": true
+                                }],
+                            "options": {
+                            }
+                        },
+                        {
+                            "id": "service_44082",
+                            "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "Airtraffic",
+                            "description": "",
+                            "layers": [{
+                                    "id": "0",
+                                    "title": "aerodrome2",
+                                    "maxScale": 50000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "1",
+                                    "title": "aerodrome1",
+                                    "maxScale": 50000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "2",
+                                    "title": "terminal",
+                                    "minScale": 24000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "3",
+                                    "title": "Helipad",
+                                    "minScale": 50000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "4",
+                                    "title": "runway",
+                                    "minScale": 500000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "5",
+                                    "title": "taxiway",
+                                    "minScale": 200000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "6",
+                                    "title": "runway",
+                                    "minScale": 500000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "7",
+                                    "title": "taxiway",
+                                    "minScale": 200000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "8",
+                                    "title": "terminal",
+                                    "minScale": 2000000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "9",
+                                    "title": "apron",
+                                    "minScale": 2000000,
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "10",
+                                    "title": "aerodrome",
+                                    "minScale": 2000000,
+                                    "enabled": true
+                                }],
+                            "options": {
+                            }
+                        }]
+                }
+            },
+            "enabled": true
+        },
+        "selection": {
+            "SelectionTool": [{
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1441024426716",
+                    "storeId": "_AGS_STORE_1441024426700",
+                    "title": "Infrastructure (Facility Type)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1441025566349",
+                    "storeId": "_AGS_STORE_1441025566339",
+                    "title": "Wind Turbines (TurbineInspections)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1441195340653",
+                    "storeId": "_AGS_STORE_1441195340629",
+                    "title": "USA (Counties)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1441195356968",
+                    "storeId": "_AGS_STORE_1441195356941",
+                    "title": "USA (Highways)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1441195705851",
+                    "storeId": "_AGS_STORE_1441195705828",
+                    "title": "USA (States)"
+                }]
+        },
+        "templates": {
+            "TemplateSelector": {
+                "componentEnabled": false
+            }
+        },
+        "themes": {
+            "ThemeSelector": {
+                "componentEnabled": false
+            }
+        },
+        "toolset": {
+            "ToolsetManager": {
+                "toolsets": [{
+                        "id": "toolset_1437464739023",
+                        "title": "Questions And Answers",
+                        "container": "map",
+                        "window": {
+                            "closable": true
+                        },
+                        "tooltip": "List of predefined questions, click to see the answer",
+                        "cssClass": "ctWDYWBtn ctPrimaryInput",
+                        "max_horizontal": 1,
+                        "windowType": "dropdown",
+                        "position": {
+                            "rel_l": 20,
+                            "rel_t": 20
+                        },
+                        "tools": ["fc_*"]
+                    }]
+            },
+            "enabled": true
+        }
+    }
 }

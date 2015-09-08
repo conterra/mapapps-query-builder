@@ -151,7 +151,6 @@ define([
         },
         _onDone: function () {
             ct_when(this._saveProperties(), this._onReady);
-
         },
         _onReady: function () {
         },
