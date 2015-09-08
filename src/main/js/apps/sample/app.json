@@ -25,8 +25,7 @@
             "windowmanager",
             "toolset",
             "basemaptoggler",
-            "dn_openweathermap_datastore"],
-        "i18n": ["bundle"]
+            "dn_openweathermap_datastore"]
     },
     "bundles": {
         "agssearch": {
