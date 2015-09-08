@@ -20,9 +20,9 @@ define({
                 bundleDescription: "",
                 description: "",
                 widget: {
-                    now: "Aktuell",
-                    fiveDays: "5 Tage",
-                    sixteenDays: "16 Tage",
+                    now: "Now",
+                    fiveDays: "5 Days",
+                    sixteenDays: "16 ays",
                     conditions: "Conditions in "
                 }
             },

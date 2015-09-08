@@ -14,35 +14,57 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/declare",
-    "dojo/_base/Deferred",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/OWMInfoWidget.html",
+    "dojo/_base/declare",
+    "dojo/_base/Deferred",
+    "dojo/_base/array",
     "dojo/_base/lang",
+    "dojo/date/locale",
     "dojo/dom-attr",
     "contentviewer/GridContent",
     "ct/_when",
+    "ct/_Connect",
     "ct/request",
     "dojox/charting/Chart",
     "dojox/charting/themes/MiamiNice",
-    "dojox/charting/plot2d/StackedAreas"
+    "dojox/charting/plot2d/Areas",
+    "dojox/charting/axis2d/Default",
+    "dojox/charting/widget/Legend",
+    "dojox/charting/action2d/Tooltip",
+    "dojox/charting/action2d/MoveSlice",
+    "dojox/charting/action2d/Magnify",
+    "dojox/charting/action2d/Highlight",
+    "dijit/form/FilteringSelect",
+    "dojo/store/Memory"
 ], function (
-        declare,
-        Deferred,
         _WidgetBase,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
         templateStringContent,
+        declare,
+        Deferred,
+        d_array,
         d_lang,
+        locale,
         domAttr,
         GridContent,
         ct_when,
+        _Connect,
         ct_request,
         Chart,
         theme,
-        StackedAreas
+        Areas,
+        Default,
+        Legend,
+        Tooltip,
+        MoveSlice,
+        Magnify,
+        Highlight,
+        FilteringSelect,
+        Memory
         ) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
@@ -55,79 +77,361 @@ define([
             this.set("title", i18n.widget.conditions + content.name);
         },
         postCreate: function () {
+            //var d3 = d3;
+            //var c3 = c3;
+            //console.error(c3);
+
             this.inherited(arguments);
             var content = this._content;
             var icon = content.icon;
             var url = "http://openweathermap.org/img/w/" + icon + ".png";
             domAttr.set(this._icon, "src", url);
-
             var grid = new GridContent({
                 content: this.content,
                 context: this.context
             });
-
             /*append the new grid to the div*/
             this._grid.set("content", grid);
-            ct_when(this._getFiveDayForecast(), function (data) {
-                //this._renderChart(data, this._chartNode1);
+            /*var chart = c3.generate({
+             data: {
+             columns: [
+             ['data', 91.4]
+             ],
+             type: 'gauge',
+             onclick: function (d, i) {
+             console.log("onclick", d, i);
+             },
+             onmouseover: function (d, i) {
+             console.log("onmouseover", d, i);
+             },
+             onmouseout: function (d, i) {
+             console.log("onmouseout", d, i);
+             }
+             },
+             gauge: {
+             //        label: {
+             //            format: function(value, ratio) {
+             //                return value;
+             //            },
+             //            show: false // to turn off the min/max labels.
+             //        },
+             //    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+             //    max: 100, // 100 is default
+             //    units: ' %',
+             //    width: 39 // for adjusting arc thickness
+             },
+             color: {
+             pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+             threshold: {
+             //            unit: 'value', // percentage is default
+             //            max: 200, // 100 is default
+             values: [30, 60, 90, 100]
+             }
+             },
+             size: {
+             height: 180
+             }
+             });
+             
+             this._test.set("content", chart);*/
+
+            this._chart5Days = new Chart(this._chartNode5Days);
+            this._chart16Days = new Chart(this._chartNode16Days);
+            var store5Days = new Memory({
+                data: [
+                    {name: "Temperature", id: "temp"},
+                    {name: "Pressure", id: "pressure"},
+                    {name: "Humidity", id: "humidity"},
+                    {name: "Clouds", id: "clouds"},
+                    {name: "Windspeed", id: "windspeed"}
+                ]
+            });
+            var store16Days = new Memory({
+                data: [
+                    {name: "Temperature", id: "temp"},
+                    {name: "Pressure", id: "pressure"},
+                    {name: "Humidity", id: "humidity"},
+                    {name: "Clouds", id: "clouds"},
+                    {name: "Windspeed", id: "windspeed"},
+                    {name: "Rain", id: "rain"}
+                ]
+            });
+            var seriesSelect5Days = this._seriesSelect5Days = new FilteringSelect({
+                name: "series",
+                value: "temp",
+                store: store5Days,
+                searchAttr: "name",
+                style: "width: 200px;"
+            }, this._seriesNode5Days);
+            var seriesSelect16Days = this._seriesSelect16Days = new FilteringSelect({
+                name: "series",
+                value: "temp",
+                store: store16Days,
+                searchAttr: "name",
+                style: "width: 200px;"
+            }, this._seriesNode16Days);
+            seriesSelect5Days.startup();
+            seriesSelect16Days.startup();
+            ct_when(this._get5DayForecast(), function (data) {
+                this._data5Days = data;
+                this._render5DaysChart(this._data5Days, seriesSelect5Days.value);
+                this.connect(seriesSelect5Days, "onChange", function () {
+                    this._render5DaysChart(this._data5Days, seriesSelect5Days.value);
+                });
+            }, this);
+            ct_when(this._get16DayForecast(), function (data) {
+                this._data16Days = data;
+                this._render16DaysChart(this._data16Days, seriesSelect16Days.value);
+                this.connect(seriesSelect16Days, "onChange", function () {
+                    this._render16DaysChart(this._data16Days, seriesSelect16Days.value);
+                });
             }, this);
         },
-        _renderChart: function (data, domNode) {
-            var chart = this._chart = new Chart(domNode);
-            //domNode.removePlot("default");
-            //var chart = this._chart;
+        _render5DaysChart: function (data, value) {
+            var chart = this._chart5Days;
+            chart.removePlot("default");
             chart.setTheme(theme);
-            chart.addAxis("x", {fixLower: "major", fixUpper: "major"});
-            chart.addAxis("y", {
-                min: 0,
-                vertical: true,
-                fixLower: "major",
-                fixUpper: "major",
-                majorTickStep: 1,
-                minorTicks: false
+            var labels = [];
+            d_array.forEach(data, function (item, index) {
+                var date = new Date(item.dt * 1000);
+                var d = locale.format(date, "MMM d, yyyy");
+                labels.push({
+                    value: index,
+                    text: d
+                });
             });
-            for (var i = 0; i < data.length; i++) {
-                var s = data[i].name;
-                var tooltip = data[i].name + " [" + data[i].count + "]";
-                var d1 = [{x: 0, y: data[i].count, tooltip: tooltip}];
-                chart.addSeries(s, d1);
+            chart.addAxis("x", {labels: labels, majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+            if (value === "temp") {
+                chart.addAxis("y", {vertical: true, title: "°C", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var tempArray = [];
+                d_array.forEach(data, function (item, index) {
+                    var temp = item.temp;
+                    tempArray.push({
+                        x: index,
+                        y: temp
+                    });
+                });
+                chart.addSeries("Temperature", tempArray, {stroke: "grey", fill: "green"});
+            } else if (value === "pressure") {
+                chart.addAxis("y", {vertical: true, title: "hPa", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var pressureArray = [];
+                d_array.forEach(data, function (item, index) {
+                    pressureArray.push({
+                        x: index,
+                        y: item.pressure
+                    });
+                });
+                chart.addSeries("Pressure", pressureArray, {stroke: "black", fill: "red"});
+            } else if (value === "humidity") {
+                chart.addAxis("y", {vertical: true, title: "%", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var humidityArray = [];
+                d_array.forEach(data, function (item, index) {
+                    humidityArray.push({
+                        x: index,
+                        y: item.humidity
+                    });
+                });
+                chart.addSeries("Humidity", humidityArray, {stroke: "black", fill: "blue"});
+            } else if (value === "clouds") {
+                chart.addAxis("y", {vertical: true, title: "%", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var cloudsArray = [];
+                d_array.forEach(data, function (item, index) {
+                    cloudsArray.push({
+                        x: index,
+                        y: item.clouds
+                    });
+                });
+                chart.addSeries("Clouds", cloudsArray, {stroke: "black", fill: "grey"});
+            } else if (value === "windspeed") {
+                chart.addAxis("y", {vertical: true, title: "m/s", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var windspeedArray = [];
+                d_array.forEach(data, function (item, index) {
+                    windspeedArray.push({
+                        x: index,
+                        y: item.windspeed
+                    });
+                });
+                chart.addSeries("Windspeed", windspeedArray, {stroke: "black", fill: "yellow"});
             }
-            chart.addPlot("default", {type: StackedAreas, lines: true, areas: true, markers: false});
+
+            chart.addPlot("default", {type: Areas, lines: true, areas: true, markers: true, tension: "X"});
             new Tooltip(chart, "default");
-            //new Highlight(chart, "default");
             chart.render();
-
-            if (this.legend === undefined) {
-                this.legend = new Legend({chart: chart}, this.legendNode);
+            var legend = this._legend5Days;
+            if (legend === undefined) {
+                legend = this._legend5Days = new Legend({chart: chart}, this._legendNode5Days);
             } else {
-                this.legend.set("chart", chart);
-                this.legend.refresh();
+                legend.set("chart", chart);
+                legend.refresh();
             }
 
-            /*this.connect(this._chartContainer1, "resize", function (dims) {
-             var width = dims.w;
-             var height = dims.h;
-             this._chart.resize(width, height);
-             });*/
+            this.connect(this._chartContainer5Days, "resize", function (dims) {
+                var width = dims.w - 2;
+                var height = dims.h - 2;
+                chart.resize(width, height);
+            });
         },
-        _getFiveDayForecast: function () {
+        _render16DaysChart: function (data, value) {
+            var chart = this._chart16Days;
+            chart.removePlot("default");
+            chart.setTheme(theme);
+            var labels = [];
+            d_array.forEach(data, function (item, index) {
+                var date = new Date(item.dt * 1000);
+                var d = locale.format(date, "MMM d, yyyy");
+                labels.push({
+                    value: index,
+                    text: d
+                });
+            });
+            debugger
+            chart.addAxis("x", {labels: labels, majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+            if (value === "temp") {
+                chart.addAxis("y", {vertical: true, title: "°C", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var tempMinArray = [];
+                var tempMaxArray = [];
+                d_array.forEach(data, function (item, index) {
+                    tempMinArray.push({
+                        x: index,
+                        y: item.temp_min
+                    });
+                    tempMaxArray.push({
+                        x: index,
+                        y: item.temp_max
+                    });
+                });
+                chart.addSeries("Min Temperature", tempMinArray, {stroke: "black", fill: "blue"});
+                chart.addSeries("Max Temperature", tempMaxArray, {stroke: "black", fill: "red"});
+            } else if (value === "pressure") {
+                chart.addAxis("y", {vertical: true, title: "hPa", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var pressureArray = [];
+                d_array.forEach(data, function (item, index) {
+                    pressureArray.push({
+                        x: index,
+                        y: item.pressure
+                    });
+                });
+                chart.addSeries("Pressure", pressureArray, {stroke: "black", fill: "red"});
+            } else if (value === "humidity") {
+                chart.addAxis("y", {vertical: true, title: "%", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var humidityArray = [];
+                d_array.forEach(data, function (item, index) {
+                    humidityArray.push({
+                        x: index,
+                        y: item.humidity
+                    });
+                });
+                chart.addSeries("Humidity", humidityArray, {stroke: "black", fill: "blue"});
+            } else if (value === "clouds") {
+                chart.addAxis("y", {vertical: true, title: "%", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var cloudsArray = [];
+                d_array.forEach(data, function (item, index) {
+                    cloudsArray.push({
+                        x: index,
+                        y: item.clouds
+                    });
+                });
+                chart.addSeries("Clouds", cloudsArray, {stroke: "black", fill: "grey"});
+            } else if (value === "windspeed") {
+                chart.addAxis("y", {vertical: true, title: "m/s", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var windspeedArray = [];
+                d_array.forEach(data, function (item, index) {
+                    windspeedArray.push({
+                        x: index,
+                        y: item.windspeed
+                    });
+                });
+                chart.addSeries("Windspeed", windspeedArray, {stroke: "black", fill: "yellow"});
+            } else if (value === "rain") {
+                chart.addAxis("y", {vertical: true, title: "mm", fixLower: "major", fixUpper: "major", majorLabels: true, minorTicks: true, minorLabels: false, microTicks: false, majorTickStep: 5, minorTickStep: 1});
+                var rainArray = [];
+                d_array.forEach(data, function (item, index) {
+                    rainArray.push({
+                        x: index,
+                        y: item.rain
+                    });
+                });
+                chart.addSeries("Rain", rainArray, {stroke: "black", fill: "blue"});
+            }
+
+            chart.addPlot("default", {type: Areas, lines: true, areas: true, markers: true, tension: "X"});
+            new Tooltip(chart, "default");
+            chart.render();
+            var legend = this._legend16Days;
+            if (legend === undefined) {
+                legend = this._legend16Days = new Legend({chart: chart}, this._legendNode16Days);
+            } else {
+                legend.set("chart", chart);
+                legend.refresh();
+            }
+
+            this.connect(this._chartContainer16Days, "resize", function (dims) {
+                var width = dims.w - 2;
+                var height = dims.h - 2;
+                chart.resize(width, height);
+            });
+        },
+        _get5DayForecast: function () {
             var id = this.content.id;
-            var url = "http://api.openweathermap.org/data/2.5/forecast?id=" + id;
+            var url = "http://api.openweathermap.org/data/2.5/forecast?units=metric&id=" + id;
             var list;
             return ct_when(ct_request({
                 url: url,
                 timeout: 10000
             }), function (response) {
-                debugger
                 list = response.list;
-                return list;
+                var data = [];
+                d_array.forEach(list, function (item) {
+                    var obj = {
+                        dt: item.dt,
+                        temp: item.main.temp,
+                        pressure: item.main.pressure,
+                        humidity: item.main.humidity,
+                        clouds: item.clouds.all,
+                        windspeed: item.wind.speed
+                    };
+                    data.push(obj);
+                });
+                return data;
+            }, this);
+        },
+        _get16DayForecast: function () {
+            var id = this.content.id;
+            var url = "http://api.openweathermap.org/data/2.5/forecast/daily?cnt=16&units=metric&id=" + id;
+            var list;
+            return ct_when(ct_request({
+                url: url,
+                timeout: 10000
+            }), function (response) {
+                list = response.list;
+                var data = [];
+                d_array.forEach(list, function (item) {
+                    var rain;
+                    if (item.rain) {
+                        rain = item.rain;
+                    } else {
+                        rain = 0;
+                    }
+                    var obj = {
+                        dt: item.dt,
+                        temp_min: item.temp.min,
+                        temp_max: item.temp.max,
+                        pressure: item.pressure,
+                        humidity: item.humidity,
+                        clouds: item.clouds,
+                        windspeed: item.speed,
+                        rain: rain
+                    };
+                    data.push(obj);
+                });
+                return data;
             }, this);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
                 this._containerNode.resize({
                     w: dim.w,
-                    h: dim.h// - this.getHeadingHeight()
+                    h: dim.h
                 });
             }
         }

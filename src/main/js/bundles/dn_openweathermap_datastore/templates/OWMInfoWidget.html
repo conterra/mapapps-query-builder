@@ -9,13 +9,27 @@
                     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="_grid"></div>
                 </div>
             </div>
-            <div data-dojo-type="dijit/layout/ContentPane" title="${i18n.widget.fiveDays}" data-dojo-props="" data-dojo-attach-point="_fiveDaysTab">
-                <div data-dojo-type="dijit/layout/ContentPane"  data-dojo-props="region: 'center', 'class':'noPadding'" data-dojo-attach-point="_chartContainer1">
-                    <div data-dojo-attach-point="_chartNode1"></div>
+            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.widget.fiveDays}" data-dojo-props="" data-dojo-attach-point="_5DaysTab">
+                <div data-dojo-type="dijit/layout/ContentPane"  data-dojo-props="region: 'top'">
+                    <div  data-dojo-attach-point="_seriesNode5Days"></div>
                 </div>
-                <div data-dojo-attach-point="_legendNode1"></div>
+                <div data-dojo-type="dijit/layout/ContentPane"  data-dojo-props="region: 'center', 'class':'noPadding'" data-dojo-attach-point="_chartContainer5Days">
+                    <div data-dojo-attach-point="_chartNode5Days"></div>
+                </div>
+                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'bottom'">
+                    <div data-dojo-attach-point="_legendNode5Days"></div>
+                </div>
             </div>
-            <div data-dojo-type="dijit/layout/ContentPane" title="${i18n.widget.sixteenDays}" data-dojo-props="" data-dojo-attach-point="_sixteenDaysTab">
+            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.widget.sixteenDays}" data-dojo-props="" data-dojo-attach-point="_16DaysTab">
+                <div data-dojo-type="dijit/layout/ContentPane"  data-dojo-props="region: 'top'">
+                    <div  data-dojo-attach-point="_seriesNode16Days"></div>
+                </div>
+                <div data-dojo-type="dijit/layout/ContentPane"  data-dojo-props="region: 'center', 'class':'noPadding'" data-dojo-attach-point="_chartContainer16Days">
+                    <div data-dojo-attach-point="_chartNode16Days"></div>
+                </div>
+                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'bottom'">
+                    <div data-dojo-attach-point="_legendNode16Days"></div>
+                </div>
             </div>
         </div>
     </div>

@@ -39,6 +39,7 @@ define([
     return declare([], {
         activate: function () {
             var properties = this._properties || {};
+
             // check mandatory parameters
             ct_lang.hasProp(properties, "url", true);
 
