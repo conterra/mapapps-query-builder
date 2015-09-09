@@ -74,7 +74,7 @@ define([
                                     {
                                         "type": "selectbox",
                                         "useFirstValueAsDefault": true,
-                                        "field": "storeIdForCustomQuery",
+                                        "field": "storeId",
                                         "title": "StoreID",
                                         "values": this._ids,
                                         "required": true

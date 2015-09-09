@@ -9,6 +9,12 @@
     "Require-Bundle": [{
             "name": "contentviewer"
         }],
+    "CSS-Themes-Extension": [
+        {
+            "name": "*",
+            "files": ["./styles/styles.css"]
+        }
+    ],
     "Components": [{
             "name": "OWMInfoWidgetFactory",
             "provides": ["ct.contentviewer.ContentRule"],

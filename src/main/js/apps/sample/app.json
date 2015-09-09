@@ -6,6 +6,7 @@
         "bundleLocations": ["localbundles", "bundles"],
         "styles": ["${app}:app.css"],
         "allowedBundles": [
+            "wizard",
             "contentviewer",
             "infoservice",
             "coordinatetransformer",
@@ -148,9 +149,9 @@
                     }
                 }]
         },
-        "resultcenter" : {
-            "ActionController" : {
-                "zoomToFeatures" : true
+        "resultcenter": {
+            "ActionController": {
+                "zoomToFeatures": true
             }
         },
         "dn_query_builder": {
@@ -165,6 +166,18 @@
                                     "$gt": 25
                                 }
                             }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "temp",
+                                "compareId": "is_greater_number",
+                                "value": "25"
+                            }
+                        ]
                     }
                 },
                 {
@@ -185,6 +198,23 @@
                                     }
                                 }
                             }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "art",
+                                "compareId": "is",
+                                "value": 5
+                            },
+                            {
+                                "fieldId": "status",
+                                "compareId": "is_not",
+                                "value": 3
+                            }
+                        ]
                     }
                 },
                 {
@@ -198,6 +228,18 @@
                                     "$eq": "Y"
                                 }
                             }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "capital",
+                                "compareId": "is",
+                                "value": "Y"
+                            }
+                        ]
                     }
                 },
                 {
@@ -206,29 +248,12 @@
                     "iconClass": "icon-heliport",
                     "storeId": "airtraffic",
                     "customquery": {
-                    }
-                },
-                {
-                    "id": "fc_1441300105443",
-                    "title": "Which cities do have nice weather conditions right now?",
-                    "iconClass": "icon-thumb-up",
-                    "storeId": "owm_datastore",
-                    "customquery": {
-                        "$and": [{
-                                "temp": {
-                                    "$gte": 20
-                                }
-                            },
-                            {
-                                "temp": {
-                                    "$lte": 30
-                                }
-                            },
-                            {
-                                "clouds": {
-                                    "$lt": 20
-                                }
-                            }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": []
                     }
                 },
                 {
@@ -242,6 +267,18 @@
                                     "$eq": 800
                                 }
                             }]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "weather_id",
+                                "compareId": "is",
+                                "value": 800
+                            }
+                        ]
                     }
                 }]
         },

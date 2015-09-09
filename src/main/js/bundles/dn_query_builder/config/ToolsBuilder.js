@@ -91,7 +91,7 @@ define([
                                             },
                                             {
                                                 "title": "Store ID",
-                                                "name": "storeIdForCustomQuery",
+                                                "name": "storeId",
                                                 "type": "string"
                                             }/*,
                                              {
@@ -124,7 +124,6 @@ define([
                             properties = d_lang.clone(properties);
                             var props = this._properties.widgetProperties;
                             var config = this._configAdminService.createFactoryConfiguration(props.pid, props.bid);
-
                             config.update(properties);
                             //this._updateGrid();
                         },
@@ -150,76 +149,69 @@ define([
                                 properties.title = config.title;
                                 properties.iconClass = config.iconClass;
                                 properties.pid = config.pid;
-                                properties.storeIdForCustomQuery = config.storeIdForCustomQuery;
+                                properties.storeId = config.storeId;
                                 properties.customquery = config.customquery;
                                 properties._wizardGUI = config._wizardGUI;
                             }
                             // search stores
                             var stores = this._agsstores;
                             var storeData = this._getStoreData(stores);
-
                             // i18n
                             var wizardI18n = this._i18n.get().widget.wizard;
-
                             var wizard = new ToolsBuilderWizard({storeData: storeData, properties: properties, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, agsstores: this._agsstores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer});
-
                             return wizard;
                         },
-                        _createWizard: function (config) {
-                            var properties = this._properties || {};
-                            // time & default icon
-                            var date = new Date();
-                            if (config.id === undefined) {
-                                properties.id = "fc_" + date.getTime();
-                                properties.title = "";
-                                properties.iconClass = "icon-custom-info";
-                                properties.customquery = {};
-                            } else {
-                                properties.id = config.id;
-                                properties.title = config.title;
-                                properties.iconClass = config.iconClass;
-                                properties.pid = config.pid;
-                                properties.storeIdForCustomQuery = config.storeIdForCustomQuery;
-                                properties.customquery = config.customquery;
-                                properties._wizardGUI = config._wizardGUI;
-                            }
-                            // search stores
-                            var stores = this._agsstores;
-                            var ids = this._getStoreIds(stores);
-
-                            // i18n
-                            var wizardI18n = this._i18n.get().widget.wizard;
-
-                            // create dataform
-                            var dfService = this._dataformService;
-                            var dataformDefinition = new ToolsBuilderWizardDefinition({ids: ids, i18n: wizardI18n});
-                            dataformDefinition = dataformDefinition.createDataformJson();
-                            dataformDefinition = this._substituteDefintion(dataformDefinition, wizardI18n);
-                            var dataform = dfService.createDataForm(dataformDefinition);
-
-                            dataform.connect(dataform, "onControlEvent", function (evt) {
-                                switch (evt.topic) {
-                                    case "button_iconclass" :
-                                        var winURL = 'http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/3.2.1/themes/webFontsGallery.html';
-                                        var winName = 'win1';
-                                        var winSize = 'width=800,height=600,scrollbars=yes';
-                                        var ref = window.open(winURL, winName, winSize);
-                                        break;
-                                    case "button_query" :
-                                        var winURL = 'http://developernetwork.conterra.de/de/documentation/mapapps/32/developers-documentation/complex-query-dojostore';
-                                        var winName = 'win2';
-                                        var winSize = 'width=800,height=600,scrollbars=yes';
-                                        var ref = window.open(winURL, winName, winSize);
-                                        break;
-                                }
-                            });
-
-                            var binding = dfService.createBinding("object", {
-                                data: properties
-                            });
-                            dataform.set("dataBinding", binding);
-                            return dataform;
-                        },
+                        /*_createWizard: function (config) {
+                         var properties = this._properties || {};
+                         // time & default icon
+                         var date = new Date();
+                         if (config.id === undefined) {
+                         properties.id = "fc_" + date.getTime();
+                         properties.title = "";
+                         properties.iconClass = "icon-custom-info";
+                         properties.customquery = {};
+                         } else {
+                         properties.id = config.id;
+                         properties.title = config.title;
+                         properties.iconClass = config.iconClass;
+                         properties.pid = config.pid;
+                         properties.storeId = config.storeId;
+                         properties.customquery = config.customquery;
+                         properties._wizardGUI = config._wizardGUI;
+                         }
+                         // search stores
+                         var stores = this._agsstores;
+                         var ids = this._getStoreIds(stores);
+                         // i18n
+                         var wizardI18n = this._i18n.get().widget.wizard;
+                         // create dataform
+                         var dfService = this._dataformService;
+                         var dataformDefinition = new ToolsBuilderWizardDefinition({ids: ids, i18n: wizardI18n});
+                         dataformDefinition = dataformDefinition.createDataformJson();
+                         dataformDefinition = this._substituteDefintion(dataformDefinition, wizardI18n);
+                         var dataform = dfService.createDataForm(dataformDefinition);
+                         dataform.connect(dataform, "onControlEvent", function (evt) {
+                         switch (evt.topic) {
+                         case "button_iconclass" :
+                         var winURL = 'http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/3.2.1/themes/webFontsGallery.html';
+                         var winName = 'win1';
+                         var winSize = 'width=800,height=600,scrollbars=yes';
+                         var ref = window.open(winURL, winName, winSize);
+                         break;
+                         case "button_query" :
+                         var winURL = 'http://developernetwork.conterra.de/de/documentation/mapapps/32/developers-documentation/complex-query-dojostore';
+                         var winName = 'win2';
+                         var winSize = 'width=800,height=600,scrollbars=yes';
+                         var ref = window.open(winURL, winName, winSize);
+                         break;
+                         }
+                         });
+                         var binding = dfService.createBinding("object", {
+                         data: properties
+                         });
+                         dataform.set("dataBinding", binding);
+                         return dataform;
+                         }, */
                         _openWizardWindow2: function (wizard, edit) {
                             var properties = this._properties || {};
                             var windowManager = this._windowManager;
@@ -241,7 +233,6 @@ define([
                                 attachToDom: this._appCtx.builderWindowRoot
                             });
                             window.show();
-
                             this.connect(wizard, "_onReady", function () {
                                 if (edit) {
                                     this._updateConfig(properties);
@@ -257,48 +248,47 @@ define([
                                 window.close();
                             });
                         },
-                        _openWizardWindow: function (wizard, edit) {
-                            var properties = this._properties || {};
-                            var windowManager = this._windowManager;
-                            var i18n = this._i18n.get().widget.wizard;
-                            var title;
-                            if (edit === true) {
-                                title = i18n.windowtitleEdit;
-                            } else {
-                                title = i18n.windowtitleAdd;
-                            }
-                            var window = windowManager.createModalWindow({
-                                title: title,
-                                marginBox: {
-                                    w: 450,
-                                    h: 450
-                                },
-                                content: wizard,
-                                closable: true,
-                                attachToDom: this._appCtx.builderWindowRoot
-                            });
-                            window.show();
-
-                            var save = d_lang.hitch(this, function (event) {
-                                if (edit) {
-                                    this._updateConfig(properties);
-                                } else {
-                                    this._applyConfig(properties);
-                                }
-                                this._updateGrid();
-                            });
-                            wizard.connect(wizard, "onControlEvent", function (evt) {
-                                switch (evt.topic) {
-                                    case "wizardpanel/CANCEL" :
-                                        window.close();
-                                        break;
-                                    case "wizardpanel/DONE" :
-                                        save(wizard, window);
-                                        window.close();
-                                        break;
-                                }
-                            });
-                        },
+                        /*_openWizardWindow: function (wizard, edit) {
+                         var properties = this._properties || {};
+                         var windowManager = this._windowManager;
+                         var i18n = this._i18n.get().widget.wizard;
+                         var title;
+                         if (edit === true) {
+                         title = i18n.windowtitleEdit;
+                         } else {
+                         title = i18n.windowtitleAdd;
+                         }
+                         var window = windowManager.createModalWindow({
+                         title: title,
+                         marginBox: {
+                         w: 450,
+                         h: 450
+                         },
+                         content: wizard,
+                         closable: true,
+                         attachToDom: this._appCtx.builderWindowRoot
+                         });
+                         window.show();
+                         var save = d_lang.hitch(this, function (event) {
+                         if (edit) {
+                         this._updateConfig(properties);
+                         } else {
+                         this._applyConfig(properties);
+                         }
+                         this._updateGrid();
+                         });
+                         wizard.connect(wizard, "onControlEvent", function (evt) {
+                         switch (evt.topic) {
+                         case "wizardpanel/CANCEL" :
+                         window.close();
+                         break;
+                         case "wizardpanel/DONE" :
+                         save(wizard, window);
+                         window.close();
+                         break;
+                         }
+                         });
+                         },*/
                         _getConfiguration: function (pid) {
                             var properties = this._properties.widgetProperties;
                             var data = this._configAdminService.getFactoryConfigurations(properties.pid, properties.bid);

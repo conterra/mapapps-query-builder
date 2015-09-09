@@ -92,7 +92,7 @@ define(["dojo/_base/declare",
                         {
                             matches: {
                                 name: {
-                                    $eq: "storeIdForCustomQuery"
+                                    $eq: "storeId"
                                 }
                             }
                         },

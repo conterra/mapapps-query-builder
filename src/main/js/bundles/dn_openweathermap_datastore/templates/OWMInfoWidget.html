@@ -2,8 +2,10 @@
     <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters: false, design: 'headline'">
         <div data-dojo-attach-point="_centerNode" data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region: 'center'">
             <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.widget.now}" data-dojo-props="selected:true" data-dojo-attach-point="_nowTab">
-                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'">
-                    <img src="" data-dojo-attach-point="_icon"/>
+                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top', class:'test'">
+                    <div data-dojo-attach-point="_test">
+                        <img src="" data-dojo-attach-point="_icon"/>
+                    </div>
                 </div>
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'">
                     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="_grid"></div>

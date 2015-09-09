@@ -60,9 +60,10 @@ define([
             var store = new Memory({
                 data: this._storeData
             });
+            debugger
             var filteringSelect = this._filteringSelect = new FilteringSelect({
                 name: "stores",
-                value: this._properties.storeIdForCustomQuery || this._storeData[0].id,
+                value: this._properties.storeId || this._storeData[0].id,
                 store: store,
                 searchAttr: "name",
                 style: "width: 250px;"
