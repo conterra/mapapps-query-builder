@@ -7,6 +7,7 @@ http://www.mapapps.de/mapapps/resources/apps/downloads_query_builder/index.html
 Installation Guide
 ------------------
 **Requirement: map.apps 3.2.2**
+
 1. At first, you need to add the bundles "agssearch", "resultcenter" and "dn_query_builder" to your app.
 2. After that add a service to your app (Content -> Services Management). Example
 3. Now you can add the new service to the Search&Selection bundle. Don't forget to enable the selection checkbox. (Search&Selection -> ArcGIS for Server Search&Selection)
