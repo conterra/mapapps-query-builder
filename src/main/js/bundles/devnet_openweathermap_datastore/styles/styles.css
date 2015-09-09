@@ -16,3 +16,9 @@
 .test div{
     display: inline;
 }
+.c3-chart-arc text {
+    fill: white;
+}
+.c3-chart-arcs text {
+    fill: white;
+}

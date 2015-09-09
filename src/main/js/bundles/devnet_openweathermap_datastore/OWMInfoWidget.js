@@ -138,7 +138,7 @@ define([
                         },
                         show: true
                     },
-                    units: 'Clouds [%]'
+                    units: 'Humidity [%]'
                 },
                 color: {
                     pattern: ['#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
@@ -163,7 +163,7 @@ define([
                         },
                         show: true
                     },
-                    units: 'Humidity [%]'
+                    units: 'Clouds [%]'
                 },
                 color: {
                     pattern: ['#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.

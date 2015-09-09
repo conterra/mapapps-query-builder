@@ -1,5 +1,5 @@
 {
-    "Bundle-SymbolicName": "dn_openweathermap_datastore",
+    "Bundle-SymbolicName": "devnet_openweathermap_datastore",
     "Bundle-Version": "1.0.0",
     "Bundle-Name": "OpenWeatherMap DataStore",
     "Bundle-Description": "Datastore for OpenWeatherMap API",

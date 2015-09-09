@@ -1,5 +1,5 @@
 {
-    "Bundle-SymbolicName": "dn_query_builder",
+    "Bundle-SymbolicName": "devnet_query_builder",
     "Bundle-Version": "2.0.0",
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
@@ -40,5 +40,44 @@
                     "name": "_eventService",
                     "providing": "ct.framework.api.EventService"
                 }]
-        }]
+        }/*, {
+            "name": "UserToolCreator",
+            "provides": [
+                "dijit.Widget",
+                "analysis_distribution.TabWidgetFactory"
+            ],
+            "properties": {},
+            "instanceFactory": true,
+            "immediate": true,
+            "references": [
+                {
+                    "name": "store",
+                    "providing": "ct.api.Store",
+                    "filter": "(id={storeId})"
+                },
+                {
+                    "name": "_mapState",
+                    "providing": "ct.mapping.map.MapState"
+                },
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=analysisDistributionTool)"
+                }
+            ]
+        },
+        {
+            "name": "${toolName}",
+            "impl": "ct/tools/Tool",
+            "provides": ["ct.tools.Tool"],
+            "propertiesConstructor": true,
+            "properties": {
+                "id": "userToolCreatorTool",
+                "toolRole": "toolset",
+                "title": "UserToolCreator",
+                "tooltip": "",
+                "togglable": false,
+                "iconClass": "icon-chart-bar"
+            }
+        }*/]
 }

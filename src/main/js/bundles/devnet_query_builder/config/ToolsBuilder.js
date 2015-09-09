@@ -27,9 +27,8 @@ define([
     "ct/store/ComplexMemory",
     "ct/_when",
     "ct/Hash",
-    "ct/async",
-    "./ToolsBuilderWizardDefinition"
-], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ct_async, ToolsBuilderWizardDefinition) {
+    "ct/async"
+], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ct_async) {
     /*
      * COPYRIGHT 2012 con terra GmbH Germany
      */

@@ -18,8 +18,7 @@ define({
             {
                 bundleName: "Query Builder Config",
                 bundleDescription: "Configuration bundle for FilterQuery",
-                windowTitle1: "QueryBuilderConfig",
-                windowTitle2: "Query Builder Config",
+                windowTitle: "Query Builder Config",
                 description: "Settings for the Query Builder bundle",
                 widget: {
                     window: {

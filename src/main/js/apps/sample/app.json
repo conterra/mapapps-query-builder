@@ -24,8 +24,8 @@
             "windowmanager",
             "toolset",
             "basemaptoggler",
-            "dn_query_builder@2.0.0",
-            "dn_openweathermap_datastore"
+            "devnet_query_builder",
+            "devnet_openweathermap_datastore"
         ]
     },
     "bundles": {
@@ -154,7 +154,7 @@
                 "zoomToFeatures": true
             }
         },
-        "dn_query_builder": {
+        "devnet_query_builder": {
             "QueryTools": [{
                     "id": "fc_1441279619509",
                     "title": "In which cities is it warmer than 25°C",

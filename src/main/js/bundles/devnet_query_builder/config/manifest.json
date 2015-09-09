@@ -23,7 +23,7 @@
                 "children": [
                     {
                         "widget": "toolsBuilderwidget",
-                        "title": "${windowTitle2}",
+                        "title": "${windowTitle}",
                         "iconUrl": "resource('styles/images/bundleIcon.png')"
                     }
                 ]
@@ -38,8 +38,8 @@
             "instanceFactory": true,
             "properties": {
                 "widgetProperties": {
-                    "bid": "dn_query_builder",
-                    "pid": "dn_query_builder-QueryTools-Factory",
+                    "bid": "devnet_query_builder",
+                    "pid": "devnet_query_builder-QueryTools-Factory",
                     "id": "toolsBuilderwidget",
                     "description": "${description}"
                 }

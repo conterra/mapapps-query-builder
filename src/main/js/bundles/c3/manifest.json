@@ -2,9 +2,9 @@
     "Bundle-SymbolicName": "c3",
     "Bundle-Version": "3.2.2-SNAPSHOT",
     "Bundle-Name": "C3",
-    "Bundle-Description": "D3 API",
+    "Bundle-Description": "C3 API",
     "Bundle-Category": ["drawing"],
-    "Bundle-DocURL": "http://d3js.org",
+    "Bundle-DocURL": "http://c3js.org",
     "Bundle-Localization": [],
     "Bundle-ExcludedExecutionEnvironment": ["IE:[,9)"],
     "Product-Name": "map.apps"
