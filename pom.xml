@@ -18,9 +18,9 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.conterra.mapapps.sampleProj</groupId>
-    <artifactId>mapapps-query-builder</artifactId>
-    <version>2.0.0</version>
+    <groupId>de.conterra.devnet</groupId>
+    <artifactId>ct-mapapps-query-builder</artifactId>
+    <version>2.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <repositories>
         <repository>
@@ -246,7 +246,7 @@
                     <!-- add here properties which are used in plugin configuration resolution -->
                     <properties>
                         <!-- deployment of map.apps installation -->
-                        <mapapps.remote.base>http://localhost:9191</mapapps.remote.base>
+                        <mapapps.remote.base>http://vsdev1114.esri-de.com/ct-mapapps-webapp-3.2.1</mapapps.remote.base>
                     </properties>
                 </configuration>
             </plugin>
