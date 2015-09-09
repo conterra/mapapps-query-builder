@@ -36,8 +36,8 @@
                         },
                         "type": "OWMInfoWidgetFactory",
                         "windowSize": {
-                            "w": 500,
-                            "h": 500
+                            "w": 514,
+                            "h": 460
                         }
                     }]
             },
