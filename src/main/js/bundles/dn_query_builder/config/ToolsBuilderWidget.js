@@ -30,9 +30,7 @@ define(["dojo/_base/declare",
         baseClass: "ctToolsBuilderWidget",
         templateString: template,
         constructor: function (opts) {
-            this.toolbar = opts.toolbar;
             this._listeners = new _Connect();
-            this._i18n = opts.i18n;
         },
         postCreate: function () {
             this.inherited(arguments);
@@ -57,7 +55,7 @@ define(["dojo/_base/declare",
             }
         },
         _createDataView: function () {
-            var i18n = this._i18n.dataView;
+            var i18n = this.i18n.dataView;
             var dataView = this._dataView = new DataView({
                 i18n: i18n,
                 showFilter: true,

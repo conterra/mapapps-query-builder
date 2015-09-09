@@ -19,6 +19,7 @@ define([
     "dojo/_base/Deferred",
     "dojo/parser",
     "dojo/_base/array",
+    "dojo/json",
     "ct/_Connect",
     "ct/_when",
     "wizard/_BuilderWidget",
@@ -36,21 +37,12 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
         baseClass: "queryBuilderWizard",
         constructor: function (opts) {
-            this._properties = opts.properties;
-            this._windowManager = opts.windowManager;
-            this._appCtx = opts.appCtx;
-            this._agsstores = opts.agsstores;
-            this._i18n = opts.i18n;
-            this._mapState = opts.mapState;
-            this._mapModel = opts.mapModel;
-            this._coordinateTransformer = opts.coordinateTransformer;
-            this._storeData = opts.storeData;
         },
         destroyInstance: function (instance) {
             instance.destroyRecursive();
@@ -58,25 +50,24 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             var store = new Memory({
-                data: this._storeData
+                data: this.storeData
             });
-            debugger
             var filteringSelect = this._filteringSelect = new FilteringSelect({
                 name: "stores",
-                value: this._properties.storeId || this._storeData[0].id,
+                value: this.properties.storeId || this.storeData[0].id,
                 store: store,
                 searchAttr: "name",
                 style: "width: 250px;"
             }, this._filteringNode);
             filteringSelect.startup();
-            this._titleTextBox.set("value", this._properties.title);
-            this._iconClassTextBox.set("value", this._properties.iconClass);
-            var customQueryString = JSON.stringify(this._properties.customquery, "", "\t");
+            this._titleTextBox.set("value", this.properties.title);
+            this._iconClassTextBox.set("value", this.properties.iconClass);
+            var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
             var extentStore = this._extentStore = new Memory({
                 data: [
-                    {name: this._i18n.yes, id: "yes"},
-                    {name: this._i18n.no, id: "no"}
+                    {name: this.i18n.yes, id: "yes"},
+                    {name: this.i18n.no, id: "no"}
                 ]
             });
             var extentSelect = this._extentSelect = new FilteringSelect({
@@ -90,8 +81,8 @@ define([
             domConstruct.place(extentSelect.domNode, this._extentNode);
             var matchStore = this._matchStore = new Memory({
                 data: [
-                    {name: this._i18n.all, id: "$and"},
-                    {name: this._i18n.any, id: "$or"}
+                    {name: this.i18n.all, id: "$and"},
+                    {name: this.i18n.any, id: "$or"}
                 ]
             });
             var matchSelect = this._matchSelect = new FilteringSelect({
@@ -103,7 +94,7 @@ define([
                 required: true
             });
             domConstruct.place(matchSelect.domNode, this._matchNode);
-            var wizardGUI = this._properties._wizardGUI;
+            var wizardGUI = this.properties._wizardGUI;
             if (wizardGUI) {
                 if (wizardGUI.mode === "builder") {
                     this._createGUI(wizardGUI);
@@ -157,25 +148,25 @@ define([
         },
         _saveProperties: function () {
             var def = new Deferred();
-            if (!this._properties._wizardGUI) {
-                this._properties._wizardGUI = {};
+            if (!this.properties._wizardGUI) {
+                this.properties._wizardGUI = {};
             }
             if (this._builderTab.get("selected")) {
-                this._properties._wizardGUI.mode = "builder";
+                this.properties._wizardGUI.mode = "builder";
                 var match = this._matchSelect.value;
                 var customQuery = {};
                 var extent;
                 if (this._extentSelect.value === "yes") {
-                    extent = this._mapState.getExtent();
+                    extent = this.mapState.getExtent();
                     customQuery.geometry = {
                         $contains: extent
                     };
                     def.resolve();
                 } else {
-                    /*var children = this._mapModel.getBaseLayer().get("children");
+                    /*var children = this.mapModel.getBaseLayer().get("children");
                      d_array.forEach(children, function (child) {
                      if (child.enabled) {
-                     ct_when(this._coordinateTransformer.transform(child.fullExtent, this._mapState.getSpatialReference().wkid),
+                     ct_when(this.coordinateTransformer.transform(child.fullExtent, this.mapState.getSpatialReference().wkid),
                      function (transformedGeometry) {
                      extent = transformedGeometry;
                      def.resolve();
@@ -187,21 +178,21 @@ define([
                      };*/
                     def.resolve();
                 }
-                this._properties._wizardGUI.match = this._matchSelect.value;
-                this._properties._wizardGUI.extent = this._extentSelect.value;
+                this.properties._wizardGUI.match = this._matchSelect.value;
+                this.properties._wizardGUI.extent = this._extentSelect.value;
                 var children = this._queryNode.children;
                 if (children.length > 0)
                 {
                     customQuery[match] = [];
                 }
-                this._properties._wizardGUI.fields = [];
+                this.properties._wizardGUI.fields = [];
                 d_array.forEach(children, function (child, i) {
                     var widget = d_registry.getEnclosingWidget(child);
                     var fieldId = widget._getSelectedField().id;
                     var compareId = widget._getSelectedCompare().id;
                     var compareValue = widget._getSelectedCompare().value;
                     var value = widget._getValue();
-                    this._properties._wizardGUI.fields.push({fieldId: fieldId, compareId: compareId, value: value});
+                    this.properties._wizardGUI.fields.push({fieldId: fieldId, compareId: compareId, value: value});
                     switch (compareId) {
                         case "is":
                             var obj = {};
@@ -287,27 +278,27 @@ define([
                             customQuery[match].push(obj);
                     }
                 }, this);
-                this._properties.customquery = customQuery;
+                this.properties.customquery = customQuery;
             } else {
                 var customQuery = this._customQueryTextArea.get("value");
-                if (this._properties._wizardGUI.mode === "builder") {
+                if (this.properties._wizardGUI.mode === "builder") {
                     var customQueryObj = this._getCustomQuery(customQuery);
-                    ct_when(this._windowManager.createInfoDialogWindow({
-                        message: this._i18n.changeToManual,
-                        attachToDom: this._appCtx.builderWindowRoot
+                    ct_when(this.windowManager.createInfoDialogWindow({
+                        message: this.i18n.changeToManual,
+                        attachToDom: this.appCtx.builderWindowRoot
                     }), function () {
-                        this._properties.customquery = customQueryObj;
-                        this._properties._wizardGUI.mode = "manual";
+                        this.properties.customquery = customQueryObj;
+                        this.properties._wizardGUI.mode = "manual";
                         def.resolve();
                     }, this);
                 } else {
-                    this._properties.customquery = this._getCustomQuery(customQuery);
+                    this.properties.customquery = this._getCustomQuery(customQuery);
                     def.resolve();
                 }
             }
-            this._properties.title = this._titleTextBox.get("value");
-            this._properties.iconClass = this._iconClassTextBox.get("value");
-            this._properties.storeId = this._filteringSelect.get("value");
+            this.properties.title = this._titleTextBox.get("value");
+            this.properties.iconClass = this._iconClassTextBox.get("value");
+            this.properties.storeId = this._filteringSelect.get("value");
 
             return def;
         },
@@ -315,8 +306,8 @@ define([
             try {
                 var customQueryObj = JSON.parse(customQuery);
             } catch (e) {
-                var windowManager = this._windowManager;
-                var appCtx = this._appCtx;
+                var windowManager = this.windowManager;
+                var appCtx = this.appCtx;
                 var errorMessage = e.toString();
                 ct_when(windowManager.createInfoDialogWindow({
                     message: errorMessage,
@@ -329,7 +320,7 @@ define([
         },
         _getSelectedStore: function (id) {
             var s;
-            d_array.forEach(this._agsstores, function (store) {
+            d_array.forEach(this.agsstores, function (store) {
                 if (id === store.id) {
                     s = store;
                 }
@@ -361,7 +352,7 @@ define([
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
                 storeData: storeData,
-                i18n: this._i18n.fields,
+                i18n: this.i18n.fields,
                 fieldId: field.fieldId,
                 compareId: field.compareId,
                 value: field.value
@@ -372,7 +363,7 @@ define([
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
                 storeData: storeData,
-                i18n: this._i18n.fields
+                i18n: this.i18n.fields
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },

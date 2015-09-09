@@ -22,7 +22,7 @@ define({
                 widget: {
                     now: "Now",
                     fiveDays: "5 Days",
-                    sixteenDays: "16 ays",
+                    sixteenDays: "16 Days",
                     conditions: "Conditions in "
                 }
             },

@@ -8,6 +8,10 @@
     "Product-Name": "map.apps Developer Network",
     "Require-Bundle": [{
             "name": "contentviewer"
+        }, {
+            "name": "d3"
+        }, {
+            "name": "c3"
         }],
     "CSS-Themes-Extension": [
         {
@@ -27,7 +31,6 @@
                                     "context": {
                                         "storeId": "osm_datastore"
                                     }
-
                                 }
                             ]
                         },

@@ -39,9 +39,9 @@ define([
     "dojox/charting/action2d/Magnify",
     "dojox/charting/action2d/Highlight",
     "dijit/form/FilteringSelect",
-    "dojo/store/Memory",
-    "d3",
-    "c3"
+    "dojo/store/Memory"/*,
+     "d3",
+     "c3"*/
 ], function (
         _WidgetBase,
         _TemplatedMixin,
@@ -68,9 +68,9 @@ define([
         Magnify,
         Highlight,
         FilteringSelect,
-        Memory,
-        d3,
-        c3
+        Memory/*,
+         d3,
+         c3*/
         ) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
@@ -97,65 +97,66 @@ define([
             });
             /*append the new grid to the div*/
             this._grid.set("content", grid);
-            var humidityChart = c3.generate({
-                data: {
-                    columns: [
-                        ['data', content.humidity]
-                    ],
-                    type: 'gauge',
-                    onclick: function (d, i) {
-                        console.log("onclick", d, i);
-                    },
-                    onmouseover: function (d, i) {
-                        console.log("onmouseover", d, i);
-                    },
-                    onmouseout: function (d, i) {
-                        console.log("onmouseout", d, i);
-                    }
-                },
-                tooltip: {
-                    show: true
-                },
-                gauge: {
-                    //        label: {
-                    //            format: function(value, ratio) {
-                    //                return value;
-                    //            },
-                    //            show: false // to turn off the min/max labels.
-                    //        },
-                    //    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
-                    //    max: 100, // 100 is default
-                    //    units: ' %',
-                    //    width: 39 // for adjusting arc thickness
-                },
-                color: {
-                    pattern: ['#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
-                    threshold: {
-                        //            unit: 'value', // percentage is default
-                        //            max: 200, // 100 is default
-                        values: [30, 60, 90, 100]
-                    }
-                },
-                size: {height: 80, width: 100}
-            });
-            var cloudsChart = c3.generate({
-                data: {
-                    columns: [
-                        ['data', content.clouds]
-                    ],
-                    type: 'gauge'
-                },
-                gauge: {},
-                color: {
-                    pattern: ['#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
-                    threshold: {values: [30, 60, 90, 100]}
-                },
-                size: {height: 80, width: 100}
-            });
-            debugger
-            domConstruct.place(humidityChart.element, this._test, "last");
-            domConstruct.place(cloudsChart.element, this._test, "last");
-            //this._test.appendChild(humidityChart.element);
+
+            // c3 charts
+            /*var humidityChart = c3.generate({
+             data: {
+             columns: [
+             ['data', content.humidity]
+             ],
+             type: 'gauge',
+             onclick: function (d, i) {
+             console.log("onclick", d, i);
+             },
+             onmouseover: function (d, i) {
+             console.log("onmouseover", d, i);
+             },
+             onmouseout: function (d, i) {
+             console.log("onmouseout", d, i);
+             }
+             },
+             tooltip: {
+             show: true
+             },
+             gauge: {
+             //        label: {
+             //            format: function(value, ratio) {
+             //                return value;
+             //            },
+             //            show: false // to turn off the min/max labels.
+             //        },
+             //    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+             //    max: 100, // 100 is default
+             //    units: ' %',
+             //    width: 39 // for adjusting arc thickness
+             },
+             color: {
+             pattern: ['#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
+             threshold: {
+             //            unit: 'value', // percentage is default
+             //            max: 200, // 100 is default
+             values: [30, 60, 90, 100]
+             }
+             },
+             size: {height: 80, width: 100}
+             });
+             var cloudsChart = c3.generate({
+             data: {
+             columns: [
+             ['data', content.clouds]
+             ],
+             type: 'gauge'
+             },
+             gauge: {},
+             color: {
+             pattern: ['#60B044', '#F6C600', '#F97600', '#FF0000'], // the three color levels for the percentage values.
+             threshold: {values: [30, 60, 90, 100]}
+             },
+             size: {height: 80, width: 100}
+             });
+             domConstruct.place(humidityChart.element, this._test, "last");
+             domConstruct.place(cloudsChart.element, this._test, "last");
+             //this._test.appendChild(humidityChart.element);*/
 
             this._chart5Days = new Chart(this._chartNode5Days);
             this._chart16Days = new Chart(this._chartNode16Days);
