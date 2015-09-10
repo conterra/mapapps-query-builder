@@ -16,12 +16,12 @@
 define([
     "dojo/_base/declare",
     "ct/store/Filter"
-], function(declare, Filter) {
+], function (declare, Filter) {
     return declare([], {
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
         // TODO: better integrate the filter code inside the SearchStoreTool of the result center?
-        onFilterStoreClicked: function(event) {
+        onFilterStoreClicked: function (event) {
             var store = event.store;
             if (!store) {
                 // ignore
@@ -31,7 +31,7 @@ define([
             var topic = "ct/selection/SELECTION_END";
             this._eventService.postEvent(topic, {
                 source: this,
-                store: customquery ? Filter(store, customquery) : store
+                store: customquery ? Filter(store, customquery, {ignoreCase: true}) : store
             });
         }
     });

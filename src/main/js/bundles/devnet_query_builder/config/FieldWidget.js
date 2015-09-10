@@ -20,6 +20,8 @@ define([
     "dojo/_base/array",
     "ct/_Connect",
     "ct/_when",
+    "esri/tasks/query",
+    "esri/tasks/QueryTask",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -34,49 +36,51 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, parser, d_array, _Connect, ct_when, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, TextBox, ValidationTextBox, ComboBox, FilteringSelect, Button, DateTextBox, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, parser, d_array, _Connect, ct_when, Query, QueryTask, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, TextBox, ValidationTextBox, ComboBox, FilteringSelect, Button, DateTextBox, Memory, domConstruct, ContentPane) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
         templateString: template,
         postCreate: function () {
             this.inherited(arguments);
-            if (this.type === "user") {
-                this._fieldSelectWidth = "width: 100px;";
-                this._valueSelectWidth = "width: 100px;";
-                this._compareSelectWidth = "width: 60px;";
-            } else {
-                this._fieldSelectWidth = "width: 180px;";
-                this._valueSelectWidth = "width: 200px;";
-                this._compareSelectWidth = "width: 120px;";
-            }
 
-            var fieldData = this.storeData;
-            var fieldStore = this._fieldStore = new Memory({
-                data: fieldData
-            });
-            var fieldSelect = this._fieldSelect = new FilteringSelect({
-                name: "fields",
-                value: fieldData[0].id,
-                store: fieldStore,
-                searchAttr: "title",
-                style: this._fieldSelectWidth
-            }, this._fieldNode);
-            fieldSelect.startup();
-            this._createCompareSelect();
-            this.connect(fieldSelect, "onChange", this._changeCompareSelect);
-
-            var myButton = new Button({
-                label: "-",
-                onClick: function () {
-                    myButton.domNode.parentNode.remove();
+            ct_when(this.store.getMetadata(), function (metadata) {
+                this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
+                if (this.type === "user") {
+                    this._fieldSelectWidth = "width: 100px;";
+                    this._valueSelectWidth = "width: 100px;";
+                    this._compareSelectWidth = "width: 60px;";
+                } else {
+                    this._fieldSelectWidth = "width: 180px;";
+                    this._valueSelectWidth = "width: 200px;";
+                    this._compareSelectWidth = "width: 120px;";
                 }
-            });
-            domConstruct.place(myButton.domNode, this._buttonNode, "replace");
-            myButton.startup();
 
-            if (this.fieldId) {
-                this._fieldSelect.set("value", this.fieldId);
-            }
+                var fieldData = this.storeData;
+                var fieldStore = this._fieldStore = new Memory({
+                    data: fieldData
+                });
+                var fieldSelect = this._fieldSelect = new FilteringSelect({
+                    name: "fields",
+                    value: fieldData[0].id,
+                    store: fieldStore,
+                    searchAttr: "title",
+                    style: this._fieldSelectWidth
+                }, this._fieldNode);
+                fieldSelect.startup();
+                this._createCompareSelect();
+                this.connect(fieldSelect, "onChange", this._changeCompareSelect);
+                var myButton = new Button({
+                    label: "-",
+                    onClick: function () {
+                        myButton.domNode.parentNode.remove();
+                    }
+                });
+                domConstruct.place(myButton.domNode, this._buttonNode, "replace");
+                myButton.startup();
+                if (this.fieldId) {
+                    this._fieldSelect.set("value", this.fieldId);
+                }
+            }, this);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
@@ -102,7 +106,6 @@ define([
                     style: this._compareSelectWidth
                 }, this._compareNode);
                 compareSelect.startup();
-
                 var codedValueData = [];
                 d_array.forEach(codedValues, function (codedValue) {
                     codedValueData.push({name: codedValue.name, id: codedValue.code});
@@ -149,21 +152,42 @@ define([
                     }, this._compareNode);
                 }
                 compareSelect.startup();
-                if (type === "date") {
-                    var valueSelect = this._valueField = new DateTextBox({
-                        name: "value",
-                        value: this.value || new Date(),
-                        style: this._valueSelectWidth
-                    });
+                if (this._supportsDistincts === true) {
+                    ct_when(this._getDistinctValues(selectedField), function (result) {
+                        var distinctValueData = [];
+                        d_array.forEach(result, function (distinctValue) {
+                            distinctValueData.push({id: distinctValue});
+                        });
+                        var codedValueStore = new Memory({
+                            data: distinctValueData
+                        });
+                        var valueSelect = this._valueField = new FilteringSelect({
+                            name: "value",
+                            value: distinctValueData[0],
+                            store: codedValueStore,
+                            searchAttr: "id",
+                            style: this._valueSelectWidth
+                        });
+                        domConstruct.place(valueSelect.domNode, this._valueNode);
+                        valueSelect.startup();
+                    }, this);
                 } else {
-                    var valueSelect = this._valueField = new TextBox({
-                        name: "value",
-                        value: this.value || "",
-                        placeHolder: this.i18n.typeInValue,
-                        style: this._valueSelectWidth
-                    });
+                    if (type === "date") {
+                        var valueSelect = this._valueField = new DateTextBox({
+                            name: "value",
+                            value: this.value || new Date(),
+                            style: this._valueSelectWidth
+                        });
+                    } else {
+                        var valueSelect = this._valueField = new TextBox({
+                            name: "value",
+                            value: this.value || "",
+                            placeHolder: this.i18n.typeInValue,
+                            style: this._valueSelectWidth
+                        });
+                    }
+                    domConstruct.place(valueSelect.domNode, this._valueNode);
                 }
-                domConstruct.place(valueSelect.domNode, this._valueNode);
             }
         },
         _changeCompareSelect: function (type, value) {
@@ -175,12 +199,10 @@ define([
                 this._valueNode.removeChild(this._valueNode.firstChild);
             }
             var compareSelect = this._compareSelect;
-
             if (codedValues.length > 0) {
                 var compareStore = this._compareStore = this._createCodedValueStore();
                 compareSelect.set("store", compareStore);
                 compareSelect.set("value", this.compareId || "is");
-
                 var codedValueData = [];
                 d_array.forEach(codedValues, function (codedValue) {
                     codedValueData.push({name: codedValue.name, id: codedValue.code});
@@ -211,23 +233,61 @@ define([
                     compareSelect.set("store", compareStore);
                     compareSelect.set("value", this.compareId || "before");
                 }
-                if (type === "date") {
-                    var valueSelect = this._valueField = new DateTextBox({
-                        name: "value",
-                        value: this.value || new Date(),
-                        style: this._valueSelectWidth
-                    });
+                if (this._supportsDistincts === true) {
+                    ct_when(this._getDistinctValues(selectedField), function (result) {
+                        var distinctValueData = [];
+                        d_array.forEach(result, function (distinctValue) {
+                            distinctValueData.push({id: distinctValue});
+                        });
+                        var codedValueStore = new Memory({
+                            data: distinctValueData
+                        });
+                        var valueSelect = this._valueField = new FilteringSelect({
+                            name: "value",
+                            value: distinctValueData[0],
+                            store: codedValueStore,
+                            searchAttr: "id",
+                            style: this._valueSelectWidth
+                        });
+                        domConstruct.place(valueSelect.domNode, this._valueNode);
+                        valueSelect.startup();
+                    }, this);
                 } else {
-                    var valueSelect = this._valueField = new TextBox({
-                        name: "value",
-                        value: this.value || "",
-                        placeHolder: this.i18n.typeInValue,
-                        style: this._valueSelectWidth
-                    });
+                    if (type === "date") {
+                        var valueSelect = this._valueField = new DateTextBox({
+                            name: "value",
+                            value: this.value || new Date(),
+                            style: this._valueSelectWidth
+                        });
+                    } else {
+                        var valueSelect = this._valueField = new TextBox({
+                            name: "value",
+                            value: this.value || "",
+                            placeHolder: this.i18n.typeInValue,
+                            style: this._valueSelectWidth
+                        });
+                    }
+                    domConstruct.place(valueSelect.domNode, this._valueNode);
                 }
-                domConstruct.place(valueSelect.domNode, this._valueNode);
             }
             //compareSelect.startup();
+        },
+        _getDistinctValues: function (selectedField) {
+            var query = new Query();
+            var queryTask = new QueryTask(this.store.target);
+            query.where = "1=1";
+            query.returnGeometry = false;
+            query.outFields = [selectedField];
+            query.returnDistinctValues = true;
+            return ct_when(queryTask.execute(query), function (result) {
+                var distinctValues = [];
+                var features = result.features;
+                d_array.forEach(features, function (feature) {
+                    var value = feature.attributes[selectedField];
+                    distinctValues.push(value);
+                }, this);
+                return distinctValues;
+            }, this);
         },
         _createCodedValueStore: function () {
             var i18n = this.i18n;
@@ -282,7 +342,6 @@ define([
             var store = this._fieldStore;
             var result = store.get(id);
             return result;
-
         },
         _getSelectedCompare: function () {
             var id = this._compareSelect.value;

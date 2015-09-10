@@ -77,23 +77,27 @@ define([
         templateString: templateStringContent,
         constructor: function (args) {
             this.inherited(arguments);
-            var i18n = this._i18n = args.i18n;
-            var content = this._content = args.content;
-            this._context = args.context;
-            this.set("title", i18n.widget.conditions + content.name);
         },
         postCreate: function () {
             this.inherited(arguments);
-            var content = this._content;
+            var i18n = this.i18n;
+            var content = this.content;
+            var context = this.context;
+
+            this.set("title", i18n.widget.conditions + content.name);
             var icon = content.icon;
             var url = "http://openweathermap.org/img/w/" + icon + ".png";
             //domAttr.set(this._icon, "src", url);
+            var data = content;
+            delete data["id"];
             var grid = new GridContent({
-                content: this.content,
-                context: this.context
+                content: data,
+                context: context
             });
             /*append the new grid to the div*/
+            debugger
             this._grid.set("content", grid);
+
             // c3 charts
             var tempChart = c3.generate({
                 data: {

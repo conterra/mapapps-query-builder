@@ -26,13 +26,11 @@
             "properties": {
                 "contentRules": [{
                         "matches": {
-                            "$or": [
-                                {
-                                    "context": {
-                                        "storeId": "osm_datastore"
-                                    }
+                            "content": {
+                                "temp": {
+                                    "$exists": true
                                 }
-                            ]
+                            }
                         },
                         "type": "OWMInfoWidgetFactory",
                         "windowSize": {

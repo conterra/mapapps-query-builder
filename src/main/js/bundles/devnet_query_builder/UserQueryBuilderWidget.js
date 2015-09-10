@@ -139,8 +139,10 @@ define([
             var ref = window.open(winURL, winName, winSize);
         },
         _addField: function () {
+            var storeId = this._filteringSelect.get("value");
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
+                store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 type: "user"
@@ -292,6 +294,7 @@ define([
                         customQuery[match].push(obj);
                 }
             }, this);
+            debugger
             return customQuery;
         }
     });

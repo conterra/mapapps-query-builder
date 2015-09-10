@@ -350,7 +350,9 @@ define([
         },
         _addDataField: function (field) {
             var storeData = this._getFields();
+            var storeId = this._filteringSelect.get("value");
             var fieldWidget = new FieldWidget({
+                store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 fieldId: field.fieldId,
