@@ -31,11 +31,21 @@
     overflow: hidden;
     text-overflow:ellipsis;
 }
-
 .queryBuilderWizard .rightFloatingButton{
     float: right;
 }
-
 .queryBuilderWizard .button{
     padding-bottom: 5px;
+}
+
+.userQueryBuilderWizard .inputContainer div{
+    margin-bottom: 1px;
+}
+
+.userQueryBuilderWizard .inputContainer label{
+    display: inline-block;
+    min-width: 150px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow:ellipsis;
 }

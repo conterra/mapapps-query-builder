@@ -6,9 +6,8 @@
         "bundleLocations": ["localbundles", "bundles"],
         "styles": ["${app}:app.css"],
         "allowedBundles": [
-            "wizard",
             "contentviewer",
-            "infoservice",
+            //"infoservice",
             "coordinatetransformer",
             "geometryservice",
             "notifier",
@@ -531,7 +530,7 @@
                             "rel_l": 20,
                             "rel_t": 20
                         },
-                        "tools": ["fc_*"]
+                        "tools": ["fc_*", "userQueryBuilderTool"]
                     }]
             },
             "enabled": true

@@ -20,7 +20,7 @@ define([
     "dojo/_base/array",
     "ct/_Connect",
     "ct/_when",
-    "wizard/_BuilderWidget",
+    "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/FieldWidget.html",
@@ -34,20 +34,23 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, parser, d_array, _Connect, ct_when, _BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, template, TextBox, ValidationTextBox, ComboBox, FilteringSelect, Button, DateTextBox, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, parser, d_array, _Connect, ct_when, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, TextBox, ValidationTextBox, ComboBox, FilteringSelect, Button, DateTextBox, Memory, domConstruct, ContentPane) {
 
-    return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
         templateString: template,
-        constructor: function (opts) {
-            this._storeData = opts.storeData;
-            this._i18n = opts.i18n;
-            this._fieldId = opts.fieldId;
-            this._compareId = opts.compareId;
-            this._value = opts.value;
-        },
         postCreate: function () {
             this.inherited(arguments);
-            var fieldData = this._storeData;
+            if (this.type === "user") {
+                this._fieldSelectWidth = "width: 100px;";
+                this._valueSelectWidth = "width: 100px;";
+                this._compareSelectWidth = "width: 60px;";
+            } else {
+                this._fieldSelectWidth = "width: 180px;";
+                this._valueSelectWidth = "width: 200px;";
+                this._compareSelectWidth = "width: 120px;";
+            }
+
+            var fieldData = this.storeData;
             var fieldStore = this._fieldStore = new Memory({
                 data: fieldData
             });
@@ -56,7 +59,7 @@ define([
                 value: fieldData[0].id,
                 store: fieldStore,
                 searchAttr: "title",
-                style: "width: 180px;"
+                style: this._fieldSelectWidth
             }, this._fieldNode);
             fieldSelect.startup();
             this._createCompareSelect();
@@ -71,8 +74,8 @@ define([
             domConstruct.place(myButton.domNode, this._buttonNode, "replace");
             myButton.startup();
 
-            if (this._fieldId) {
-                this._fieldSelect.set("value", this._fieldId);
+            if (this.fieldId) {
+                this._fieldSelect.set("value", this.fieldId);
             }
         },
         resize: function (dim) {
@@ -93,10 +96,10 @@ define([
                 var compareStore = this._compareStore = this._createCodedValueStore();
                 compareSelect = this._compareSelect = new FilteringSelect({
                     name: "compares",
-                    value: this._compareId || "is",
+                    value: this.compareId || "is",
                     store: compareStore,
                     searchAttr: "name",
-                    style: "width: 120px;"
+                    style: this._compareSelectWidth
                 }, this._compareNode);
                 compareSelect.startup();
 
@@ -112,7 +115,7 @@ define([
                     value: this.value || codedValueData[0].id,
                     store: codedValueStore,
                     searchAttr: "name",
-                    style: "width: 200px;"
+                    style: this._valueSelectWidth
                 });
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
@@ -121,43 +124,43 @@ define([
                     var compareStore = this._compareStore = this._createStringStore();
                     compareSelect = this._compareSelect = new FilteringSelect({
                         name: "compares",
-                        value: this._compareId || "is",
+                        value: this.compareId || "is",
                         store: compareStore,
                         searchAttr: "name",
-                        style: "width: 120px;"
+                        style: this._compareSelectWidth
                     }, this._compareNode);
                 } else if (type === "number" || type === "integer" || type === "double") {
                     var compareStore = this._compareStore = this._createNumberStore();
                     compareSelect = this._compareSelect = new FilteringSelect({
                         name: "compares",
-                        value: this._compareId || "is_number",
+                        value: this.compareId || "is_number",
                         store: compareStore,
                         searchAttr: "name",
-                        style: "width: 120px;"
+                        style: this._compareSelectWidth
                     }, this._compareNode);
                 } else if (type === "date") {
                     var compareStore = this._compareStore = this._createDateStore();
                     compareSelect = this._compareSelect = new FilteringSelect({
                         name: "compares",
-                        value: this._compareId || "before",
+                        value: this.compareId || "before",
                         store: compareStore,
                         searchAttr: "name",
-                        style: "width: 120px;"
+                        style: this._compareSelectWidth
                     }, this._compareNode);
                 }
                 compareSelect.startup();
                 if (type === "date") {
                     var valueSelect = this._valueField = new DateTextBox({
                         name: "value",
-                        value: this._value || new Date(),
-                        style: "width: 200px;"
+                        value: this.value || new Date(),
+                        style: this._valueSelectWidth
                     });
                 } else {
                     var valueSelect = this._valueField = new TextBox({
                         name: "value",
-                        value: this._value || "",
-                        placeHolder: this._i18n.typeInValue,
-                        style: "width: 200px;"
+                        value: this.value || "",
+                        placeHolder: this.i18n.typeInValue,
+                        style: this._valueSelectWidth
                     });
                 }
                 domConstruct.place(valueSelect.domNode, this._valueNode);
@@ -176,7 +179,7 @@ define([
             if (codedValues.length > 0) {
                 var compareStore = this._compareStore = this._createCodedValueStore();
                 compareSelect.set("store", compareStore);
-                compareSelect.set("value", this._compareId || "is");
+                compareSelect.set("value", this.compareId || "is");
 
                 var codedValueData = [];
                 d_array.forEach(codedValues, function (codedValue) {
@@ -187,10 +190,10 @@ define([
                 });
                 var valueSelect = this._valueField = new FilteringSelect({
                     name: "value",
-                    value: this._value || codedValueData[0].id,
+                    value: this.value || codedValueData[0].id,
                     store: codedValueStore,
                     searchAttr: "name",
-                    style: "width: 200px;"
+                    style: this._valueSelectWidth
                 });
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
@@ -198,28 +201,28 @@ define([
                 if (type === "string") {
                     var compareStore = this._compareStore = this._createStringStore();
                     compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this._compareId || "is");
+                    compareSelect.set("value", this.compareId || "is");
                 } else if (type === "number" || type === "integer" || type === "double") {
                     var compareStore = this._compareStore = this._createNumberStore();
                     compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this._compareId || "is_number");
+                    compareSelect.set("value", this.compareId || "is_number");
                 } else if (type === "date") {
                     var compareStore = this._compareStore = this._createDateStore();
                     compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this._compareId || "before");
+                    compareSelect.set("value", this.compareId || "before");
                 }
                 if (type === "date") {
                     var valueSelect = this._valueField = new DateTextBox({
                         name: "value",
-                        value: this._value || new Date(),
-                        style: "width: 200px;"
+                        value: this.value || new Date(),
+                        style: this._valueSelectWidth
                     });
                 } else {
                     var valueSelect = this._valueField = new TextBox({
                         name: "value",
-                        value: this._value || "",
-                        placeHolder: this._i18n.typeInValue,
-                        style: "width: 200px;"
+                        value: this.value || "",
+                        placeHolder: this.i18n.typeInValue,
+                        style: this._valueSelectWidth
                     });
                 }
                 domConstruct.place(valueSelect.domNode, this._valueNode);
@@ -227,7 +230,7 @@ define([
             //compareSelect.startup();
         },
         _createCodedValueStore: function () {
-            var i18n = this._i18n;
+            var i18n = this.i18n;
             var store = new Memory({
                 data: [
                     {id: "is", name: i18n.is},
@@ -237,7 +240,7 @@ define([
             return store;
         },
         _createStringStore: function () {
-            var i18n = this._i18n;
+            var i18n = this.i18n;
             var store = new Memory({
                 data: [
                     {id: "is", name: i18n.is},
@@ -251,7 +254,7 @@ define([
             return store;
         },
         _createNumberStore: function () {
-            var i18n = this._i18n;
+            var i18n = this.i18n;
             var store = new Memory({
                 data: [
                     {id: "is_number", name: i18n.is},
@@ -265,7 +268,7 @@ define([
             return store;
         },
         _createDateStore: function () {
-            var i18n = this._i18n;
+            var i18n = this.i18n;
             var store = new Memory({
                 data: [
                     {id: "before", name: i18n.before},

@@ -17,7 +17,49 @@ define({
     root:
             {
                 bundleName: "Query Builder",
-                bundleDescription: "Bundle to build custom query tools"
+                bundleDescription: "Bundle to build custom query tools",
+                wizard: {
+                    toolTitle: "Build Query",
+                    toolToolTip: "Build your own Query",
+                    windowTitle: "Custom Query Tool",
+                    title: "Title",
+                    builder: "Builder",
+                    manual: "Manual",
+                    iconClass: "Icon Class",
+                    iconClassHelp: "Icon Class Help",
+                    complexQueryHelp: "Complex Query Help",
+                    customQuery: "Custom Query",
+                    queryDefinition: "Query definiton:",
+                    useExtent: "Current extent",
+                    addField: "Add Field",
+                    storeId: "Store",
+                    cancel: "Cancel",
+                    done: "Search",
+                    typeInTitle: "type in title",
+                    match: "Combine Fields",
+                    match1: "Get features that match ",
+                    match2: " of the following expressions",
+                    changeToManual: "Are you sure? The query edit-mode will be switched to manual!",
+                    all: "all",
+                    any: "any",
+                    yes: "yes",
+                    no: "no",
+                    fields: {
+                        typeInValue: "type in value",
+                        is: "is",
+                        is_not: "is not",
+                        contains: "contains",
+                        contains_not: "does not contain",
+                        starts_with: "starts with",
+                        ends_with: "ends with",
+                        is_greater_than: "is greater than",
+                        is_greater_or_equal: "is greater or equal",
+                        is_less_than: "is less than",
+                        is_less_or_equal: "is less or equal",
+                        before: "before",
+                        after: "after"
+                    }
+                }
             },
     de: true
 });

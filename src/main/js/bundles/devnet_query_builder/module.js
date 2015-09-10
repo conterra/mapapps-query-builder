@@ -16,9 +16,8 @@
 define([
     ".",
     "./FilterQuery",
+    "./UserQueryBuilderWidget",
+    "./UserQueryBuilderWidgetFactory",
     "ct/tools/Tool",
     "ct/store/Filter"
-    
-    
-    
-],{});
+], {});

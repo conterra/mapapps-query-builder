@@ -1,6 +1,6 @@
 {
     "Bundle-SymbolicName": "devnet_query_builder",
-    "Bundle-Version": "2.0.0",
+    "Bundle-Version": "3.0.0",
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
     "Bundle-Vendor": "con terra GmbH",
@@ -10,6 +10,24 @@
             "name": "*",
             "files": ["./styles/styles.css"]
         }],
+    "layout-widgets": [
+        {
+            "role": "userQueryBuilderWidget",
+            "window": {
+                "title": "${wizard.windowTitle}",
+                "marginBox": {
+                    "t": 100,
+                    "l": 20,
+                    "w": 360,
+                    "h": 360
+                },
+                "dockTool": "userQueryBuilderTool",
+                "closable": true,
+                "minimizeOnClose": true,
+                "resizable": true
+            }
+        }
+    ],
     "Components": [{
             "name": "QueryTools",
             "impl": "ct.tools.Tool",
@@ -40,20 +58,23 @@
                     "name": "_eventService",
                     "providing": "ct.framework.api.EventService"
                 }]
-        }/*, {
-            "name": "UserToolCreator",
+        }, {
+            "name": "UserQueryBuilderWidgetFactory",
             "provides": [
                 "dijit.Widget",
-                "analysis_distribution.TabWidgetFactory"
+                "ct.framework.api.EventHandler"
             ],
-            "properties": {},
+            "properties": {
+                "widgetRole": "userQueryBuilderWidget"
+            },
             "instanceFactory": true,
             "immediate": true,
             "references": [
                 {
-                    "name": "store",
+                    "name": "_stores",
                     "providing": "ct.api.Store",
-                    "filter": "(id={storeId})"
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
                 },
                 {
                     "name": "_mapState",
@@ -62,22 +83,26 @@
                 {
                     "name": "_tool",
                     "providing": "ct.tools.Tool",
-                    "filter": "(id=analysisDistributionTool)"
+                    "filter": "(id=userQueryBuilderTool)"
+                },
+                {
+                    "name": "_dataModel",
+                    "providing": "ct.resultcenter.DataModel"
                 }
             ]
         },
         {
-            "name": "${toolName}",
+            "name": "newTool",
             "impl": "ct/tools/Tool",
             "provides": ["ct.tools.Tool"],
             "propertiesConstructor": true,
             "properties": {
-                "id": "userToolCreatorTool",
+                "id": "userQueryBuilderTool",
                 "toolRole": "toolset",
-                "title": "UserToolCreator",
-                "tooltip": "",
+                "title": "${wizard.toolTitle}",
+                "tooltip": "${wizard.toolToolTip}",
                 "togglable": false,
-                "iconClass": "icon-chart-bar"
+                "iconClass": "icon-custom-info-help"
             }
-        }*/]
+        }]
 }
