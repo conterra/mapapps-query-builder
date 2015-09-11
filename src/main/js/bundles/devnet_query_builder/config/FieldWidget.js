@@ -330,7 +330,9 @@ define([
                 var features = result.features;
                 d_array.forEach(features, function (feature) {
                     var value = feature.attributes[selectedField];
-                    distinctValues.push(value);
+                    if (value !== null) {
+                        distinctValues.push(value);
+                    }
                 }, this);
                 return distinctValues;
             }, this);
