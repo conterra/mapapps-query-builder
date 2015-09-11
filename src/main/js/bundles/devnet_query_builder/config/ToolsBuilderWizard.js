@@ -361,7 +361,8 @@ define([
                 i18n: this.i18n.fields,
                 fieldId: field.fieldId,
                 compareId: field.compareId,
-                value: field.value
+                value: field.value,
+                type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },
