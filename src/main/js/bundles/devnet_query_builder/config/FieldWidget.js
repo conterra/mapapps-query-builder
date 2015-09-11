@@ -230,7 +230,7 @@ define([
                 if (this.fieldId === this._getSelectedField().id) {
                     value = this.value;
                 } else {
-                    value = codedValueData[0].id;
+                    value = codedValueData[0] && codedValueData[0].id;
                 }
                 var valueSelect = this._valueField = new FilteringSelect({
                     name: "value",
@@ -271,7 +271,7 @@ define([
                         if (this.fieldId === this._getSelectedField().id) {
                             value = this.value;
                         } else {
-                            value = distinctValueData[0].id;
+                            value = distinctValueData[0] && distinctValueData[0].id;
                         }
                         var valueComboBox = this._valueField = new ComboBox({
                             name: "value",
