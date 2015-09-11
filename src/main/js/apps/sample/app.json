@@ -154,17 +154,20 @@
             }
         },
         "devnet_query_builder": {
-            "QueryTools": [{
+            "QueryTools": [
+                {
                     "id": "fc_1441279619509",
                     "title": "In which cities is it warmer than 25°C",
                     "iconClass": "icon-cog",
                     "storeId": "owm_datastore",
                     "customquery": {
-                        "$and": [{
+                        "$and": [
+                            {
                                 "temp": {
                                     "$gt": 25
                                 }
-                            }]
+                            }
+                        ]
                     },
                     "_wizardGUI": {
                         "mode": "builder",
@@ -185,7 +188,8 @@
                     "iconClass": "icon-toolcase",
                     "storeId": "stoerungen",
                     "customquery": {
-                        "$and": [{
+                        "$and": [
+                            {
                                 "art": {
                                     "$eq": 5
                                 }
@@ -196,7 +200,8 @@
                                         "$eq": 3
                                     }
                                 }
-                            }]
+                            }
+                        ]
                     },
                     "_wizardGUI": {
                         "mode": "builder",
@@ -222,11 +227,13 @@
                     "iconClass": "icon-house",
                     "storeId": "usa_cities",
                     "customquery": {
-                        "$and": [{
+                        "$and": [
+                            {
                                 "capital": {
                                     "$eq": "Y"
                                 }
-                            }]
+                            }
+                        ]
                     },
                     "_wizardGUI": {
                         "mode": "builder",
@@ -244,28 +251,45 @@
                 {
                     "id": "fc_1441023991013",
                     "title": "Where are Germany's airports?",
-                    "iconClass": "icon-heliport",
+                    "iconClass": "icon-airport",
                     "storeId": "airtraffic",
-                    "customquery": {
-                    },
+                    "customquery": {},
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
                         "extent": "no",
                         "fields": []
-                    }
+                    },
+                    "pid": "devnet_query_builder-QueryTools-3",
+                    "type": "CUSTOM"
                 },
                 {
-                    "id": "fc_1441656488839",
-                    "title": "Clear Sky",
-                    "iconClass": "icon-custom-info",
-                    "storeId": "owm_datastore",
+                    "id": "fc_1441976636993",
+                    "title": "Holiday Weather",
+                    "iconClass": "icon-selection-circle",
                     "customquery": {
-                        "$and": [{
-                                "weather_id": {
-                                    "$eq": 800
+                        "$and": [
+                            {
+                                "temp": {
+                                    "$gte": 25
                                 }
-                            }]
+                            },
+                            {
+                                "temp": {
+                                    "$lte": 35
+                                }
+                            },
+                            {
+                                "humidity": {
+                                    "$lte": 50
+                                }
+                            },
+                            {
+                                "clouds": {
+                                    "$lt": 20
+                                }
+                            }
+                        ]
                     },
                     "_wizardGUI": {
                         "mode": "builder",
@@ -273,13 +297,90 @@
                         "extent": "no",
                         "fields": [
                             {
-                                "fieldId": "weather_id",
-                                "compareId": "is",
-                                "value": 800
+                                "fieldId": "temp",
+                                "compareId": "is_greater_or_equal_number",
+                                "value": "25"
+                            },
+                            {
+                                "fieldId": "temp",
+                                "compareId": "is_less_or_equal_number",
+                                "value": "35"
+                            },
+                            {
+                                "fieldId": "humidity",
+                                "compareId": "is_less_or_equal_number",
+                                "value": "50"
+                            },
+                            {
+                                "fieldId": "clouds",
+                                "compareId": "is_less_number",
+                                "value": "20"
                             }
                         ]
-                    }
-                }]
+                    },
+                    "storeId": "owm_datastore",
+                    "pid": "devnet_query_builder-QueryTools-5",
+                    "type": "CUSTOM"
+                },
+                {
+                    "id": "fc_1441982464561",
+                    "title": "US Counties with Population > 1000 per SQM",
+                    "iconClass": "icon-zoom-world",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "pop00_sqmi": {
+                                    "$gte": 1000
+                                }
+                            }
+                        ]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "pop00_sqmi",
+                                "compareId": "is_greater_or_equal_number",
+                                "value": "1000"
+                            }
+                        ]
+                    },
+                    "storeId": "_AGS_STORE_1441195340629",
+                    "pid": "devnet_query_builder-QueryTools-6",
+                    "type": "CUSTOM"
+                },
+                {
+                    "id": "fc_1441982585646",
+                    "title": "All US-Interstates",
+                    "iconClass": "icon-line",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "admn_class": {
+                                    "$eq": "Interstate"
+                                }
+                            }
+                        ]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "admn_class",
+                                "compareId": "is",
+                                "value": "Interstate"
+                            }
+                        ]
+                    },
+                    "storeId": "_AGS_STORE_1441195356941",
+                    "pid": "devnet_query_builder-QueryTools-7",
+                    "type": "CUSTOM"
+                }
+            ]
         },
         "map": {
             "MapModelFactory": {
