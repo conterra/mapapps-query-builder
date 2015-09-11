@@ -438,7 +438,7 @@
         <netbeans.hint.jdkPlatform>JDK_1.7</netbeans.hint.jdkPlatform>
 
         <!-- JS lib versions -->
-        <mapapps.version>3.2.2-SNAPSHOT</mapapps.version>
+        <mapapps.version>3.2.1</mapapps.version>
         <!-- java lib versions -->
         <ct.jsregistry.version>1.0.8</ct.jsregistry.version>
         <ct.jsrt-test.version>1.0.5</ct.jsrt-test.version>
