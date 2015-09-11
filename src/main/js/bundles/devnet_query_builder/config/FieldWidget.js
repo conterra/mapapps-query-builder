@@ -69,14 +69,15 @@ define([
                     maxHeight: this.maxComboBoxHeight
                 }, this._fieldNode);
                 fieldSelect.startup();
-                var myButton = new Button({
+                var removeButton = new Button({
                     label: "-",
                     onClick: function () {
-                        myButton.domNode.parentNode.remove();
-                    }
+                        removeButton.domNode.parentNode.remove();
+                        this._remove();
+                    }.bind(this)
                 });
-                domConstruct.place(myButton.domNode, this._buttonNode, "replace");
-                myButton.startup();
+                domConstruct.place(removeButton.domNode, this._buttonNode, "replace");
+                removeButton.startup();
                 if (this.fieldId) {
                     this._fieldSelect.set("value", this.fieldId);
                 }
@@ -93,6 +94,8 @@ define([
                     h: dim.h - this.getHeadingHeight()
                 });
             }
+        },
+        _remove: function () {
         },
         _createCompareSelect: function () {
             var def = new Deferred();
@@ -256,7 +259,6 @@ define([
                     compareSelect.set("store", compareStore);
                     compareSelect.set("value", this.compareId || "before");
                 }
-                var valueSelect = this._valueField;
                 if (this._supportsDistincts === true) {
                     ct_when(this._getDistinctValues(selectedField), function (result) {
                         result.sort();
@@ -292,7 +294,7 @@ define([
                         } else {
                             value = new Date();
                         }
-                        valueSelect = new DateTextBox({
+                        var valueSelect = this._valueField = new DateTextBox({
                             name: "value",
                             value: value,
                             style: this._valueSelectWidth,
@@ -304,7 +306,7 @@ define([
                         } else {
                             value = "";
                         }
-                        valueSelect = new TextBox({
+                        var valueSelect = this._valueField = new TextBox({
                             name: "value",
                             value: value,
                             placeHolder: this.i18n.typeInValue,
@@ -316,8 +318,7 @@ define([
                     valueSelect.startup();
                 }
             }
-        }
-        ,
+        },
         _getDistinctValues: function (selectedField) {
             var query = new Query();
             var queryTask = new QueryTask(this.store.target);

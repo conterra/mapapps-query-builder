@@ -80,8 +80,7 @@ define([
                 style: "width: 80px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
-            });
-            domConstruct.place(extentSelect.domNode, this._extentNode);
+            }, this._extentNode);
             var matchStore = this._matchStore = new Memory({
                 data: [
                     {name: this.i18n.all, id: "$and"},
@@ -96,8 +95,7 @@ define([
                 style: "width: 80px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
-            });
-            domConstruct.place(matchSelect.domNode, this._matchNode);
+            }, this._matchNode);
             var wizardGUI = this.properties._wizardGUI;
             if (wizardGUI) {
                 if (wizardGUI.mode === "builder") {
@@ -190,11 +188,10 @@ define([
                     customQuery[match] = [];
                 }
                 this.properties._wizardGUI.fields = [];
-                d_array.forEach(children, function (child, i) {
+                d_array.forEach(children, function (child) {
                     var widget = d_registry.getEnclosingWidget(child);
                     var fieldId = widget._getSelectedField().id;
                     var compareId = widget._getSelectedCompare().id;
-                    var compareValue = widget._getSelectedCompare().value;
                     var value = widget._getValue();
                     this.properties._wizardGUI.fields.push({fieldId: fieldId, compareId: compareId, value: value});
                     switch (compareId) {
@@ -259,27 +256,12 @@ define([
                             customQuery[match].push(obj);
                             break;
                         case "before":
-                            var date = new Date(value);
-                            var day = ("0" + date.getDate()).slice(-2);
-                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                            var year = date.getFullYear();
-                            var value = year + "-" + month + "-" + day + " 00:00:00";
-                            var obj = {};
-                            var obj2 = {};
-                            obj2[compareValue] = "timestamp '" + value + "'";
-                            obj[fieldId] = obj2;
-                            customQuery[match].push(obj);
+                            //TODO
                             break;
                         case "after":
-                            value = new Date(value).getTime();
-                            customQuery += "{\"" + fieldId + "\":{\"" + compareValue + "\":\"" + value + "\"}}";
+                            //TODO
                             break;
                         default:
-                            var obj = {};
-                            var obj2 = {};
-                            obj2[compareValue] = value;
-                            obj[fieldId] = obj2;
-                            customQuery[match].push(obj);
                     }
                 }, this);
                 this.properties.customquery = customQuery;

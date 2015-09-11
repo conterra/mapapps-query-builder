@@ -41,11 +41,6 @@ define([
         },
         createInstance: function () {
             return this.widget;
-        }/*,
-         modified: function () {
-         var props = this._properties;
-         var unit = props.unit;
-         this.epw.set("unit", unit);
-         }*/
+        }
     });
 });

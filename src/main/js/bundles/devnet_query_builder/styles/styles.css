@@ -31,6 +31,12 @@
     overflow: hidden;
     text-overflow:ellipsis;
 }
+
+.queryBuilderWizard .head{
+    margin-bottom: 8px;
+}
+
+
 .queryBuilderWizard .rightFloatingButton{
     float: right;
 }
@@ -49,3 +55,12 @@
     overflow: hidden;
     text-overflow:ellipsis;
 }
+
+.userQueryBuilderWizard .inputContainer {
+    height: 90px;
+}
+
+.userQueryBuilderWizard .inputContainer .input{
+    height: 65px;
+}
+

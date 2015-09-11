@@ -73,12 +73,12 @@ define([
                                         //Attribute der Tabellen im ToolsBuilderWidget
                                         displayField: "name",
                                         fields: [
-                                            {
-                                                "title": "ID",
-                                                "name": "id",
-                                                "type": "string",
-                                                "identifier": true
-                                            },
+                                            /*{
+                                             "title": "ID",
+                                             "name": "id",
+                                             "type": "string",
+                                             "identifier": true
+                                             },*/
                                             {
                                                 "title": "Title",
                                                 "name": "title",

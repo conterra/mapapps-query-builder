@@ -106,7 +106,7 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }, this._extentNode);
 
-            //this._changeExtentVisibility();
+            this._changeExtentVisibility();
 
             var matchStore = this._matchStore = new Memory({
                 data: [
@@ -147,13 +147,13 @@ define([
             var winSize = 'width=800,height=600,scrollbars=yes';
             var ref = window.open(winURL, winName, winSize);
         },
-        /*_changeExtentVisibility: function () {
-         if (this._queryNode.children.length > 1) {
-         ct_css.switchHidden(this._extentDiv, false);
-         } else {
-         ct_css.switchHidden(this._extentDiv, true);
-         }
-         },*/
+        _changeExtentVisibility: function () {
+            if (this._queryNode.children.length > 1) {
+                ct_css.switchHidden(this._matchDiv, false);
+            } else {
+                ct_css.switchHidden(this._matchDiv, true);
+            }
+        },
         _addField: function () {
             var storeId = this._filteringSelect.get("value");
             var storeData = this._getFields();
@@ -163,14 +163,15 @@ define([
                 i18n: this.i18n.fields,
                 type: "user"
             });
+            this.connect(fieldWidget, "_remove", this._changeExtentVisibility);
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            //this._changeExtentVisibility();
+            this._changeExtentVisibility();
         },
         _removeFields: function () {
             while (this._queryNode.firstChild) {
                 this._queryNode.removeChild(this._queryNode.firstChild);
+                this._changeExtentVisibility();
             }
-            //this._changeExtentVisibility();
         },
         _getFields: function () {
             var storeId = this._filteringSelect.get("value");
@@ -237,11 +238,9 @@ define([
                 customQuery[match] = [];
             }
             d_array.forEach(children, function (child) {
-
                 var widget = d_registry.getEnclosingWidget(child);
                 var fieldId = widget._getSelectedField().id;
                 var compareId = widget._getSelectedCompare().id;
-                var compareValue = widget._getSelectedCompare().value;
                 var value = widget._getValue();
                 switch (compareId) {
                     case "is":
@@ -305,11 +304,7 @@ define([
                         customQuery[match].push(obj);
                         break;
                     default:
-                        var obj = {};
-                        var obj2 = {};
-                        obj2[compareValue] = value;
-                        obj[fieldId] = obj2;
-                        customQuery[match].push(obj);
+
                 }
             }, this);
             return customQuery;
