@@ -6,8 +6,8 @@
         "bundleLocations": ["localbundles", "bundles"],
         "styles": ["${app}:app.css"],
         "allowedBundles": [
+            "wizard",
             "contentviewer",
-            //"infoservice",
             "coordinatetransformer",
             "geometryservice",
             "notifier",

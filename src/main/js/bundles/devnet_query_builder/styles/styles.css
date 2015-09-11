@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.queryBuilderWizard .inputContainer div{
+.queryBuilderWizard .dijitComboBox{
     margin-bottom: 1px;
 }
 
@@ -38,7 +38,7 @@
     padding-bottom: 5px;
 }
 
-.userQueryBuilderWizard .inputContainer div{
+.userQueryBuilderWizard .dijitComboBox{
     margin-bottom: 1px;
 }
 

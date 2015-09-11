@@ -34,7 +34,8 @@ define([
     "dijit/layout/BorderContainer",
     "ct/async",
     "ct/_when",
-    "ct/store/Filter"
+    "ct/store/Filter",
+    "ct/util/css"
 ], function (declare,
         domConstruct,
         d_array,
@@ -55,7 +56,8 @@ define([
         BorderContainer,
         ct_async,
         ct_when,
-        Filter) {
+        Filter,
+        ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
         templateString: templateStringContent,
@@ -74,6 +76,7 @@ define([
             }, this);
         },
         _init: function () {
+            this.maxComboBoxHeight = 160;
             var store = new Memory({
                 data: this.storeData
             });
@@ -82,7 +85,8 @@ define([
                 value: this.storeData[0].id,
                 store: store,
                 searchAttr: "name",
-                style: "width: 155px;"
+                style: "width: 155px;",
+                maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
             filteringSelect.startup();
 
@@ -98,8 +102,12 @@ define([
                 store: extentStore,
                 searchAttr: "name",
                 style: "width: 155px;",
-                required: true
+                required: true,
+                maxHeight: this.maxComboBoxHeight
             }, this._extentNode);
+
+            //this._changeExtentVisibility();
+
             var matchStore = this._matchStore = new Memory({
                 data: [
                     {name: this.i18n.all, id: "$and"},
@@ -112,7 +120,8 @@ define([
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 155px;",
-                required: true
+                required: true,
+                maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
 
             this.connect(filteringSelect, "onChange", this._removeFields);
@@ -138,6 +147,13 @@ define([
             var winSize = 'width=800,height=600,scrollbars=yes';
             var ref = window.open(winURL, winName, winSize);
         },
+        /*_changeExtentVisibility: function () {
+         if (this._queryNode.children.length > 1) {
+         ct_css.switchHidden(this._extentDiv, false);
+         } else {
+         ct_css.switchHidden(this._extentDiv, true);
+         }
+         },*/
         _addField: function () {
             var storeId = this._filteringSelect.get("value");
             var storeData = this._getFields();
@@ -148,6 +164,13 @@ define([
                 type: "user"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+            //this._changeExtentVisibility();
+        },
+        _removeFields: function () {
+            while (this._queryNode.firstChild) {
+                this._queryNode.removeChild(this._queryNode.firstChild);
+            }
+            //this._changeExtentVisibility();
         },
         _getFields: function () {
             var storeId = this._filteringSelect.get("value");
@@ -190,16 +213,11 @@ define([
             }, this);
             return s;
         },
-        _removeFields: function () {
-            while (this._queryNode.firstChild) {
-                this._queryNode.removeChild(this._queryNode.firstChild);
-            }
-        },
         _onDone: function () {
             var complexQuery = this._getComplexQuery();
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStore(storeId);
-            var filter = new Filter(store, complexQuery);
+            var filter = new Filter(store, complexQuery, {ignoreCase: true});
             this.dataModel.setDatasource(filter);
         },
         _getComplexQuery: function () {
@@ -294,7 +312,6 @@ define([
                         customQuery[match].push(obj);
                 }
             }, this);
-            debugger
             return customQuery;
         }
     });

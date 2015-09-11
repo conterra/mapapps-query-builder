@@ -95,7 +95,6 @@ define([
                 context: context
             });
             /*append the new grid to the div*/
-            debugger
             this._grid.set("content", grid);
 
             // c3 charts

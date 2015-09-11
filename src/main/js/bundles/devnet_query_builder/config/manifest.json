@@ -1,6 +1,6 @@
 {
     "Bundle-SymbolicName": "query_builder-config",
-    "Bundle-Version": "2.0.0",
+    "Bundle-Version": "3.0.0",
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
     "Bundle-Vendor": "con terra GmbH",

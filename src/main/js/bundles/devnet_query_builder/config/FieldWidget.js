@@ -46,14 +46,15 @@ define([
             ct_when(this.store.getMetadata(), function (metadata) {
                 this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
                 if (this.type === "user") {
-                    this._fieldSelectWidth = "width: 100px;";
-                    this._valueSelectWidth = "width: 100px;";
-                    this._compareSelectWidth = "width: 60px;";
+                    this._fieldSelectWidth = "width: 140px;";
+                    this._valueSelectWidth = "width: 120px;";
+                    this._compareSelectWidth = "width: 120px;";
                 } else {
                     this._fieldSelectWidth = "width: 180px;";
                     this._valueSelectWidth = "width: 200px;";
                     this._compareSelectWidth = "width: 120px;";
                 }
+                this.maxComboBoxHeight = 160;
 
                 var fieldData = this.storeData;
                 var fieldStore = this._fieldStore = new Memory({
@@ -64,7 +65,8 @@ define([
                     value: fieldData[0].id,
                     store: fieldStore,
                     searchAttr: "title",
-                    style: this._fieldSelectWidth
+                    style: this._fieldSelectWidth,
+                    maxHeight: this.maxComboBoxHeight
                 }, this._fieldNode);
                 fieldSelect.startup();
                 this._createCompareSelect();
@@ -103,7 +105,8 @@ define([
                     value: this.compareId || "is",
                     store: compareStore,
                     searchAttr: "name",
-                    style: this._compareSelectWidth
+                    style: this._compareSelectWidth,
+                    maxHeight: this.maxComboBoxHeight
                 }, this._compareNode);
                 compareSelect.startup();
                 var codedValueData = [];
@@ -118,7 +121,8 @@ define([
                     value: this.value || codedValueData[0].id,
                     store: codedValueStore,
                     searchAttr: "name",
-                    style: this._valueSelectWidth
+                    style: this._valueSelectWidth,
+                    maxHeight: this.maxComboBoxHeight
                 });
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
@@ -153,37 +157,22 @@ define([
                 }
                 compareSelect.startup();
                 if (this._supportsDistincts === true) {
-                    ct_when(this._getDistinctValues(selectedField), function (result) {
-                        var distinctValueData = [];
-                        d_array.forEach(result, function (distinctValue) {
-                            distinctValueData.push({id: distinctValue});
-                        });
-                        var codedValueStore = new Memory({
-                            data: distinctValueData
-                        });
-                        var valueSelect = this._valueField = new FilteringSelect({
-                            name: "value",
-                            value: distinctValueData[0],
-                            store: codedValueStore,
-                            searchAttr: "id",
-                            style: this._valueSelectWidth
-                        });
-                        domConstruct.place(valueSelect.domNode, this._valueNode);
-                        valueSelect.startup();
-                    }, this);
+                    this._createDistinctValueComboBox(selectedField);
                 } else {
                     if (type === "date") {
                         var valueSelect = this._valueField = new DateTextBox({
                             name: "value",
                             value: this.value || new Date(),
-                            style: this._valueSelectWidth
+                            style: this._valueSelectWidth,
+                            maxHeight: this.maxComboBoxHeight
                         });
                     } else {
                         var valueSelect = this._valueField = new TextBox({
                             name: "value",
                             value: this.value || "",
                             placeHolder: this.i18n.typeInValue,
-                            style: this._valueSelectWidth
+                            style: this._valueSelectWidth,
+                            maxHeight: this.maxComboBoxHeight
                         });
                     }
                     domConstruct.place(valueSelect.domNode, this._valueNode);
@@ -215,7 +204,8 @@ define([
                     value: this.value || codedValueData[0].id,
                     store: codedValueStore,
                     searchAttr: "name",
-                    style: this._valueSelectWidth
+                    style: this._valueSelectWidth,
+                    maxHeight: this.maxComboBoxHeight
                 });
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
@@ -234,43 +224,50 @@ define([
                     compareSelect.set("value", this.compareId || "before");
                 }
                 if (this._supportsDistincts === true) {
-                    ct_when(this._getDistinctValues(selectedField), function (result) {
-                        var distinctValueData = [];
-                        d_array.forEach(result, function (distinctValue) {
-                            distinctValueData.push({id: distinctValue});
-                        });
-                        var codedValueStore = new Memory({
-                            data: distinctValueData
-                        });
-                        var valueSelect = this._valueField = new FilteringSelect({
-                            name: "value",
-                            value: distinctValueData[0],
-                            store: codedValueStore,
-                            searchAttr: "id",
-                            style: this._valueSelectWidth
-                        });
-                        domConstruct.place(valueSelect.domNode, this._valueNode);
-                        valueSelect.startup();
-                    }, this);
+                    this._createDistinctValueComboBox(selectedField);
                 } else {
                     if (type === "date") {
                         var valueSelect = this._valueField = new DateTextBox({
                             name: "value",
                             value: this.value || new Date(),
-                            style: this._valueSelectWidth
+                            style: this._valueSelectWidth,
+                            maxHeight: this.maxComboBoxHeight
                         });
                     } else {
                         var valueSelect = this._valueField = new TextBox({
                             name: "value",
                             value: this.value || "",
                             placeHolder: this.i18n.typeInValue,
-                            style: this._valueSelectWidth
+                            style: this._valueSelectWidth,
+                            maxHeight: this.maxComboBoxHeight
                         });
                     }
                     domConstruct.place(valueSelect.domNode, this._valueNode);
                 }
             }
             //compareSelect.startup();
+        },
+        _createDistinctValueComboBox: function (selectedField) {
+            ct_when(this._getDistinctValues(selectedField), function (result) {
+                result.sort();
+                var distinctValueData = [];
+                d_array.forEach(result, function (distinctValue) {
+                    distinctValueData.push({id: distinctValue});
+                });
+                var distinctValueStore = new Memory({
+                    data: distinctValueData
+                });
+                var valueComboBox = this._valueField = new ComboBox({
+                    name: "value",
+                    value: distinctValueData[0].id,
+                    store: distinctValueStore,
+                    searchAttr: "id",
+                    style: this._valueSelectWidth,
+                    maxHeight: this.maxComboBoxHeight
+                });
+                domConstruct.place(valueComboBox.domNode, this._valueNode);
+                valueComboBox.startup();
+            }, this);
         },
         _getDistinctValues: function (selectedField) {
             var query = new Query();

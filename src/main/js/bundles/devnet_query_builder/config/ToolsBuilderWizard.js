@@ -49,6 +49,7 @@ define([
         },
         postCreate: function () {
             this.inherited(arguments);
+            this.maxComboBoxHeight = 160;
             var store = new Memory({
                 data: this.storeData
             });
@@ -57,7 +58,8 @@ define([
                 value: this.properties.storeId || this.storeData[0].id,
                 store: store,
                 searchAttr: "name",
-                style: "width: 250px;"
+                style: "width: 250px;",
+                maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
             filteringSelect.startup();
             this._titleTextBox.set("value", this.properties.title);
@@ -76,7 +78,8 @@ define([
                 store: extentStore,
                 searchAttr: "name",
                 style: "width: 80px;",
-                required: true
+                required: true,
+                maxHeight: this.maxComboBoxHeight
             });
             domConstruct.place(extentSelect.domNode, this._extentNode);
             var matchStore = this._matchStore = new Memory({
@@ -91,7 +94,8 @@ define([
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 80px;",
-                required: true
+                required: true,
+                maxHeight: this.maxComboBoxHeight
             });
             domConstruct.place(matchSelect.domNode, this._matchNode);
             var wizardGUI = this.properties._wizardGUI;
@@ -362,10 +366,13 @@ define([
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },
         _addField: function () {
+            var storeId = this._filteringSelect.get("value");
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
+                store: this._getSelectedStore(storeId),
                 storeData: storeData,
-                i18n: this.i18n.fields
+                i18n: this.i18n.fields,
+                type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },

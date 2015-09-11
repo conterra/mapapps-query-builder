@@ -16,9 +16,9 @@
 .myclass {}
 .mainMap:before{
     content: '';
-    background-image: url(logo.jpg);
-    width: 186px;
-    height: 26px;
+    background-image: url(logo.png);
+    width: 153px;
+    height: 22px;
     position: absolute;
     right: 20px;
     top: 20px;
