@@ -12,6 +12,10 @@
             "name": "wizard"
         }
     ],
+    "CSS-Themes-Extension": [{
+            "name": "*",
+            "files": ["../styles/styles.css"]
+        }],
     "Components": [
         {
             "name": "BuilderEntry",
