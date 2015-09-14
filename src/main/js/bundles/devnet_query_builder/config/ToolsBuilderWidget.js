@@ -149,6 +149,7 @@ define(["dojo/_base/declare",
         },
         updateGrid: function () {
             this._dataView.storeContentChanged();
+            this._viewModel.fireDataChanged();
         },
         onRemoveQueryTool: function () {
         },

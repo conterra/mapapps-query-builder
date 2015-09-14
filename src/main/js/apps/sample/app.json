@@ -29,7 +29,8 @@
     },
     "bundles": {
         "agssearch": {
-            "AGSStore": [{
+            "AGSStore": [
+                {
                     "id": "stoerungen",
                     "title": "Stoerungen",
                     "useIn": "selection",
@@ -57,28 +58,16 @@
                     "type": "Unbekannt"
                 },
                 {
-                    "id": "airtraffic_helipad",
-                    "title": "Airtraffic Helipad",
-                    "useIn": "selection",
-                    "idProperty": "OBJECTID",
-                    "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/3"
-                },
-                {
-                    "id": "usa_cities",
-                    "title": "Cities in the USA",
-                    "useIn": "selection",
-                    "idProperty": "OBJECTID",
-                    "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0"
-                },
-                {
                     "title": "USA (Counties)",
                     "description": "",
                     "omniSearchLabelAttr": "name",
                     "omniSearchSearchAttr": "name",
                     "idProperty": "objectid",
                     "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/3",
-                    "useIn": ["omnisearch",
-                        "selection"],
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
                     "filterOptions": {
                         "suggestContains": true
                     },
@@ -96,8 +85,10 @@
                     "omniSearchSearchAttr": "type",
                     "idProperty": "objectid",
                     "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1",
-                    "useIn": ["omnisearch",
-                        "selection"],
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
                     "filterOptions": {
                         "suggestContains": true
                     },
@@ -115,8 +106,10 @@
                     "omniSearchSearchAttr": "state_name",
                     "idProperty": "objectid",
                     "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2",
-                    "useIn": ["omnisearch",
-                        "selection"],
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
                     "filterOptions": {
                         "suggestContains": true
                     },
@@ -126,7 +119,92 @@
                     "fetchIdProperty": true,
                     "enablePagination": false,
                     "id": "_AGS_STORE_1441195705828"
-                }],
+                },
+                {
+                    "title": "Zensus Deutschland 2011 (Zensus 2011 Bundesländer)",
+                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+                    "omniSearchLabelAttr": "NAME",
+                    "omniSearchSearchAttr": "NAME",
+                    "idProperty": "OBJECTID_1",
+                    "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/0",
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1442226070628"
+                },
+                {
+                    "title": "Zensus Deutschland 2011 (Zensus 2011 Kreise)",
+                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+                    "omniSearchLabelAttr": "NAME",
+                    "omniSearchSearchAttr": "NAME",
+                    "idProperty": "OBJECTID_1",
+                    "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/1",
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1442227045951"
+                },
+                {
+                    "title": "Zensus Deutschland 2011 (Zensus 2011 Gemeinden)",
+                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+                    "omniSearchLabelAttr": "NAME",
+                    "omniSearchSearchAttr": "NAME",
+                    "idProperty": "OBJECTID_1",
+                    "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/2",
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1442227058500"
+                },
+                {
+                    "title": "Earthquakes (Earthquakes)",
+                    "description": "Earthquake data for the last 90 days from the USGS. In addition to web-based maps and html pages, USGS provides <a href=\"http://earthquake.usgs.gov/earthquakes/\">several alternative ways</a> to obtain real-time earthquake lists. Earthquake information is extracted from a merged catalog of earthquakes located by the USGS and <a href=\"http://earthquake.usgs.gov/earthquakes/aboutmaps.php#datasources\">contributing networks</a>. Earthquakes will be broadcast within a few minutes for California events, and within 30-minutes for worldwide events\n<br><br>\nWe gather this data from the <a href=\"http://earthquake.usgs.gov/earthquakes/catalogs/\">USGS xml feed</a>. These shape files from the kml feed are parsed using the <a href=\"http://resources.esri.com/publicsafety/index.cfm?fa=codeGalleryDetails&scriptID=16421\">Aggregated Live Feeds methodology</a> to take the returned information and serve the data through ArcGIS Server as a map service. ",
+                    "omniSearchLabelAttr": "LOCATION",
+                    "omniSearchSearchAttr": "LOCATION",
+                    "idProperty": "OBJECTID",
+                    "url": "http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer/0",
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1442227368735"
+                }
+            ],
             "enabled": true
         },
         "contentviewer": {
@@ -151,6 +229,61 @@
         "resultcenter": {
             "ActionController": {
                 "zoomToFeatures": true
+            },
+            "GraphicResolverFactory": {
+                "symbolLookup": {
+                    "lookupAttributeName": "type",
+                    "lookupTable": {
+                        "point": {
+                            "color": [0, 0, 255, 128],
+                            "size": 8,
+                            "type": "esriSMS",
+                            "style": "esriSMSCircle",
+                            "outline": {
+                                "color": [0, 0, 0, 255],
+                                "width": 1,
+                                "type": " esriSLS",
+                                "style": "esriSLSSolid"
+                            }
+                        },
+                        "point-selected": {
+                            "color": [255, 215, 0, 128],
+                            "size": 10,
+                            "type": "esriSMS",
+                            "style": "esriSMSCircle",
+                            "outline": {
+                                "color": [0, 0, 0, 255],
+                                "width": 1,
+                                "type": " esriSLS",
+                                "style": "esriSLSSolid"
+                            }
+                        },
+                        "point-highlighted": {
+                            "color": [255, 215, 0, 100],
+                            "size": 10,
+                            "type": "esriSMS",
+                            "style": "esriSMSCircle",
+                            "outline": {
+                                "color": [0, 0, 0, 255],
+                                "width": 1,
+                                "type": " esriSLS",
+                                "style": "esriSLSSolid"
+                            }
+                        },
+                        "point-selected-highlighted": {
+                            "color": [255, 215, 0, 128],
+                            "size": 10,
+                            "type": "esriSMS",
+                            "style": "esriSMSCircle",
+                            "outline": {
+                                "color": [0, 0, 0, 255],
+                                "width": 2,
+                                "type": " esriSLS",
+                                "style": "esriSLSSolid"
+                            }
+                        }
+                    }
+                }
             }
         },
         "devnet_query_builder": {
@@ -260,7 +393,6 @@
                         "extent": "no",
                         "fields": []
                     },
-                    "pid": "devnet_query_builder-QueryTools-3",
                     "type": "CUSTOM"
                 },
                 {
@@ -319,7 +451,6 @@
                         ]
                     },
                     "storeId": "owm_datastore",
-                    "pid": "devnet_query_builder-QueryTools-5",
                     "type": "CUSTOM"
                 },
                 {
@@ -348,7 +479,6 @@
                         ]
                     },
                     "storeId": "_AGS_STORE_1441195340629",
-                    "pid": "devnet_query_builder-QueryTools-6",
                     "type": "CUSTOM"
                 },
                 {
@@ -377,7 +507,6 @@
                         ]
                     },
                     "storeId": "_AGS_STORE_1441195356941",
-                    "pid": "devnet_query_builder-QueryTools-7",
                     "type": "CUSTOM"
                 }
             ]
@@ -420,20 +549,51 @@
             },
             "MappingResourceRegistryFactory": {
                 "_knownServices": {
-                    "services": [{
+                    "services": [
+                        {
                             "id": "service_43687",
                             "url": "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer",
-                            "type": "AGS_TILED"
+                            "type": "AGS_TILED",
+                            "title": "Canvas Base",
+                            "description": "This map draws attention to your thematic content by providing a neutral background with minimal colors, labels, and features. Only key information is represented to provide geographic context, allowing your data to come to the foreground. This light gray map supports any strong colors, creating a visually compelling map graphic which helps your reader see the patterns intended. This map was developed by Esri using HERE data, DeLorme basemap layers, OpenStreetMap contributors, Esri basemap data, and select data from the GIS user community. Worldwide coverage is provided from Level 0 (1:591M scale) through Level 13 (1:72k scale). In North America (Canada, Mexico, United States), Europe, India, South America and Central America, Africa, most of the Middle east, and Australia & New Zealand coverage is provided from Level 14 (1:36k scale) through Level 16 (1:9k scale). For more information on this map, including our terms of use, visit us online at http://goto.arcgisonline.com/maps/World_Light_Gray_Base",
+                            "layers": [
+                                {
+                                    "id": "0",
+                                    "title": "Light Gray Canvas Base",
+                                    "enabled": true
+                                }
+                            ],
+                            "options": {}
                         },
                         {
                             "id": "service_40216",
                             "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
-                            "type": "AGS_TILED"
+                            "type": "AGS_TILED",
+                            "title": "World Topographic Map",
+                            "description": "This map is designed to be used as a basemap by GIS professionals and as a reference map by anyone. The map includes administrative boundaries, cities, water features, physiographic features, parks, landmarks, highways, roads, railways, and airports overlaid on land cover and shaded relief imagery for added context. The map provides coverage for the world down to a scale of ~1:72k. Coverage is provided down to ~1:4k for the following areas: Australia and New Zealand; India; Europe; Canada; Mexico; the continental United States and Hawaii; South America and Central America; Africa; and most of the Middle East. Coverage down to ~1:1k and ~1:2k is available in select urban areas. This basemap was compiled from a variety of best available sources from several data providers, including the U.S. Geological Survey (USGS), U.S. Environmental Protection Agency (EPA), U.S. National Park Service (NPS), Food and Agriculture Organization of the United Nations (FAO), Department of Natural Resources Canada (NRCAN), GeoBase, Agriculture and Agri-Food Canada, DeLorme, HERE, Esri, OpenStreetMap contributors, and the GIS User Community. For more information on this map, including our terms of use, visit us online at http://goto.arcgisonline.com/maps/World_Topo_Map",
+                            "layers": [
+                                {
+                                    "id": "0",
+                                    "title": "Citations",
+                                    "enabled": false
+                                }
+                            ],
+                            "options": {}
                         },
                         {
                             "id": "service_11893",
                             "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
-                            "type": "AGS_TILED"
+                            "type": "AGS_TILED",
+                            "title": "World Street Map",
+                            "description": "This worldwide street map presents highway-level data for the world. Street-level data includes the United States; much of Canada; Mexico; Europe; Japan; Australia and New Zealand; India; South America and Central America; Africa; and most of the Middle East. This comprehensive street map includes highways, major roads, minor roads, one-way arrow indicators, railways, water features, administrative boundaries, cities, parks, and landmarks, overlaid on shaded relief imagery for added context. The map also includes building footprints for selected areas. Coverage is provided down to ~1:4k with ~1:1k and ~1:2k data available in select urban areas. The street map was developed by Esri using Esri basemap data, DeLorme basemap layers, U.S. Geological Survey (USGS) elevation data, Intact Forest Landscape (IFL) data for the world; HERE data for Europe, Australia and New Zealand, North America, South America and Central America, Africa, and most of the Middle East; OpenStreetMap contributors for select countries in Africa; MapmyIndia data in India; and select data from the GIS user community. For more information on this map, including the terms of use, visit us online at http://goto.arcgisonline.com/maps/World_Street_Map",
+                            "layers": [
+                                {
+                                    "id": "0",
+                                    "title": "World Street Map",
+                                    "enabled": true
+                                }
+                            ],
+                            "options": {}
                         },
                         {
                             "id": "stoerungen",
@@ -441,7 +601,8 @@
                             "type": "AGS_DYNAMIC",
                             "title": "Stoerungen",
                             "description": "Karte mit fiktiven Störungsmeldungen für map.apps Trainings.",
-                            "layers": [{
+                            "layers": [
+                                {
                                     "id": "0",
                                     "title": "Störungen",
                                     "enabled": true
@@ -450,9 +611,9 @@
                                     "id": "1",
                                     "title": "Status",
                                     "enabled": true
-                                }],
-                            "options": {
-                            }
+                                }
+                            ],
+                            "options": {}
                         },
                         {
                             "id": "service_54006",
@@ -460,7 +621,8 @@
                             "type": "AGS_DYNAMIC",
                             "title": "USA",
                             "description": "This map contains sample data of the United States.\n\nThis is a sample service hosted by ESRI, powered by ArcGIS Server. ESRI reserves the right to change or remove this service at any time and without notice.",
-                            "layers": [{
+                            "layers": [
+                                {
                                     "id": "0",
                                     "title": "Cities",
                                     "enabled": true
@@ -479,9 +641,9 @@
                                     "id": "3",
                                     "title": "Counties",
                                     "enabled": true
-                                }],
-                            "options": {
-                            }
+                                }
+                            ],
+                            "options": {}
                         },
                         {
                             "id": "service_44082",
@@ -489,7 +651,8 @@
                             "type": "AGS_DYNAMIC",
                             "title": "Airtraffic",
                             "description": "",
-                            "layers": [{
+                            "layers": [
+                                {
                                     "id": "0",
                                     "title": "aerodrome2",
                                     "maxScale": 50000,
@@ -554,16 +717,58 @@
                                     "title": "aerodrome",
                                     "minScale": 2000000,
                                     "enabled": true
-                                }],
-                            "options": {
-                            }
-                        }]
+                                }
+                            ],
+                            "options": {}
+                        },
+                        {
+                            "id": "service_50538",
+                            "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer",
+                            "type": "AGS_FEATURE",
+                            "title": "Zensus Deutschland 2011",
+                            "description": "Bevölkerung nach Geschlecht, Staatsangehörigkeit (Deutsche/Ausländer) und Alter (5 Altersklassen) für Gemeinden, Kreise und Länder, Ergebnisse des Zensus am 9. Mai 2011",
+                            "layers": [
+                                {
+                                    "id": "0",
+                                    "title": "Zensus 2011 Bundesländer",
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "1",
+                                    "title": "Zensus 2011 Kreise",
+                                    "enabled": true
+                                },
+                                {
+                                    "id": "2",
+                                    "title": "Zensus 2011 Gemeinden",
+                                    "enabled": true
+                                }
+                            ],
+                            "options": {}
+                        },
+                        {
+                            "id": "service_78247",
+                            "url": "http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "Earthquakes",
+                            "description": "Earthquake data for the last 90 days from the USGS. In addition to web-based maps and html pages, USGS provides <a href=\"http://earthquake.usgs.gov/earthquakes/\">several alternative ways</a> to obtain real-time earthquake lists. Earthquake information is extracted from a merged catalog of earthquakes located by the USGS and <a href=\"http://earthquake.usgs.gov/earthquakes/aboutmaps.php#datasources\">contributing networks</a>. Earthquakes will be broadcast within a few minutes for California events, and within 30-minutes for worldwide events\n<br><br>\nWe gather this data from the <a href=\"http://earthquake.usgs.gov/earthquakes/catalogs/\">USGS xml feed</a>. These shape files from the kml feed are parsed using the <a href=\"http://www.esriurl.com/LiveFeed\">Aggregated Live Feeds methodology</a> to take the returned information and serve the data through ArcGIS Server as a map service. ",
+                            "layers": [
+                                {
+                                    "id": "0",
+                                    "title": "Earthquakes",
+                                    "enabled": true
+                                }
+                            ],
+                            "options": {}
+                        }
+                    ]
                 }
             },
             "enabled": true
         },
         "selection": {
-            "SelectionTool": [{
+            "SelectionTool": [
+                {
                     "geoType": "Extent",
                     "iconClass": "icon-select-extend",
                     "clickTolerance": 0,
@@ -578,6 +783,14 @@
                     "id": "selectionTool_1441025566349",
                     "storeId": "_AGS_STORE_1441025566339",
                     "title": "Wind Turbines (TurbineInspections)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442225815386",
+                    "storeId": "_AGS_STORE_1442225815376",
+                    "title": "Kreise Bevölkerung (Kreise)"
                 },
                 {
                     "geoType": "Extent",
@@ -599,10 +812,107 @@
                     "geoType": "Extent",
                     "iconClass": "icon-select-extend",
                     "clickTolerance": 0,
+                    "id": "selectionTool_1442227045961",
+                    "storeId": "_AGS_STORE_1442227045951",
+                    "title": "Zensus Deutschland 2011 (Zensus 2011 Kreise)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442227058510",
+                    "storeId": "_AGS_STORE_1442227058500",
+                    "title": "Zensus Deutschland 2011 (Zensus 2011 Gemeinden)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
                     "id": "selectionTool_1441195705851",
                     "storeId": "_AGS_STORE_1441195705828",
                     "title": "USA (States)"
-                }]
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442223158783",
+                    "storeId": "_AGS_STORE_1442223158773",
+                    "title": "WorldToCache (World Cities)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442227368755",
+                    "storeId": "_AGS_STORE_1442227368735",
+                    "title": "Earthquakes (Earthquakes)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442223700365",
+                    "storeId": "_AGS_STORE_1442223700355",
+                    "title": "USGSTOPO (13: Airport Runway)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442226826600",
+                    "storeId": "_AGS_STORE_1442226826579",
+                    "title": "Zensus Deutschland (Bundesländer)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442225265092",
+                    "storeId": "_AGS_STORE_1442225265082",
+                    "title": "Bundeslaendergrenzen (Bundesländergrenzen 2013 (Statistik))"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442225305476",
+                    "storeId": "_AGS_STORE_1442225305466",
+                    "title": "Gemeindegrenzen (Gemeindegrenzen 2013 (Statistik))"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442226408905",
+                    "storeId": "_AGS_STORE_1442226408890",
+                    "title": "Zensus Deutschland (Gemeinden)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442225793021",
+                    "storeId": "_AGS_STORE_1442225793011",
+                    "title": "Kreisgrenzen (Kreisgrenzen 2013 (Statistik))"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442227261227",
+                    "storeId": "_AGS_STORE_1442227261217",
+                    "title": "Hurricane (Forecast Track)"
+                },
+                {
+                    "geoType": "Extent",
+                    "iconClass": "icon-select-extend",
+                    "clickTolerance": 0,
+                    "id": "selectionTool_1442226070638",
+                    "storeId": "_AGS_STORE_1442226070628",
+                    "title": "Zensus Deutschland 2011 (Zensus 2011 Bundesländer)"
+                }
+            ]
         },
         "templates": {
             "TemplateSelector": {
