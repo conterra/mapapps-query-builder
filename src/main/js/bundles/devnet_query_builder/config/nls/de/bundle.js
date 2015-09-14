@@ -22,7 +22,8 @@ define({
         window: {
             title: "Name",
             removeTool: "Custom Query Tool entfernen",
-            addTool: "Custom Query Tool hinzuf\u00fcgen"
+            addTool: "Custom Query Tool hinzuf\u00fcgen",
+            copyTool: "Custom Query Tool kopieren"
         },
         wizard: {
             windowtitle: "Custom Query Tool",

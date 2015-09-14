@@ -24,7 +24,8 @@ define({
                     window: {
                         title: "Name",
                         removeTool: "Remove custom query tool",
-                        addTool: "Add new custom query tool"
+                        addTool: "Add new custom query tool",
+                        copyTool: "Copy custom query tool"
                     },
                     wizard: {
                         windowtitle: "Custom Query Tool",

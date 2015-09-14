@@ -37,13 +37,34 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, _Connect, ct_when, Query, QueryTask, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, TextBox, ValidationTextBox, ComboBox, FilteringSelect, Button, DateTextBox, Memory, domConstruct, ContentPane) {
+], function (d_lang,
+        declare,
+        Deferred,
+        parser,
+        d_array,
+        _Connect,
+        ct_when,
+        Query,
+        QueryTask,
+        _WidgetBase,
+        _TemplatedMixin,
+        _WidgetsInTemplateMixin,
+        template,
+        TextBox,
+        ValidationTextBox,
+        ComboBox,
+        FilteringSelect,
+        Button,
+        DateTextBox,
+        Memory,
+        domConstruct,
+        ContentPane,
+        BorderContainer) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
         templateString: template,
         postCreate: function () {
             this.inherited(arguments);
-            this._i = 0;
             ct_when(this.store.getMetadata(), function (metadata) {
                 this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
                 if (this.type === "user") {
@@ -81,7 +102,6 @@ define([
                 if (this.fieldId) {
                     this._fieldSelect.set("value", this.fieldId);
                 }
-
                 ct_when(this._createCompareSelect(), function () {
                     this.connect(fieldSelect, "onChange", this._changeCompareSelect);
                 }, this);

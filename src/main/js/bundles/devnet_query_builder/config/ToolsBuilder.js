@@ -42,7 +42,6 @@ define([
                             var properties = this._properties || {};
                             var i18nGRID = this._i18n.get().widget.grid;
                             var opts = d_lang.mixin({
-                                //configAdminService: this._configAdminService,
                                 configStore: configStore,
                                 toolbar: this._toolbar,
                                 i18n: i18nGRID
@@ -51,6 +50,7 @@ define([
                             this.connect(widget, "onRemoveQueryTool", "_onRemoveQueryTool");
                             this.connect(widget, "onCreateQueryTool", "_onCreateQueryTool");
                             this.connect(widget, "onEditQueryTool", "_onEditQueryTool");
+                            this.connect(widget, "onCopyQueryTool", "_onCopyQueryTool");
                             return widget;
                         },
                         destroyInstance: function (instance) {
@@ -66,7 +66,7 @@ define([
                         },
                         _getConfigStore: function () {
                             if (!this._configStore) {
-                                var store = this._configStore = new ComplexMemoryStore({
+                                this._configStore = new ComplexMemoryStore({
                                     data: [],
                                     idProperty: "pid",
                                     metadata: {
@@ -125,7 +125,6 @@ define([
                             var props = this._properties.widgetProperties;
                             var config = this._configAdminService.createFactoryConfiguration(props.pid, props.bid);
                             config.update(properties);
-                            //this._updateGrid();
                         },
                         _updateConfig: function (properties) {
                             properties = d_lang.clone(properties);
@@ -147,9 +146,9 @@ define([
                             // search stores
                             var stores = this._agsstores;
                             var storeData = this._getStoreData(stores);
+                            var wizardI18n = this._i18n.get().widget.wizard;
                             return ct_when(storeData, function (storeData) {
                                 // i18n
-                                var wizardI18n = this._i18n.get().widget.wizard;
                                 var wizard = new ToolsBuilderWizard({storeData: storeData, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, agsstores: this._agsstores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer});
                                 return wizard;
                             }, this);
@@ -211,15 +210,13 @@ define([
                                 attachToDom: this._appCtx.builderWindowRoot
                             }), function () {
                                 var store = this._getConfigStore();
-                                d_array.forEach(
-                                        ids,
-                                        function (pid) {
-                                            var config = this._getConfiguration(pid);
-                                            if (config) {
-                                                config.remove();
-                                            }
-                                            store.remove(pid);
-                                        }, this);
+                                d_array.forEach(ids, function (pid) {
+                                    var config = this._getConfiguration(pid);
+                                    if (config) {
+                                        config.remove();
+                                    }
+                                    store.remove(pid);
+                                }, this);
                                 this._updateGrid();
                             }, this);
                         },
@@ -231,8 +228,18 @@ define([
                                 this._openWizardWindow(wizard, true);
                             }, this);
                         },
-                        _substituteDefintion: function (templateWidetDefinition, params) {
-                            return new Hash(templateWidetDefinition).substitute(params, true).asMap();
+                        _onCopyQueryTool: function (event) {
+                            var ids = event.ids || [];
+                            d_array.forEach(ids, function (pid) {
+                                var store = this._getConfigStore();
+                                var config = store.get(pid);
+                                if (config) {
+                                    var date = new Date();
+                                    config.id = "fc_" + date.getTime();
+                                    this._applyConfig(config);
+                                }
+                            }, this);
+                            this._updateGrid();
                         },
                         _updateGrid: function () {
                             this._initConfigStore();

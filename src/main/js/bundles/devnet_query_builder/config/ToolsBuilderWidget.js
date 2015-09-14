@@ -46,7 +46,6 @@ define(["dojo/_base/declare",
             });
         },
         resize: function (dim) {
-            //Beim Klick auf "ToolsBuilderWidget" in der Live- Konfiguration
             if (dim && dim.h > 0) {
                 this._containerNode.resize({
                     w: dim.w,
@@ -138,6 +137,16 @@ define(["dojo/_base/declare",
                 id: itemId
             });
         },
+        copyQueryTool: function () {
+            var selectedIds = this._viewModel.get("selectedIds");
+            if (selectedIds.length === 0) {
+                return;
+            }
+            this.onCopyQueryTool({
+                src: this,
+                ids: selectedIds
+            });
+        },
         updateGrid: function () {
             this._dataView.storeContentChanged();
         },
@@ -146,6 +155,8 @@ define(["dojo/_base/declare",
         onCreateQueryTool: function () {
         },
         onEditQueryTool: function () {
+        },
+        onCopyQueryTool: function () {
         }
     });
 });

@@ -105,7 +105,7 @@
             "enabled": true,
             "propertiesConstructor": true,
             "properties": {
-                "priority": 2,
+                "priority": 3,
                 "toolRole": "filterqueryconfigtool",
                 "id": "addServiceTool",
                 "title": "ADD",
@@ -128,7 +128,7 @@
             "enabled": true,
             "propertiesConstructor": true,
             "properties": {
-                "priority": 1,
+                "priority": 2,
                 "toolRole": "filterqueryconfigtool",
                 "id": "removeSelectedServiceTool",
                 "title": "REMOVE",
@@ -136,6 +136,29 @@
                 "tooltip": "${widget.window.removeTool}",
                 "togglable": false,
                 "clickHandler": "removeQueryTool"
+            },
+            "references": [
+                {
+                    "name": "handlerScope",
+                    "providing": "filterqueryconfig.ToolsBuilderWidget"
+                }
+            ]
+        },
+        {
+            "name": "CopyServiceTool",
+            "impl": "ct/tools/Tool",
+            "provides": ["ct.tools.Tool"],
+            "enabled": true,
+            "propertiesConstructor": true,
+            "properties": {
+                "priority": 1,
+                "toolRole": "filterqueryconfigtool",
+                "id": "copySelectedServiceTool",
+                "title": "REMOVE",
+                "iconClass": "icon-editor-copy",
+                "tooltip": "${widget.window.copyTool}",
+                "togglable": false,
+                "clickHandler": "copyQueryTool"
             },
             "references": [
                 {
