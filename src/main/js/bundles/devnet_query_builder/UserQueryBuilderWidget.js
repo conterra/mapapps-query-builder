@@ -215,11 +215,13 @@ define([
             return s;
         },
         _onDone: function () {
+            this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStore(storeId);
             var filter = new Filter(store, complexQuery, {ignoreCase: true});
             this.dataModel.setDatasource(filter);
+            this._setProcessing(false);
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;

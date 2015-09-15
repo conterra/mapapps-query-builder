@@ -54,7 +54,8 @@ define([
                         l: 20
                     },
                     content: widget,
-                    closable: true
+                    closable: true,
+                    resizable: false
                 });
                 window.show();
             } else {

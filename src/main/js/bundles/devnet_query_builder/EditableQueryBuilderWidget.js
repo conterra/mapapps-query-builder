@@ -84,7 +84,7 @@ define([
             var store = new Memory({
                 data: this.storeData
             });
-            var filteringSelect = this._filteringSelect = new FilteringSelect({
+            this._filteringSelect = new FilteringSelect({
                 name: "stores",
                 value: this.storeData[0].id,
                 store: store,
@@ -100,7 +100,7 @@ define([
                     {name: this.i18n.no, id: "no"}
                 ]
             });
-            var extentSelect = this._extentSelect = new FilteringSelect({
+            this._extentSelect = new FilteringSelect({
                 name: "extent",
                 value: "no",
                 store: extentStore,
@@ -117,7 +117,7 @@ define([
                     {name: this.i18n.any, id: "$or"}
                 ]
             });
-            var matchSelect = this._matchSelect = new FilteringSelect({
+            this._matchSelect = new FilteringSelect({
                 name: "match",
                 value: "$and",
                 store: matchStore,
@@ -212,10 +212,12 @@ define([
             }, this);
         },
         _onDone: function () {
+            this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
             var store = this.store;
             var filter = new Filter(store, complexQuery, {ignoreCase: true});
             this.dataModel.setDatasource(filter);
+            this._setProcessing(false);
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;

@@ -20,6 +20,7 @@ define([
     "dojo/parser",
     "dojo/_base/array",
     "dojo/json",
+    "dojo/dom-style",
     "ct/_Connect",
     "ct/_when",
     "wizard/_BuilderWidget",
@@ -37,7 +38,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -50,6 +51,10 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             this.maxComboBoxHeight = 160;
+            
+            domStyle.set(this._titleTextBox.domNode, "width", "250px");
+            domStyle.set(this._iconClassTextBox.domNode, "width", "209px");
+            
             var store = new Memory({
                 data: this.storeData
             });
