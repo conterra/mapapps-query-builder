@@ -79,22 +79,16 @@ define([
         _init: function () {
             this.maxComboBoxHeight = 160;
 
-            d_html.set(this._title, this.properties.title);
-
             var store = new Memory({
                 data: this.storeData
             });
-            this._filteringSelect = new FilteringSelect({
-                name: "stores",
-                value: this.storeData[0].id,
-                store: store,
-                searchAttr: "name",
-                style: "width: 155px;",
-                maxHeight: this.maxComboBoxHeight,
-                disabled: true
-            }, this._filteringNode);
 
-            var extentStore = this._extentStore = new Memory({
+            d_html.set(this._titleNode, this.properties.title);
+            var storeId = this.store.id;
+            var title = store.get(storeId).name;
+            d_html.set(this._storeNode, title);
+
+            var ynStore = this._ynStore = new Memory({
                 data: [
                     {name: this.i18n.yes, id: "yes"},
                     {name: this.i18n.no, id: "no"}
@@ -103,7 +97,7 @@ define([
             this._extentSelect = new FilteringSelect({
                 name: "extent",
                 value: "no",
-                store: extentStore,
+                store: ynStore,
                 searchAttr: "name",
                 style: "width: 155px;",
                 required: true,
@@ -113,8 +107,8 @@ define([
 
             var matchStore = this._matchStore = new Memory({
                 data: [
-                    {name: this.i18n.all, id: "$and"},
-                    {name: this.i18n.any, id: "$or"}
+                    {name: this.i18n.and, id: "$and"},
+                    {name: this.i18n.or, id: "$or"}
                 ]
             });
             this._matchSelect = new FilteringSelect({

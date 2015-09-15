@@ -161,7 +161,7 @@ define([
                     var window = windowManager.createModalWindow({
                         title: title,
                         marginBox: {
-                            w: 600,
+                            w: 606,
                             h: 500
                         },
                         content: wizard,

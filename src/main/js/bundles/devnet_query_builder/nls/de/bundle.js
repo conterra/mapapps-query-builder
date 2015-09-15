@@ -38,8 +38,8 @@ define({
         match1: "Features abfragen, die ",
         match2: " der folgenden Ausr\u00fccke erf\u00fcllen",
         changeToManual: "Sind Sie sicher? Die Query wird nur noch manuell zu \u00e4ndern sein!",
-        all: "alle",
-        any: "einige",
+        and: "und",
+        or: "oder",
         yes: "ja",
         no: "nein",
         fields: {

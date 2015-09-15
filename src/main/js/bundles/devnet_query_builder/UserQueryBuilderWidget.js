@@ -108,8 +108,8 @@ define([
 
             var matchStore = this._matchStore = new Memory({
                 data: [
-                    {name: this.i18n.all, id: "$and"},
-                    {name: this.i18n.any, id: "$or"}
+                    {name: this.i18n.and, id: "$and"},
+                    {name: this.i18n.or, id: "$or"}
                 ]
             });
             var matchSelect = this._matchSelect = new FilteringSelect({

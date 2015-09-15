@@ -40,8 +40,8 @@ define({
                     match1: "Get features that match ",
                     match2: " of the following expressions",
                     changeToManual: "Are you sure? The query edit-mode will be switched to manual!",
-                    all: "all",
-                    any: "any",
+                    and: "and",
+                    or: "or",
                     yes: "yes",
                     no: "no",
                     fields: {

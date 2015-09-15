@@ -30,7 +30,7 @@
     height: 90px;
 }
 
-.userQueryBuilderWizard .inputContainer .input{
+.userQueryBuilderWizard .inputContainer .settings{
     height: 65px;
 }
 
@@ -52,14 +52,6 @@
     max-width: 300px;
     overflow: hidden;
     text-overflow:ellipsis;
-}
-
-.editableQueryBuilderWizard .inputContainer {
-    height: 90px;
-}
-
-.editableQueryBuilderWizard .inputContainer .input{
-    height: 65px;
 }
 
 .editableQueryBuilderWizard .inline{

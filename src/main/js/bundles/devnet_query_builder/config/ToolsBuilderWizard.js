@@ -51,10 +51,10 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             this.maxComboBoxHeight = 160;
-            
+
             domStyle.set(this._titleTextBox.domNode, "width", "250px");
             domStyle.set(this._iconClassTextBox.domNode, "width", "209px");
-            
+
             var store = new Memory({
                 data: this.storeData
             });
@@ -97,8 +97,8 @@ define([
             }, this._editableNode);
             var matchStore = this._matchStore = new Memory({
                 data: [
-                    {name: this.i18n.all, id: "$and"},
-                    {name: this.i18n.any, id: "$or"}
+                    {name: this.i18n.and, id: "$and"},
+                    {name: this.i18n.or, id: "$or"}
                 ]
             });
             var matchSelect = this._matchSelect = new FilteringSelect({

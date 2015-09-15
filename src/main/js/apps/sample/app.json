@@ -326,7 +326,6 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "yes",
                         "extent": "no",
                         "fields": [
                             {
@@ -334,8 +333,11 @@
                                 "compareId": "is_greater_number",
                                 "value": "25"
                             }
-                        ]
-                    }
+                        ],
+                        "editable": "no"
+                    },
+                    "pid": "devnet_query_builder-QueryTools-0",
+                    "type": "CUSTOM"
                 },
                 {
                     "id": "fc_1441021732534",
@@ -361,7 +363,6 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "no",
                         "extent": "no",
                         "fields": [
                             {
@@ -374,8 +375,11 @@
                                 "compareId": "is_not",
                                 "value": 3
                             }
-                        ]
-                    }
+                        ],
+                        "editable": "no"
+                    },
+                    "pid": "devnet_query_builder-QueryTools-1",
+                    "type": "CUSTOM"
                 },
                 {
                     "id": "fc_1441023991013",
@@ -386,11 +390,12 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "no",
                         "extent": "no",
-                        "fields": []
+                        "fields": [],
+                        "editable": "no"
                     },
-                    "type": "CUSTOM"
+                    "type": "CUSTOM",
+                    "pid": "devnet_query_builder-QueryTools-2"
                 },
                 {
                     "id": "fc_1441976636993",
@@ -423,7 +428,6 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "no",
                         "extent": "no",
                         "fields": [
                             {
@@ -446,10 +450,12 @@
                                 "compareId": "is_less_number",
                                 "value": "20"
                             }
-                        ]
+                        ],
+                        "editable": "no"
                     },
                     "storeId": "owm_datastore",
-                    "type": "CUSTOM"
+                    "type": "CUSTOM",
+                    "pid": "devnet_query_builder-QueryTools-3"
                 },
                 {
                     "id": "fc_1441982464561",
@@ -467,7 +473,6 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "no",
                         "extent": "no",
                         "fields": [
                             {
@@ -475,10 +480,12 @@
                                 "compareId": "is_greater_or_equal_number",
                                 "value": "1000"
                             }
-                        ]
+                        ],
+                        "editable": "no"
                     },
                     "storeId": "_AGS_STORE_1441195340629",
-                    "type": "CUSTOM"
+                    "type": "CUSTOM",
+                    "pid": "devnet_query_builder-QueryTools-4"
                 },
                 {
                     "id": "fc_1441982585646",
@@ -496,7 +503,6 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "no",
                         "extent": "no",
                         "fields": [
                             {
@@ -504,10 +510,12 @@
                                 "compareId": "is",
                                 "value": "Interstate"
                             }
-                        ]
+                        ],
+                        "editable": "no"
                     },
                     "storeId": "_AGS_STORE_1441195356941",
-                    "type": "CUSTOM"
+                    "type": "CUSTOM",
+                    "pid": "devnet_query_builder-QueryTools-5"
                 },
                 {
                     "id": "fc_1442299580413",
@@ -525,7 +533,6 @@
                     "_wizardGUI": {
                         "mode": "builder",
                         "match": "$and",
-                        "editable": "no",
                         "extent": "no",
                         "fields": [
                             {
@@ -533,9 +540,72 @@
                                 "compareId": "is",
                                 "value": "Y"
                             }
+                        ],
+                        "editable": "no"
+                    },
+                    "storeId": "_AGS_STORE_1442299569090",
+                    "pid": "devnet_query_builder-QueryTools-6",
+                    "type": "CUSTOM"
+                },
+                {
+                    "id": "fc_1442315929545",
+                    "title": "Holiday Weather [editable]",
+                    "iconClass": "icon-selection-circle",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "temp": {
+                                    "$gte": 25
+                                }
+                            },
+                            {
+                                "temp": {
+                                    "$lte": 35
+                                }
+                            },
+                            {
+                                "humidity": {
+                                    "$lte": 50
+                                }
+                            },
+                            {
+                                "clouds": {
+                                    "$lt": 20
+                                }
+                            }
                         ]
                     },
-                    "storeId": "_AGS_STORE_1442299569090"
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "temp",
+                                "compareId": "is_greater_or_equal_number",
+                                "value": "25"
+                            },
+                            {
+                                "fieldId": "temp",
+                                "compareId": "is_less_or_equal_number",
+                                "value": "35"
+                            },
+                            {
+                                "fieldId": "humidity",
+                                "compareId": "is_less_or_equal_number",
+                                "value": "50"
+                            },
+                            {
+                                "fieldId": "clouds",
+                                "compareId": "is_less_number",
+                                "value": "20"
+                            }
+                        ],
+                        "editable": "yes"
+                    },
+                    "storeId": "owm_datastore",
+                    "type": "CUSTOM",
+                    "pid": "devnet_query_builder-QueryTools-7"
                 }
             ],
             "enabled": true
