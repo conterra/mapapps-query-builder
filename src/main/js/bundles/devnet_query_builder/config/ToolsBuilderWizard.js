@@ -66,7 +66,7 @@ define([
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
-            var extentStore = this._extentStore = new Memory({
+            var ynStore = this._extentStore = new Memory({
                 data: [
                     {name: this.i18n.yes, id: "yes"},
                     {name: this.i18n.no, id: "no"}
@@ -75,12 +75,21 @@ define([
             var extentSelect = this._extentSelect = new FilteringSelect({
                 name: "extent",
                 value: "no",
-                store: extentStore,
+                store: ynStore,
                 searchAttr: "name",
                 style: "width: 80px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._extentNode);
+            var editableSelect = this._editableSelect = new FilteringSelect({
+                name: "editable",
+                value: "no",
+                store: ynStore,
+                searchAttr: "name",
+                style: "width: 80px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight
+            }, this._editableNode);
             var matchStore = this._matchStore = new Memory({
                 data: [
                     {name: this.i18n.all, id: "$and"},
@@ -181,6 +190,7 @@ define([
                     def.resolve();
                 }
                 this.properties._wizardGUI.match = this._matchSelect.value;
+                this.properties._wizardGUI.editable = this._editableSelect.value;
                 this.properties._wizardGUI.extent = this._extentSelect.value;
                 var children = this._queryNode.children;
                 if (children.length > 0)
@@ -362,6 +372,8 @@ define([
         _createGUI: function (wizardGUI) {
             var match = wizardGUI.match;
             this._matchSelect.set("value", match);
+            var editable = wizardGUI.editable;
+            this._editableSelect.set("value", editable);
             var extent = wizardGUI.extent;
             this._extentSelect.set("value", extent);
             var fields = wizardGUI.fields;

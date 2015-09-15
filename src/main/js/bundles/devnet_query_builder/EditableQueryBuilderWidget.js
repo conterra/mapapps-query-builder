@@ -21,9 +21,10 @@ define([
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/UserQueryBuilderWidget.html",
+    "dojo/text!./templates/EditableQueryBuilderWidget.html",
     "./config/FieldWidget",
     "dojo/_base/lang",
+    "dojo/html",
     "dojo/store/Memory",
     "dijit/registry",
     "dijit/form/TextBox",
@@ -46,6 +47,7 @@ define([
         templateStringContent,
         FieldWidget,
         d_lang,
+        d_html,
         Memory,
         d_registry,
         TextBox,
@@ -61,14 +63,13 @@ define([
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
         templateString: templateStringContent,
-        baseClass: "userQueryBuilderWizard",
+        baseClass: "editableQueryBuilderWizard",
         postCreate: function () {
             this.inherited(arguments);
         },
         startup: function () {
             this.inherited(arguments);
-            // search stores
-            var stores = this.stores;
+            var stores = [this.store];
             var storeData = this._getStoreData(stores);
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
@@ -77,6 +78,9 @@ define([
         },
         _init: function () {
             this.maxComboBoxHeight = 160;
+
+            d_html.set(this._title, this.properties.title);
+
             var store = new Memory({
                 data: this.storeData
             });
@@ -86,9 +90,9 @@ define([
                 store: store,
                 searchAttr: "name",
                 style: "width: 155px;",
-                maxHeight: this.maxComboBoxHeight
+                maxHeight: this.maxComboBoxHeight,
+                disabled: true
             }, this._filteringNode);
-            filteringSelect.startup();
 
             var extentStore = this._extentStore = new Memory({
                 data: [
@@ -103,7 +107,8 @@ define([
                 searchAttr: "name",
                 style: "width: 155px;",
                 required: true,
-                maxHeight: this.maxComboBoxHeight
+                maxHeight: this.maxComboBoxHeight,
+                disabled: true
             }, this._extentNode);
 
             var matchStore = this._matchStore = new Memory({
@@ -119,13 +124,11 @@ define([
                 searchAttr: "name",
                 style: "width: 155px;",
                 required: true,
-                maxHeight: this.maxComboBoxHeight
+                maxHeight: this.maxComboBoxHeight,
+                disabled: true
             }, this._matchNode);
 
-            this._changeMatchVisibility();
-
-            this.connect(filteringSelect, "onChange", this._removeFields);
-            //on(filteringSelect, "onChange", this._removeFields);
+            this._createGUI(this.properties._wizardGUI);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
@@ -147,35 +150,15 @@ define([
             var winSize = 'width=800,height=600,scrollbars=yes';
             var ref = window.open(winURL, winName, winSize);
         },
-        _changeMatchVisibility: function () {
+        _changeExtentVisibility: function () {
             if (this._queryNode.children.length > 1) {
                 ct_css.switchHidden(this._matchDiv, false);
             } else {
                 ct_css.switchHidden(this._matchDiv, true);
             }
         },
-        _addField: function () {
-            var storeId = this._filteringSelect.get("value");
-            var storeData = this._getFields();
-            var fieldWidget = new FieldWidget({
-                store: this._getSelectedStore(storeId),
-                storeData: storeData,
-                i18n: this.i18n.fields,
-                type: "user"
-            });
-            this.connect(fieldWidget, "_remove", this._changeMatchVisibility);
-            domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            this._changeMatchVisibility();
-        },
-        _removeFields: function () {
-            while (this._queryNode.firstChild) {
-                this._queryNode.removeChild(this._queryNode.firstChild);
-                this._changeMatchVisibility();
-            }
-        },
         _getFields: function () {
-            var storeId = this._filteringSelect.get("value");
-            var store = this._getSelectedStore(storeId);
+            var store = this.store;
             var metadata = store.getMetadata();
             var fields = metadata.fields;
             var storeData = [];
@@ -194,6 +177,19 @@ define([
             });
             return storeData;
         },
+        _addDataField: function (field) {
+            var storeData = this._getFields();
+            var fieldWidget = new FieldWidget({
+                store: this.store,
+                storeData: storeData,
+                i18n: this.i18n.fields,
+                fieldId: field.fieldId,
+                compareId: field.compareId,
+                value: field.value,
+                type: "editing"
+            });
+            domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+        },
         _getStoreData: function (stores) {
             return ct_async.join(d_array.map(stores, function (s) {
                 return s.getMetadata();
@@ -205,19 +201,19 @@ define([
                 });
             });
         },
-        _getSelectedStore: function (id) {
-            var s;
-            d_array.forEach(this.stores, function (store) {
-                if (id === store.id) {
-                    s = store;
-                }
+        _createGUI: function (wizardGUI) {
+            var match = wizardGUI.match;
+            this._matchSelect.set("value", match);
+            var extent = wizardGUI.extent;
+            this._extentSelect.set("value", extent);
+            var fields = wizardGUI.fields;
+            d_array.forEach(fields, function (field) {
+                this._addDataField(field);
             }, this);
-            return s;
         },
         _onDone: function () {
             var complexQuery = this._getComplexQuery();
-            var storeId = this._filteringSelect.get("value");
-            var store = this._getSelectedStore(storeId);
+            var store = this.store;
             var filter = new Filter(store, complexQuery, {ignoreCase: true});
             this.dataModel.setDatasource(filter);
         },

@@ -57,6 +57,18 @@
             "references": [{
                     "name": "_eventService",
                     "providing": "ct.framework.api.EventService"
+                },
+                {
+                    "name": "_mapState",
+                    "providing": "ct.mapping.map.MapState"
+                },
+                {
+                    "name": "_dataModel",
+                    "providing": "ct.resultcenter.DataModel"
+                },
+                {
+                    "name": "_windowManager",
+                    "providing": "ct.framework.api.WindowManager"
                 }]
         }, {
             "name": "UserQueryBuilderWidgetFactory",

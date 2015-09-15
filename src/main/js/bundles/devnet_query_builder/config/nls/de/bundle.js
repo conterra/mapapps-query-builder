@@ -38,6 +38,7 @@ define({
             customQuery: "Custom Query",
             queryDefinition: "Query Definiton:",
             useExtent: "Aktueller Kartenausschnitt",
+            editable: "Editierbar",
             addField: "Feld hinzuf\u00fcgen",
             storeId: "Store",
             cancel: "Abbrechen",

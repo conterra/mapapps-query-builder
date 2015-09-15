@@ -40,6 +40,7 @@ define({
                         customQuery: "Custom Query",
                         queryDefinition: "Query definiton:",
                         useExtent: "Current extent",
+                        editable: "Editable",
                         addField: "Add Field",
                         storeId: "Store",
                         cancel: "Cancel",

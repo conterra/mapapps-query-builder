@@ -27,7 +27,7 @@ define([
             var stores = this._stores;
             var mapState = this._mapState;
             var dataModel = this._dataModel;
-            var widget = this.widget = new UserQueryBuilderWidget({
+            this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
                 tool: tool,

@@ -38,3 +38,31 @@
     display: inline;
 }
 
+.editableQueryBuilderWizard .dijitComboBox{
+    margin-bottom: 1px;
+}
+
+.editableQueryBuilderWizard .title{
+    margin-bottom: 5px;
+}
+
+.editableQueryBuilderWizard .inputContainer label{
+    display: inline-block;
+    min-width: 150px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+.editableQueryBuilderWizard .inputContainer {
+    height: 90px;
+}
+
+.editableQueryBuilderWizard .inputContainer .input{
+    height: 65px;
+}
+
+.editableQueryBuilderWizard .inline{
+    display: inline;
+}
+

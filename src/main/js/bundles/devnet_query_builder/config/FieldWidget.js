@@ -71,10 +71,17 @@ define([
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
+                    this.fieldSelectDisabled = false;
+                } else if (this.type === "editing") {
+                    this._fieldSelectWidth = "width: 140px;";
+                    this._valueSelectWidth = "width: 120px;";
+                    this._compareSelectWidth = "width: 120px;";
+                    this.fieldSelectDisabled = true;
                 } else {
                     this._fieldSelectWidth = "width: 180px;";
                     this._valueSelectWidth = "width: 200px;";
                     this._compareSelectWidth = "width: 120px;";
+                    this.fieldSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 160;
                 var fieldData = this.storeData;
@@ -87,18 +94,22 @@ define([
                     store: fieldStore,
                     searchAttr: "title",
                     style: this._fieldSelectWidth,
-                    maxHeight: this.maxComboBoxHeight
+                    maxHeight: this.maxComboBoxHeight,
+                    disabled: this.fieldSelectDisabled
                 }, this._fieldNode);
                 fieldSelect.startup();
-                var removeButton = new Button({
-                    label: "-",
-                    onClick: function () {
-                        removeButton.domNode.parentNode.remove();
-                        this._remove();
-                    }.bind(this)
-                });
-                domConstruct.place(removeButton.domNode, this._buttonNode, "replace");
-                removeButton.startup();
+                if (this.type !== "editing") {
+                    var removeButton = new Button({
+                        label: "-",
+                        onClick: function () {
+                            removeButton.domNode.parentNode.remove();
+                            this._remove();
+                        }.bind(this)
+                    });
+                    domConstruct.place(removeButton.domNode, this._buttonNode, "replace");
+                    removeButton.startup();
+                }
+
                 if (this.fieldId) {
                     this._fieldSelect.set("value", this.fieldId);
                 }

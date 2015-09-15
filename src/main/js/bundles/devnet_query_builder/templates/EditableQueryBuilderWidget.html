@@ -1,0 +1,32 @@
+<div>
+    <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters: false, design: 'headline'">
+        <div data-dojo-attach-point="_topNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'" class="inputContainer">
+            <div class="input">
+                <div class="title">
+                    <label>${i18n.title}</label>
+                    <label data-dojo-attach-point="_title"></label>
+                </div>
+                <div>
+                    <label>${i18n.storeId}</label>
+                    <input data-dojo-attach-point="_filteringNode">
+                </div>
+                <div>
+                    <label>${i18n.useExtent}</label>
+                    <input data-dojo-attach-point="_extentNode">
+                </div>
+                <div data-dojo-attach-point="_matchDiv">
+                    <label>${i18n.match}</label>
+                    <input data-dojo-attach-point="_matchNode">
+                </div>
+            </div>
+        </div>
+        <div data-dojo-attach-point="_centerNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'">
+            <div data-dojo-attach-point="_queryNode"></div>
+        </div>
+        <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'bottom'">
+            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone">
+                ${i18n.done}
+            </button>
+        </div>
+    </div>
+</div>
