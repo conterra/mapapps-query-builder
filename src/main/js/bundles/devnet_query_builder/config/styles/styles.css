@@ -13,28 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-.userQueryBuilderWizard .dijitComboBox{
+.queryBuilderWizard .dijitComboBox{
     margin-bottom: 1px;
 }
 
-.userQueryBuilderWizard .inputContainer label{
+.queryBuilderWizard .inputContainer label{
     display: inline-block;
-    min-width: 150px;
+    min-width: 100px;
     max-width: 300px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
+}
+.queryBuilderWizard .settings label{
+    display: inline-block;
+    min-width: 160px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.userQueryBuilderWizard .inputContainer {
-    height: 90px;
+.queryBuilderWizard .head{
+    margin-bottom: 8px;
 }
 
-.userQueryBuilderWizard .inputContainer .input{
-    height: 65px;
+.queryBuilderWizard .rightFloatingButton{
+    float: right;
+}
+.queryBuilderWizard .button{
+    padding-bottom: 5px;
 }
 
-.userQueryBuilderWizard .inline{
+.queryBuilderWizard .inline{
     display: inline;
 }
 

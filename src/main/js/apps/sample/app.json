@@ -203,6 +203,27 @@
                     "fetchIdProperty": true,
                     "enablePagination": false,
                     "id": "_AGS_STORE_1442227368735"
+                },
+                {
+                    "title": "USA (Cities)",
+                    "description": "",
+                    "omniSearchLabelAttr": "areaname",
+                    "omniSearchSearchAttr": "areaname",
+                    "idProperty": "objectid",
+                    "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0",
+                    "useIn": [
+                        "omnisearch",
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "omniSearchTypingDelay": 500,
+                    "omniSearchPageSize": 20,
+                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+                    "fetchIdProperty": true,
+                    "enablePagination": false,
+                    "id": "_AGS_STORE_1442299569090"
                 }
             ],
             "enabled": true
@@ -355,33 +376,6 @@
                     }
                 },
                 {
-                    "id": "fc_1441023863926",
-                    "title": "Which are the capitals of the U.S. states?",
-                    "iconClass": "icon-house",
-                    "storeId": "usa_cities",
-                    "customquery": {
-                        "$and": [
-                            {
-                                "capital": {
-                                    "$eq": "Y"
-                                }
-                            }
-                        ]
-                    },
-                    "_wizardGUI": {
-                        "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "capital",
-                                "compareId": "is",
-                                "value": "Y"
-                            }
-                        ]
-                    }
-                },
-                {
                     "id": "fc_1441023991013",
                     "title": "Where are Germany's airports?",
                     "iconClass": "icon-airport",
@@ -508,8 +502,36 @@
                     },
                     "storeId": "_AGS_STORE_1441195356941",
                     "type": "CUSTOM"
+                },
+                {
+                    "id": "fc_1442299580413",
+                    "title": "Which are the capitals of the U.S. states?",
+                    "iconClass": "icon-house",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "capital": {
+                                    "$eq": "Y"
+                                }
+                            }
+                        ]
+                    },
+                    "_wizardGUI": {
+                        "mode": "builder",
+                        "match": "$and",
+                        "extent": "no",
+                        "fields": [
+                            {
+                                "fieldId": "capital",
+                                "compareId": "is",
+                                "value": "Y"
+                            }
+                        ]
+                    },
+                    "storeId": "_AGS_STORE_1442299569090"
                 }
-            ]
+            ],
+            "enabled": true
         },
         "map": {
             "MapModelFactory": {

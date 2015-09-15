@@ -14,7 +14,7 @@
     ],
     "CSS-Themes-Extension": [{
             "name": "*",
-            "files": ["../styles/styles.css"]
+            "files": ["./styles/styles.css"]
         }],
     "Components": [
         {
