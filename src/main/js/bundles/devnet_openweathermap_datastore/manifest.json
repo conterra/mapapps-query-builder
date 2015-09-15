@@ -406,8 +406,23 @@
                             "type": "number"
                         },
                         {
-                            "title": "Windspeed [m/s]",
+                            "title": "Wind speed [m/s]",
                             "name": "windspeed",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Wind direction [°]",
+                            "name": "winddirection",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Rain [mm/1h]",
+                            "name": "rain1",
+                            "type": "number"
+                        },
+                        {
+                            "title": "Rain [mm/3h]",
+                            "name": "rain3",
                             "type": "number"
                         }
                     ]

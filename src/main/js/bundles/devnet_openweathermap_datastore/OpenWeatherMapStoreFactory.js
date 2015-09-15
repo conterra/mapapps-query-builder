@@ -39,10 +39,8 @@ define([
     return declare([], {
         activate: function () {
             var properties = this._properties || {};
-
             // check mandatory parameters
             ct_lang.hasProp(properties, "url", true);
-
             var params = {};
             params.units = "metric";
             params.cluster = "no";
@@ -100,6 +98,19 @@ define([
                 attr.humidity = obj.main.humidity;
                 attr.clouds = obj.clouds.all;
                 attr.windspeed = obj.wind.speed;
+                attr.winddirection = obj.wind.deg;
+                var rain1;
+                var rain3;
+                if (obj.rain) {
+                    if (obj.rain["1h"]) {
+                        rain1 = obj.rain["1h"];
+                    }
+                    if (obj.rain["3h"]) {
+                        rain3 = obj.rain["3h"];
+                    }
+                }
+                attr.rain1 = rain1;
+                attr.rain3 = rain3;
                 var icon = attr.icon = obj.weather[0].icon;
                 var url = "http://openweathermap.org/img/w/" + icon + ".png";
                 var symbol = new PictureMarkerSymbol(url, 30, 30);
@@ -115,6 +126,9 @@ define([
                 item.humidity = obj.main.humidity;
                 item.clouds = obj.clouds.all;
                 item.windspeed = obj.wind.speed;
+                item.winddirection = obj.wind.deg;
+                item.rain1 = rain1;
+                item.rain3 = rain3;
                 items.push(item);
             });
             var geometries = d_array.map(items, function (item) {

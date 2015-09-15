@@ -248,6 +248,12 @@
                 }]
         },
         "resultcenter": {
+            "DataView": {
+                "itemsPerPage": 100
+            },
+            "FeatureMapVisualizer": {
+                "useDataViewPaging": true
+            },
             "ActionController": {
                 "zoomToFeatures": true
             },
