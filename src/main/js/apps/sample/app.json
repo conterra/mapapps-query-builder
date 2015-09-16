@@ -23,8 +23,8 @@
             "windowmanager",
             "toolset",
             "basemaptoggler",
-            "devnet_query_builder",
-            "devnet_openweathermap_datastore"
+            "dn_querybuilder",
+            "dn_openweathermapdatastore"
         ]
     },
     "bundles": {
@@ -313,7 +313,7 @@
                 }
             }
         },
-        "devnet_query_builder": {
+        "dn_querybuilder": {
             "QueryTools": [
                 {
                     "id": "fc_1441279619509",
@@ -341,9 +341,7 @@
                             }
                         ],
                         "editable": "no"
-                    },
-                    "pid": "devnet_query_builder-QueryTools-0",
-                    "type": "CUSTOM"
+                    }
                 },
                 {
                     "id": "fc_1441021732534",
@@ -383,9 +381,7 @@
                             }
                         ],
                         "editable": "no"
-                    },
-                    "pid": "devnet_query_builder-QueryTools-1",
-                    "type": "CUSTOM"
+                    }
                 },
                 {
                     "id": "fc_1441023991013",
@@ -399,9 +395,7 @@
                         "extent": "no",
                         "fields": [],
                         "editable": "no"
-                    },
-                    "type": "CUSTOM",
-                    "pid": "devnet_query_builder-QueryTools-2"
+                    }
                 },
                 {
                     "id": "fc_1441976636993",
@@ -459,9 +453,7 @@
                         ],
                         "editable": "no"
                     },
-                    "storeId": "owm_datastore",
-                    "type": "CUSTOM",
-                    "pid": "devnet_query_builder-QueryTools-3"
+                    "storeId": "owm_datastore"
                 },
                 {
                     "id": "fc_1441982464561",
@@ -489,9 +481,7 @@
                         ],
                         "editable": "no"
                     },
-                    "storeId": "_AGS_STORE_1441195340629",
-                    "type": "CUSTOM",
-                    "pid": "devnet_query_builder-QueryTools-4"
+                    "storeId": "_AGS_STORE_1441195340629"
                 },
                 {
                     "id": "fc_1441982585646",
@@ -519,9 +509,7 @@
                         ],
                         "editable": "no"
                     },
-                    "storeId": "_AGS_STORE_1441195356941",
-                    "type": "CUSTOM",
-                    "pid": "devnet_query_builder-QueryTools-5"
+                    "storeId": "_AGS_STORE_1441195356941"
                 },
                 {
                     "id": "fc_1442299580413",
@@ -549,9 +537,7 @@
                         ],
                         "editable": "no"
                     },
-                    "storeId": "_AGS_STORE_1442299569090",
-                    "pid": "devnet_query_builder-QueryTools-6",
-                    "type": "CUSTOM"
+                    "storeId": "_AGS_STORE_1442299569090"
                 },
                 {
                     "id": "fc_1442315929545",
@@ -609,9 +595,7 @@
                         ],
                         "editable": "yes"
                     },
-                    "storeId": "owm_datastore",
-                    "type": "CUSTOM",
-                    "pid": "devnet_query_builder-QueryTools-7"
+                    "storeId": "owm_datastore"
                 }
             ],
             "enabled": true

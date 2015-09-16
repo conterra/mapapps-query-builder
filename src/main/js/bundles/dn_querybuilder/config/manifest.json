@@ -1,5 +1,5 @@
 {
-    "Bundle-SymbolicName": "query_builder-config",
+    "Bundle-SymbolicName": "querybuilder-config",
     "Bundle-Version": "3.0.0",
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
@@ -42,8 +42,8 @@
             "instanceFactory": true,
             "properties": {
                 "widgetProperties": {
-                    "bid": "devnet_query_builder",
-                    "pid": "devnet_query_builder-QueryTools-Factory",
+                    "bid": "dn_querybuilder",
+                    "pid": "dn_querybuilder-QueryTools-Factory",
                     "id": "toolsBuilderwidget",
                     "description": "${description}"
                 }
