@@ -329,18 +329,15 @@
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "temp",
-                                "compareId": "is_greater_number",
-                                "value": "25"
-                            }
-                        ],
-                        "editable": "no"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     }
                 },
                 {
@@ -357,30 +354,20 @@
                             },
                             {
                                 "status": {
-                                    "$not": {
-                                        "$eq": 3
-                                    }
+                                    "$eq": 1
                                 }
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "art",
-                                "compareId": "is",
-                                "value": 5
-                            },
-                            {
-                                "fieldId": "status",
-                                "compareId": "is_not",
-                                "value": 3
-                            }
-                        ],
-                        "editable": "no"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     }
                 },
                 {
@@ -389,12 +376,15 @@
                     "iconClass": "icon-airport",
                     "storeId": "airtraffic",
                     "customquery": {},
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [],
-                        "editable": "no"
+                        "count": 5,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     }
                 },
                 {
@@ -425,33 +415,15 @@
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "temp",
-                                "compareId": "is_greater_or_equal_number",
-                                "value": "25"
-                            },
-                            {
-                                "fieldId": "temp",
-                                "compareId": "is_less_or_equal_number",
-                                "value": "35"
-                            },
-                            {
-                                "fieldId": "humidity",
-                                "compareId": "is_less_or_equal_number",
-                                "value": "50"
-                            },
-                            {
-                                "fieldId": "clouds",
-                                "compareId": "is_less_number",
-                                "value": "20"
-                            }
-                        ],
-                        "editable": "no"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     },
                     "storeId": "owm_datastore"
                 },
@@ -468,18 +440,15 @@
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "pop00_sqmi",
-                                "compareId": "is_greater_or_equal_number",
-                                "value": "1000"
-                            }
-                        ],
-                        "editable": "no"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     },
                     "storeId": "_AGS_STORE_1441195340629"
                 },
@@ -496,18 +465,15 @@
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "admn_class",
-                                "compareId": "is",
-                                "value": "Interstate"
-                            }
-                        ],
-                        "editable": "no"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     },
                     "storeId": "_AGS_STORE_1441195356941"
                 },
@@ -524,18 +490,15 @@
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "no",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "capital",
-                                "compareId": "is",
-                                "value": "Y"
-                            }
-                        ],
-                        "editable": "no"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     },
                     "storeId": "_AGS_STORE_1442299569090"
                 },
@@ -567,33 +530,15 @@
                             }
                         ]
                     },
-                    "_wizardGUI": {
+                    "options": {
+                        "editable": "yes",
                         "mode": "builder",
-                        "match": "$and",
-                        "extent": "no",
-                        "fields": [
-                            {
-                                "fieldId": "temp",
-                                "compareId": "is_greater_or_equal_number",
-                                "value": "25"
-                            },
-                            {
-                                "fieldId": "temp",
-                                "compareId": "is_less_or_equal_number",
-                                "value": "35"
-                            },
-                            {
-                                "fieldId": "humidity",
-                                "compareId": "is_less_or_equal_number",
-                                "value": "50"
-                            },
-                            {
-                                "fieldId": "clouds",
-                                "compareId": "is_less_number",
-                                "value": "20"
-                            }
-                        ],
-                        "editable": "yes"
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
                     },
                     "storeId": "owm_datastore"
                 }

@@ -30,7 +30,7 @@ define([
             }
             var customquery = event.customquery;
             var topic = "ct/selection/SELECTION_END";
-            if (event._wizardGUI.editable === "yes") {
+            if (event.options.editable === "yes") {
                 var props = event._properties;
                 var i18n = event._i18n.get();
                 var tool = event.tool;
@@ -48,7 +48,7 @@ define([
                 var window = this._windowManager.createWindow({
                     title: i18n.wizard.windowTitle,
                     marginBox: {
-                        w: 432,
+                        w: 500,
                         h: 360,
                         t: 100,
                         l: 20
@@ -59,9 +59,13 @@ define([
                 });
                 window.show();
             } else {
+                var options = {};
+                options.count = event.options.count;
+                options.ignoreCase = event.options.ignoreCase;
+                options.locale = event.options.locale;
                 this._eventService.postEvent(topic, {
                     source: this,
-                    store: customquery ? Filter(store, customquery, {ignoreCase: true}) : store
+                    store: customquery ? Filter(store, customquery, options) : store
                 });
             }
         }

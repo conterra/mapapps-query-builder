@@ -32,13 +32,14 @@ define([
     "dojo/text!./templates/ToolsBuilderWizard.html",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
+    "dijit/form/NumberTextBox",
     "dijit/form/FilteringSelect",
     "dijit/form/Button",
     "dojo/store/Memory",
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -51,10 +52,8 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             this.maxComboBoxHeight = 160;
-
             domStyle.set(this._titleTextBox.domNode, "width", "250px");
             domStyle.set(this._iconClassTextBox.domNode, "width", "209px");
-
             var store = new Memory({
                 data: this.storeData
             });
@@ -71,62 +70,15 @@ define([
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
-            var ynStore = this._extentStore = new Memory({
-                data: [
-                    {name: this.i18n.yes, id: "yes"},
-                    {name: this.i18n.no, id: "no"}
-                ]
-            });
-            var extentSelect = this._extentSelect = new FilteringSelect({
-                name: "extent",
-                value: "no",
-                store: ynStore,
-                searchAttr: "name",
-                style: "width: 80px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }, this._extentNode);
-            var editableSelect = this._editableSelect = new FilteringSelect({
-                name: "editable",
-                value: "no",
-                store: ynStore,
-                searchAttr: "name",
-                style: "width: 80px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }, this._editableNode);
-            var matchStore = this._matchStore = new Memory({
-                data: [
-                    {name: this.i18n.and, id: "$and"},
-                    {name: this.i18n.or, id: "$or"}
-                ]
-            });
-            var matchSelect = this._matchSelect = new FilteringSelect({
-                name: "match",
-                value: "$and",
-                store: matchStore,
-                searchAttr: "name",
-                style: "width: 80px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }, this._matchNode);
-            var wizardGUI = this.properties._wizardGUI;
-            if (wizardGUI) {
-                if (wizardGUI.mode === "builder") {
-                    this._createGUI(wizardGUI);
-                    this._builderTab.set("selected", true);
-                    //this._manualTab.set("selected", false);
-                    //this._manualTab.set("disabled", true);
-                } else if (wizardGUI.mode === "manual") {
-                    this._manualTab.set("selected", true);
-                    this._builderTab.set("selected", false);
-                    this._builderTab.set("disabled", true);
-                }
-            }
+
+            this._createBuilderGUI();
+            this._createOptionsGUI();
 
             this.connect(filteringSelect, "onChange", this._removeFields);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
+            this.connect(this._titleTextBox, "onChange", this._checkSelectedTab);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
+            this.connect(this._centerNode, "onClick", this._checkSelectedTab);
         },
         _checkValidation: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -164,11 +116,11 @@ define([
         },
         _saveProperties: function () {
             var def = new Deferred();
-            if (!this.properties._wizardGUI) {
-                this.properties._wizardGUI = {};
+            if (!this.properties.options) {
+                this.properties.options = {};
             }
             if (this._builderTab.get("selected")) {
-                this.properties._wizardGUI.mode = "builder";
+                this.properties.options.mode = "builder";
                 var match = this._matchSelect.value;
                 var customQuery = {};
                 var extent;
@@ -194,102 +146,45 @@ define([
                      };*/
                     def.resolve();
                 }
-                this.properties._wizardGUI.match = this._matchSelect.value;
-                this.properties._wizardGUI.editable = this._editableSelect.value;
-                this.properties._wizardGUI.extent = this._extentSelect.value;
                 var children = this._queryNode.children;
                 if (children.length > 0)
                 {
                     customQuery[match] = [];
                 }
-                this.properties._wizardGUI.fields = [];
                 d_array.forEach(children, function (child) {
                     var widget = d_registry.getEnclosingWidget(child);
-                    var fieldId = widget._getSelectedField().id;
-                    var compareId = widget._getSelectedCompare().id;
+                    var fieldId = widget._getSelectedField();
+                    var fieldType = widget._getSelectedFieldType();
+                    var compareId = widget._getSelectedCompare();
+                    var not = widget._getSelectedNot();
                     var value = widget._getValue();
-                    this.properties._wizardGUI.fields.push({fieldId: fieldId, compareId: compareId, value: value});
-                    switch (compareId) {
-                        case "is":
-                            var obj = {};
-                            obj[fieldId] = {$eq: value};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_not":
-                            var obj = {};
-                            obj[fieldId] = {$not: {$eq: value}};
-                            customQuery[match].push(obj);
-                            break;
-                        case "contains":
-                            var obj = {};
-                            obj[fieldId] = {$eqw: "*" + value + "*"};
-                            customQuery[match].push(obj);
-                            break;
-                        case "contains_not":
-                            var obj = {};
-                            obj[fieldId] = {$not: {$eqw: "*" + value + "*"}};
-                            customQuery[match].push(obj);
-                            break;
-                        case "starts_with":
-                            var obj = {};
-                            obj[fieldId] = {$eqw: value + "*"};
-                            customQuery[match].push(obj);
-                            break;
-                        case "ends_with":
-                            var obj = {};
-                            obj[fieldId] = {$eqw: "*" + value};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_number":
-                            var obj = {};
-                            obj[fieldId] = {$eq: parseFloat(value)};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_not_number":
-                            var obj = {};
-                            obj[fieldId] = {$not: {$eq: parseFloat(value)}};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_greater_number":
-                            var obj = {};
-                            obj[fieldId] = {$gt: parseFloat(value)};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_greater_or_equal_number":
-                            var obj = {};
-                            obj[fieldId] = {$gte: parseFloat(value)};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_less_number":
-                            var obj = {};
-                            obj[fieldId] = {$lt: parseFloat(value)};
-                            customQuery[match].push(obj);
-                            break;
-                        case "is_less_or_equal_number":
-                            var obj = {};
-                            obj[fieldId] = {$lte: parseFloat(value)};
-                            customQuery[match].push(obj);
-                            break;
-                        case "before":
-                            //TODO
-                            break;
-                        case "after":
-                            //TODO
-                            break;
-                        default:
+                    if (fieldType === "number") {
+                        value = new Number(value);
+                    }
+                    var obj1 = {};
+                    obj1[compareId] = value;
+                    var obj2 = {};
+                    obj2[fieldId] = obj1;
+                    if (not) {
+                        var object = {$not: obj2};
+                        customQuery[match].push(object);
+                    } else {
+                        customQuery[match].push(obj2);
                     }
                 }, this);
                 this.properties.customquery = customQuery;
+                this.properties.options.editable = this._editableSelect.get("value");
             } else {
-                var customQuery = this._customQueryTextArea.get("value");
-                if (this.properties._wizardGUI.mode === "builder") {
+                var customQuery = this._customQueryTextArea.value;
+                if (this.properties.options.mode === "builder") {
                     var customQueryObj = this._getCustomQuery(customQuery);
                     ct_when(this.windowManager.createInfoDialogWindow({
                         message: this.i18n.changeToManual,
                         attachToDom: this.appCtx.builderWindowRoot
                     }), function () {
                         this.properties.customquery = customQueryObj;
-                        this.properties._wizardGUI.mode = "manual";
+                        this.properties.options.mode = "manual";
+                        this.properties.options.editable = false;
                         def.resolve();
                     }, this);
                 } else {
@@ -297,10 +192,16 @@ define([
                     def.resolve();
                 }
             }
-            this.properties.title = this._titleTextBox.get("value");
-            this.properties.iconClass = this._iconClassTextBox.get("value");
-            this.properties.storeId = this._filteringSelect.get("value");
+            this.properties.title = this._titleTextBox.value;
+            this.properties.iconClass = this._iconClassTextBox.value;
+            this.properties.storeId = this._filteringSelect.value;
 
+            this.properties.options.count = this._countTextBox.value;
+            this.properties.options.ignoreCase = this._ignoreCaseSelect.value;
+            var localeId = this._localeSelect.value;
+            var localeObj = this._localeStore.get(localeId);
+            delete localeObj.id;
+            this.properties.options.locale = localeObj;
             return def;
         },
         _getCustomQuery: function (customQuery) {
@@ -329,7 +230,7 @@ define([
             return s;
         },
         _getFields: function () {
-            var storeId = this._filteringSelect.get("value");
+            var storeId = this._filteringSelect.value;
             var store = this._getSelectedStore(storeId);
             var metadata = store.getMetadata();
             var fields = metadata.fields;
@@ -350,21 +251,43 @@ define([
             return storeData;
         },
         _addDataField: function (field) {
+            var fieldId;
+            var compareId;
+            var value;
+            var not;
+            if (field.$not) {
+                not = true;
+                for (var a in field.$not) {
+                    fieldId = a;
+                    for (var b in field.$not[fieldId]) {
+                        compareId = b;
+                        value = field.$not[fieldId][compareId];
+                    }
+                }
+            } else {
+                not = false;
+                for (var a in field) {
+                    fieldId = a;
+                    for (var b in field[fieldId]) {
+                        compareId = b;
+                        value = field[fieldId][compareId];
+                    }
+                }
+            }
             var storeData = this._getFields();
-            var storeId = this._filteringSelect.get("value");
+            var storeId = this._filteringSelect.value;
             var fieldWidget = new FieldWidget({
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
-                fieldId: field.fieldId,
-                compareId: field.compareId,
-                value: field.value,
-                type: "admin"
+                fieldId: fieldId,
+                compareId: compareId,
+                value: value, type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },
         _addField: function () {
-            var storeId = this._filteringSelect.get("value");
+            var storeId = this._filteringSelect.value;
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
                 store: this._getSelectedStore(storeId),
@@ -374,17 +297,111 @@ define([
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },
-        _createGUI: function (wizardGUI) {
-            var match = wizardGUI.match;
-            this._matchSelect.set("value", match);
-            var editable = wizardGUI.editable;
-            this._editableSelect.set("value", editable);
-            var extent = wizardGUI.extent;
-            this._extentSelect.set("value", extent);
-            var fields = wizardGUI.fields;
+        _createBuilderGUI: function () {
+            var ynStore = new Memory({
+                data: [
+                    {name: this.i18n.yes, id: "yes"},
+                    {name: this.i18n.no, id: "no"}
+                ]
+            });
+            var extentSelect = this._extentSelect = new FilteringSelect({
+                name: "extent",
+                value: "no",
+                store: ynStore,
+                searchAttr: "name",
+                style: "width: 80px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight
+            }, this._extentNode);
+            var editableSelect = this._editableSelect = new FilteringSelect({
+                name: "editable",
+                value: "no",
+                store: ynStore,
+                searchAttr: "name",
+                style: "width: 80px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight
+            }, this._editableNode);
+            var matchStore = this._matchStore = new Memory({
+                data: [
+                    {name: this.i18n.and, id: "$and"},
+                    {name: this.i18n.or, id: "$or"}]
+            });
+            var matchSelect = this._matchSelect = new FilteringSelect({
+                name: "match",
+                value: "$and",
+                store: matchStore,
+                searchAttr: "name",
+                style: "width: 80px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight
+            }, this._matchNode);
+            var properties = this.properties;
+            var customQuery = properties.customquery;
+            if (properties.options.editable) {
+                var editable = properties.options.editable;
+                this._editableSelect.set("value", editable);
+            }
+            var match;
+            if (customQuery.geometry) {
+                this._extentSelect.set("value", "yes");
+            } else {
+                this._extentSelect.set("value", "no");
+            }
+            if (customQuery.$and) {
+                this._matchSelect.set("value", "$and");
+                match = "$and";
+            } else if (customQuery.$or) {
+                this._matchSelect.set("value", "$or");
+                match = "$or";
+            }
+            var fields = customQuery[match];
             d_array.forEach(fields, function (field) {
                 this._addDataField(field);
             }, this);
+        },
+        _createOptionsGUI: function () {
+            this._countTextBox = new NumberTextBox({
+                name: "count",
+                value: this.properties.options.count || -1, style: "width: 140px;",
+                required: true,
+                constraints: {min: -1}
+            }, this._countNode);
+            var ynStore = new Memory({
+                data: [
+                    {name: this.i18n.yes, id: false},
+                    {name: this.i18n.no, id: true}
+                ]
+            });
+            var ignoreCase;
+            if (this.properties.options.ignoreCase === undefined) {
+                ignoreCase = true;
+            } else {
+                ignoreCase = this.properties.options.ignoreCase;
+            }
+            this._ignoreCaseSelect = new FilteringSelect({
+                name: "ignoreCase",
+                value: ignoreCase,
+                store: ynStore,
+                searchAttr: "name",
+                style: "width: 140px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight
+            }, this._ignoreCaseNode);
+            var localeStore = this._localeStore = new Memory({
+                data: [
+                    {language: "de", country: "DE", id: "de"}, {language: "en", country: "EN", id: "en"}
+                ]
+            });
+            this._localeSelect = new FilteringSelect({
+                name: "locale",
+                value: this.properties.options.locale && this.properties.options.locale.language || "en",
+                store: localeStore,
+                searchAttr: "language",
+                style: "width: 140px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight
+            }, this._localeNode);
         },
         _addExpressionSet: function () {
 
@@ -392,6 +409,15 @@ define([
         _removeFields: function () {
             while (this._queryNode.firstChild) {
                 this._queryNode.removeChild(this._queryNode.firstChild);
+            }
+        },
+        _checkSelectedTab: function () {
+            if (this._optionsTab.get("selected")) {
+                this._doneButton.set("disabled", true);
+            } else {
+                if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
+                    this._doneButton.set("disabled", false);
+                }
             }
         }
     });

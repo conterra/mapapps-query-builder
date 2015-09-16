@@ -30,6 +30,22 @@
                     <div data-dojo-attach-point="_queryNode"></div>
                 </div>
             </div>
+            <div data-dojo-type="dijit/layout/ContentPane" title="${i18n.options}" data-dojo-attach-point="_optionsTab">
+                <div class="options">
+                    <div>
+                        <label>${i18n.count}</label>
+                        <input data-dojo-attach-point="_countNode"/>
+                    </div>
+                    <div>
+                        <label>${i18n.ignoreCase}</label>
+                        <input data-dojo-attach-point="_ignoreCaseNode"/>
+                    </div>
+                    <div>
+                        <label>${i18n.locale}</label>
+                        <input data-dojo-attach-point="_localeNode"/>
+                    </div>
+                </div>
+            </div>
             <div data-dojo-type="dijit/layout/ContentPane" title="${i18n.manual}" data-dojo-attach-point="_manualTab">
                 <div data-dojo-attach-point="_customQueryLabelNode">
                     <label>${i18n.customQuery}</label>

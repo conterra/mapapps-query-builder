@@ -109,7 +109,6 @@ define([
                     data = d_array.map(data, function (config) {
                         var props = config.get("properties");
                         props.pid = config.get("pid");
-                        props.type = props.type || "CUSTOM";
                         return props;
                     }, this);
                     configStore.setData(data);
@@ -118,11 +117,13 @@ define([
                     properties = d_lang.clone(properties);
                     var props = this._properties.widgetProperties;
                     var config = this._configAdminService.createFactoryConfiguration(props.pid, props.bid);
+                    delete properties.pid;
                     config.update(properties);
                 },
                 _updateConfig: function (properties) {
                     properties = d_lang.clone(properties);
                     var config = this._getConfiguration(properties.pid);
+                    delete properties.pid;
                     config.update(properties);
                 },
                 _createWizard: function (config) {
@@ -133,9 +134,7 @@ define([
                         config.title = "";
                         config.iconClass = "icon-custom-info";
                         config.customquery = {};
-                        config._wizardGUI = {
-                            mode: "new"
-                        };
+                        config.options = {};
                     }
                     // search stores
                     var stores = this._agsstores;
@@ -161,7 +160,7 @@ define([
                     var window = windowManager.createModalWindow({
                         title: title,
                         marginBox: {
-                            w: 606,
+                            w: 660,
                             h: 500
                         },
                         content: wizard,

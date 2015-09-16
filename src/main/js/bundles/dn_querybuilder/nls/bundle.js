@@ -24,6 +24,7 @@ define({
                     windowTitle: "Custom Query Tool",
                     title: "Title",
                     builder: "Builder",
+                    options: "Options",
                     manual: "Manual",
                     iconClass: "Icon Class",
                     iconClassHelp: "Icon Class Help",
@@ -31,6 +32,9 @@ define({
                     customQuery: "Custom Query",
                     queryDefinition: "Query definiton:",
                     useExtent: "Current extent",
+                    count: "Result Count",
+                    ignoreCase: "Case Sensitive",
+                    locale: "Language",
                     addField: "Add Field",
                     storeId: "Store",
                     cancel: "Cancel",
@@ -47,6 +51,8 @@ define({
                     fields: {
                         typeInValue: "type in value",
                         is: "is",
+                        eqw: "is (wildcard)",
+                        suggest: "suggest",
                         is_not: "is not",
                         contains: "contains",
                         contains_not: "does not contain",
@@ -57,7 +63,9 @@ define({
                         is_less_than: "is less than",
                         is_less_or_equal: "is less or equal",
                         before: "before",
-                        after: "after"
+                        after: "after",
+                        yes: "yes",
+                        no: "no"
                     }
                 }
             },

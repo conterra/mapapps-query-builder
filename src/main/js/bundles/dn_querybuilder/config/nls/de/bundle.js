@@ -31,6 +31,7 @@ define({
             windowtitleEdit: "Custom Query Tool editieren",
             title: "Titel",
             builder: "Bauen",
+            options: "Optionen",
             manual: "Manuell",
             iconClass: "Icon Klasse",
             iconClassHelp: "Hilfe zur Icon Class",
@@ -38,13 +39,16 @@ define({
             customQuery: "Custom Query",
             queryDefinition: "Query Definiton:",
             useExtent: "Aktueller Kartenausschnitt",
+            count: "Anzahl der Ergebnisse",
+            ignoreCase: "Groß-/Kleinschreibung unterscheiden",
+            locale: "Sprache",
             editable: "Editierbar",
             addField: "Feld hinzuf\u00fcgen",
             storeId: "Store",
             cancel: "Abbrechen",
             done: "Fertig",
             typeInTitle: "Titel eingeben",
-            match: "Felder verknüpfen",
+            match: "Felder verkn\u00fcpfen",
             match1: "Features abfragen, die ",
             match2: " der folgenden Ausr\u00fccke erf\u00fcllen",
             changeToManual: "Sind Sie sicher? Die Query wird nur noch manuell zu \u00e4ndern sein!",
@@ -55,6 +59,8 @@ define({
             fields: {
                 typeInValue: "Wert eingeben",
                 is: "ist gleich",
+                eqw: "ist gleich (wildcard)",
+                suggest: "\u00e4hnelt",
                 is_not: "ist nicht gleich",
                 contains: "enth\u00e4lt",
                 contains_not: "enth\u00e4lt nicht",
@@ -65,7 +71,9 @@ define({
                 is_less_than: "ist kleiner",
                 is_less_or_equal: "ist kleiner / gleich",
                 before: "vor",
-                after: "nach"
+                after: "nach",
+                yes: "ja",
+                no: "nein"
             }
         },
         grid: {

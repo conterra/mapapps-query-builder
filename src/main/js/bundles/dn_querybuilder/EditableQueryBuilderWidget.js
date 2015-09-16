@@ -122,7 +122,7 @@ define([
                 disabled: true
             }, this._matchNode);
 
-            this._createGUI(this.properties._wizardGUI);
+            this._createGUI();
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
@@ -195,12 +195,23 @@ define([
                 });
             });
         },
-        _createGUI: function (wizardGUI) {
-            var match = wizardGUI.match;
-            this._matchSelect.set("value", match);
-            var extent = wizardGUI.extent;
-            this._extentSelect.set("value", extent);
-            var fields = wizardGUI.fields;
+        _createGUI: function () {
+            var properties = this.properties;
+            var customQuery = properties.customquery;
+            var match;
+            if (customQuery.geometry) {
+                this._extentSelect.set("value", "yes");
+            } else {
+                this._extentSelect.set("value", "no");
+            }
+            if (customQuery.$and) {
+                this._matchSelect.set("value", "$and");
+                match = "$and";
+            } else if (customQuery.$or) {
+                this._matchSelect.set("value", "$or");
+                match = "$or";
+            }
+            var fields = customQuery[match];
             d_array.forEach(fields, function (field) {
                 this._addDataField(field);
             }, this);
@@ -209,7 +220,12 @@ define([
             this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
             var store = this.store;
-            var filter = new Filter(store, complexQuery, {ignoreCase: true});
+            debugger
+            var options = {};
+            options.count = this.properties.options.count;
+            options.ignoreCase = this.properties.options.ignoreCase;
+            options.locale = this.properties.options.locale;
+            var filter = new Filter(store, complexQuery, options);
             this.dataModel.setDatasource(filter);
             this._setProcessing(false);
         },
@@ -231,72 +247,23 @@ define([
             }
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
-                var fieldId = widget._getSelectedField().id;
-                var compareId = widget._getSelectedCompare().id;
+                var fieldId = widget._getSelectedField();
+                var fieldType = widget._getSelectedFieldType();
+                var compareId = widget._getSelectedCompare();
+                var not = widget._getSelectedNot();
                 var value = widget._getValue();
-                switch (compareId) {
-                    case "is":
-                        var obj = {};
-                        obj[fieldId] = {$eq: value};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_not":
-                        var obj = {};
-                        obj[fieldId] = {$not: {$eq: value}};
-                        customQuery[match].push(obj);
-                        break;
-                    case "contains":
-                        var obj = {};
-                        obj[fieldId] = {$eqw: "*" + value + "*"};
-                        customQuery[match].push(obj);
-                        break;
-                    case "contains_not":
-                        var obj = {};
-                        obj[fieldId] = {$not: {$eqw: "*" + value + "*"}};
-                        customQuery[match].push(obj);
-                        break;
-                    case "starts_with":
-                        var obj = {};
-                        obj[fieldId] = {$eqw: value + "*"};
-                        customQuery[match].push(obj);
-                        break;
-                    case "ends_with":
-                        var obj = {};
-                        obj[fieldId] = {$eqw: "*" + value};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_number":
-                        var obj = {};
-                        obj[fieldId] = {$eq: parseFloat(value)};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_not_number":
-                        var obj = {};
-                        obj[fieldId] = {$not: {$eq: parseFloat(value)}};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_greater_number":
-                        var obj = {};
-                        obj[fieldId] = {$gt: parseFloat(value)};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_greater_or_equal_number":
-                        var obj = {};
-                        obj[fieldId] = {$gte: parseFloat(value)};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_less_number":
-                        var obj = {};
-                        obj[fieldId] = {$lt: parseFloat(value)};
-                        customQuery[match].push(obj);
-                        break;
-                    case "is_less_or_equal_number":
-                        var obj = {};
-                        obj[fieldId] = {$lte: parseFloat(value)};
-                        customQuery[match].push(obj);
-                        break;
-                    default:
-
+                if (fieldType === "number") {
+                    value = new Number(value);
+                }
+                var obj1 = {};
+                obj1[compareId] = value;
+                var obj2 = {};
+                obj2[fieldId] = obj1;
+                if (not) {
+                    var object = {$not: obj2};
+                    customQuery[match].push(object);
+                } else {
+                    customQuery[match].push(obj2);
                 }
             }, this);
             return customQuery;

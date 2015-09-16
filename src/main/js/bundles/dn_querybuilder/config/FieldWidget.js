@@ -71,16 +71,19 @@ define([
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
+                    this._notSelectWidth = "width: 50px;";
                     this.fieldSelectDisabled = false;
                 } else if (this.type === "editing") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
+                    this._notSelectWidth = "width: 50px;";
                     this.fieldSelectDisabled = true;
                 } else {
                     this._fieldSelectWidth = "width: 180px;";
                     this._valueSelectWidth = "width: 200px;";
                     this._compareSelectWidth = "width: 120px;";
+                    this._notSelectWidth = "width: 50px;";
                     this.fieldSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 160;
@@ -90,7 +93,7 @@ define([
                 });
                 var fieldSelect = this._fieldSelect = new FilteringSelect({
                     name: "fields",
-                    value: fieldData[0].id,
+                    value: this.fieldId || fieldData[0].id,
                     store: fieldStore,
                     searchAttr: "title",
                     style: this._fieldSelectWidth,
@@ -98,6 +101,25 @@ define([
                     disabled: this.fieldSelectDisabled
                 }, this._fieldNode);
                 fieldSelect.startup();
+
+                var i18n = this.i18n;
+                var notStore = this._notStore = new Memory({
+                    data: [
+                        {id: true, name: i18n.yes},
+                        {id: false, name: i18n.no}
+                    ]
+                });
+                var notSelect = this._notSelect = new FilteringSelect({
+                    name: "not",
+                    value: this.not || false,
+                    store: notStore,
+                    searchAttr: "name",
+                    style: this._notSelectWidth,
+                    maxHeight: this.maxComboBoxHeight,
+                    disabled: this.fieldSelectDisabled
+                }, this._notNode);
+                notSelect.startup();
+
                 if (this.type !== "editing") {
                     var removeButton = new Button({
                         label: "-",
@@ -110,9 +132,9 @@ define([
                     removeButton.startup();
                 }
 
-                if (this.fieldId) {
-                    this._fieldSelect.set("value", this.fieldId);
-                }
+                /*if (this.fieldId) {
+                 this._fieldSelect.set("value", this.fieldId);
+                 }*/
                 ct_when(this._createGUI(), function () {
                     this.connect(fieldSelect, "onChange", this._changeGUI);
                 }, this);
@@ -136,7 +158,7 @@ define([
             var codedValues = this._fieldStore.get(selectedField).codedValues;
             if (codedValues.length > 0) {
                 var compareStore = this._compareStore = this._createCodedValueStore();
-                this._createCompareSelect("is", compareStore);
+                this._createCompareSelect("$eq", compareStore);
                 var codedValueData = [];
                 d_array.forEach(codedValues, function (codedValue) {
                     codedValueData.push({name: codedValue.name, id: codedValue.code});
@@ -158,10 +180,13 @@ define([
             } else {
                 if (type === "string") {
                     var compareStore = this._compareStore = this._createStringStore();
-                    this._createCompareSelect("is", compareStore);
+                    this._createCompareSelect("$eq", compareStore);
                 } else if (type === "number" || type === "integer" || type === "double") {
                     var compareStore = this._compareStore = this._createNumberStore();
-                    this._createCompareSelect("is_number", compareStore);
+                    this._createCompareSelect("$eq", compareStore);
+                } else if (type === "boolean") {
+                    var compareStore = this._compareStore = this._createBooleanStore();
+                    this._createCompareSelect("$eq", compareStore);
                 } else if (type === "date") {
                     var compareStore = this._compareStore = this._createDateStore();
                     this._createCompareSelect("before", compareStore);
@@ -226,7 +251,7 @@ define([
             if (codedValues.length > 0) {
                 var compareStore = this._compareStore = this._createCodedValueStore();
                 compareSelect.set("store", compareStore);
-                compareSelect.set("value", this.compareId || "is");
+                compareSelect.set("value", this.compareId || "$eq");
                 var codedValueData = [];
                 d_array.forEach(codedValues, function (codedValue) {
                     codedValueData.push({name: codedValue.name, id: codedValue.code});
@@ -235,7 +260,7 @@ define([
                     data: codedValueData
                 });
                 var value;
-                if (this.fieldId === this._getSelectedField().id) {
+                if (this.fieldId === this._getSelectedField()) {
                     value = this.value;
                 } else {
                     value = codedValueData[0] && codedValueData[0].id;
@@ -254,11 +279,15 @@ define([
                 if (type === "string") {
                     var compareStore = this._compareStore = this._createStringStore();
                     compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this.compareId || "is");
+                    compareSelect.set("value", this.compareId || "$eq");
                 } else if (type === "number" || type === "integer" || type === "double") {
                     var compareStore = this._compareStore = this._createNumberStore();
                     compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this.compareId || "is_number");
+                    compareSelect.set("value", this.compareId || "$eq");
+                } else if (type === "boolean") {
+                    var compareStore = this._compareStore = this._createBooleanStore();
+                    compareSelect.set("store", compareStore);
+                    compareSelect.set("value", this.compareId || "$eq");
                 } else if (type === "date") {
                     var compareStore = this._compareStore = this._createDateStore();
                     compareSelect.set("store", compareStore);
@@ -284,7 +313,7 @@ define([
                             data: distinctValueData
                         });
                         var value;
-                        if (this.fieldId === this._getSelectedField().id) {
+                        if (this.fieldId === this._getSelectedField()) {
                             value = this.value;
                         } else {
                             value = distinctValueData[0] && distinctValueData[0].id;
@@ -296,7 +325,7 @@ define([
                 } else {
                     if (type === "date") {
                         var value;
-                        if (this.fieldId === this._getSelectedField().id) {
+                        if (this.fieldId === this._getSelectedField()) {
                             value = this.value;
                         } else {
                             value = new Date();
@@ -308,7 +337,7 @@ define([
                             maxHeight: this.maxComboBoxHeight
                         });
                     } else {
-                        if (this.fieldId === this._getSelectedField().id) {
+                        if (this.fieldId === this._getSelectedField()) {
                             value = this.value;
                         } else {
                             value = "";
@@ -360,8 +389,16 @@ define([
             var i18n = this.i18n;
             var store = new Memory({
                 data: [
-                    {id: "is", name: i18n.is},
-                    {id: "is_not", name: i18n.is_not}
+                    {id: "$eq", name: i18n.is}
+                ]
+            });
+            return store;
+        },
+        _createBooleanStore: function () {
+            var i18n = this.i18n;
+            var store = new Memory({
+                data: [
+                    {id: "$eq", name: i18n.is}
                 ]
             });
             return store;
@@ -370,12 +407,9 @@ define([
             var i18n = this.i18n;
             var store = new Memory({
                 data: [
-                    {id: "is", name: i18n.is},
-                    {id: "is_not", name: i18n.is_not},
-                    {id: "contains", name: i18n.contains},
-                    {id: "contains_not", name: i18n.contains_not},
-                    {id: "starts_with", name: i18n.starts_with},
-                    {id: "ends_with", name: i18n.ends_with}
+                    {id: "$eq", name: i18n.is},
+                    {id: "$eqw", name: i18n.eqw},
+                    {id: "$suggest", name: i18n.suggest}
                 ]
             });
             return store;
@@ -384,12 +418,11 @@ define([
             var i18n = this.i18n;
             var store = new Memory({
                 data: [
-                    {id: "is_number", name: i18n.is},
-                    {id: "is_not_number", name: i18n.is_not},
-                    {id: "is_greater_number", name: i18n.is_greater_than},
-                    {id: "is_greater_or_equal_number", name: i18n.is_greater_or_equal},
-                    {id: "is_less_number", name: i18n.is_less_than},
-                    {id: "is_less_or_equal_number", name: i18n.is_less_or_equal}
+                    {id: "$eq", name: i18n.is},
+                    {id: "$gt", name: i18n.is_greater_than},
+                    {id: "$gte", name: i18n.is_greater_or_equal},
+                    {id: "$lt", name: i18n.is_less_than},
+                    {id: "$lte", name: i18n.is_less_or_equal}
                 ]
             });
             return store;
@@ -410,15 +443,19 @@ define([
             }
         },
         _getSelectedField: function () {
-            var id = this._fieldSelect.value;
-            var store = this._fieldStore;
-            var result = store.get(id);
+            var result = this._fieldSelect.value;
+            return result;
+        },
+        _getSelectedFieldType: function () {
+            var result = this._fieldSelect.type;
             return result;
         },
         _getSelectedCompare: function () {
-            var id = this._compareSelect.value;
-            var store = this._compareStore;
-            var result = store.get(id);
+            var result = this._compareSelect.value;
+            return result;
+        },
+        _getSelectedNot: function () {
+            var result = this._notSelect.value;
             return result;
         },
         _getValue: function () {
