@@ -247,7 +247,7 @@ define([
                 var not = widget._getSelectedNot();
                 var value = widget._getValue();
                 if (fieldType === "number") {
-                    value = new Number(value);
+                    value = Number(value);
                 }
                 var obj1 = {};
                 obj1[compareId] = value;

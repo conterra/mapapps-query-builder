@@ -447,7 +447,13 @@ define([
             return result;
         },
         _getSelectedFieldType: function () {
+            var data = this._fieldSelect.store.data;
             var result = this._fieldSelect.type;
+            d_array.forEach(data, function (item) {
+                if (item.id === this._fieldSelect.value) {
+                    result = item.type;
+                }
+            }, this);
             return result;
         },
         _getSelectedCompare: function () {
