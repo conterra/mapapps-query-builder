@@ -24,7 +24,7 @@
                 "dockTool": "userQueryBuilderTool",
                 "closable": true,
                 "minimizeOnClose": true,
-                "resizable": false
+                "resizable": true
             }
         }
     ],

@@ -21,6 +21,7 @@ define([
     "dojo/_base/array",
     "ct/_Connect",
     "ct/_when",
+    "ct/util/css",
     "esri/tasks/query",
     "esri/tasks/QueryTask",
     "dijit/_WidgetBase",
@@ -33,6 +34,7 @@ define([
     "dijit/form/FilteringSelect",
     "dijit/form/Button",
     "dijit/form/DateTextBox",
+    "dijit/form/CheckBox",
     "dojo/store/Memory",
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
@@ -44,6 +46,7 @@ define([
         d_array,
         _Connect,
         ct_when,
+        ct_css,
         Query,
         QueryTask,
         _WidgetBase,
@@ -56,6 +59,7 @@ define([
         FilteringSelect,
         Button,
         DateTextBox,
+        CheckBox,
         Memory,
         domConstruct,
         ContentPane,
@@ -121,13 +125,22 @@ define([
                     maxHeight: this.maxComboBoxHeight,
                     disabled: this.fieldSelectDisabled
                 });
-                domConstruct.place(notSelect.domNode, this._notNode, "last");
+                domConstruct.place(notSelect.domNode, this._notNode, "first");
                 notSelect.startup();
+
+                this._createCheckBoxes();
+                if (this.type === "admin") {
+                    this.connect(this.source._editableSelect, "onChange", this._changeEditingVisibility);
+                }
 
                 ct_when(this._createGUI(), function () {
                     this.connect(fieldSelect, "onChange", this._changeGUI);
                 }, this);
             }, this);
+        },
+        deactivate: function () {
+            debugger
+            this.disconnect();
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
@@ -169,6 +182,18 @@ define([
                     domConstruct.place(removeButton.domNode, this._buttonNode, "last");
                     removeButton.startup();
                 } else {
+                    var removeButton = new Button({
+                        label: "-",
+                        onClick: d_lang.hitch(this, function () {
+                            removeButton.domNode.parentNode.parentNode.remove();
+                            this.source._children();
+                            if (this.type === "user")
+                                this.source._changeMatchVisibility();
+
+                        })
+                    });
+                    domConstruct.place(removeButton.domNode, this._buttonNode, "last");
+                    removeButton.startup();
                 }
             }
         },
@@ -463,6 +488,48 @@ define([
             });
             return store;
         },
+        _createCheckBoxes: function () {
+            var not = false;
+            var field = false;
+            var compare = false;
+            var value = false;
+            if (this.editOptions) {
+                not = this.editOptions.not;
+                field = this.editOptions.field;
+                compare = this.editOptions.compare;
+                value = this.editOptions.value;
+            }
+            this._notCheckBox = new CheckBox({
+                name: "checkBox",
+                checked: not
+            }, this._notCheckBoxNode);
+            this._fieldCheckBox = new CheckBox({
+                name: "checkBox",
+                checked: field
+            }, this._fieldCheckBoxNode);
+            this._compareCheckBox = new CheckBox({
+                name: "checkBox",
+                checked: compare
+            }, this._compareCheckBoxNode);
+            this._valueCheckBox = new CheckBox({
+                name: "checkBox",
+                checked: value
+            }, this._valueCheckBoxNode);
+            ct_css.switchHidden(this._notCheckBox.domNode, true);
+            ct_css.switchHidden(this._fieldCheckBox.domNode, true);
+            ct_css.switchHidden(this._compareCheckBox.domNode, true);
+            ct_css.switchHidden(this._valueCheckBox.domNode, true);
+        },
+        _changeEditingVisibility: function () {
+            var editing = this.source._editableSelect.value;
+            var hidden = true;
+            if (editing === true)
+                hidden = false;
+            ct_css.switchHidden(this._notCheckBox.domNode, hidden);
+            ct_css.switchHidden(this._fieldCheckBox.domNode, hidden);
+            ct_css.switchHidden(this._compareCheckBox.domNode, hidden);
+            ct_css.switchHidden(this._valueCheckBox.domNode, hidden);
+        },
         _removeFields: function (node) {
             while (node.firstChild) {
                 node.removeChild(node.firstChild);
@@ -488,6 +555,22 @@ define([
         },
         _getSelectedNot: function () {
             var result = this._notSelect.value;
+            return result;
+        },
+        _getNotCheckBoxValue: function () {
+            var result = this._notCheckBox.checked;
+            return result;
+        },
+        _getFieldCheckBoxValue: function () {
+            var result = this._fieldCheckBox.checked;
+            return result;
+        },
+        _getCompareCheckBoxValue: function () {
+            var result = this._compareCheckBox.checked;
+            return result;
+        },
+        _getValueCheckBoxValue: function () {
+            var result = this._valueCheckBox.checked;
             return result;
         },
         _getValue: function () {

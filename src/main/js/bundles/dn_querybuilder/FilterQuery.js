@@ -30,7 +30,7 @@ define([
             }
             var customquery = event.customquery;
             var topic = "ct/selection/SELECTION_END";
-            if (event.options.editable === "yes") {
+            if (event.options.editable === true) {
                 var props = event._properties;
                 var i18n = event._i18n.get();
                 var tool = event.tool;

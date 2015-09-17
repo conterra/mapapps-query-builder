@@ -27,8 +27,9 @@ define([
     "ct/store/ComplexMemory",
     "ct/_when",
     "ct/Hash",
-    "ct/async"
-], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ct_async) {
+    "ct/async",
+    "dijit/registry"
+], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ct_async, d_registry) {
     return declare([_Connect],
             {
                 createInstance: function () {
@@ -160,13 +161,13 @@ define([
                     var window = windowManager.createModalWindow({
                         title: title,
                         marginBox: {
-                            w: 755,
+                            w: 760,
                             h: 500
                         },
                         content: wizard,
                         closable: true,
                         attachToDom: this._appCtx.builderWindowRoot,
-                        resizable: false
+                        resizable: true
                     });
                     window.show();
                     this.connect(wizard, "_onReady", function () {
@@ -177,10 +178,20 @@ define([
                         }
                         this._updateGrid();
                         wizard.disconnect();
+                        var children = wizard._queryNode.children;
+                        d_array.forEach(children, function (child) {
+                            var widget = d_registry.getEnclosingWidget(child);
+                            widget.disconnect();
+                        }, this);
                         window.close();
                     });
                     this.connect(wizard, "_onCancel", function () {
                         wizard.disconnect();
+                        var children = wizard._queryNode.children;
+                        d_array.forEach(children, function (child) {
+                            var widget = d_registry.getEnclosingWidget(child);
+                            widget.disconnect();
+                        }, this);
                         window.close();
                     });
                 },

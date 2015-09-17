@@ -330,7 +330,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -360,7 +360,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -385,7 +385,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": 5,
                         "ignoreCase": true,
@@ -424,7 +424,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -449,7 +449,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -474,7 +474,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -499,7 +499,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "no",
+                        "editable": false,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -546,7 +546,7 @@
                         ]
                     },
                     "options": {
-                        "editable": "yes",
+                        "editable": true,
                         "mode": "builder",
                         "count": -1,
                         "ignoreCase": true,
@@ -572,7 +572,7 @@
                     },
                     "options": {
                         "mode": "builder",
-                        "editable": "yes",
+                        "editable": true,
                         "count": -1,
                         "ignoreCase": true,
                         "locale": {

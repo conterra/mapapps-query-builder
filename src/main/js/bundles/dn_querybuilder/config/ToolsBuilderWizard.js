@@ -135,7 +135,7 @@ define([
                 var match = this._matchSelect.value;
                 var customQuery = {};
                 var extent;
-                if (this._extentSelect.value === "yes") {
+                if (this._extentSelect.value === true) {
                     extent = this.mapState.getExtent();
                     customQuery.geometry = {
                         $contains: extent
@@ -184,7 +184,20 @@ define([
                     }
                 }, this);
                 this.properties.customquery = customQuery;
-                this.properties.options.editable = this._editableSelect.get("value");
+                this.properties.options.editable = this._editableSelect.value;
+                if (this.properties.options.editable === true) {
+                    this.properties.options.editOptions = [];
+                    var children = this._queryNode.children;
+                    d_array.forEach(children, function (child) {
+                        var obj = {};
+                        var widget = d_registry.getEnclosingWidget(child);
+                        obj["not"] = widget._getNotCheckBoxValue();
+                        obj["field"] = widget._getFieldCheckBoxValue();
+                        obj["compare"] = widget._getCompareCheckBoxValue();
+                        obj["value"] = widget._getValueCheckBoxValue();
+                        this.properties.options.editOptions.push(obj);
+                    }, this);
+                }
             } else {
                 var customQuery = this._customQueryTextArea.value;
                 if (this.properties.options.mode === "builder") {
@@ -218,7 +231,7 @@ define([
             var match = this._matchSelect.value;
             var customQuery = {};
             var extent;
-            if (this._extentSelect.value === "yes") {
+            if (this._extentSelect.value === true) {
                 extent = this.mapState.getExtent();
                 customQuery.geometry = {
                     $contains: extent
@@ -299,7 +312,7 @@ define([
             });
             return storeData;
         },
-        _addDataField: function (field) {
+        _addDataField: function (field, editOptions) {
             var fieldId;
             var compareId;
             var value;
@@ -334,6 +347,7 @@ define([
                 compareId: compareId,
                 value: value,
                 not: not,
+                editFields: editOptions,
                 type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
@@ -378,22 +392,22 @@ define([
         _createBuilderGUI: function () {
             var ynStore = new Memory({
                 data: [
-                    {name: this.i18n.yes, id: "yes"},
-                    {name: this.i18n.no, id: "no"}
+                    {name: this.i18n.yes, id: true},
+                    {name: this.i18n.no, id: false}
                 ]
             });
-            var extentSelect = this._extentSelect = new FilteringSelect({
+            this._extentSelect = new FilteringSelect({
                 name: "extent",
-                value: "no",
+                value: false,
                 store: ynStore,
                 searchAttr: "name",
                 style: "width: 80px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._extentNode);
-            var editableSelect = this._editableSelect = new FilteringSelect({
+            this._editableSelect = new FilteringSelect({
                 name: "editable",
-                value: "no",
+                value: false,
                 store: ynStore,
                 searchAttr: "name",
                 style: "width: 80px;",
@@ -405,7 +419,7 @@ define([
                     {name: this.i18n.and, id: "$and"},
                     {name: this.i18n.or, id: "$or"}]
             });
-            var matchSelect = this._matchSelect = new FilteringSelect({
+            this._matchSelect = new FilteringSelect({
                 name: "match",
                 value: "$and",
                 store: matchStore,
@@ -421,9 +435,9 @@ define([
                 this._editableSelect.set("value", editable);
             }
             if (customQuery.geometry) {
-                this._extentSelect.set("value", "yes");
+                this._extentSelect.set("value", true);
             } else {
-                this._extentSelect.set("value", "no");
+                this._extentSelect.set("value", false);
             }
             var match;
             if (customQuery.$and) {
@@ -434,9 +448,12 @@ define([
                 match = "$or";
             }
             var fields = customQuery[match];
+            var editFields = this.properties.options.editOptions;
+            debugger
             if (fields) {
-                d_array.forEach(fields, function (field) {
-                    this._addDataField(field);
+                d_array.forEach(fields, function (field, i) {
+                    var editOptions = editFields && editFields[i];
+                    this._addDataField(field, editOptions);
                 }, this);
             } else {
                 this._addField();

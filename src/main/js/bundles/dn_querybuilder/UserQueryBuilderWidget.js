@@ -17,7 +17,6 @@ define([
     "dojo/_base/declare",
     "dojo/dom-construct",
     "dojo/_base/array",
-    "dojo/on",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -39,7 +38,6 @@ define([
 ], function (declare,
         domConstruct,
         d_array,
-        on,
         _WidgetBase,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -93,13 +91,13 @@ define([
 
             var extentStore = this._extentStore = new Memory({
                 data: [
-                    {name: this.i18n.yes, id: "yes"},
-                    {name: this.i18n.no, id: "no"}
+                    {name: this.i18n.yes, id: true},
+                    {name: this.i18n.no, id: false}
                 ]
             });
             var extentSelect = this._extentSelect = new FilteringSelect({
                 name: "extent",
-                value: "no",
+                value: false,
                 store: extentStore,
                 searchAttr: "name",
                 style: "width: 155px;",
@@ -126,7 +124,6 @@ define([
             this._changeMatchVisibility();
 
             this.connect(filteringSelect, "onChange", this._removeFields);
-            //on(filteringSelect, "onChange", this._removeFields);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
@@ -248,12 +245,11 @@ define([
             var match = this._matchSelect.value;
             var customQuery = {};
             var extent;
-            if (this._extentSelect.value === "yes") {
+            if (this._extentSelect.value === true) {
                 extent = this.mapState.getExtent();
                 customQuery.geometry = {
                     $contains: extent
                 };
-            } else {
             }
             var children = this._queryNode.children;
             if (children.length > 0)
