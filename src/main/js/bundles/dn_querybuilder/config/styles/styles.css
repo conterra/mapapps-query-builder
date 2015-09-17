@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.queryBuilderWizard .dijitComboBox{
-    margin-bottom: 1px;
-}
 
 .queryBuilderWizard .inputContainer label{
     display: inline-block;
-    min-width: 100px;
+    min-width: 150px;
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .queryBuilderWizard .settings label{
     display: inline-block;
-    min-width: 160px;
+    min-width: 250px;
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -55,3 +52,11 @@
     display: inline;
 }
 
+.queryBuilderWizard .fieldWidget{
+    margin-bottom: 2px;
+}
+
+.queryBuilderWizard .fieldWidget .notNode{
+    margin-right: 5px;
+    display: inline;
+}

@@ -30,17 +30,17 @@ define({
                     iconClassHelp: "Icon Class Help",
                     complexQueryHelp: "Complex Query Help",
                     customQuery: "Custom Query",
-                    queryDefinition: "Query definiton:",
-                    useExtent: "Current extent",
+                    queryDefinition: "Query definiton",
+                    useExtent: "Use current extent",
                     count: "Result Count",
                     ignoreCase: "Case Sensitive",
                     locale: "Language",
                     addField: "Add Field",
-                    storeId: "Store",
+                    store: "Store",
                     cancel: "Cancel",
                     done: "Search",
                     typeInTitle: "type in title",
-                    match: "Combine Fields",
+                    match: "Combine fields with",
                     match1: "Get features that match ",
                     match2: " of the following expressions",
                     changeToManual: "Are you sure? The query edit-mode will be switched to manual!",
@@ -65,7 +65,9 @@ define({
                         before: "before",
                         after: "after",
                         yes: "yes",
-                        no: "no"
+                        no: "no",
+                        shouldBeTrue: "Should be true",
+                        shouldBeFalse: "Should be false"
                     }
                 }
             },

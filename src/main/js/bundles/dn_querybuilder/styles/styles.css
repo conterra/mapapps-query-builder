@@ -14,32 +14,33 @@
  * limitations under the License.
  */
 
-.userQueryBuilderWizard .dijitComboBox{
-    margin-bottom: 1px;
-}
-
 .userQueryBuilderWizard .inputContainer label{
     display: inline-block;
-    min-width: 150px;
+    min-width: 250px;
     max-width: 300px;
     overflow: hidden;
     text-overflow:ellipsis;
 }
 
 .userQueryBuilderWizard .inputContainer {
-    height: 90px;
+    height: 60px;
 }
 
 .userQueryBuilderWizard .inputContainer .settings{
-    height: 65px;
+    height: 35px;
 }
 
 .userQueryBuilderWizard .inline{
     display: inline;
 }
 
-.editableQueryBuilderWizard .dijitComboBox{
-    margin-bottom: 1px;
+.userQueryBuilderWizard .fieldWidget{
+    margin-bottom: 2px;
+}
+
+.userQueryBuilderWizard .fieldWidget .notNode{
+    margin-right: 5px;
+    display: inline;
 }
 
 .editableQueryBuilderWizard .title{
@@ -48,7 +49,15 @@
 
 .editableQueryBuilderWizard .inputContainer label{
     display: inline-block;
-    min-width: 150px;
+    min-width: 250px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+.editableQueryBuilderWizard .inputContainer .noWidth{
+    display: inline-block;
+    min-width: 0px;
     max-width: 300px;
     overflow: hidden;
     text-overflow:ellipsis;
@@ -57,4 +66,14 @@
 .editableQueryBuilderWizard .inline{
     display: inline;
 }
+
+.editableQueryBuilderWizard .fieldWidget{
+    margin-bottom: 2px;
+}
+
+.editableQueryBuilderWizard .fieldWidget .notNode{
+    margin-right: 5px;
+    display: inline;
+}
+
 

@@ -74,11 +74,22 @@ define([
             this._createBuilderGUI();
             this._createOptionsGUI();
 
+            if (this.properties.options.mode) {
+                if (this.properties.options.mode === "builder") {
+                    this._builderTab.set("selected", true);
+                }
+                else if (this.properties.options.mode === "manual") {
+                    this._manualTab.set("selected", true);
+                    this._builderTab.set("selected", false);
+                    this._builderTab.set("disabled", true);
+                }
+            }
+
             this.connect(filteringSelect, "onChange", this._removeFields);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
             this.connect(this._titleTextBox, "onChange", this._checkSelectedTab);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
-            this.connect(this._centerNode, "onClick", this._checkSelectedTab);
+            this.connect(this._tabContainerNode, "onClick", this._checkSelectedTab);
         },
         _checkValidation: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -158,7 +169,7 @@ define([
                     var compareId = widget._getSelectedCompare();
                     var not = widget._getSelectedNot();
                     var value = widget._getValue();
-                    if (fieldType === "number") {
+                    if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
                         value = Number(value);
                     }
                     var obj1 = {};
@@ -195,7 +206,6 @@ define([
             this.properties.title = this._titleTextBox.value;
             this.properties.iconClass = this._iconClassTextBox.value;
             this.properties.storeId = this._filteringSelect.value;
-
             this.properties.options.count = this._countTextBox.value;
             this.properties.options.ignoreCase = this._ignoreCaseSelect.value;
             var localeId = this._localeSelect.value;
@@ -203,6 +213,45 @@ define([
             delete localeObj.id;
             this.properties.options.locale = localeObj;
             return def;
+        },
+        _getComplexQuery: function () {
+            var match = this._matchSelect.value;
+            var customQuery = {};
+            var extent;
+            if (this._extentSelect.value === "yes") {
+                extent = this.mapState.getExtent();
+                customQuery.geometry = {
+                    $contains: extent
+                };
+            } else {
+            }
+            var children = this._queryNode.children;
+            if (children.length > 0)
+            {
+                customQuery[match] = [];
+            }
+            d_array.forEach(children, function (child) {
+                var widget = d_registry.getEnclosingWidget(child);
+                var fieldId = widget._getSelectedField();
+                var fieldType = widget._getSelectedFieldType();
+                var compareId = widget._getSelectedCompare();
+                var not = widget._getSelectedNot();
+                var value = widget._getValue();
+                if (fieldType === "number") {
+                    value = Number(value);
+                }
+                var obj1 = {};
+                obj1[compareId] = value;
+                var obj2 = {};
+                obj2[fieldId] = obj1;
+                if (not) {
+                    var object = {$not: obj2};
+                    customQuery[match].push(object);
+                } else {
+                    customQuery[match].push(obj2);
+                }
+            }, this);
+            return customQuery;
         },
         _getCustomQuery: function (customQuery) {
             try {
@@ -277,25 +326,54 @@ define([
             var storeData = this._getFields();
             var storeId = this._filteringSelect.value;
             var fieldWidget = new FieldWidget({
+                source: this,
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 fieldId: fieldId,
                 compareId: compareId,
-                value: value, type: "admin"
+                value: value,
+                not: not,
+                type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+            this._children();
         },
         _addField: function () {
             var storeId = this._filteringSelect.value;
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
+                source: this,
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+            this._children();
+        },
+        _removeLastField: function () {
+            this._queryNode.removeChild(this._queryNode.lastChild);
+            this._children();
+        },
+        _removeFields: function () {
+            while (this._queryNode.firstChild) {
+                this._queryNode.removeChild(this._queryNode.firstChild);
+            }
+            this._addField();
+        },
+        _children: function () {
+            var children = this._queryNode.children;
+            d_array.forEach(children, function (child, i) {
+                var widget = d_registry.getEnclosingWidget(child);
+                if (i === 0 && children.length === 1) {
+                    widget._changeButtons(true, false);
+                } else if (i === children.length - 1 && children.length !== 1) {
+                    widget._changeButtons(false, true);
+                } else {
+                    widget._changeButtons(false, false);
+                }
+            });
         },
         _createBuilderGUI: function () {
             var ynStore = new Memory({
@@ -338,16 +416,16 @@ define([
             }, this._matchNode);
             var properties = this.properties;
             var customQuery = properties.customquery;
-            if (properties.options.editable) {
+            if (properties.options.editable !== undefined) {
                 var editable = properties.options.editable;
                 this._editableSelect.set("value", editable);
             }
-            var match;
             if (customQuery.geometry) {
                 this._extentSelect.set("value", "yes");
             } else {
                 this._extentSelect.set("value", "no");
             }
+            var match;
             if (customQuery.$and) {
                 this._matchSelect.set("value", "$and");
                 match = "$and";
@@ -356,9 +434,13 @@ define([
                 match = "$or";
             }
             var fields = customQuery[match];
-            d_array.forEach(fields, function (field) {
-                this._addDataField(field);
-            }, this);
+            if (fields) {
+                d_array.forEach(fields, function (field) {
+                    this._addDataField(field);
+                }, this);
+            } else {
+                this._addField();
+            }
         },
         _createOptionsGUI: function () {
             this._countTextBox = new NumberTextBox({
@@ -403,17 +485,15 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }, this._localeNode);
         },
-        _addExpressionSet: function () {
-
-        },
-        _removeFields: function () {
-            while (this._queryNode.firstChild) {
-                this._queryNode.removeChild(this._queryNode.firstChild);
-            }
-        },
         _checkSelectedTab: function () {
             if (this._optionsTab.get("selected")) {
                 this._doneButton.set("disabled", true);
+            } else if (this._manualTab.get("selected")) {
+                if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
+                    this._doneButton.set("disabled", false);
+                }
+                var customQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
+                this._customQueryTextArea.set("value", customQueryString);
             } else {
                 if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
                     this._doneButton.set("disabled", false);

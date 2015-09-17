@@ -375,7 +375,15 @@
                     "title": "Where are Germany's airports?",
                     "iconClass": "icon-airport",
                     "storeId": "airtraffic",
-                    "customquery": {},
+                    "customquery": {
+                        "$and": [
+                            {
+                                "OBJECTID": {
+                                    "$gt": -1
+                                }
+                            }
+                        ]
+                    },
                     "options": {
                         "editable": "no",
                         "mode": "builder",
@@ -527,6 +535,13 @@
                                 "clouds": {
                                     "$lt": 20
                                 }
+                            },
+                            {
+                                "$not": {
+                                    "weather_id": {
+                                        "$eq": 521
+                                    }
+                                }
                             }
                         ]
                     },
@@ -541,6 +556,31 @@
                         }
                     },
                     "storeId": "owm_datastore"
+                },
+                {
+                    "id": "fc_1442490426938",
+                    "title": "Strong Earthquakes [editable]",
+                    "iconClass": "icon-custom-info",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "MAGNITUDE": {
+                                    "$gte": 7
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": "yes",
+                        "count": -1,
+                        "ignoreCase": true,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "_AGS_STORE_1442227368735"
                 }
             ],
             "enabled": true

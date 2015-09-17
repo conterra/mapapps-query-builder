@@ -48,7 +48,7 @@ define([
                 var window = this._windowManager.createWindow({
                     title: i18n.wizard.windowTitle,
                     marginBox: {
-                        w: 500,
+                        w: 540,
                         h: 360,
                         t: 100,
                         l: 20

@@ -28,19 +28,17 @@ define({
         iconClassHelp: "Hilfe zur Icon Class",
         complexQueryHelp: "Hilfe zur Complex Query",
         customQuery: "Custom Query",
-        queryDefinition: "Query Definiton:",
-        useExtent: "Aktueller Kartenausschnitt",
+        queryDefinition: "Query Definiton",
+        useExtent: "Auswahl auf aktuellen\nKartenausschnitt begrenzen",
         count: "Anzahl der Ergebnisse",
         ignoreCase: "Groß-/Kleinschreibung unterscheiden",
         locale: "Sprache",
         addField: "Feld hinzuf\u00fcgen",
-        storeId: "Store",
+        store: "Datenquelle",
         cancel: "Abbrechen",
         done: "Suchen",
         typeInTitle: "Titel eingeben",
-        match: "Felder verkn\u00fcpfen",
-        match1: "Features abfragen, die ",
-        match2: " der folgenden Ausr\u00fccke erf\u00fcllen",
+        match: "Felder verkn\u00fcpfen mit",
         changeToManual: "Sind Sie sicher? Die Query wird nur noch manuell zu \u00e4ndern sein!",
         and: "und",
         or: "oder",
@@ -62,7 +60,9 @@ define({
             before: "vor",
             after: "nach",
             yes: "ja",
-            no: "nein"
+            no: "nein",
+            shouldBeTrue: "Soll zutreffen",
+            shouldBeFalse: "Soll nicht zutreffen"
         }
     }
 });

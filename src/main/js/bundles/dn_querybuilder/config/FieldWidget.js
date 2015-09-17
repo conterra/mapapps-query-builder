@@ -71,19 +71,19 @@ define([
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
-                    this._notSelectWidth = "width: 50px;";
+                    this._notSelectWidth = "width: 100px;";
                     this.fieldSelectDisabled = false;
                 } else if (this.type === "editing") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
-                    this._notSelectWidth = "width: 50px;";
+                    this._notSelectWidth = "width: 100px;";
                     this.fieldSelectDisabled = true;
                 } else {
                     this._fieldSelectWidth = "width: 180px;";
                     this._valueSelectWidth = "width: 200px;";
                     this._compareSelectWidth = "width: 120px;";
-                    this._notSelectWidth = "width: 50px;";
+                    this._notSelectWidth = "width: 100px;";
                     this.fieldSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 160;
@@ -101,40 +101,29 @@ define([
                     disabled: this.fieldSelectDisabled
                 }, this._fieldNode);
                 fieldSelect.startup();
-
                 var i18n = this.i18n;
                 var notStore = this._notStore = new Memory({
                     data: [
-                        {id: true, name: i18n.yes},
-                        {id: false, name: i18n.no}
+                        {id: false, name: i18n.shouldBeTrue},
+                        {id: true, name: i18n.shouldBeFalse}
                     ]
                 });
+                var not = false;
+                if (this.not !== undefined) {
+                    not = this.not;
+                }
                 var notSelect = this._notSelect = new FilteringSelect({
                     name: "not",
-                    value: this.not || false,
+                    value: not,
                     store: notStore,
                     searchAttr: "name",
                     style: this._notSelectWidth,
                     maxHeight: this.maxComboBoxHeight,
                     disabled: this.fieldSelectDisabled
-                }, this._notNode);
+                });
+                domConstruct.place(notSelect.domNode, this._notNode, "last");
                 notSelect.startup();
 
-                if (this.type !== "editing") {
-                    var removeButton = new Button({
-                        label: "-",
-                        onClick: function () {
-                            removeButton.domNode.parentNode.remove();
-                            this._remove();
-                        }.bind(this)
-                    });
-                    domConstruct.place(removeButton.domNode, this._buttonNode, "replace");
-                    removeButton.startup();
-                }
-
-                /*if (this.fieldId) {
-                 this._fieldSelect.set("value", this.fieldId);
-                 }*/
                 ct_when(this._createGUI(), function () {
                     this.connect(fieldSelect, "onChange", this._changeGUI);
                 }, this);
@@ -148,7 +137,40 @@ define([
                 });
             }
         },
-        _remove: function () {
+        _changeButtons: function (first, last) {
+            while (this._buttonNode.firstChild) {
+                this._buttonNode.removeChild(this._buttonNode.firstChild);
+            }
+            if (this.type !== "editing") {
+                if (first) {
+                    var addButton = new Button({
+                        label: "+",
+                        onClick: d_lang.hitch(this, function () {
+                            this.source._addField();
+                        })
+                    });
+                    domConstruct.place(addButton.domNode, this._buttonNode, "last");
+                    addButton.startup();
+                } else if (last) {
+                    var addButton = new Button({
+                        label: "+",
+                        onClick: d_lang.hitch(this, function () {
+                            this.source._addField();
+                        })
+                    });
+                    domConstruct.place(addButton.domNode, this._buttonNode, "last");
+                    addButton.startup();
+                    var removeButton = new Button({
+                        label: "-",
+                        onClick: d_lang.hitch(this, function () {
+                            this.source._removeLastField();
+                        })
+                    });
+                    domConstruct.place(removeButton.domNode, this._buttonNode, "last");
+                    removeButton.startup();
+                } else {
+                }
+            }
         },
         _createGUI: function () {
             var def = new Deferred();
@@ -210,8 +232,12 @@ define([
                         var distinctValueStore = new Memory({
                             data: distinctValueData
                         });
-                        valueComboBox.set("value", this.value || distinctValueData[0].id);
                         valueComboBox.set("store", distinctValueStore);
+                        var value = distinctValueData[0].id;
+                        if (this.value !== undefined) {
+                            value = this.value;
+                        }
+                        valueComboBox.set("value", value);
                         valueComboBox.set('disabled', false);
                         def.resolve();
                     }, this);

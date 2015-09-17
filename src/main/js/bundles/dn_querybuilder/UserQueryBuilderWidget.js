@@ -73,6 +73,7 @@ define([
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
                 this._init();
+                this._addField();
             }, this);
         },
         _init: function () {
@@ -158,13 +159,19 @@ define([
             var storeId = this._filteringSelect.get("value");
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
+                source: this,
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 type: "user"
             });
-            this.connect(fieldWidget, "_remove", this._changeMatchVisibility);
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+            this._changeMatchVisibility();
+            this._children();
+        },
+        _removeLastField: function () {
+            this._queryNode.removeChild(this._queryNode.lastChild);
+            this._children();
             this._changeMatchVisibility();
         },
         _removeFields: function () {
@@ -172,6 +179,20 @@ define([
                 this._queryNode.removeChild(this._queryNode.firstChild);
                 this._changeMatchVisibility();
             }
+            this._addField();
+        },
+        _children: function () {
+            var children = this._queryNode.children;
+            d_array.forEach(children, function (child, i) {
+                var widget = d_registry.getEnclosingWidget(child);
+                if (i === 0 && children.length === 1) {
+                    widget._changeButtons(true, false);
+                } else if (i === children.length - 1 && children.length !== 1) {
+                    widget._changeButtons(false, true);
+                } else {
+                    widget._changeButtons(false, false);
+                }
+            });
         },
         _getFields: function () {
             var storeId = this._filteringSelect.get("value");
@@ -246,7 +267,7 @@ define([
                 var compareId = widget._getSelectedCompare();
                 var not = widget._getSelectedNot();
                 var value = widget._getValue();
-                if (fieldType === "number") {
+                if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
                     value = Number(value);
                 }
                 var obj1 = {};

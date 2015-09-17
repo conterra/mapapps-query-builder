@@ -172,14 +172,39 @@ define([
             return storeData;
         },
         _addDataField: function (field) {
+            var fieldId;
+            var compareId;
+            var value;
+            var not;
+            if (field.$not) {
+                not = true;
+                for (var a in field.$not) {
+                    fieldId = a;
+                    for (var b in field.$not[fieldId]) {
+                        compareId = b;
+                        value = field.$not[fieldId][compareId];
+                    }
+                }
+            } else {
+                not = false;
+                for (var a in field) {
+                    fieldId = a;
+                    for (var b in field[fieldId]) {
+                        compareId = b;
+                        value = field[fieldId][compareId];
+                    }
+                }
+            }
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
+                source: this,
                 store: this.store,
                 storeData: storeData,
                 i18n: this.i18n.fields,
-                fieldId: field.fieldId,
-                compareId: field.compareId,
-                value: field.value,
+                fieldId: fieldId,
+                compareId: compareId,
+                value: value,
+                not: not,
                 type: "editing"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
@@ -252,7 +277,7 @@ define([
                 var compareId = widget._getSelectedCompare();
                 var not = widget._getSelectedNot();
                 var value = widget._getValue();
-                if (fieldType === "number") {
+                if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
                     value = Number(value);
                 }
                 var obj1 = {};
