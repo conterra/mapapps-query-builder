@@ -16,7 +16,7 @@
 
 .userQueryBuilderWizard .inputContainer label{
     display: inline-block;
-    min-width: 180px;
+    min-width: 160px;
     max-width: 300px;
     overflow: hidden;
     text-overflow:ellipsis;
@@ -49,7 +49,7 @@
 
 .editableQueryBuilderWizard .inputContainer label{
     display: inline-block;
-    min-width: 180px;
+    min-width: 160px;
     max-width: 300px;
     overflow: hidden;
     text-overflow:ellipsis;

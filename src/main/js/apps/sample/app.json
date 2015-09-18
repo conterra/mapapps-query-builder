@@ -333,7 +333,7 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -363,12 +363,45 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
                         }
                     }
+                },
+                {
+                    "id": "fc_1442569207538",
+                    "title": "Date Test [editable]",
+                    "iconClass": "icon-custom-info",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "zeitpunkt": {
+                                    "$lte": "2015-09-18"
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": true,
+                        "editOptions": [
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            }
+                        ],
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "stoerungen"
                 },
                 {
                     "id": "fc_1441023991013",
@@ -388,7 +421,7 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -427,7 +460,7 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -452,7 +485,7 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -477,7 +510,7 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -502,7 +535,7 @@
                         "editable": false,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -549,7 +582,7 @@
                         "editable": true,
                         "mode": "builder",
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"
@@ -606,7 +639,7 @@
                         "mode": "builder",
                         "editable": true,
                         "count": -1,
-                        "ignoreCase": true,
+                        "ignoreCase": false,
                         "locale": {
                             "language": "en",
                             "country": "EN"

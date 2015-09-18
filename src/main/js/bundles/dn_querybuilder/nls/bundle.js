@@ -51,8 +51,8 @@ define({
                     userUseExtent: "Where do you want to search?",
                     userDone: "Go",
                     userMatch: "Combine fields with...",
-                    userExtentYes: "Current extent",
-                    userExtentNo: "Everywhere",
+                    userExtentYes: "current extent",
+                    userExtentNo: "everywhere",
                     userWindowTitle: "Build your own Query",
                     fields: {
                         typeInValue: "type in value",

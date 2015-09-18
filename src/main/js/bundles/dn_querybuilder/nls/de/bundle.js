@@ -49,8 +49,8 @@ define({
         userUseExtent: "Wo suchen?",
         userDone: "Los gehts",
         userMatch: "Suche verknüpfen mit...",
-        userExtentYes: "Auf sichtbarer Karte",
-        userExtentNo: "\u00dcberall",
+        userExtentYes: "auf sichtbarer Karte",
+        userExtentNo: "\u00fcberall",
         userWindowTitle: "Eigene Abfrage erstellen",
         fields: {
             typeInValue: "Wert eingeben",

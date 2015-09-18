@@ -205,7 +205,7 @@ define([
                 if (codedValues.length > 0) {
                     codedValueString = "[CV]";
                 }
-                if (field.type !== "geometry" && field.type !== "date") {
+                if (field.type !== "geometry" /*&& field.type !== "date"*/) {
                     storeData.push({id: field.name, title: field.title + " (" + field.type + ") " + codedValueString, type: field.type, codedValues: codedValues});
                 }
             });
@@ -236,7 +236,7 @@ define([
             var complexQuery = this._getComplexQuery();
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStore(storeId);
-            var filter = new Filter(store, complexQuery, {ignoreCase: true});
+            var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
             this.dataModel.setDatasource(filter);
             this._setProcessing(false);
         },

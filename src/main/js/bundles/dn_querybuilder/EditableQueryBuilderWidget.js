@@ -87,8 +87,8 @@ define([
 
             var ynStore = this._ynStore = new Memory({
                 data: [
-                    {name: this.i18n.yes, id: true},
-                    {name: this.i18n.no, id: false}
+                    {name: this.i18n.userExtentYes, id: true},
+                    {name: this.i18n.userExtentNo, id: false}
                 ]
             });
             this._extentSelect = new FilteringSelect({
@@ -162,7 +162,7 @@ define([
                 if (codedValues.length > 0) {
                     codedValueString = "[CV]";
                 }
-                if (field.type !== "geometry" && field.type !== "date") {
+                if (field.type !== "geometry" /*&& field.type !== "date"*/) {
                     storeData.push({id: field.name, title: field.title + " (" + field.type + ") " + codedValueString, type: field.type, codedValues: codedValues});
                 }
             });

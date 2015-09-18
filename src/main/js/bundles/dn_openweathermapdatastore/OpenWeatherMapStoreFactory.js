@@ -29,7 +29,7 @@ define([
     "dojo/store/util/QueryResults",
     "esri/symbols/PictureMarkerSymbol",
     "esri/graphic"
-], function (d_lang, declare, ct_geometry, DistanceParameters, d_array, Deferred, locale, ct_lang, ct_when, ct_request, StoreUtil, ComplexQuery, ComplexMemory, QueryResults, PictureMarkerSymbol, Graphic) {
+], function (d_lang, declare, ct_geometry, DistanceParameters, d_array, Deferred, d_locale, ct_lang, ct_when, ct_request, StoreUtil, ComplexQuery, ComplexMemory, QueryResults, PictureMarkerSymbol, Graphic) {
     /*
      * COPYRIGHT 2015 con terra GmbH Germany
      */
@@ -89,7 +89,7 @@ define([
                 attr.name = obj.name;
                 var time = obj.dt;
                 var date = new Date(time * 1000);
-                var date = attr.date = locale.format(date, "MMM d, yyyy");
+                var date = attr.date = d_locale.format(date, "MMM d, yyyy");
                 attr.weather_id = obj.weather[0].id;
                 attr.main = obj.weather[0].main;
                 attr.description = obj.weather[0].description;

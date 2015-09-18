@@ -37,6 +37,7 @@ define([
     "dijit/form/CheckBox",
     "dojo/store/Memory",
     "dojo/dom-construct",
+    "dojo/date/locale",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
 ], function (d_lang,
@@ -62,6 +63,7 @@ define([
         CheckBox,
         Memory,
         domConstruct,
+        d_locale,
         ContentPane,
         BorderContainer) {
 
@@ -95,7 +97,7 @@ define([
                     this._notSelectWidth = "width: 100px;";
                     //this.fieldSelectDisabled = false;
                 }
-                this.maxComboBoxHeight = 160;
+                this.maxComboBoxHeight = 200;
                 var fieldData = this.storeData;
                 var fieldStore = this._fieldStore = new Memory({
                     data: fieldData
@@ -170,14 +172,6 @@ define([
                     domConstruct.place(addButton.domNode, this._buttonNode, "last");
                     addButton.startup();
                 } else if (last) {
-                    var addButton = new Button({
-                        label: "+",
-                        onClick: d_lang.hitch(this, function () {
-                            this.source._addField();
-                        })
-                    });
-                    domConstruct.place(addButton.domNode, this._buttonNode, "last");
-                    addButton.startup();
                     var removeButton = new Button({
                         label: "-",
                         onClick: d_lang.hitch(this, function () {
@@ -186,6 +180,14 @@ define([
                     });
                     domConstruct.place(removeButton.domNode, this._buttonNode, "last");
                     removeButton.startup();
+                    var addButton = new Button({
+                        label: "+",
+                        onClick: d_lang.hitch(this, function () {
+                            this.source._addField();
+                        })
+                    });
+                    domConstruct.place(addButton.domNode, this._buttonNode, "last");
+                    addButton.startup();
                 } else {
                     var removeButton = new Button({
                         label: "-",
@@ -241,9 +243,9 @@ define([
                     this._createCompareSelect("$eq", compareStore);
                 } else if (type === "date") {
                     var compareStore = this._compareStore = this._createDateStore();
-                    this._createCompareSelect("before", compareStore);
+                    this._createCompareSelect("$lte", compareStore);
                 }
-                if (this._supportsDistincts === true) {
+                if (this._supportsDistincts === true && type !== "date") {
                     var valueComboBox = this._valueField = new ComboBox({
                         name: "value",
                         searchAttr: "id",
@@ -349,9 +351,9 @@ define([
                 } else if (type === "date") {
                     var compareStore = this._compareStore = this._createDateStore();
                     compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this.compareId || "before");
+                    compareSelect.set("value", this.compareId || "$lte");
                 }
-                if (this._supportsDistincts === true) {
+                if (this._supportsDistincts === true && type !== "date") {
                     var valueComboBox = this._valueField = new ComboBox({
                         name: "value",
                         searchAttr: "id",
@@ -489,8 +491,8 @@ define([
             var i18n = this.i18n;
             var store = new Memory({
                 data: [
-                    {id: "before", name: i18n.before},
-                    {id: "after", name: i18n.after}
+                    {id: "$lte", name: i18n.before},
+                    {id: "$gte", name: i18n.after}
                 ]
             });
             return store;
@@ -581,6 +583,9 @@ define([
         },
         _getValue: function () {
             var result = this._valueField.value;
+            if (this._getSelectedFieldType() === "date") {
+                result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
+            }
             return result;
         }
     });
