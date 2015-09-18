@@ -23,6 +23,7 @@ define([
     "dojo/dom-style",
     "ct/_Connect",
     "ct/_when",
+    "ct/array",
     "wizard/_BuilderWidget",
     "./FieldWidget",
     "dijit/registry",
@@ -39,7 +40,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -70,10 +71,8 @@ define([
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
-
             this._createBuilderGUI();
             this._createOptionsGUI();
-
             if (this.properties.options.mode) {
                 if (this.properties.options.mode === "builder") {
                     this._builderTab.set("selected", true);
@@ -87,9 +86,11 @@ define([
 
             this.connect(filteringSelect, "onChange", this._removeFields);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
-            this.connect(this._titleTextBox, "onChange", this._checkSelectedTab);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
-            this.connect(this._tabContainerNode, "onClick", this._checkSelectedTab);
+            this.connect(this._builderTab, "onShow", this._onBuilderTab);
+            this.connect(this._optionsTab, "onShow", this._onOptionsTab);
+            this.connect(this._manualTab, "onShow", this._onManualTab);
+            //this.connect(this._customQueryTextArea, "onInput", this._onTextAreaInput);
         },
         _checkValidation: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -132,57 +133,9 @@ define([
             }
             if (this._builderTab.get("selected")) {
                 this.properties.options.mode = "builder";
-                var match = this._matchSelect.value;
-                var customQuery = {};
-                var extent;
-                if (this._extentSelect.value === true) {
-                    extent = this.mapState.getExtent();
-                    customQuery.geometry = {
-                        $contains: extent
-                    };
-                    def.resolve();
-                } else {
-                    /*var children = this.mapModel.getBaseLayer().get("children");
-                     d_array.forEach(children, function (child) {
-                     if (child.enabled) {
-                     ct_when(this.coordinateTransformer.transform(child.fullExtent, this.mapState.getSpatialReference().wkid),
-                     function (transformedGeometry) {
-                     extent = transformedGeometry;
-                     def.resolve();
-                     }, this);
-                     }
-                     }, this);
-                     customQuery.geometry = {
-                     $contains: extent
-                     };*/
-                    def.resolve();
-                }
-                var children = this._queryNode.children;
-                if (children.length > 0)
-                {
-                    customQuery[match] = [];
-                }
-                d_array.forEach(children, function (child) {
-                    var widget = d_registry.getEnclosingWidget(child);
-                    var fieldId = widget._getSelectedField();
-                    var fieldType = widget._getSelectedFieldType();
-                    var compareId = widget._getSelectedCompare();
-                    var not = widget._getSelectedNot();
-                    var value = widget._getValue();
-                    if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
-                        value = Number(value);
-                    }
-                    var obj1 = {};
-                    obj1[compareId] = value;
-                    var obj2 = {};
-                    obj2[fieldId] = obj1;
-                    if (not) {
-                        var object = {$not: obj2};
-                        customQuery[match].push(object);
-                    } else {
-                        customQuery[match].push(obj2);
-                    }
-                }, this);
+
+                var customQuery = this._getComplexQuery();
+
                 this.properties.customquery = customQuery;
                 this.properties.options.editable = this._editableSelect.value;
                 if (this.properties.options.editable === true) {
@@ -201,21 +154,23 @@ define([
                     if (this.properties.options.editOptions)
                         delete this.properties.options.editOptions;
                 }
+                def.resolve();
             } else {
-                var customQuery = this._customQueryTextArea.value;
+                var customQueryString = this._customQueryTextArea.value;
                 if (this.properties.options.mode === "builder") {
-                    var customQueryObj = this._getCustomQuery(customQuery);
+                    //if (!this._checkCustomQuery(customQueryString)) {
                     ct_when(this.windowManager.createInfoDialogWindow({
                         message: this.i18n.changeToManual,
                         attachToDom: this.appCtx.builderWindowRoot
                     }), function () {
-                        this.properties.customquery = customQueryObj;
+                        this.properties.customquery = this._getCustomQueryObj(customQueryString);
                         this.properties.options.mode = "manual";
                         this.properties.options.editable = false;
                         def.resolve();
                     }, this);
+                    //}
                 } else {
-                    this.properties.customquery = this._getCustomQuery(customQuery);
+                    this.properties.customquery = this._getCustomQueryObj(customQueryString);
                     def.resolve();
                 }
             }
@@ -269,7 +224,7 @@ define([
             }, this);
             return customQuery;
         },
-        _getCustomQuery: function (customQuery) {
+        _getCustomQueryObj: function (customQuery) {
             try {
                 var customQueryObj = JSON.parse(customQuery);
             } catch (e) {
@@ -283,7 +238,54 @@ define([
             }
             return customQueryObj;
         },
+        /*_checkCustomQuery: function (customQueryString) {
+         var result = false;
+         try {
+         var customQueryObj = JSON.parse(customQueryString);
+         } catch (e) {
+         return false;
+         }
+         if (customQueryObj !== {}) {
+         var i = 0;
+         var obj1 = [];
+         var obj2 = [];
+         for (var child in customQueryObj) {
+         i++;
+         obj1.push(customQueryObj[child]);
+         obj2.push(child);
+         }
+         if (i === 1) {
+         if (obj2[0] === "$and" || obj2[0] === "$or") {
+         var obj2 = [];
+         for (var child in obj1[0]) {
+         obj2.push(child);
+         }
+         var res1 = ct_array.arraySearch(obj1, {name: "$and"});
+         var res2 = ct_array.arraySearch(obj1, {name: "$or"});
+         if (res1.toString() === "" && res2.toString() === "") {
+         result = true;
+         }
+         }
+         } else if (i === 2) {
+         if (obj[0] === "geometry") {
+         if (obj[1] === "$and" || obj[1] === "$or") {
+         var obj1 = [];
+         for (var child in obj[0]) {
+         obj1.push(child);
+         }
+         var res1 = ct_array.arraySearch(obj1, {name: "$and"});
+         var res2 = ct_array.arraySearch(obj1, {name: "$or"});
+         if (res1.toString() === "" && res2.toString() === "") {
+         result = true;
+         }
+         }
+         }
+         }
+         }
+         return result;
+         },*/
         _onCancel: function () {
+            //needed
         },
         _getSelectedStore: function (id) {
             var s;
@@ -504,20 +506,29 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }, this._localeNode);
         },
-        _checkSelectedTab: function () {
-            if (this._optionsTab.get("selected")) {
-                this._doneButton.set("disabled", true);
-            } else if (this._manualTab.get("selected")) {
-                if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
-                    this._doneButton.set("disabled", false);
-                }
-                var customQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
-                this._customQueryTextArea.set("value", customQueryString);
-            } else {
-                if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
-                    this._doneButton.set("disabled", false);
-                }
+        _onBuilderTab: function () {
+            if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
+                this._doneButton.set("disabled", false);
             }
+        },
+        _onOptionsTab: function () {
+            this._doneButton.set("disabled", true);
+        },
+        _onManualTab: function () {
+            if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
+                this._doneButton.set("disabled", false);
+            }
+            var customQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
+            this._customQueryTextArea.set("value", customQueryString);
+        },
+        _onTextAreaInput: function () {
+            var that = this;
+            clearTimeout(this._timeout);
+            this._timeout = setTimeout(function () {
+                var customQueryString = that._customQueryTextArea.get("value");
+                var valid = that._checkCustomQuery(customQueryString);
+                that._builderTab.set("disabled", !valid);
+            }, 100);
         }
     });
 });

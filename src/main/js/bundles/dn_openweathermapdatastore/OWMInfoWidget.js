@@ -218,7 +218,7 @@ define([
             ct_when(this._get5DayForecast(), function (data) {
                 this._data5Days = data;
                 //this._createHeatmap();
-                this._render5DaysChart(this._data5Days, seriesSelect5Days.value);
+                this._render5DaysChart2(this._data5Days, seriesSelect5Days.value);
                 this.connect(seriesSelect5Days, "onChange", function () {
                     this._render5DaysChart(this._data5Days, seriesSelect5Days.value);
                 });
