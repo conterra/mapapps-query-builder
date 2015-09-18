@@ -87,15 +87,14 @@ define([
                 style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
-            filteringSelect.startup();
 
             var extentStore = this._extentStore = new Memory({
                 data: [
-                    {name: this.i18n.yes, id: true},
-                    {name: this.i18n.no, id: false}
+                    {name: this.i18n.userExtentYes, id: true},
+                    {name: this.i18n.userExtentNo, id: false}
                 ]
             });
-            var extentSelect = this._extentSelect = new FilteringSelect({
+            this._extentSelect = new FilteringSelect({
                 name: "extent",
                 value: false,
                 store: extentStore,
@@ -111,7 +110,7 @@ define([
                     {name: this.i18n.or, id: "$or"}
                 ]
             });
-            var matchSelect = this._matchSelect = new FilteringSelect({
+            this._matchSelect = new FilteringSelect({
                 name: "match",
                 value: "$and",
                 store: matchStore,

@@ -46,7 +46,7 @@ define([
             params.cluster = "no";
             //default:
             //params.bbox = "-180.0,90.0,180.0,-90.0,5";
-            params.bbox = "-180.0,90.0,180.0,-90.0,6";
+            params.bbox = "-180.0,90.0,180.0,-90.0,5";
             if (properties.apikey) {
                 params.APPID = properties.apikey;
             }

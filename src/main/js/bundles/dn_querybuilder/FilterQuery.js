@@ -46,7 +46,7 @@ define([
                     dataModel: dataModel
                 });
                 var window = this._windowManager.createWindow({
-                    title: i18n.wizard.windowTitle,
+                    title: i18n.wizard.editWindowTitle,
                     marginBox: {
                         w: 540,
                         h: 360,

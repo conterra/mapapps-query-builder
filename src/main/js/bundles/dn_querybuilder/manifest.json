@@ -14,7 +14,7 @@
         {
             "role": "userQueryBuilderWidget",
             "window": {
-                "title": "${wizard.windowTitle}",
+                "title": "${wizard.userWindowTitle}",
                 "marginBox": {
                     "t": 100,
                     "l": 20,
@@ -24,7 +24,7 @@
                 "dockTool": "userQueryBuilderTool",
                 "closable": true,
                 "minimizeOnClose": true,
-                "resizable": true
+                "resizable": false
             }
         }
     ],

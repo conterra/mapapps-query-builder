@@ -252,7 +252,7 @@
                 "itemsPerPage": 100
             },
             "FeatureMapVisualizer": {
-                "useDataViewPaging": true
+                "useDataViewPaging": false
             },
             "ActionController": {
                 "zoomToFeatures": true
@@ -387,7 +387,7 @@
                     "options": {
                         "editable": false,
                         "mode": "builder",
-                        "count": 5,
+                        "count": -1,
                         "ignoreCase": true,
                         "locale": {
                             "language": "en",
@@ -553,7 +553,39 @@
                         "locale": {
                             "language": "en",
                             "country": "EN"
-                        }
+                        },
+                        "editOptions": [
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": true,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            }
+                        ]
                     },
                     "storeId": "owm_datastore"
                 },
@@ -578,7 +610,15 @@
                         "locale": {
                             "language": "en",
                             "country": "EN"
-                        }
+                        },
+                        "editOptions": [
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            }
+                        ]
                     },
                     "storeId": "_AGS_STORE_1442227368735"
                 }

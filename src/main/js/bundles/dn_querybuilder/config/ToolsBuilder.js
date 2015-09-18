@@ -161,13 +161,13 @@ define([
                     var window = windowManager.createModalWindow({
                         title: title,
                         marginBox: {
-                            w: 760,
+                            w: 840,
                             h: 500
                         },
                         content: wizard,
                         closable: true,
                         attachToDom: this._appCtx.builderWindowRoot,
-                        resizable: true
+                        resizable: false
                     });
                     window.show();
                     this.connect(wizard, "_onReady", function () {

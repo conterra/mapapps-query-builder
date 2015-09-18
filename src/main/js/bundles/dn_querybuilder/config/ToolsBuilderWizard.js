@@ -197,6 +197,9 @@ define([
                         obj["value"] = widget._getValueCheckBoxValue();
                         this.properties.options.editOptions.push(obj);
                     }, this);
+                } else {
+                    if (this.properties.options.editOptions)
+                        delete this.properties.options.editOptions;
                 }
             } else {
                 var customQuery = this._customQueryTextArea.value;
@@ -250,7 +253,7 @@ define([
                 var compareId = widget._getSelectedCompare();
                 var not = widget._getSelectedNot();
                 var value = widget._getValue();
-                if (fieldType === "number") {
+                if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
                     value = Number(value);
                 }
                 var obj1 = {};
@@ -347,7 +350,7 @@ define([
                 compareId: compareId,
                 value: value,
                 not: not,
-                editFields: editOptions,
+                editOptions: editOptions,
                 type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
@@ -449,7 +452,6 @@ define([
             }
             var fields = customQuery[match];
             var editFields = this.properties.options.editOptions;
-            debugger
             if (fields) {
                 d_array.forEach(fields, function (field, i) {
                     var editOptions = editFields && editFields[i];

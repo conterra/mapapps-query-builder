@@ -80,11 +80,10 @@ define([
             var store = new Memory({
                 data: this.storeData
             });
-
             d_html.set(this._titleNode, this.properties.title);
             var storeId = this.store.id;
-            var title = store.get(storeId).name;
-            d_html.set(this._storeNode, title);
+            var storeTitle = store.get(storeId).name;
+            d_html.set(this._storeNode, storeTitle);
 
             var ynStore = this._ynStore = new Memory({
                 data: [
@@ -169,7 +168,7 @@ define([
             });
             return storeData;
         },
-        _addDataField: function (field) {
+        _addDataField: function (field, editOptions) {
             var fieldId;
             var compareId;
             var value;
@@ -203,6 +202,7 @@ define([
                 compareId: compareId,
                 value: value,
                 not: not,
+                editOptions: editOptions,
                 type: "editing"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
@@ -235,9 +235,13 @@ define([
                 match = "$or";
             }
             var fields = customQuery[match];
-            d_array.forEach(fields, function (field) {
-                this._addDataField(field);
-            }, this);
+            var editFields = this.properties.options.editOptions;
+            if (fields) {
+                d_array.forEach(fields, function (field, i) {
+                    var editOptions = editFields && editFields[i];
+                    this._addDataField(field, editOptions);
+                }, this);
+            }
         },
         _onDone: function () {
             this._setProcessing(true);

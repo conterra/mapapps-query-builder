@@ -76,19 +76,24 @@ define([
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
-                    this.fieldSelectDisabled = false;
+                    //this.fieldSelectDisabled = false;
                 } else if (this.type === "editing") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
-                    this.fieldSelectDisabled = true;
+                    if (this.editOptions) {
+                        this.notSelectDisabled = !this.editOptions.not;
+                        this.fieldSelectDisabled = !this.editOptions.field;
+                        this.compareSelectDisabled = !this.editOptions.compare;
+                        this.valueSelectDisabled = !this.editOptions.value;
+                    }
                 } else {
                     this._fieldSelectWidth = "width: 180px;";
                     this._valueSelectWidth = "width: 200px;";
                     this._compareSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
-                    this.fieldSelectDisabled = false;
+                    //this.fieldSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 160;
                 var fieldData = this.storeData;
@@ -123,7 +128,7 @@ define([
                     searchAttr: "name",
                     style: this._notSelectWidth,
                     maxHeight: this.maxComboBoxHeight,
-                    disabled: this.fieldSelectDisabled
+                    disabled: this.notSelectDisabled
                 });
                 domConstruct.place(notSelect.domNode, this._notNode, "first");
                 notSelect.startup();
@@ -288,6 +293,8 @@ define([
                     def.resolve();
                 }
             }
+            this._compareSelect.set("disabled", this.compareSelectDisabled);
+            this._valueField.set("disabled", this.valueSelectDisabled);
             return def;
         },
         _changeGUI: function () {
@@ -515,16 +522,15 @@ define([
                 name: "checkBox",
                 checked: value
             }, this._valueCheckBoxNode);
-            ct_css.switchHidden(this._notCheckBox.domNode, true);
-            ct_css.switchHidden(this._fieldCheckBox.domNode, true);
-            ct_css.switchHidden(this._compareCheckBox.domNode, true);
-            ct_css.switchHidden(this._valueCheckBox.domNode, true);
+            this._changeEditingVisibility();
         },
         _changeEditingVisibility: function () {
-            var editing = this.source._editableSelect.value;
-            var hidden = true;
-            if (editing === true)
-                hidden = false;
+            if (this.source._editableSelect) {
+                var hidden = !this.source._editableSelect.value;
+            } else {
+                hidden = true;
+            }
+
             ct_css.switchHidden(this._notCheckBox.domNode, hidden);
             ct_css.switchHidden(this._fieldCheckBox.domNode, hidden);
             ct_css.switchHidden(this._compareCheckBox.domNode, hidden);
