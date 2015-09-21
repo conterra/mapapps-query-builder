@@ -71,26 +71,44 @@ define([
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
-            this._createBuilderGUI();
+
             this._createOptionsGUI();
-            if (this.properties.options.mode) {
-                if (this.properties.options.mode === "builder") {
-                    this._builderTab.set("selected", true);
-                }
-                else if (this.properties.options.mode === "manual") {
-                    this._manualTab.set("selected", true);
-                    this._builderTab.set("selected", false);
-                    this._builderTab.set("disabled", true);
+
+            var valid = this._validateCustomQuery(customQueryString);
+            if (valid) {
+                this._createBuilderGUI();
+            } else {
+                this._builderTab.set("disabled", true);
+                this._manualTab.set("selected", true);
+                this._builderTab.set("selected", false);
+                if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
+                    this._doneButton.set("disabled", false);
                 }
             }
 
-            this.connect(filteringSelect, "onChange", this._removeFields);
+
+            /*if (this.properties.options.mode) {
+             if (this.properties.options.mode === "builder") {
+             this._builderTab.set("selected", true);
+             }
+             else if (this.properties.options.mode === "manual") {
+             this._manualTab.set("selected", true);
+             this._builderTab.set("selected", false);
+             this._builderTab.set("disabled", true);
+             }
+             }*/
+
+            this.connect(filteringSelect, "onChange", this._onStoreChange);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
+            this.connect(this._customQueryTextArea, "onInput", this._onTextAreaInput);
             this.connect(this._builderTab, "onShow", this._onBuilderTab);
-            this.connect(this._optionsTab, "onShow", this._onOptionsTab);
             this.connect(this._manualTab, "onShow", this._onManualTab);
-            //this.connect(this._customQueryTextArea, "onInput", this._onTextAreaInput);
+            this.connect(this._optionsTab, "onShow", this._onOptionsTab);
+
+            /*if (this.properties.customquery) {
+             this._addField();
+             }*/
         },
         _checkValidation: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -157,22 +175,22 @@ define([
                 def.resolve();
             } else {
                 var customQueryString = this._customQueryTextArea.value;
-                if (this.properties.options.mode === "builder") {
-                    //if (!this._checkCustomQuery(customQueryString)) {
-                    ct_when(this.windowManager.createInfoDialogWindow({
-                        message: this.i18n.changeToManual,
-                        attachToDom: this.appCtx.builderWindowRoot
-                    }), function () {
-                        this.properties.customquery = this._getCustomQueryObj(customQueryString);
-                        this.properties.options.mode = "manual";
-                        this.properties.options.editable = false;
-                        def.resolve();
-                    }, this);
-                    //}
-                } else {
-                    this.properties.customquery = this._getCustomQueryObj(customQueryString);
-                    def.resolve();
-                }
+                this.properties.customquery = this._getCustomQueryObj(customQueryString);
+                def.resolve();
+                /*if (this.properties.options.mode === "builder") {
+                 ct_when(this.windowManager.createInfoDialogWindow({
+                 message: this.i18n.changeToManual,
+                 attachToDom: this.appCtx.builderWindowRoot
+                 }), function () {
+                 this.properties.customquery = this._getCustomQueryObj(customQueryString);
+                 this.properties.options.mode = "manual";
+                 this.properties.options.editable = false;
+                 def.resolve();
+                 }, this);
+                 } else {
+                 this.properties.customquery = this._getCustomQueryObj(customQueryString);
+                 def.resolve();
+                 }*/
             }
             this.properties.title = this._titleTextBox.value;
             this.properties.iconClass = this._iconClassTextBox.value;
@@ -238,52 +256,70 @@ define([
             }
             return customQueryObj;
         },
-        /*_checkCustomQuery: function (customQueryString) {
-         var result = false;
-         try {
-         var customQueryObj = JSON.parse(customQueryString);
-         } catch (e) {
-         return false;
-         }
-         if (customQueryObj !== {}) {
-         var i = 0;
-         var obj1 = [];
-         var obj2 = [];
-         for (var child in customQueryObj) {
-         i++;
-         obj1.push(customQueryObj[child]);
-         obj2.push(child);
-         }
-         if (i === 1) {
-         if (obj2[0] === "$and" || obj2[0] === "$or") {
-         var obj2 = [];
-         for (var child in obj1[0]) {
-         obj2.push(child);
-         }
-         var res1 = ct_array.arraySearch(obj1, {name: "$and"});
-         var res2 = ct_array.arraySearch(obj1, {name: "$or"});
-         if (res1.toString() === "" && res2.toString() === "") {
-         result = true;
-         }
-         }
-         } else if (i === 2) {
-         if (obj[0] === "geometry") {
-         if (obj[1] === "$and" || obj[1] === "$or") {
-         var obj1 = [];
-         for (var child in obj[0]) {
-         obj1.push(child);
-         }
-         var res1 = ct_array.arraySearch(obj1, {name: "$and"});
-         var res2 = ct_array.arraySearch(obj1, {name: "$or"});
-         if (res1.toString() === "" && res2.toString() === "") {
-         result = true;
-         }
-         }
-         }
-         }
-         }
-         return result;
-         },*/
+        _validateCustomQuery: function (customQueryString) {
+            var result = false;
+            if (customQueryString) {
+                try {
+                    var customQueryObj = JSON.parse(customQueryString);
+                } catch (e) {
+                    return false;
+                }
+            } else {
+                var customQueryObj = this.properties.customquery;
+            }
+            if (JSON.stringify(customQueryObj) === "{}")
+                return true;
+            var i = 0;
+            var obj1 = [];
+            var obj2 = [];
+            for (var child in customQueryObj) {
+                i++;
+                obj1.push(customQueryObj[child]);
+                obj2.push(child);
+            }
+            if (i === 1) {
+                if (obj2[0] === "$and" || obj2[0] === "$or") {
+                    var objects = obj1[0];
+                    var results = 0;
+                    d_array.forEach(objects, function (object, i) {
+                        i = 0;
+                        for (var child in object) {
+                            for (var child in object[child]) {
+                                i++;
+                            }
+                        }
+                        if (i === 1) {
+                            results++;
+                        }
+                    });
+                    if (results === objects.length) {
+                        result = true;
+                    }
+                }
+            } else if (i === 2) {
+                if (obj2[0] === "geometry") {
+                    if (obj2[1] === "$and" || obj2[1] === "$or") {
+                        var objects = obj1[0];
+                        var results = 0;
+                        d_array.forEach(objects, function (object, i) {
+                            i = 0;
+                            for (var child in object) {
+                                for (var child in object[child]) {
+                                    i++;
+                                }
+                            }
+                            if (i === 1) {
+                                results++;
+                            }
+                        });
+                        if (results.length === objects.length) {
+                            result = true;
+                        }
+                    }
+                }
+            }
+            return result;
+        },
         _onCancel: function () {
             //needed
         },
@@ -356,7 +392,7 @@ define([
                 type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            this._children();
+            this._changeChildrenButtons();
         },
         _addField: function () {
             var storeId = this._filteringSelect.value;
@@ -369,19 +405,18 @@ define([
                 type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            this._children();
+            this._changeChildrenButtons();
         },
         _removeLastField: function () {
             this._queryNode.removeChild(this._queryNode.lastChild);
-            this._children();
+            this._changeChildrenButtons();
         },
         _removeFields: function () {
             while (this._queryNode.firstChild) {
                 this._queryNode.removeChild(this._queryNode.firstChild);
             }
-            this._addField();
         },
-        _children: function () {
+        _changeChildrenButtons: function () {
             var children = this._queryNode.children;
             d_array.forEach(children, function (child, i) {
                 var widget = d_registry.getEnclosingWidget(child);
@@ -394,47 +429,57 @@ define([
                 }
             });
         },
-        _createBuilderGUI: function () {
+        _createBuilderGUI: function (textAreaCustomQuery) {
             var ynStore = new Memory({
                 data: [
                     {name: this.i18n.yes, id: true},
                     {name: this.i18n.no, id: false}
                 ]
             });
-            this._extentSelect = new FilteringSelect({
-                name: "extent",
-                value: false,
-                store: ynStore,
-                searchAttr: "name",
-                style: "width: 80px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }, this._extentNode);
-            this._editableSelect = new FilteringSelect({
-                name: "editable",
-                value: false,
-                store: ynStore,
-                searchAttr: "name",
-                style: "width: 80px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }, this._editableNode);
+            if (!this._extentSelect) {
+                this._extentSelect = new FilteringSelect({
+                    name: "extent",
+                    value: false,
+                    store: ynStore,
+                    searchAttr: "name",
+                    style: "width: 80px;",
+                    required: true,
+                    maxHeight: this.maxComboBoxHeight
+                }, this._extentNode);
+            }
+            if (!this._editableSelect) {
+                this._editableSelect = new FilteringSelect({
+                    name: "editable",
+                    value: false,
+                    store: ynStore,
+                    searchAttr: "name",
+                    style: "width: 80px;",
+                    required: true,
+                    maxHeight: this.maxComboBoxHeight
+                }, this._editableNode);
+            }
             var matchStore = this._matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
                     {name: this.i18n.or, id: "$or"}]
             });
-            this._matchSelect = new FilteringSelect({
-                name: "match",
-                value: "$and",
-                store: matchStore,
-                searchAttr: "name",
-                style: "width: 80px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }, this._matchNode);
+            if (!this._matchSelect) {
+                this._matchSelect = new FilteringSelect({
+                    name: "match",
+                    value: "$and",
+                    store: matchStore,
+                    searchAttr: "name",
+                    style: "width: 80px;",
+                    required: true,
+                    maxHeight: this.maxComboBoxHeight
+                }, this._matchNode);
+            }
             var properties = this.properties;
-            var customQuery = properties.customquery;
+            if (textAreaCustomQuery) {
+                var customQuery = textAreaCustomQuery;
+            } else {
+                var customQuery = properties.customquery;
+            }
             if (properties.options.editable !== undefined) {
                 var editable = properties.options.editable;
                 this._editableSelect.set("value", editable);
@@ -454,6 +499,7 @@ define([
             }
             var fields = customQuery[match];
             var editFields = this.properties.options.editOptions;
+            this._removeFields();
             if (fields) {
                 d_array.forEach(fields, function (field, i) {
                     var editOptions = editFields && editFields[i];
@@ -506,9 +552,17 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }, this._localeNode);
         },
+        _onStoreChange: function () {
+            this._removeFields();
+            this._addField();
+        },
         _onBuilderTab: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
                 this._doneButton.set("disabled", false);
+            }
+            var customQueryString = this._customQueryTextArea.get("value");
+            if (this._validateCustomQuery(customQueryString)) {
+                this._createBuilderGUI(JSON.parse(customQueryString));
             }
         },
         _onOptionsTab: function () {
@@ -518,15 +572,17 @@ define([
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
                 this._doneButton.set("disabled", false);
             }
-            var customQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
-            this._customQueryTextArea.set("value", customQueryString);
+            if (this._validateCustomQuery()) {
+                var customQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
+                this._customQueryTextArea.set("value", customQueryString);
+            }
         },
         _onTextAreaInput: function () {
             var that = this;
             clearTimeout(this._timeout);
             this._timeout = setTimeout(function () {
                 var customQueryString = that._customQueryTextArea.get("value");
-                var valid = that._checkCustomQuery(customQueryString);
+                var valid = that._validateCustomQuery(customQueryString);
                 that._builderTab.set("disabled", !valid);
             }, 100);
         }

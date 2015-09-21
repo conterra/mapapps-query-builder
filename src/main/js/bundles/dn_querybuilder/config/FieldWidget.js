@@ -137,7 +137,6 @@ define([
                 if (this.type === "admin") {
                     this.connect(this.source._editableSelect, "onChange", this._changeEditingVisibility);
                 }
-
                 this._changeGUI();
                 this.connect(fieldSelect, "onChange", this._changeGUI);
             }, this);
@@ -190,7 +189,7 @@ define([
                         label: "-",
                         onClick: d_lang.hitch(this, function () {
                             removeButton.domNode.parentNode.parentNode.remove();
-                            this.source._children();
+                            this.source._changeChildrenButtons();
                             if (this.type === "user")
                                 this.source._changeMatchVisibility();
 
@@ -274,9 +273,10 @@ define([
                         name: "value",
                         searchAttr: "id",
                         style: this._valueSelectWidth,
-                        maxHeight: this.maxComboBoxHeight,
-                        disabled: true
+                        maxHeight: this.maxComboBoxHeight
                     });
+                    if (!this.valueSelectDisabled)
+                        valueComboBox.set('disabled', true);
                     domConstruct.place(valueComboBox.domNode, this._valueNode);
                     valueComboBox.startup();
                     ct_when(this._getDistinctValues(selectedField), function (result) {
@@ -297,7 +297,8 @@ define([
                             value = this.value;
                         }
                         valueComboBox.set("value", value);
-                        valueComboBox.set('disabled', false);
+                        if (!this.valueSelectDisabled)
+                            valueComboBox.set('disabled', false);
                     }, this);
                 } else {
                     if (type === "date") {
