@@ -24,6 +24,7 @@ define([
     "ct/_Connect",
     "ct/_when",
     "ct/array",
+    "ct/util/css",
     "wizard/_BuilderWidget",
     "./FieldWidget",
     "dijit/registry",
@@ -40,7 +41,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -86,18 +87,6 @@ define([
                 }
             }
 
-
-            /*if (this.properties.options.mode) {
-             if (this.properties.options.mode === "builder") {
-             this._builderTab.set("selected", true);
-             }
-             else if (this.properties.options.mode === "manual") {
-             this._manualTab.set("selected", true);
-             this._builderTab.set("selected", false);
-             this._builderTab.set("disabled", true);
-             }
-             }*/
-
             this.connect(filteringSelect, "onChange", this._onStoreChange);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
@@ -105,10 +94,6 @@ define([
             this.connect(this._builderTab, "onShow", this._onBuilderTab);
             this.connect(this._manualTab, "onShow", this._onManualTab);
             this.connect(this._optionsTab, "onShow", this._onOptionsTab);
-
-            /*if (this.properties.customquery) {
-             this._addField();
-             }*/
         },
         _checkValidation: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -177,20 +162,6 @@ define([
                 var customQueryString = this._customQueryTextArea.value;
                 this.properties.customquery = this._getCustomQueryObj(customQueryString);
                 def.resolve();
-                /*if (this.properties.options.mode === "builder") {
-                 ct_when(this.windowManager.createInfoDialogWindow({
-                 message: this.i18n.changeToManual,
-                 attachToDom: this.appCtx.builderWindowRoot
-                 }), function () {
-                 this.properties.customquery = this._getCustomQueryObj(customQueryString);
-                 this.properties.options.mode = "manual";
-                 this.properties.options.editable = false;
-                 def.resolve();
-                 }, this);
-                 } else {
-                 this.properties.customquery = this._getCustomQueryObj(customQueryString);
-                 def.resolve();
-                 }*/
             }
             this.properties.title = this._titleTextBox.value;
             this.properties.iconClass = this._iconClassTextBox.value;
@@ -564,9 +535,10 @@ define([
             if (this._validateCustomQuery(customQueryString)) {
                 this._createBuilderGUI(JSON.parse(customQueryString));
             }
+            ct_css.switchHidden(this._bottomNode.domNode, false);
         },
         _onOptionsTab: function () {
-            this._doneButton.set("disabled", true);
+            ct_css.switchHidden(this._bottomNode.domNode, true);
         },
         _onManualTab: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -576,6 +548,7 @@ define([
                 var customQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
                 this._customQueryTextArea.set("value", customQueryString);
             }
+            ct_css.switchHidden(this._bottomNode.domNode, false);
         },
         _onTextAreaInput: function () {
             var that = this;
