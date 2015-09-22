@@ -360,7 +360,8 @@ define([
                 value: value,
                 not: not,
                 editOptions: editOptions,
-                type: "admin"
+                type: "admin",
+                replacer: this.replacer
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeChildrenButtons();

@@ -504,6 +504,8 @@ define([
             var result = this._valueField.value;
             if (this._getSelectedFieldType() === "date") {
                 result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
+            } else if (this._getSelectedFieldType() === "string") {
+                result = this.replacer.replace(result);
             }
             return result;
         }

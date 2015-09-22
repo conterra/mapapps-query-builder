@@ -6,10 +6,12 @@
     "Bundle-Vendor": "con terra GmbH",
     "Product-Name": "map.apps Developer Network",
     "Config-Bundle-Location": "/config",
-    "CSS-Themes-Extension": [{
+    "CSS-Themes-Extension": [
+        {
             "name": "*",
             "files": ["./styles/styles.css"]
-        }],
+        }
+    ],
     "layout-widgets": [
         {
             "role": "userQueryBuilderWidget",
@@ -28,7 +30,8 @@
             }
         }
     ],
-    "Components": [{
+    "Components": [
+        {
             "name": "QueryTools",
             "impl": "ct.tools.Tool",
             "provides": ["ct.tools.Tool"],
@@ -43,14 +46,16 @@
                 "customquery": {},
                 "storeId": "*"
             },
-            "references": [{
+            "references": [
+                {
                     "name": "handlerScope",
                     "providing": "filter_query.FilterQuery"
                 }, {
                     "name": "store",
                     "providing": "ct.api.Store",
                     "filter": "(id={storeId})"
-                }]
+                }
+            ]
         }, {
             "name": "FilterQuery",
             "provides": ["filter_query.FilterQuery"],
@@ -69,6 +74,10 @@
                 {
                     "name": "_windowManager",
                     "providing": "ct.framework.api.WindowManager"
+                },
+                {
+                    "name": "_replacer",
+                    "providing": "dn_replacer.Replacer"
                 }]
         }, {
             "name": "UserQueryBuilderWidgetFactory",
@@ -100,6 +109,10 @@
                 {
                     "name": "_dataModel",
                     "providing": "ct.resultcenter.DataModel"
+                },
+                {
+                    "name": "_replacer",
+                    "providing": "dn_replacer.Replacer"
                 }
             ]
         },
@@ -116,5 +129,6 @@
                 "togglable": false,
                 "iconClass": "icon-custom-info-help"
             }
-        }]
+        }
+    ]
 }

@@ -1,0 +1,22 @@
+{
+    "Bundle-SymbolicName": "dn_replacer",
+    "Bundle-Version": "1.0.0",
+    "Bundle-Name": "Replacer",
+    "Bundle-Description": "Replaces placeholder",
+    "Bundle-Vendor": "con terra GmbH",
+    "Bundle-Category": [],
+    "Product-Name": "map.apps Developer Network",
+    "Require-Bundle": [],
+    "Bundle-Localization": [],
+    "Components": [{
+            "name": "Replacer",
+            "provides": ["dn_replacer.Replacer"],
+            "propertiesConstructor": true,
+            "properties": {
+                "placeholder": {
+                    "sample": "Sample"
+                }
+            },
+            "references": []
+        }]
+}

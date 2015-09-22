@@ -82,6 +82,10 @@
                     "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
                 },
                 {
+                    "name": "_replacer",
+                    "providing": "dn_replacer.Replacer"
+                },
+                {
                     "name": "_agsstores",
                     "providing": "ct.api.Store",
                     "cardinality": "0..n",

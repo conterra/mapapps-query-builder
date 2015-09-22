@@ -24,7 +24,8 @@
             "toolset",
             "basemaptoggler",
             "dn_querybuilder",
-            "dn_openweathermapdatastore"
+            "dn_openweathermapdatastore",
+            "dn_replacer"
         ]
     },
     "bundles": {
@@ -657,6 +658,13 @@
                 }
             ],
             "enabled": true
+        },
+        "dn_replacer": {
+            "Replacer": {
+                "placeholder": {
+                    "user": "Peter"
+                }
+            }
         },
         "map": {
             "MapModelFactory": {

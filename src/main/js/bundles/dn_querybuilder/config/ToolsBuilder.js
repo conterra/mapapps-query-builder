@@ -142,8 +142,7 @@ define([
                     var storeData = this._getStoreData(stores);
                     var wizardI18n = this._i18n.get().widget.wizard;
                     return ct_when(storeData, function (storeData) {
-                        // i18n
-                        var wizard = new ToolsBuilderWizard({storeData: storeData, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, agsstores: this._agsstores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer});
+                        var wizard = new ToolsBuilderWizard({storeData: storeData, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, agsstores: this._agsstores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer, replacer: this._replacer});
                         return wizard;
                     }, this);
 

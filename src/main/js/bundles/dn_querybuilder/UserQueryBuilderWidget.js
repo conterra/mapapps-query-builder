@@ -159,7 +159,8 @@ define([
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
-                type: "user"
+                type: "user",
+                replacer: this.replacer
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeMatchVisibility();

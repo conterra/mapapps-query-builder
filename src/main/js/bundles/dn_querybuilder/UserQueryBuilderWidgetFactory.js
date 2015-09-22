@@ -27,13 +27,15 @@ define([
             var stores = this._stores;
             var mapState = this._mapState;
             var dataModel = this._dataModel;
+            var replacer = this._replacer;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
                 tool: tool,
                 stores: stores,
                 mapState: mapState,
-                dataModel: dataModel
+                dataModel: dataModel,
+                replacer: replacer
             });
         },
         deactivate: function () {

@@ -37,13 +37,15 @@ define([
                 var store = event.store;
                 var mapState = this._mapState;
                 var dataModel = this._dataModel;
+                var replacer = this._replacer;
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
                     tool: tool,
                     store: store,
                     mapState: mapState,
-                    dataModel: dataModel
+                    dataModel: dataModel,
+                    replacer: replacer
                 });
                 var window = this._windowManager.createWindow({
                     title: i18n.wizard.editWindowTitle,

@@ -203,7 +203,8 @@ define([
                 value: value,
                 not: not,
                 editOptions: editOptions,
-                type: "editing"
+                type: "editing",
+                replacer: this.replacer
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },
