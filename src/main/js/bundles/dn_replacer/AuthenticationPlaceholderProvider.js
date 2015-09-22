@@ -14,7 +14,20 @@
  * limitations under the License.
  */
 define([
-    ".",
-    "./Replacer",
-    "./AuthenticationPlaceholderProvider"
-], {});
+    "dojo/_base/declare",
+    "dojo/_base/lang"
+], function (
+        declare,
+        lang
+        ) {
+    return declare([], {
+        getPlaceholder: function () {
+            var userAdminService = this._userAdminService;
+            var authentication = userAdminService.getAuthentication();
+            var user = authentication.getUser();
+            var placeholder = {};
+            placeholder["user"] = user;
+            return placeholder;
+        }
+    });
+});

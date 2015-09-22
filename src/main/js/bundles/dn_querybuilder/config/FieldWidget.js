@@ -290,9 +290,6 @@ define([
                         });
                         valueComboBox.set("store", distinctValueStore);
                         var value = value = distinctValueData[0] && distinctValueData[0].id;
-                        /*if (this.value !== undefined) {
-                         value = this.value;
-                         }*/
                         if (this.fieldId === this._getSelectedField() && this.value !== undefined) {
                             value = this.value;
                         }
@@ -323,7 +320,8 @@ define([
                             name: "value",
                             value: value,
                             placeHolder: this.i18n.typeInValue,
-                            style: this._valueSelectWidth
+                            style: this._valueSelectWidth,
+                            intermediateChanges: true
                         });
                     }
                     domConstruct.place(valueSelect.domNode, this._valueNode);
@@ -333,6 +331,7 @@ define([
                 this._compareSelect.set("disabled", this.compareSelectDisabled);
             if (this.valueSelectDisabled)
                 this._valueField.set("disabled", this.valueSelectDisabled);
+            this.connect(this._valueField, "onChange", this._onEdit);
         },
         _createCompareSelect: function (value, compareStore) {
             var compareSelect = this._compareSelect = new FilteringSelect({
@@ -451,7 +450,6 @@ define([
             } else {
                 hidden = true;
             }
-
             ct_css.switchHidden(this._notCheckBox.domNode, hidden);
             ct_css.switchHidden(this._fieldCheckBox.domNode, hidden);
             ct_css.switchHidden(this._compareCheckBox.domNode, hidden);
@@ -504,10 +502,21 @@ define([
             var result = this._valueField.value;
             if (this._getSelectedFieldType() === "date") {
                 result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
-            } else if (this._getSelectedFieldType() === "string") {
-                result = this.replacer.replace(result);
-            }
+            } /*else if (this._getSelectedFieldType() === "string") {
+             if (this.replacer) {
+             result = this.replacer.replace(result);
+             }
+             }*/
             return result;
+        },
+        _onEdit: function () {
+            if (this._getSelectedFieldType() === "string") {
+                if (this.replacer) {
+                    var result = this._valueField.value;
+                    result = this.replacer.replace(result);
+                    this._valueField.set("value", result);
+                }
+            }
         }
     });
 });

@@ -90,7 +90,7 @@ define([
             this.connect(filteringSelect, "onChange", this._onStoreChange);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
-            this.connect(this._customQueryTextArea, "onInput", this._onTextAreaInput);
+            this.connect(this._customQueryTextArea, "onChange", this._onTextAreaInput);
             this.connect(this._builderTab, "onShow", this._onBuilderTab);
             this.connect(this._manualTab, "onShow", this._onManualTab);
             this.connect(this._optionsTab, "onShow", this._onOptionsTab);
@@ -374,7 +374,8 @@ define([
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
-                type: "admin"
+                type: "admin",
+                replacer: this.replacer
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeChildrenButtons();
@@ -553,12 +554,9 @@ define([
         },
         _onTextAreaInput: function () {
             var that = this;
-            clearTimeout(this._timeout);
-            this._timeout = setTimeout(function () {
-                var customQueryString = that._customQueryTextArea.get("value");
-                var valid = that._validateCustomQuery(customQueryString);
-                that._builderTab.set("disabled", !valid);
-            }, 100);
+            var customQueryString = that._customQueryTextArea.get("value");
+            var valid = that._validateCustomQuery(customQueryString);
+            that._builderTab.set("disabled", !valid);
         }
     });
 });

@@ -18,11 +18,21 @@ define([
     "dojo/_base/lang"
 ], function (
         declare,
-        lang
+        d_lang
         ) {
     return declare([], {
+        activate: function () {
+            this.placeholder = this.placeholder || {};
+            //d_lang.mixin(this.placeholder, this._properties.placeholder);
+        },
         replace: function (string) {
-            return lang.replace(string, this._properties.placeholder);
+            return d_lang.replace(string, this.placeholder);
+        },
+        addPlaceholderProvider: function (placeholderProvider) {
+            var globalPlacerholder = this.placeholder || {};
+            var placeholder = placeholderProvider.getPlaceholder();
+            d_lang.mixin(globalPlacerholder, placeholder);
+            this.placeholder = globalPlacerholder;
         }
     });
 });
