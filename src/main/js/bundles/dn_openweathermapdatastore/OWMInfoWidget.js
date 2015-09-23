@@ -174,9 +174,9 @@ define([
                 },
                 size: {height: 100, width: 160}
             });
-            domConstruct.place(tempChart.element, this._test, "last");
-            domConstruct.place(humidityChart.element, this._test, "last");
-            domConstruct.place(cloudsChart.element, this._test, "last");
+            domConstruct.place(tempChart.element, this._top, "last");
+            domConstruct.place(humidityChart.element, this._top, "last");
+            domConstruct.place(cloudsChart.element, this._top, "last");
 
             this._chart5Days = new Chart(this._chartNode5Days);
             this._chart16Days = new Chart(this._chartNode16Days);

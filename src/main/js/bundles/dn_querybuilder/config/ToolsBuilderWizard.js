@@ -25,6 +25,8 @@ define([
     "ct/_when",
     "ct/array",
     "ct/util/css",
+    "ct/ui/desktop/IFrameContent",
+    "ct/request",
     "wizard/_BuilderWidget",
     "./FieldWidget",
     "dijit/registry",
@@ -41,7 +43,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, IFrameContent, ct_request, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -110,19 +112,31 @@ define([
                 });
             }
         },
-        createContent: function () {
+        _createWindow: function (url, title) {
+            url = ct_request.getProxiedUrl(url, true);
+            var content = new IFrameContent();
+            content.set("src", url);
+            var appCtx = this.appCtx;
+            var wr = this.windowManager.createModalWindow({
+                content: content,
+                marginBox: {
+                    w: 750,
+                    h: 500
+                },
+                maximizable: true,
+                closable: true,
+                title: title,
+                attachToDom: appCtx.builderWindowRoot
+            });
+            wr.show();
         },
         _iconClassHelp: function () {
-            var winURL = 'http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/3.2.1/themes/webFontsGallery.html';
-            var winName = 'win1';
-            var winSize = 'width=800,height=600,scrollbars=yes';
-            var ref = window.open(winURL, winName, winSize);
+            var url = this.globalProperties.webFontsGalleryUrl;
+            this._createWindow(url, "WebFontsGallery");
         },
         _customQueryHelp: function () {
-            var winURL = 'http://developernetwork.conterra.de/de/documentation/mapapps/32/developers-documentation/complex-query-dojostore';
-            var winName = 'win2';
-            var winSize = 'width=800,height=600,scrollbars=yes';
-            var ref = window.open(winURL, winName, winSize);
+            var url = this.globalProperties.complexQueryDocUrl;
+            this._createWindow(url, "Complex Query Documentation");
         },
         _onDone: function () {
             ct_when(this._saveProperties(), this._onReady);

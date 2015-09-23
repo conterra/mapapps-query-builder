@@ -164,11 +164,11 @@ define([
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeMatchVisibility();
-            this._children();
+            this._changeChildrenButtons();
         },
         _removeLastField: function () {
             this._queryNode.removeChild(this._queryNode.lastChild);
-            this._children();
+            this._changeChildrenButtons();
             this._changeMatchVisibility();
         },
         _removeFields: function () {
@@ -178,7 +178,7 @@ define([
             }
             this._addField();
         },
-        _children: function () {
+        _changeChildrenButtons: function () {
             var children = this._queryNode.children;
             d_array.forEach(children, function (child, i) {
                 var widget = d_registry.getEnclosingWidget(child);

@@ -33,12 +33,14 @@ define([
     "dijit/form/ValidationTextBox",
     "dijit/form/ComboBox",
     "dijit/form/FilteringSelect",
+    "dijit/form/Select",
     "dijit/form/Button",
     "dijit/form/DateTextBox",
     "dijit/form/CheckBox",
     "dojo/store/Memory",
     "dojo/dom-construct",
     "dojo/date/locale",
+    "dojo/data/ObjectStore",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
 ], function (d_lang,
@@ -60,12 +62,14 @@ define([
         ValidationTextBox,
         ComboBox,
         FilteringSelect,
+        Select,
         Button,
         DateTextBox,
         CheckBox,
         Memory,
         domConstruct,
         d_locale,
+        ObjectStore,
         ContentPane,
         BorderContainer) {
 
@@ -80,6 +84,10 @@ define([
                     this._valueSelectWidth = "width: 120px;";
                     this._compareSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
+                    this.notSelectDisabled = false;
+                    this.fieldSelectDisabled = false;
+                    this.compareSelectDisabled = false;
+                    this.valueSelectDisabled = false;
                 } else if (this.type === "editing") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
@@ -96,6 +104,10 @@ define([
                     this._valueSelectWidth = "width: 200px;";
                     this._compareSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
+                    this.notSelectDisabled = false;
+                    this.fieldSelectDisabled = false;
+                    this.compareSelectDisabled = false;
+                    this.valueSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 200;
                 var fieldData = this.storeData;
@@ -109,9 +121,9 @@ define([
                     searchAttr: "title",
                     style: this._fieldSelectWidth,
                     maxHeight: this.maxComboBoxHeight,
+                    readOnly: false,
                     disabled: this.fieldSelectDisabled
                 }, this._fieldNode);
-                fieldSelect.startup();
                 var i18n = this.i18n;
                 var notStore = this._notStore = new Memory({
                     data: [
@@ -131,9 +143,7 @@ define([
                     style: this._notSelectWidth,
                     maxHeight: this.maxComboBoxHeight,
                     disabled: this.notSelectDisabled
-                });
-                domConstruct.place(notSelect.domNode, this._notNode, "first");
-                notSelect.startup();
+                }, this._notNode);
 
                 this._createCheckBoxes();
                 if (this.type === "admin") {
@@ -231,7 +241,9 @@ define([
                     store: codedValueStore,
                     searchAttr: "name",
                     style: this._valueSelectWidth,
-                    maxHeight: this.maxComboBoxHeight
+                    maxHeight: this.maxComboBoxHeight,
+                    queryExpr: "*${0}*",
+                    autoComplete: false
                 });
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
@@ -274,7 +286,10 @@ define([
                         name: "value",
                         searchAttr: "id",
                         style: this._valueSelectWidth,
-                        maxHeight: this.maxComboBoxHeight
+                        maxHeight: this.maxComboBoxHeight,
+                        required: true,
+                        queryExpr: "*${0}*",
+                        autoComplete: false
                     });
                     if (!this.valueSelectDisabled)
                         valueComboBox.set('disabled', true);
@@ -297,6 +312,9 @@ define([
                         valueComboBox.set("value", value);
                         if (!this.valueSelectDisabled)
                             valueComboBox.set('disabled', false);
+                        if (this._getSelectedFieldType() === "number") {
+                            //valueComboBox.set('disabled', false);
+                        }
                     }, this);
                 } else {
                     var valueSelect;
@@ -323,8 +341,10 @@ define([
                         valueSelect = this._valueField = new NumberTextBox({
                             name: "value",
                             value: value,
+                            placeHolder: this.i18n.typeInValue,
                             style: this._valueSelectWidth,
-                            intermediateChanges: true
+                            intermediateChanges: true,
+                            required: true
                         });
                     } else {
                         if (this.fieldId === this._getSelectedField()) {
@@ -337,7 +357,8 @@ define([
                             value: value,
                             placeHolder: this.i18n.typeInValue,
                             style: this._valueSelectWidth,
-                            intermediateChanges: true
+                            intermediateChanges: true,
+                            required: true
                         });
                     }
                     domConstruct.place(valueSelect.domNode, this._valueNode);
