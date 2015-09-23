@@ -29,6 +29,7 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/FieldWidget.html",
     "dijit/form/TextBox",
+    "dijit/form/NumberTextBox",
     "dijit/form/ValidationTextBox",
     "dijit/form/ComboBox",
     "dijit/form/FilteringSelect",
@@ -55,6 +56,7 @@ define([
         _WidgetsInTemplateMixin,
         template,
         TextBox,
+        NumberTextBox,
         ValidationTextBox,
         ComboBox,
         FilteringSelect,
@@ -142,7 +144,6 @@ define([
             }, this);
         },
         deactivate: function () {
-            debugger
             this.disconnect();
         },
         resize: function (dim) {
@@ -298,6 +299,7 @@ define([
                             valueComboBox.set('disabled', false);
                     }, this);
                 } else {
+                    var valueSelect;
                     if (type === "date") {
                         var value;
                         if (this.fieldId === this._getSelectedField()) {
@@ -305,10 +307,24 @@ define([
                         } else {
                             value = new Date();
                         }
-                        var valueSelect = this._valueField = new DateTextBox({
+                        valueSelect = this._valueField = new DateTextBox({
                             name: "value",
                             value: value,
-                            style: this._valueSelectWidth
+                            style: this._valueSelectWidth,
+                            validator: this._validator,
+                            intermediateChanges: true
+                        });
+                    } else if (type === "number" || type === "integer" || type === "double") {
+                        if (this.fieldId === this._getSelectedField()) {
+                            value = this.value;
+                        } else {
+                            value = null;
+                        }
+                        valueSelect = this._valueField = new NumberTextBox({
+                            name: "value",
+                            value: value,
+                            style: this._valueSelectWidth,
+                            intermediateChanges: true
                         });
                     } else {
                         if (this.fieldId === this._getSelectedField()) {
@@ -316,7 +332,7 @@ define([
                         } else {
                             value = "";
                         }
-                        var valueSelect = this._valueField = new TextBox({
+                        valueSelect = this._valueField = new TextBox({
                             name: "value",
                             value: value,
                             placeHolder: this.i18n.typeInValue,
@@ -331,7 +347,7 @@ define([
                 this._compareSelect.set("disabled", this.compareSelectDisabled);
             if (this.valueSelectDisabled)
                 this._valueField.set("disabled", this.valueSelectDisabled);
-            this.connect(this._valueField, "onChange", this._onEdit);
+            //this.connect(this._valueField, "onChange", this._onEdit);
         },
         _createCompareSelect: function (value, compareStore) {
             var compareSelect = this._compareSelect = new FilteringSelect({
@@ -501,22 +517,31 @@ define([
         _getValue: function () {
             var result = this._valueField.value;
             if (this._getSelectedFieldType() === "date") {
-                result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
-            } /*else if (this._getSelectedFieldType() === "string") {
-             if (this.replacer) {
-             result = this.replacer.replace(result);
-             }
-             }*/
+                if (result === undefined) {
+                    result = this.replacer.replace(this._valueField.displayedValue);
+                } else {
+                    result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
+                }
+            } else if (this._getSelectedFieldType() === "string") {
+                if (this.replacer) {
+                    result = this.replacer.replace(result);
+                }
+            }
             return result;
         },
         _onEdit: function () {
-            if (this._getSelectedFieldType() === "string") {
+            if (this._getSelectedFieldType() === "string" || this._getSelectedFieldType() === "date") {
                 if (this.replacer) {
                     var result = this._valueField.value;
                     result = this.replacer.replace(result);
                     this._valueField.set("value", result);
                 }
             }
+        },
+        _validator: function (a, b) {
+            return true;
+            /*return RegExp("^(?:" + this._computeRegexp(b) + ")" + (this.required ?
+             "" : "?") + "$").test(a) && (!this.required || !this._isEmpty(a)) && (this._isEmpty(a) || void 0 !== this.parse(a, b));*/
         }
     });
 });

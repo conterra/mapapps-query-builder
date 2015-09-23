@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/declare"
+    "dojo/_base/declare",
+    "dojo/date/locale"
 ], function (
-        declare
+        declare,
+        d_locale
         ) {
     return declare([], {
         getPlaceholder: function () {
-            var userAdminService = this._userAdminService;
-            var authentication = userAdminService.getAuthentication();
-            var user = authentication.getUser();
+            var dateObj = new Date();
+            var date = d_locale.format(dateObj, {datePattern: "yyy-MM-dd", selector: 'date'});
             var placeholder = {};
-            placeholder["user"] = user;
+            placeholder["date"] = date;
             return placeholder;
         }
     });

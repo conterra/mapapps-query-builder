@@ -485,7 +485,8 @@ define([
         _createOptionsGUI: function () {
             this._countTextBox = new NumberTextBox({
                 name: "count",
-                value: this.properties.options.count || -1, style: "width: 140px;",
+                value: this.properties.options.count || -1,
+                style: "width: 140px;",
                 required: true,
                 constraints: {min: -1}
             }, this._countNode);

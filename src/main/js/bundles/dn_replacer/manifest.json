@@ -6,11 +6,14 @@
     "Bundle-Vendor": "con terra GmbH",
     "Bundle-Category": [],
     "Product-Name": "map.apps Developer Network",
-    "Require-Bundle": [{
+    "Require-Bundle": [
+        {
             "name": "authentication"
-        }],
+        }
+    ],
     "Bundle-Localization": [],
-    "Components": [{
+    "Components": [
+        {
             "name": "Replacer",
             "provides": ["dn_replacer.Replacer"],
             "propertiesConstructor": true,
@@ -35,5 +38,10 @@
                     "providing": "ct.framework.api.UserAdmin"
                 }
             ]
-        }]
+        }, {
+            "name": "DatePlaceholderProvider",
+            "provides": "dn_replacer.PlaceholderProvider",
+            "references": []
+        }
+    ]
 }
