@@ -22,6 +22,7 @@
     <artifactId>ct-mapapps-query-builder</artifactId>
     <version>3.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <!-- DISABLE repositories and pluginRepositories if inside the con terra! -->
     <repositories>
         <repository>
             <id>52n-dependencies</id>
@@ -117,13 +118,15 @@
                     <configuration>
                         <source>1.7</source>
                         <target>1.7</target>
-                        <showDeprecation>true</showDeprecation>
+                        <compilerArgs>
+                            <arg>-Xlint:unchecked</arg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.2</version>
+                    <version>2.10.3</version>
                 </plugin>
                 <plugin>
                     <!-- we jar the ct/* js sources so that we have it present for dependency unpack goal in projects -->
@@ -148,17 +151,12 @@
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.2.10.v20150310</version>
+                    <version>9.2.1.v20140609</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>properties-maven-plugin</artifactId>
                     <version>1.0-alpha-2</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.google.code.maven-replacer-plugin</groupId>
-                    <artifactId>replacer</artifactId>
-                    <version>1.5.3</version>
                 </plugin>
                 <plugin>
                     <groupId>org.lesscss</groupId>
@@ -172,6 +170,10 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-scm-plugin</artifactId>
+                    <version>1.10</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <!-- set as source dir, so that you can edit it correctly in netbeans -->
@@ -180,6 +182,7 @@
             <resource>
                 <directory>src/main/js</directory>
                 <targetPath>${js.build.outputPath}</targetPath>
+                <filtering>false</filtering>
             </resource>
         </resources>
         <testResources>
@@ -195,12 +198,14 @@
                 <excludes>
                     <exclude>application.properties</exclude>
                 </excludes>
+                <filtering>false</filtering>
             </testResource>
             <testResource>
                 <directory>src/test/webapp</directory>
                 <includes>
                     <include>**/*</include>
                 </includes>
+                <filtering>false</filtering>
             </testResource>
         </testResources>
         <plugins>
@@ -344,6 +349,7 @@
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
                 <executions>
                     <execution>
                         <id>replace some config settings in app.json</id>
@@ -361,7 +367,7 @@
                                 <replacement>
                                     <!-- remove bundleLocations from app.json -->
                                     <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*</token>
-                                    <value></value>                                    
+                                    <value></value>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -396,7 +402,7 @@
                 <configuration>
                     <skipDeploy>true</skipDeploy>
                     <createApp>false</createApp>
-                </configuration>         
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
@@ -409,7 +415,7 @@
                     <stopKey>jetty-stop</stopKey>
                     <stopWait>60000</stopWait>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <reload>manual</reload>       
+                    <reload>manual</reload>
                     <webXml>${basedir}/src/test/webapp/WEB-INF/web.xml</webXml>
                     <useTestScope>true</useTestScope>
                     <webAppConfig>
@@ -422,34 +428,54 @@
                     </webAppConfig>
                     <systemProperties>
                         <systemProperty>
-                            <!-- set catalina home, so that log files are created in the target directory-->
-                            <name>catalina.home</name>
+                            <!-- set catalina base, so that log files are created in the target directory-->
+                            <name>catalina.base</name>
                             <value>${project.build.directory}</value>
                         </systemProperty>
                     </systemProperties>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <preparationGoals>clean</preparationGoals>
+                    <releaseProfiles>release,compress,write-release-versions,commit-release-versions,rollout</releaseProfiles>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <scm>
+        <developerConnection>scm:git:git@github.com:conterra/mapapps-query-builder.git</developerConnection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>ct-dist-releases-file</id>
+            <name>repository for sdi.suite releases</name>
+            <url>file://///repository01.esri-de.com/maven/maven-repo/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>ct-dist-snapshots-file</id>
+            <name>repository for sdi.suite snapshots</name>
+            <url>file://///repository01.esri-de.com/maven/maven-repo/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- dojo custom build parameters -->
         <js.build.outputPath>${project.build.directory}/${project.artifactId}/js</js.build.outputPath>
-        <netbeans.hint.jdkPlatform>JDK_1.7</netbeans.hint.jdkPlatform>
-
-        <!-- JS lib versions -->
+        <!-- mapapps.version -->
         <mapapps.version>3.2.1</mapapps.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.0.8</ct.jsregistry.version>
-        <ct.jsrt-test.version>1.0.5</ct.jsrt-test.version>
-        
+        <ct.jsregistry.version>1.0.9</ct.jsregistry.version>
+        <ct.jsrt-test.version>1.0.6</ct.jsrt-test.version>
+
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
         <client.config.initjs>$\{mapapps.remote.base\}/resources/jsregistry/root/ct/${mapapps.version}/dojo-init.js</client.config.initjs>
-
-        <!-- don't do this in production configuration! This allows to go any http traffic over the /proxy endpoint -->
         <proxy.allowedServerUrls>
-            http,*;
+            http;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
     </properties>
@@ -492,6 +518,76 @@
             </build>
         </profile>
         <profile>
+            <id>write-release-versions</id>
+            <properties>
+                <replace.source.version>1.0.0-SNAPSHOT</replace.source.version>
+                <replace.target.version>${project.version}</replace.target.version>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- ensure correct version in the manifest.json files-->
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>replacer</artifactId>
+                        <executions>
+                            <!-- set release version -->
+                            <execution>
+                                <id>Set Versions from ${replace.source.version} to ${replace.target.version}</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                                <configuration>
+                                    <basedir>${basedir}</basedir>
+                                    <includes>
+                                        <include>src/main/js/**/manifest.json</include>
+                                        <include>src/main/js/**/package.json</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>src/main/js/**/tests/**</exclude>
+                                    </excludes>
+                                    <regex>false</regex>
+                                    <replacements>
+                                        <replacement>
+                                            <token>"${replace.source.version}"</token>
+                                            <value>"${replace.target.version}"</value>
+                                        </replacement>
+                                        <replacement>
+                                            <token>"~${replace.source.version}"</token>
+                                            <value>"~${replace.target.version}"</value>
+                                        </replacement>
+                                    </replacements>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>commit-release-versions</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>checkin</goal>
+                                    <goal>update</goal>
+                                </goals>
+                                <configuration>
+                                    <message>[update-bundle-package-versions] from ${replace.source.version} to ${replace.target.version}</message>
+                                    <basedir>${basedir}/src/main/js</basedir>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <!-- this is the optimization profile, it executes the dojo build to compress, minimize and inline templates in dojo, esri and ct javascript sources -->
             <!-- it must be explicitly activated by -P compress flag, also at release time -->
             <id>compress</id>
@@ -499,7 +595,7 @@
                 <plugins>
                     <plugin>
                         <groupId>de.conterra.jsregistry</groupId>
-                        <artifactId>ct-jsregistry-maven-plugin</artifactId>                
+                        <artifactId>ct-jsregistry-maven-plugin</artifactId>
                         <executions>
                             <execution>
                                 <id>calculate js dependencies</id>
@@ -525,19 +621,15 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>optimize CSS</id>
+                                <id>optimize css</id>
                                 <goals>
                                     <goal>optimizeCSS</goal>
                                 </goals>
-                                <phase>compile</phase>
                                 <configuration>
                                     <cssFiles>
                                         <includes>
-                                            <include>bundles/*/*/*.css</include>
+                                            <include>**/*.css</include>
                                         </includes>
-                                        <excludes>
-                                            <exclude>**/themeSettings.css</exclude>
-                                        </excludes>
                                     </cssFiles>
                                 </configuration>
                             </execution>
@@ -638,8 +730,8 @@
         <profile>
             <id>less-v8-x64-mac</id>
             <activation>
-                <os> 
-                    <family>mac</family> 
+                <os>
+                    <family>mac</family>
                 </os>
             </activation>
             <build>
