@@ -6,7 +6,7 @@ http://www.mapapps.de/mapapps/resources/apps/downloads_query_builder/index.html
 
 Installation Guide
 ------------------
-**Requirement: map.apps 3.2.2**
+**Requirement: map.apps 3.2.1**
 
 1. First, you need to add the bundles "agssearch", "resultcenter" and "dn_query_builder" to your app.
 2. After that, add a service to your app (Content -> Services Management). Example
