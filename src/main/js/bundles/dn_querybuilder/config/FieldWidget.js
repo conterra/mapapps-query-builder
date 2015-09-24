@@ -143,7 +143,9 @@ define([
                     style: this._notSelectWidth,
                     maxHeight: this.maxComboBoxHeight,
                     disabled: this.notSelectDisabled
-                }, this._notNode);
+                });
+                domConstruct.place(notSelect.domNode, this._notNode, "first");
+                notSelect.startup();
 
                 this._createCheckBoxes();
                 if (this.type === "admin") {
@@ -306,21 +308,17 @@ define([
                         });
                         valueComboBox.set("store", distinctValueStore);
                         var value = value = distinctValueData[0] && distinctValueData[0].id;
-                        if (this.fieldId === this._getSelectedField() && this.value !== undefined) {
+                        if (this.fieldId === this.getSelectedField() && this.value !== undefined)
                             value = this.value;
-                        }
                         valueComboBox.set("value", value);
                         if (!this.valueSelectDisabled)
                             valueComboBox.set('disabled', false);
-                        if (this._getSelectedFieldType() === "number") {
-                            //valueComboBox.set('disabled', false);
-                        }
                     }, this);
                 } else {
                     var valueSelect;
                     if (type === "date") {
                         var value;
-                        if (this.fieldId === this._getSelectedField()) {
+                        if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
                         } else {
                             value = new Date();
@@ -333,7 +331,7 @@ define([
                             intermediateChanges: true
                         });
                     } else if (type === "number" || type === "integer" || type === "double") {
-                        if (this.fieldId === this._getSelectedField()) {
+                        if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
                         } else {
                             value = null;
@@ -347,7 +345,7 @@ define([
                             required: true
                         });
                     } else {
-                        if (this.fieldId === this._getSelectedField()) {
+                        if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
                         } else {
                             value = "";
@@ -497,11 +495,11 @@ define([
                 node.removeChild(node.firstChild);
             }
         },
-        _getSelectedField: function () {
+        getSelectedField: function () {
             var result = this._fieldSelect.value;
             return result;
         },
-        _getSelectedFieldType: function () {
+        getSelectedFieldType: function () {
             var data = this._fieldSelect.store.data;
             var result = this._fieldSelect.type;
             d_array.forEach(data, function (item) {
@@ -511,47 +509,51 @@ define([
             }, this);
             return result;
         },
-        _getSelectedCompare: function () {
+        getSelectedCompare: function () {
             var result = this._compareSelect.value;
             return result;
         },
-        _getSelectedNot: function () {
+        getSelectedNot: function () {
             var result = this._notSelect.value;
             return result;
         },
-        _getNotCheckBoxValue: function () {
+        getNotCheckBoxValue: function () {
             var result = this._notCheckBox.checked;
             return result;
         },
-        _getFieldCheckBoxValue: function () {
+        getFieldCheckBoxValue: function () {
             var result = this._fieldCheckBox.checked;
             return result;
         },
-        _getCompareCheckBoxValue: function () {
+        getCompareCheckBoxValue: function () {
             var result = this._compareCheckBox.checked;
             return result;
         },
-        _getValueCheckBoxValue: function () {
+        getValueCheckBoxValue: function () {
             var result = this._valueCheckBox.checked;
             return result;
         },
-        _getValue: function () {
+        getValue: function () {
             var result = this._valueField.value;
-            if (this._getSelectedFieldType() === "date") {
+            var fieldType = this.getSelectedFieldType();
+            if (fieldType === "date") {
                 if (result === undefined) {
                     result = this.replacer.replace(this._valueField.displayedValue);
                 } else {
                     result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
                 }
-            } else if (this._getSelectedFieldType() === "string") {
+            } else if (fieldType === "string") {
                 if (this.replacer) {
                     result = this.replacer.replace(result);
                 }
+            } else if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
+                result = Number(result);
             }
             return result;
         },
         _onEdit: function () {
-            if (this._getSelectedFieldType() === "string" || this._getSelectedFieldType() === "date") {
+            var fieldType = this.getSelectedFieldType();
+            if (fieldType === "string" || fieldType === "date") {
                 if (this.replacer) {
                     var result = this._valueField.value;
                     result = this.replacer.replace(result);

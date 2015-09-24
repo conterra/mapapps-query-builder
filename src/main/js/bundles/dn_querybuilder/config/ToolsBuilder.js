@@ -250,11 +250,11 @@ define([
                     var widget = this._widget;
                     widget.updateGrid();
                 },
-                _getStoreIds: function (stores) {
-                    return d_array.map(stores, function (store) {
-                        return store.id;
-                    }, this);
-                },
+                /*_getStoreIds: function (stores) {
+                 return d_array.map(stores, function (store) {
+                 return store.id;
+                 }, this);
+                 },*/
                 _getStoreData: function (stores) {
                     return ct_async.join(d_array.map(stores, function (s) {
                         return s.getMetadata();

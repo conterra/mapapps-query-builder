@@ -274,13 +274,9 @@ define([
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
                 var fieldId = widget._getSelectedField();
-                var fieldType = widget._getSelectedFieldType();
                 var compareId = widget._getSelectedCompare();
                 var not = widget._getSelectedNot();
-                var value = widget._getValue();
-                if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
-                    value = Number(value);
-                }
+                var value = widget.getValue();
                 var obj1 = {};
                 obj1[compareId] = value;
                 var obj2 = {};

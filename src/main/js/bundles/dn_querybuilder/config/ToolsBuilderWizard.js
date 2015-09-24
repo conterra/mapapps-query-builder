@@ -113,22 +113,25 @@ define([
             }
         },
         _createWindow: function (url, title) {
-            url = ct_request.getProxiedUrl(url, true);
-            var content = new IFrameContent();
-            content.set("src", url);
-            var appCtx = this.appCtx;
-            var wr = this.windowManager.createModalWindow({
-                content: content,
-                marginBox: {
-                    w: 750,
-                    h: 500
-                },
-                maximizable: true,
-                closable: true,
-                title: title,
-                attachToDom: appCtx.builderWindowRoot
-            });
-            wr.show();
+            /*url = ct_request.getProxiedUrl(url, true);
+             var content = new IFrameContent();
+             content.set("src", url);
+             var appCtx = this.appCtx;
+             var wr = this.windowManager.createModalWindow({
+             content: content,
+             marginBox: {
+             w: 750,
+             h: 500
+             },
+             maximizable: true,
+             closable: true,
+             title: title,
+             attachToDom: appCtx.builderWindowRoot
+             });
+             wr.show();*/
+
+            var size = 'width=800,height=600,scrollbars=yes';
+            window.open(url, title, size);
         },
         _iconClassHelp: function () {
             var url = this.globalProperties.webFontsGalleryUrl;
@@ -207,13 +210,9 @@ define([
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
                 var fieldId = widget._getSelectedField();
-                var fieldType = widget._getSelectedFieldType();
                 var compareId = widget._getSelectedCompare();
                 var not = widget._getSelectedNot();
-                var value = widget._getValue();
-                if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
-                    value = Number(value);
-                }
+                var value = widget.getValue();
                 var obj1 = {};
                 obj1[compareId] = value;
                 var obj2 = {};
