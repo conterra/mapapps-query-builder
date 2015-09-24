@@ -6,6 +6,14 @@
     "Bundle-Vendor": "con terra GmbH",
     "Product-Name": "map.apps Developer Network",
     "Config-Bundle-Location": "/config",
+    "Require-Bundle": [
+        {
+            "name": "dn_replacer"
+        },
+        {
+            "name": "resultcenter"
+        }
+    ],
     "CSS-Themes-Extension": [
         {
             "name": "*",

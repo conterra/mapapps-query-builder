@@ -161,7 +161,7 @@ define([
                         title: title,
                         marginBox: {
                             w: 840,
-                            h: 500
+                            h: 520
                         },
                         content: wizard,
                         closable: true,

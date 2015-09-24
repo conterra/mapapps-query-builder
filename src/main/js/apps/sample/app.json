@@ -24,8 +24,7 @@
             "toolset",
             "basemaptoggler",
             "dn_querybuilder",
-            "dn_openweathermapdatastore",
-            "dn_replacer"
+            "dn_openweathermapdatastore"
         ]
     },
     "bundles": {

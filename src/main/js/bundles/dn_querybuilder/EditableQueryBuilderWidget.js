@@ -273,9 +273,9 @@ define([
             }
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
-                var fieldId = widget._getSelectedField();
-                var compareId = widget._getSelectedCompare();
-                var not = widget._getSelectedNot();
+                var fieldId = widget.getSelectedField();
+                var compareId = widget.getSelectedCompare();
+                var not = widget.getSelectedNot();
                 var value = widget.getValue();
                 var obj1 = {};
                 obj1[compareId] = value;

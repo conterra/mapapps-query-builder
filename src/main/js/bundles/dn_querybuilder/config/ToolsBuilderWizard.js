@@ -27,6 +27,9 @@ define([
     "ct/util/css",
     "ct/ui/desktop/IFrameContent",
     "ct/request",
+    "ct/store/ComplexMemory",
+    "ct/ui/controls/dataview/DataViewModel",
+    "ct/ui/controls/dataview/DataView",
     "wizard/_BuilderWidget",
     "./FieldWidget",
     "dijit/registry",
@@ -43,7 +46,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, IFrameContent, ct_request, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, IFrameContent, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -74,9 +77,7 @@ define([
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
-
             this._createOptionsGUI();
-
             var valid = this._validateCustomQuery(customQueryString);
             if (valid) {
                 this._createBuilderGUI();
@@ -89,6 +90,7 @@ define([
                 }
             }
 
+            this._createPlaceholderGUI();
             this.connect(filteringSelect, "onChange", this._onStoreChange);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
@@ -153,9 +155,7 @@ define([
             }
             if (this._builderTab.get("selected")) {
                 this.properties.options.mode = "builder";
-
                 var customQuery = this._getComplexQuery();
-
                 this.properties.customquery = customQuery;
                 this.properties.options.editable = this._editableSelect.value;
                 if (this.properties.options.editable === true) {
@@ -164,10 +164,10 @@ define([
                     d_array.forEach(children, function (child) {
                         var obj = {};
                         var widget = d_registry.getEnclosingWidget(child);
-                        obj["not"] = widget._getNotCheckBoxValue();
-                        obj["field"] = widget._getFieldCheckBoxValue();
-                        obj["compare"] = widget._getCompareCheckBoxValue();
-                        obj["value"] = widget._getValueCheckBoxValue();
+                        obj["not"] = widget.getNotCheckBoxValue();
+                        obj["field"] = widget.getFieldCheckBoxValue();
+                        obj["compare"] = widget.getCompareCheckBoxValue();
+                        obj["value"] = widget.getValueCheckBoxValue();
                         this.properties.options.editOptions.push(obj);
                     }, this);
                 } else {
@@ -209,9 +209,9 @@ define([
             }
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
-                var fieldId = widget._getSelectedField();
-                var compareId = widget._getSelectedCompare();
-                var not = widget._getSelectedNot();
+                var fieldId = widget.getSelectedField();
+                var compareId = widget.getSelectedCompare();
+                var not = widget.getSelectedNot();
                 var value = widget.getValue();
                 var obj1 = {};
                 obj1[compareId] = value;
@@ -538,6 +538,66 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._localeNode);
+        },
+        _createPlaceholderGUI: function () {
+            var placeholderObj = this.replacer.placeholder;
+            var placeholderArray = [];
+            for (var placeholder in placeholderObj) {
+                placeholderArray.push({key: placeholder, value: placeholderObj[placeholder]});
+            }
+            var store = new ComplexMemoryStore({
+                data: placeholderArray,
+                idProperty: "key",
+                metadata: {
+                    displayField: "label",
+                    fields: [
+                        {
+                            "title": this.i18n.key,
+                            "name": "key",
+                            "type": "string",
+                            "identifier": true
+                        },
+                        {
+                            "title": this.i18n.value,
+                            "name": "value",
+                            "type": "string"
+                        }
+                    ]
+                }
+            });
+            var model = this._viewModel = new DataViewModel({
+                store: store
+            });
+            var dataView = this._dataView = new DataView({
+                i18n: this.i18n,
+                showFilter: true,
+                filterDuringKeyUp: true,
+                showPager: true,
+                showViewButtons: false,
+                itemsPerPage: 10,
+                DGRID: {
+                    checkboxSelection: false,
+                    columns: [
+                        {
+                            matches: {
+                                name: {
+                                    $eq: "key"
+                                }
+                            }
+                        },
+                        {
+                            matches: {
+                                name: {
+                                    $eq: "value"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            this._placeholderNode.set("content", dataView);
+            dataView.startup();
+            dataView.set("model", model);
         },
         _onStoreChange: function () {
             this._removeFields();
