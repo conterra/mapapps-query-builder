@@ -203,8 +203,7 @@ define([
                 value: value,
                 not: not,
                 editOptions: editOptions,
-                type: "editing",
-                replacer: this.replacer
+                type: "editing"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
         },
@@ -247,6 +246,9 @@ define([
         _onDone: function () {
             this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
+            var customQueryString = JSON.stringify(complexQuery);
+            customQueryString = this.replacer.replace(customQueryString);
+            complexQuery = JSON.parse(customQueryString);
             var store = this.store;
             var options = {};
             options.count = this.properties.options.count;

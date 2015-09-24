@@ -9,7 +9,7 @@
     "Require-Bundle": [
         {
             "name": "dn_replacer"
-        },
+        }, 
         {
             "name": "resultcenter"
         }

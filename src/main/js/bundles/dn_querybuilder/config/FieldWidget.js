@@ -537,8 +537,8 @@ define([
             var result = this._valueField.value;
             var fieldType = this.getSelectedFieldType();
             if (fieldType === "date") {
-                if (result === undefined) {
-                    result = this.replacer.replace(this._valueField.displayedValue);
+                if (result === undefined || result === null) {
+                    result = this._valueField.displayedValue;
                 } else {
                     result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
                 }

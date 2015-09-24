@@ -159,8 +159,7 @@ define([
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
-                type: "user",
-                replacer: this.replacer
+                type: "user"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeMatchVisibility();
@@ -235,6 +234,9 @@ define([
         _onDone: function () {
             this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
+            var customQueryString = JSON.stringify(complexQuery);
+            customQueryString = this.replacer.replace(customQueryString);
+            complexQuery = JSON.parse(customQueryString);
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStore(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);

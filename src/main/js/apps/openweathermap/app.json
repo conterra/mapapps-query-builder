@@ -1,12 +1,11 @@
 {
     "properties": {
-        "title": "Query Builder Sample"
+        "title": "Query Builder / OpenWeatherMap Datastore - Sample"
     },
     "load": {
         "bundleLocations": ["localbundles", "bundles"],
         "styles": ["${app}:app.css"],
         "allowedBundles": [
-            "wizard",
             "contentviewer",
             "coordinatetransformer",
             "geometryservice",
@@ -23,7 +22,8 @@
             "windowmanager",
             "toolset",
             "basemaptoggler",
-            "dn_querybuilder"
+            "dn_querybuilder",
+            "dn_openweathermapdatastore"
         ]
     },
     "bundles": {
@@ -315,6 +315,31 @@
         "dn_querybuilder": {
             "QueryTools": [
                 {
+                    "id": "fc_1441279619509",
+                    "title": "In which cities is it warmer than 25°C",
+                    "iconClass": "icon-cog",
+                    "storeId": "owm_datastore",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "temp": {
+                                    "$gt": 25
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "editable": false,
+                        "mode": "builder",
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    }
+                },
+                {
                     "id": "fc_1441021732534",
                     "title": "Show reported street damages that are not yet fixed in Münster",
                     "iconClass": "icon-toolcase",
@@ -403,6 +428,46 @@
                     }
                 },
                 {
+                    "id": "fc_1441976636993",
+                    "title": "Holiday Weather",
+                    "iconClass": "icon-selection-circle",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "temp": {
+                                    "$gte": 25
+                                }
+                            },
+                            {
+                                "temp": {
+                                    "$lte": 35
+                                }
+                            },
+                            {
+                                "humidity": {
+                                    "$lte": 50
+                                }
+                            },
+                            {
+                                "clouds": {
+                                    "$lt": 20
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "editable": false,
+                        "mode": "builder",
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "owm_datastore"
+                },
+                {
                     "id": "fc_1441982464561",
                     "title": "US Counties with Population > 1000 per SQM",
                     "iconClass": "icon-zoom-world",
@@ -476,6 +541,85 @@
                         }
                     },
                     "storeId": "_AGS_STORE_1442299569090"
+                },
+                {
+                    "id": "fc_1442315929545",
+                    "title": "Holiday Weather [editable]",
+                    "iconClass": "icon-selection-circle",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "temp": {
+                                    "$gte": 25
+                                }
+                            },
+                            {
+                                "temp": {
+                                    "$lte": 35
+                                }
+                            },
+                            {
+                                "humidity": {
+                                    "$lte": 50
+                                }
+                            },
+                            {
+                                "clouds": {
+                                    "$lt": 20
+                                }
+                            },
+                            {
+                                "$not": {
+                                    "weather_id": {
+                                        "$eq": 521
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "editable": true,
+                        "mode": "builder",
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        },
+                        "editOptions": [
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": false,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            },
+                            {
+                                "not": true,
+                                "field": false,
+                                "compare": false,
+                                "value": true
+                            }
+                        ]
+                    },
+                    "storeId": "owm_datastore"
                 },
                 {
                     "id": "fc_1442490426938",

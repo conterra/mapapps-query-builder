@@ -25,7 +25,6 @@ define([
     "ct/_when",
     "ct/array",
     "ct/util/css",
-    "ct/ui/desktop/IFrameContent",
     "ct/request",
     "ct/store/ComplexMemory",
     "ct/ui/controls/dataview/DataViewModel",
@@ -46,7 +45,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, IFrameContent, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -98,6 +97,7 @@ define([
             this.connect(this._builderTab, "onShow", this._onBuilderTab);
             this.connect(this._manualTab, "onShow", this._onManualTab);
             this.connect(this._optionsTab, "onShow", this._onOptionsTab);
+            this.connect(this._placeholderTab, "onShow", this._onPlaceholderTab);
         },
         _checkValidation: function () {
             if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
@@ -115,25 +115,7 @@ define([
             }
         },
         _createWindow: function (url, title) {
-            /*url = ct_request.getProxiedUrl(url, true);
-             var content = new IFrameContent();
-             content.set("src", url);
-             var appCtx = this.appCtx;
-             var wr = this.windowManager.createModalWindow({
-             content: content,
-             marginBox: {
-             w: 750,
-             h: 500
-             },
-             maximizable: true,
-             closable: true,
-             title: title,
-             attachToDom: appCtx.builderWindowRoot
-             });
-             wr.show();*/
-
-            var size = 'width=800,height=600,scrollbars=yes';
-            window.open(url, title, size);
+            window.open(url, "_blank");
         },
         _iconClassHelp: function () {
             var url = this.globalProperties.webFontsGalleryUrl;
@@ -373,8 +355,7 @@ define([
                 value: value,
                 not: not,
                 editOptions: editOptions,
-                type: "admin",
-                replacer: this.replacer
+                type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeChildrenButtons();
@@ -387,8 +368,7 @@ define([
                 store: this._getSelectedStore(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
-                type: "admin",
-                replacer: this.replacer
+                type: "admin"
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeChildrenButtons();
@@ -614,6 +594,9 @@ define([
             ct_css.switchHidden(this._bottomNode.domNode, false);
         },
         _onOptionsTab: function () {
+            ct_css.switchHidden(this._bottomNode.domNode, true);
+        },
+        _onPlaceholderTab: function () {
             ct_css.switchHidden(this._bottomNode.domNode, true);
         },
         _onManualTab: function () {

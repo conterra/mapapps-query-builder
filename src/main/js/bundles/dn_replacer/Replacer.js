@@ -15,10 +15,12 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/_base/lang"
+    "dojo/_base/lang",
+    "dojo/string"
 ], function (
         declare,
-        d_lang
+        d_lang,
+        d_string
         ) {
     return declare([], {
         activate: function () {
@@ -26,7 +28,8 @@ define([
             //d_lang.mixin(this.placeholder, this._properties.placeholder);
         },
         replace: function (string) {
-            return d_lang.replace(string, this.placeholder);
+            //return d_lang.replace(string, this.placeholder);
+            return d_string.substitute(string, this.placeholder);
         },
         addPlaceholderProvider: function (placeholderProvider) {
             var globalPlacerholder = this.placeholder || {};

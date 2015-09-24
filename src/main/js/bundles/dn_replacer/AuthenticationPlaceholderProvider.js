@@ -22,9 +22,11 @@ define([
         getPlaceholder: function () {
             var userAdminService = this._userAdminService;
             var authentication = userAdminService.getAuthentication();
-            var user = authentication.getUser() && authentication.getUser().name;
+            if (authentication.getUser()) {
+                var user = authentication.getUser().name;
+                placeholder["user"] = user;
+            }
             var placeholder = {};
-            placeholder["user"] = user;
             return placeholder;
         }
     });

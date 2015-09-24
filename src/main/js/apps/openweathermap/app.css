@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2015 con terra GmbH (info@conterra.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,4 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([], {});
+.myclass {}
+.mainMap:before{
+    content: '';
+    background-image: url(logo.png);
+    width: 153px;
+    height: 22px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 1;
+}
