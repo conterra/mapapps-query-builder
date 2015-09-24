@@ -24,7 +24,7 @@ define([
             var authentication = userAdminService.getAuthentication();
             if (authentication.getUser()) {
                 var user = authentication.getUser().name;
-                placeholder["user"] = user;
+                placeholder["current_user_name"] = user;
             }
             var placeholder = {};
             return placeholder;

@@ -34,7 +34,7 @@ define({
             options: "Optionen",
             manual: "Manuell",
             key: "Schl\u00fcssel",
-            value: "Wert",
+            value: "Werte werden dynamisch gesetzt, aktueller Wert ist",
             placeholder: "Platzhalter",
             iconClass: "Icon Klasse",
             iconClassHelp: "Hilfe zur Icon Class",

@@ -523,11 +523,11 @@ define([
             var placeholderObj = this.replacer.placeholder;
             var placeholderArray = [];
             for (var placeholder in placeholderObj) {
-                placeholderArray.push({key: placeholder, value: placeholderObj[placeholder]});
+                placeholderArray.push({id: placeholder, key: "${" + placeholder + "}", value: placeholderObj[placeholder]});
             }
             var store = new ComplexMemoryStore({
                 data: placeholderArray,
-                idProperty: "key",
+                idProperty: "id",
                 metadata: {
                     displayField: "label",
                     fields: [

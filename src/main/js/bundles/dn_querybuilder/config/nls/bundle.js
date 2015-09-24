@@ -36,7 +36,7 @@ define({
                         options: "Options",
                         manual: "Manual",
                         key: "Key",
-                        value: "Value",
+                        value: "Values will be dynamically set, current value is",
                         placeholder: "Placeholder",
                         iconClass: "Icon Class",
                         iconClassHelp: "Icon Class Help",

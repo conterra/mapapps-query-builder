@@ -146,7 +146,6 @@ define([
                 });
                 domConstruct.place(notSelect.domNode, this._notNode, "first");
                 notSelect.startup();
-
                 this._createCheckBoxes();
                 if (this.type === "admin") {
                     this.connect(this.source._editableSelect, "onChange", this._changeEditingVisibility);
@@ -205,7 +204,6 @@ define([
                             this.source._changeChildrenButtons();
                             if (this.type === "user")
                                 this.source._changeMatchVisibility();
-
                         })
                     });
                     domConstruct.place(removeButton.domNode, this._buttonNode, "last");
@@ -330,6 +328,8 @@ define([
                             validator: this._validator,
                             intermediateChanges: true
                         });
+                        if (valueSelect.value === null)
+                            valueSelect.set("displayedValue", value);
                     } else if (type === "number" || type === "integer" || type === "double") {
                         if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
@@ -540,7 +540,7 @@ define([
                 if (result === undefined || result === null) {
                     result = this._valueField.displayedValue;
                 } else {
-                    result = d_locale.format(result, {datePattern: "yyy-MM-dd", selector: 'date'});
+                    result = d_locale.format(result, {datePattern: "yyyy-MM-dd", selector: 'date'});
                 }
             } else if (fieldType === "string") {
                 if (this.replacer) {

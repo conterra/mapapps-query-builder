@@ -352,7 +352,7 @@
                         "$and": [
                             {
                                 "zeitpunkt": {
-                                    "$lte": "2015-09-18"
+                                    "$lte": "${current_date}"
                                 }
                             }
                         ]

@@ -29,9 +29,7 @@ define([
                 return;
             }
             var customquery = event.customquery;
-            var customQueryString = JSON.stringify(customquery);
-            customQueryString = this._replacer.replace(customQueryString);
-            customquery = JSON.parse(customQueryString);
+
             var topic = "ct/selection/SELECTION_END";
             if (event.options.editable === true) {
                 var props = event._properties;
@@ -64,6 +62,9 @@ define([
                 });
                 window.show();
             } else {
+                var customQueryString = JSON.stringify(customquery);
+                customQueryString = this._replacer.replace(customQueryString);
+                customquery = JSON.parse(customQueryString);
                 var options = {};
                 options.count = event.options.count;
                 options.ignoreCase = event.options.ignoreCase;
