@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/declare"
+    "dojo/_base/declare",
+    "ct/_Connect"
 ], function (
-        declare
+        declare,
+        _Connect
         ) {
-    return declare([], {
+    return declare([_Connect], {
         getPlaceholder: function () {
             var placeholder = {};
-            var userAdminService = this._userAdminService;
-            var authentication = userAdminService.getAuthentication();
-            if (authentication.getUser()) {
-                var user = authentication.getUser().name;
-                placeholder["current_user_name"] = user;
-            }
+            var extent = JSON.stringify(this._mapState.getExtent(), "", "\t");
+            placeholder["current_extent"] = extent;
             return placeholder;
+        },
+        reEvaluate: function () {
+            return this.getPlaceholder();
         }
     });
 });

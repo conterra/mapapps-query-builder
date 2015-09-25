@@ -16,26 +16,48 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/string"
+    "dojo/_base/array",
+    "dojo/string",
+    "ct/Stateful",
+    "ct/_when"
 ], function (
         declare,
         d_lang,
-        d_string
+        d_array,
+        d_string,
+        Stateful,
+        ct_when
         ) {
-    return declare([], {
+    return declare([Stateful], {
         activate: function () {
             this.placeholder = this.placeholder || {};
-            //d_lang.mixin(this.placeholder, this._properties.placeholder);
+            this.placeholderProvider = this.placeholderProvider || [];
         },
         replace: function (string) {
-            //return d_lang.replace(string, this.placeholder);
+            this.refresh();
             return d_string.substitute(string, this.placeholder);
         },
+        _getPlaceholder: function () {
+            this.refresh();
+            return this.placeholder;
+        },
         addPlaceholderProvider: function (placeholderProvider) {
-            var globalPlacerholder = this.placeholder || {};
+            this.placeholderProvider = this.placeholderProvider || [];
+            this.placeholderProvider.push(placeholderProvider);
+            var globalPlaceholder = this.placeholder || {};
             var placeholder = placeholderProvider.getPlaceholder();
-            d_lang.mixin(globalPlacerholder, placeholder);
-            this.placeholder = globalPlacerholder;
+            d_lang.mixin(globalPlaceholder, placeholder);
+            this.placeholder = globalPlaceholder;
+        },
+        refresh: function () {
+            d_array.forEach(this.placeholderProvider, function (provider) {
+                if (provider.reEvaluate) {
+                    ct_when(provider.reEvaluate(), function (result) {
+                        var placeholder = result;
+                        d_lang.mixin(this.placeholder, placeholder);
+                    }, this);
+                }
+            }, this);
         }
     });
 });

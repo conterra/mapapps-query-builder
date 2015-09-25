@@ -29,6 +29,9 @@ define([
             placeholder["current_date"] = date;
             placeholder["current_time"] = time;
             return placeholder;
+        },
+        reEvaluate: function () {
+            return this.getPlaceholder();
         }
     });
 });

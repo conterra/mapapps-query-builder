@@ -26,7 +26,7 @@
                 {
                     "name": "placeholderProvider",
                     "providing": "dn_replacer.PlaceholderProvider",
-                    "cardinality": "0..n"
+                    "cardinality": "1..n"
                 }
             ]
         }, {
@@ -40,8 +40,16 @@
             ]
         }, {
             "name": "DatePlaceholderProvider",
+            "provides": "dn_replacer.PlaceholderProvider"
+        }, {
+            "name": "ExtentPlaceholderProvider",
             "provides": "dn_replacer.PlaceholderProvider",
-            "references": []
+            "references": [
+                {
+                    "name": "_mapState",
+                    "providing": "ct.mapping.map.MapState"
+                }
+            ]
         }
     ]
 }

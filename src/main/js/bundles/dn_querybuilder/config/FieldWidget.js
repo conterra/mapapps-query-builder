@@ -547,7 +547,11 @@ define([
                     result = this.replacer.replace(result);
                 }
             } else if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
-                result = Number(result);
+                if (result === undefined || result === null) {
+                    result = this._valueField.displayedValue;
+                } else {
+                    result = Number(result);
+                }
             }
             return result;
         },

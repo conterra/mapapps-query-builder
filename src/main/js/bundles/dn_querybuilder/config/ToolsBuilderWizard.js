@@ -63,7 +63,7 @@ define([
             var store = new Memory({
                 data: this.storeData
             });
-            var filteringSelect = this._filteringSelect = new FilteringSelect({
+            var storeSelect = this._storeSelect = new FilteringSelect({
                 name: "stores",
                 value: this.properties.storeId || this.storeData[0].id,
                 store: store,
@@ -71,7 +71,7 @@ define([
                 style: "width: 250px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
-            filteringSelect.startup();
+            storeSelect.startup();
             this._titleTextBox.set("value", this.properties.title);
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
@@ -90,7 +90,7 @@ define([
             }
 
             this._createPlaceholderGUI();
-            this.connect(filteringSelect, "onChange", this._onStoreChange);
+            this.connect(storeSelect, "onChange", this._onStoreChange);
             this.connect(this._titleTextBox, "onChange", this._checkValidation);
             this.connect(this._iconClassTextBox, "onChange", this._checkValidation);
             this.connect(this._customQueryTextArea, "onChange", this._onTextAreaInput);
@@ -164,7 +164,7 @@ define([
             }
             this.properties.title = this._titleTextBox.value;
             this.properties.iconClass = this._iconClassTextBox.value;
-            this.properties.storeId = this._filteringSelect.value;
+            this.properties.storeId = this._storeSelect.value;
             this.properties.options.count = this._countTextBox.value;
             this.properties.options.ignoreCase = this._ignoreCaseSelect.value;
             var localeId = this._localeSelect.value;
@@ -299,8 +299,9 @@ define([
             return s;
         },
         _getFields: function () {
-            var storeId = this._filteringSelect.value;
+            var storeId = this._storeSelect.value;
             var store = this._getSelectedStore(storeId);
+            //
             var metadata = store.getMetadata();
             var fields = metadata.fields;
             var storeData = [];
@@ -344,7 +345,7 @@ define([
                 }
             }
             var storeData = this._getFields();
-            var storeId = this._filteringSelect.value;
+            var storeId = this._storeSelect.value;
             var fieldWidget = new FieldWidget({
                 source: this,
                 store: this._getSelectedStore(storeId),
@@ -361,7 +362,7 @@ define([
             this._changeChildrenButtons();
         },
         _addField: function () {
-            var storeId = this._filteringSelect.value;
+            var storeId = this._storeSelect.value;
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
                 source: this,
@@ -520,7 +521,7 @@ define([
             }, this._localeNode);
         },
         _createPlaceholderGUI: function () {
-            var placeholderObj = this.replacer.placeholder;
+            var placeholderObj = this.replacer.get("placeholder");
             var placeholderArray = [];
             for (var placeholder in placeholderObj) {
                 placeholderArray.push({id: placeholder, key: "${" + placeholder + "}", value: placeholderObj[placeholder]});
