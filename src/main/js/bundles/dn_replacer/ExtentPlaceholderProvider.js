@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/declare",
-    "ct/_Connect"
+    "dojo/_base/declare"
 ], function (
-        declare,
-        _Connect
+        declare
         ) {
-    return declare([_Connect], {
+    return declare([], {
         getPlaceholder: function () {
             var placeholder = {};
             var extent = JSON.stringify(this._mapState.getExtent(), "", "\t");

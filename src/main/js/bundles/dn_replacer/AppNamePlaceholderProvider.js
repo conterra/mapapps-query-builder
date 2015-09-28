@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 define([
-    ".",
-    "./Replacer",
-    "./AuthenticationPlaceholderProvider",
-    "./DatePlaceholderProvider",
-    "./ExtentPlaceholderProvider",
-    "./AppNamePlaceholderProvider"
-], {});
+    "dojo/_base/declare"
+], function (
+        declare
+        ) {
+    return declare([], {
+        getPlaceholder: function () {
+            var placeholder = {};
+            var appName = this._appCtx.getApplicationName();
+            var appTitle = this._appCtx.getApplicationProperties().title;
+            placeholder["current_app_name"] = appName;
+            placeholder["current_app_title"] = appTitle;
+            return placeholder;
+        }
+    });
+});

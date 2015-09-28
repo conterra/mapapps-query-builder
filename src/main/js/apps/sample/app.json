@@ -516,7 +516,6 @@
         "dn_replacer": {
             "Replacer": {
                 "placeholder": {
-                    "user1": "Peter"
                 }
             }
         },

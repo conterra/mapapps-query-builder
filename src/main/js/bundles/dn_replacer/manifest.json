@@ -19,7 +19,6 @@
             "propertiesConstructor": true,
             "properties": {
                 "placeholder": {
-                    "sample": "Sample"
                 }
             },
             "references": [
@@ -29,7 +28,8 @@
                     "cardinality": "1..n"
                 }
             ]
-        }, {
+        },
+        {
             "name": "AuthenticationPlaceholderProvider",
             "provides": "dn_replacer.PlaceholderProvider",
             "references": [
@@ -38,16 +38,31 @@
                     "providing": "ct.framework.api.UserAdmin"
                 }
             ]
-        }, {
+        },
+        {
             "name": "DatePlaceholderProvider",
             "provides": "dn_replacer.PlaceholderProvider"
-        }, {
+        },
+        {
             "name": "ExtentPlaceholderProvider",
             "provides": "dn_replacer.PlaceholderProvider",
             "references": [
                 {
                     "name": "_mapState",
                     "providing": "ct.mapping.map.MapState"
+                }, {
+                    "name": "_appCtx",
+                    "providing": "ct.framework.api.ApplicationContext"
+                }
+            ]
+        },
+        {
+            "name": "AppNamePlaceholderProvider",
+            "provides": "dn_replacer.PlaceholderProvider",
+            "references": [
+                {
+                    "name": "_appCtx",
+                    "providing": "ct.framework.api.ApplicationContext"
                 }
             ]
         }
