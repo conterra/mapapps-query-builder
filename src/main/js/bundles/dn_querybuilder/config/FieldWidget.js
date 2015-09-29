@@ -256,7 +256,7 @@ define([
                     } else {
                         this._createCompareSelect("$eq", compareStore);
                     }
-                } else if (type === "number" || type === "integer" || type === "double") {
+                } else if (type === "number" || type === "integer" || type === "single" || type === "double") {
                     var compareStore = this._compareStore = this._createNumberStore();
                     if (this._compareSelect) {
                         compareSelect.set("store", compareStore);
@@ -330,7 +330,7 @@ define([
                         });
                         if (valueSelect.value === null)
                             valueSelect.set("displayedValue", value);
-                    } else if (type === "number" || type === "integer" || type === "double") {
+                    } else if (type === "number" || type === "integer" || type === "single" || type === "double") {
                         if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
                         } else {
@@ -546,7 +546,7 @@ define([
                 if (this.replacer) {
                     result = this.replacer.replace(result);
                 }
-            } else if (fieldType === "number" || fieldType === "integer" || fieldType === "double") {
+            } else if (fieldType === "number" || fieldType === "integer" || fieldType === "single" || fieldType === "double") {
                 if (result === undefined || result === null) {
                     result = this._valueField.displayedValue;
                 } else {

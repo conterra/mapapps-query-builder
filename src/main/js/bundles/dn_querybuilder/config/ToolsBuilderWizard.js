@@ -314,7 +314,7 @@ define([
                 if (codedValues.length > 0) {
                     codedValueString = "[CV]";
                 }
-                if (field.type !== "geometry" /*&& field.type !== "date"*/) {
+                if (field.type !== "geometry") {
                     storeData.push({id: field.name, title: field.title + " (" + field.type + ") " + codedValueString, type: field.type, codedValues: codedValues});
                 }
             });
