@@ -52,7 +52,7 @@ define([
                     title: i18n.wizard.editWindowTitle,
                     marginBox: {
                         w: 540,
-                        h: 360,
+                        h: 274,
                         t: 100,
                         l: 20
                     },

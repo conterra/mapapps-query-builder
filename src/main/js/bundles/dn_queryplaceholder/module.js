@@ -18,6 +18,5 @@ define([
     "./Replacer",
     "./AuthenticationPlaceholderProvider",
     "./DatePlaceholderProvider",
-    "./ExtentPlaceholderProvider",
     "./AppNamePlaceholderProvider"
 ], {});

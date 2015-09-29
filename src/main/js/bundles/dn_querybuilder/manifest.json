@@ -8,8 +8,8 @@
     "Config-Bundle-Location": "/config",
     "Require-Bundle": [
         {
-            "name": "dn_replacer"
-        }, 
+            "name": "dn_queryplaceholder"
+        },
         {
             "name": "resultcenter"
         }
@@ -29,7 +29,7 @@
                     "t": 100,
                     "l": 20,
                     "w": 625,
-                    "h": 360
+                    "h": 270
                 },
                 "dockTool": "userQueryBuilderTool",
                 "closable": true,

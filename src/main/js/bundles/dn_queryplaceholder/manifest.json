@@ -1,7 +1,7 @@
 {
-    "Bundle-SymbolicName": "dn_replacer",
+    "Bundle-SymbolicName": "dn_queryplaceholder",
     "Bundle-Version": "1.0.0",
-    "Bundle-Name": "Replacer",
+    "Bundle-Name": "Queryplaceholder",
     "Bundle-Description": "Replaces placeholder",
     "Bundle-Vendor": "con terra GmbH",
     "Bundle-Category": [],
@@ -42,19 +42,6 @@
         {
             "name": "DatePlaceholderProvider",
             "provides": "dn_replacer.PlaceholderProvider"
-        },
-        {
-            "name": "ExtentPlaceholderProvider",
-            "provides": "dn_replacer.PlaceholderProvider",
-            "references": [
-                {
-                    "name": "_mapState",
-                    "providing": "ct.mapping.map.MapState"
-                }, {
-                    "name": "_appCtx",
-                    "providing": "ct.framework.api.ApplicationContext"
-                }
-            ]
         },
         {
             "name": "AppNamePlaceholderProvider",
