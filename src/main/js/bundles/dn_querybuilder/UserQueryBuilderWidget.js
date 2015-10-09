@@ -87,7 +87,6 @@ define([
                 style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
-
             var extentStore = this._extentStore = new Memory({
                 data: [
                     {name: this.i18n.userExtentYes, id: true},
@@ -103,7 +102,6 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._extentNode);
-
             var matchStore = this._matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -119,9 +117,7 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
-
             this._changeMatchVisibility();
-
             this.connect(filteringSelect, "onChange", this._removeFields);
         },
         resize: function (dim) {
@@ -240,7 +236,9 @@ define([
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStore(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
+
             this.dataModel.setDatasource(filter);
+
             this._setProcessing(false);
         },
         _getComplexQuery: function () {

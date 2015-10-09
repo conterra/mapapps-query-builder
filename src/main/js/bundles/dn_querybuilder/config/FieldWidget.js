@@ -110,48 +110,9 @@ define([
                     this.valueSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 200;
-                var fieldData = this.storeData;
-                var fieldStore = this._fieldStore = new Memory({
-                    data: fieldData
-                });
-                var fieldSelect = this._fieldSelect = new FilteringSelect({
-                    name: "fields",
-                    value: this.fieldId || fieldData[0].id,
-                    store: fieldStore,
-                    searchAttr: "title",
-                    style: this._fieldSelectWidth,
-                    maxHeight: this.maxComboBoxHeight,
-                    readOnly: false,
-                    disabled: this.fieldSelectDisabled
-                }, this._fieldNode);
-                var i18n = this.i18n;
-                var notStore = this._notStore = new Memory({
-                    data: [
-                        {id: false, name: i18n.shouldBeTrue},
-                        {id: true, name: i18n.shouldBeFalse}
-                    ]
-                });
-                var not = false;
-                if (this.not !== undefined) {
-                    not = this.not;
-                }
-                var notSelect = this._notSelect = new FilteringSelect({
-                    name: "not",
-                    value: not,
-                    store: notStore,
-                    searchAttr: "name",
-                    style: this._notSelectWidth,
-                    maxHeight: this.maxComboBoxHeight,
-                    disabled: this.notSelectDisabled
-                });
-                domConstruct.place(notSelect.domNode, this._notNode, "first");
-                notSelect.startup();
-                this._createCheckBoxes();
-                if (this.type === "admin") {
-                    this.connect(this.source._editableSelect, "onChange", this._changeEditingVisibility);
-                }
+                this._createGUI();
                 this._changeGUI();
-                this.connect(fieldSelect, "onChange", this._changeGUI);
+                this.connect(this._fieldSelect, "onChange", this._changeGUI);
             }, this);
         },
         deactivate: function () {
@@ -209,6 +170,48 @@ define([
                     domConstruct.place(removeButton.domNode, this._buttonNode, "last");
                     removeButton.startup();
                 }
+            }
+        },
+        _createGUI: function () {
+            var fieldData = this.storeData;
+            var fieldStore = this._fieldStore = new Memory({
+                data: fieldData
+            });
+            var fieldSelect = this._fieldSelect = new FilteringSelect({
+                name: "fields",
+                value: this.fieldId || fieldData[0].id,
+                store: fieldStore,
+                searchAttr: "title",
+                style: this._fieldSelectWidth,
+                maxHeight: this.maxComboBoxHeight,
+                readOnly: false,
+                disabled: this.fieldSelectDisabled
+            }, this._fieldNode);
+            var i18n = this.i18n;
+            var notStore = this._notStore = new Memory({
+                data: [
+                    {id: false, name: i18n.shouldBeTrue},
+                    {id: true, name: i18n.shouldBeFalse}
+                ]
+            });
+            var not = false;
+            if (this.not !== undefined) {
+                not = this.not;
+            }
+            var notSelect = this._notSelect = new FilteringSelect({
+                name: "not",
+                value: not,
+                store: notStore,
+                searchAttr: "name",
+                style: this._notSelectWidth,
+                maxHeight: this.maxComboBoxHeight,
+                disabled: this.notSelectDisabled
+            });
+            domConstruct.place(notSelect.domNode, this._notNode, "first");
+            notSelect.startup();
+            this._createCheckBoxes();
+            if (this.type === "admin") {
+                this.connect(this.source._editableSelect, "onChange", this._changeEditingVisibility);
             }
         },
         _changeGUI: function () {

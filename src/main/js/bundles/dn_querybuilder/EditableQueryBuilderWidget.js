@@ -74,6 +74,14 @@ define([
                 this._init();
             }, this);
         },
+        resize: function (dim) {
+            if (dim && dim.h > 0) {
+                this._containerNode.resize({
+                    w: dim.w,
+                    h: dim.h
+                });
+            }
+        },
         _init: function () {
             this.maxComboBoxHeight = 160;
 
@@ -85,49 +93,8 @@ define([
             var storeTitle = store.get(storeId).name;
             d_html.set(this._storeNode, storeTitle);
 
-            var ynStore = this._ynStore = new Memory({
-                data: [
-                    {name: this.i18n.userExtentYes, id: true},
-                    {name: this.i18n.userExtentNo, id: false}
-                ]
-            });
-            this._extentSelect = new FilteringSelect({
-                name: "extent",
-                value: false,
-                store: ynStore,
-                searchAttr: "name",
-                style: "width: 155px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight,
-                disabled: true
-            }, this._extentNode);
-
-            var matchStore = this._matchStore = new Memory({
-                data: [
-                    {name: this.i18n.and, id: "$and"},
-                    {name: this.i18n.or, id: "$or"}
-                ]
-            });
-            this._matchSelect = new FilteringSelect({
-                name: "match",
-                value: "$and",
-                store: matchStore,
-                searchAttr: "name",
-                style: "width: 155px;",
-                required: true,
-                maxHeight: this.maxComboBoxHeight,
-                disabled: true
-            }, this._matchNode);
-
-            this._createGUI();
-        },
-        resize: function (dim) {
-            if (dim && dim.h > 0) {
-                this._containerNode.resize({
-                    w: dim.w,
-                    h: dim.h
-                });
-            }
+            this._createGUISettings();
+            this._createGUIFields();
         },
         _setProcessing: function (processing) {
             var tool = this.tool;
@@ -218,7 +185,42 @@ define([
                 });
             });
         },
-        _createGUI: function () {
+        _createGUISettings: function () {
+            var ynStore = this._ynStore = new Memory({
+                data: [
+                    {name: this.i18n.userExtentYes, id: true},
+                    {name: this.i18n.userExtentNo, id: false}
+                ]
+            });
+            this._extentSelect = new FilteringSelect({
+                name: "extent",
+                value: false,
+                store: ynStore,
+                searchAttr: "name",
+                style: "width: 155px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight,
+                disabled: true
+            }, this._extentNode);
+
+            var matchStore = this._matchStore = new Memory({
+                data: [
+                    {name: this.i18n.and, id: "$and"},
+                    {name: this.i18n.or, id: "$or"}
+                ]
+            });
+            this._matchSelect = new FilteringSelect({
+                name: "match",
+                value: "$and",
+                store: matchStore,
+                searchAttr: "name",
+                style: "width: 155px;",
+                required: true,
+                maxHeight: this.maxComboBoxHeight,
+                disabled: true
+            }, this._matchNode);
+        },
+        _createGUIFields: function () {
             var properties = this.properties;
             var customQuery = properties.customquery;
             var match;
