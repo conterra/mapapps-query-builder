@@ -248,8 +248,11 @@
         },
         "dn_openweathermapdatastore": {
             "OpenWeatherMapStoreFactory": {
-                //"apikey": "*your api key*",
+                "apikey": "*your api key*",
                 "mapZoom": 5
+            },
+            "OWMInfoWidgetFactory": {
+                "apikey": "*your api key*"
             }
         },
         "resultcenter": {
