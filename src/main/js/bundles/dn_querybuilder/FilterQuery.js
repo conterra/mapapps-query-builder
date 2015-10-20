@@ -16,8 +16,9 @@
 define([
     "dojo/_base/declare",
     "ct/store/Filter",
+    "ct/_when",
     "./EditableQueryBuilderWidget"
-], function (declare, Filter, EditableQueryBuilderWidget) {
+], function (declare, Filter, ct_when, EditableQueryBuilderWidget) {
     return declare([], {
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
@@ -35,10 +36,10 @@ define([
                 var props = event._properties;
                 var i18n = event._i18n.get();
                 var tool = event.tool;
-                var store = event.store;
                 var mapState = this._mapState;
                 var dataModel = this._dataModel;
                 var replacer = this._replacer;
+                var logService = this._logService;
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
@@ -46,7 +47,8 @@ define([
                     store: store,
                     mapState: mapState,
                     dataModel: dataModel,
-                    replacer: replacer
+                    replacer: replacer,
+                    logService: logService
                 });
                 var window = this._windowManager.createWindow({
                     title: i18n.wizard.editWindowTitle,
@@ -69,10 +71,32 @@ define([
                 options.count = event.options.count;
                 options.ignoreCase = event.options.ignoreCase;
                 options.locale = event.options.locale;
-                this._eventService.postEvent(topic, {
-                    source: this,
-                    store: customquery ? Filter(store, customquery, options) : store
-                });
+                /*this._eventService.postEvent(topic, {
+                 source: this,
+                 store: customquery ? Filter(store, customquery, options) : store
+                 });*/
+
+                var filter = new Filter(store, customquery, options);
+
+                ct_when(filter.query({}, {count: 0}).total, function (total) {
+                    if (total) {
+                        this._dataModel.setDatasource(filter);
+                        this._setProcessing(false);
+                    }
+                }, function (e) {
+                    this._setProcessing(false);
+                    debugger
+                    this._logService.info({
+                        id: e.code,
+                        message: e
+                    });
+                }, this);
+            }
+        },
+        _setProcessing: function (processing) {
+            var tool = this.tool;
+            if (tool) {
+                tool.set("processing", processing);
             }
         }
     });

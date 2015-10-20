@@ -28,6 +28,7 @@ define([
             var mapState = this._mapState;
             var dataModel = this._dataModel;
             var replacer = this._replacer;
+            var logService = this._logService;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -35,7 +36,8 @@ define([
                 stores: stores,
                 mapState: mapState,
                 dataModel: dataModel,
-                replacer: replacer
+                replacer: replacer,
+                logService: logService
             });
         },
         deactivate: function () {

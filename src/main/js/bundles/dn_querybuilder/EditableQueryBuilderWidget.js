@@ -257,8 +257,19 @@ define([
             options.ignoreCase = this.properties.options.ignoreCase;
             options.locale = this.properties.options.locale;
             var filter = new Filter(store, complexQuery, options);
-            this.dataModel.setDatasource(filter);
-            this._setProcessing(false);
+            
+            ct_when(filter.query({}, {count: 0}).total, function (total) {
+                if (total) {
+                    this.dataModel.setDatasource(filter);
+                    this._setProcessing(false);
+                }
+            }, function (e) {
+                this._setProcessing(false);
+                this.logService.info({
+                    id: e.code,
+                    message: e
+                });
+            }, this);
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;

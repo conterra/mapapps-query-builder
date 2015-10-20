@@ -31,6 +31,7 @@ define([
     "dijit/form/Button",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer",
+    "ct/_Connect",
     "ct/async",
     "ct/_when",
     "ct/store/Filter",
@@ -52,12 +53,13 @@ define([
         Button,
         ContentPane,
         BorderContainer,
+        _Connect,
         ct_async,
         ct_when,
         Filter,
         ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
-        _WidgetsInTemplateMixin], {
+        _WidgetsInTemplateMixin, _Connect], {
         templateString: templateStringContent,
         baseClass: "userQueryBuilderWizard",
         postCreate: function () {
@@ -65,6 +67,7 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
+
             // search stores
             var stores = this.stores;
             var storeData = this._getStoreData(stores);
@@ -75,6 +78,7 @@ define([
             }, this);
         },
         _init: function () {
+
             this.maxComboBoxHeight = 160;
             var store = new Memory({
                 data: this.storeData
@@ -237,9 +241,21 @@ define([
             var store = this._getSelectedStore(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
 
-            this.dataModel.setDatasource(filter);
+            ct_when(filter.query({}, {count: 0}).total, function (total) {
+                if (total) {
+                    this.dataModel.setDatasource(filter);
+                    this._setProcessing(false);
+                }
+            }, function (e) {
+                this._setProcessing(false);
+                this.logService.info({
+                    id: e.code,
+                    message: e
+                });
+            }, this);
 
-            this._setProcessing(false);
+
+
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;

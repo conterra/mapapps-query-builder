@@ -12,6 +12,9 @@
         },
         {
             "name": "resultcenter"
+        },
+        {
+            "name": "notifier"
         }
     ],
     "CSS-Themes-Extension": [
@@ -84,6 +87,10 @@
                     "providing": "ct.framework.api.WindowManager"
                 },
                 {
+                    "name": "_logService",
+                    "providing": "ct.framework.api.LogService"
+                },
+                {
                     "name": "_replacer",
                     "providing": "dn_replacer.Replacer"
                 }]
@@ -117,6 +124,10 @@
                 {
                     "name": "_dataModel",
                     "providing": "ct.resultcenter.DataModel"
+                },
+                {
+                    "name": "_logService",
+                    "providing": "ct.framework.api.LogService"
                 },
                 {
                     "name": "_replacer",
