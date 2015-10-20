@@ -246,6 +246,12 @@
                     }
                 }]
         },
+        "dn_openweathermapdatastore": {
+            "OpenWeatherMapStoreFactory": {
+                //"apikey": "*your api key*",
+                "mapZoom": 5
+            }
+        },
         "resultcenter": {
             "DataView": {
                 "itemsPerPage": 100
