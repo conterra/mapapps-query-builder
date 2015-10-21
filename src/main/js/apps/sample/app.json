@@ -31,27 +31,6 @@
         "agssearch": {
             "AGSStore": [
                 {
-                    "title": "net_events_performance_test (Aktuelle Störungen)",
-                    "description": "",
-                    "omniSearchLabelAttr": "TICKET_ID",
-                    "omniSearchSearchAttr": "TICKET_ID",
-                    "idProperty": "OBJECTID",
-                    "url": "http://vsdev1521.esri-de.com:6080/arcgis/rest/services/GeoWorld_WM/net_events/MapServer/1",
-                    "useIn": [
-                        "omnisearch",
-                        "selection"
-                    ],
-                    "filterOptions": {
-                        "suggestContains": true
-                    },
-                    "omniSearchTypingDelay": 500,
-                    "omniSearchPageSize": 20,
-                    "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-                    "fetchIdProperty": true,
-                    "enablePagination": false,
-                    "id": "_AGS_STORE_1445344881501"
-                },
-                {
                     "id": "stoerungen",
                     "title": "Stoerungen",
                     "useIn": "selection",
@@ -601,106 +580,6 @@
             "MappingResourceRegistryFactory": {
                 "_knownServices": {
                     "services": [
-                        {
-                            "id": "service_9018",
-                            "url": "http://vsdev1521.esri-de.com:6080/arcgis/rest/services/GeoWorld_WM/net_events/MapServer",
-                            "type": "AGS_DYNAMIC",
-                            "title": "net_events_performance_test",
-                            "description": "",
-                            "layers": [
-                                {
-                                    "id": "0",
-                                    "title": "Betroffene Standorte",
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "1",
-                                    "title": "Aktuelle Störungen",
-                                    "parentId": "0",
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "2",
-                                    "title": "Aktuelle Wartungen",
-                                    "parentId": "0",
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "3",
-                                    "title": "Abgelaufene Events",
-                                    "parentId": "0",
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "4",
-                                    "title": "Zukünftige Events",
-                                    "parentId": "0",
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "5",
-                                    "title": "Betroffene Flächen",
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "6",
-                                    "title": "Aktuelle Störungen > 500k",
-                                    "parentId": "5",
-                                    "maxScale": 500001,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "7",
-                                    "title": "Aktuelle Störungen <= 500k",
-                                    "parentId": "5",
-                                    "minScale": 500000,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "8",
-                                    "title": "Aktuelle Wartungen > 500k",
-                                    "parentId": "5",
-                                    "maxScale": 500001,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "9",
-                                    "title": "Aktuelle Wartungen <= 500k",
-                                    "parentId": "5",
-                                    "minScale": 500000,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "10",
-                                    "title": "Abgelaufene Events > 500k",
-                                    "parentId": "5",
-                                    "maxScale": 500001,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "11",
-                                    "title": "Abgelaufene Events <= 500k",
-                                    "parentId": "5",
-                                    "minScale": 500000,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "12",
-                                    "title": "Zukünftige Events > 500k",
-                                    "parentId": "5",
-                                    "maxScale": 500001,
-                                    "enabled": true
-                                },
-                                {
-                                    "id": "13",
-                                    "title": "Zukünftige Events <= 500k",
-                                    "parentId": "5",
-                                    "minScale": 500000,
-                                    "enabled": true
-                                }
-                            ],
-                            "options": {}
-                        },
                         {
                             "id": "service_43687",
                             "url": "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer",

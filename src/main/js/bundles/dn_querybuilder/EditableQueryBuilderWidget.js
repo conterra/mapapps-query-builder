@@ -24,6 +24,7 @@ define([
     "./config/FieldWidget",
     "dojo/_base/lang",
     "dojo/html",
+    "dojo/json",
     "dojo/store/Memory",
     "dijit/registry",
     "dijit/form/TextBox",
@@ -46,6 +47,7 @@ define([
         FieldWidget,
         d_lang,
         d_html,
+        JSON,
         Memory,
         d_registry,
         TextBox,
@@ -257,10 +259,16 @@ define([
             options.ignoreCase = this.properties.options.ignoreCase;
             options.locale = this.properties.options.locale;
             var filter = new Filter(store, complexQuery, options);
-            
+
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);
+                    this._setProcessing(false);
+                } else {
+                    this.logService.info({
+                        id: 0,
+                        message: "no results found for your query"
+                    });
                     this._setProcessing(false);
                 }
             }, function (e) {

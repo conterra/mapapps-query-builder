@@ -23,6 +23,7 @@ define([
     "dojo/text!./templates/UserQueryBuilderWidget.html",
     "./config/FieldWidget",
     "dojo/_base/lang",
+    "dojo/json",
     "dojo/store/Memory",
     "dijit/registry",
     "dijit/form/TextBox",
@@ -45,6 +46,7 @@ define([
         templateStringContent,
         FieldWidget,
         d_lang,
+        JSON,
         Memory,
         d_registry,
         TextBox,
@@ -244,6 +246,12 @@ define([
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);
+                    this._setProcessing(false);
+                } else {
+                    this.logService.info({
+                        id: 0,
+                        message: "no results found for your query"
+                    });
                     this._setProcessing(false);
                 }
             }, function (e) {

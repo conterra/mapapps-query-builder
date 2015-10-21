@@ -15,10 +15,11 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/json",
     "ct/store/Filter",
     "ct/_when",
     "./EditableQueryBuilderWidget"
-], function (declare, Filter, ct_when, EditableQueryBuilderWidget) {
+], function (declare, JSON, Filter, ct_when, EditableQueryBuilderWidget) {
     return declare([], {
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
@@ -82,10 +83,15 @@ define([
                     if (total) {
                         this._dataModel.setDatasource(filter);
                         this._setProcessing(false);
+                    } else {
+                        this._logService.info({
+                            id: 0,
+                            message: "no results found for your query"
+                        });
+                        this._setProcessing(false);
                     }
                 }, function (e) {
                     this._setProcessing(false);
-                    debugger
                     this._logService.info({
                         id: e.code,
                         message: e
