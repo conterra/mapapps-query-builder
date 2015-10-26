@@ -1,6 +1,6 @@
 {
     "Bundle-SymbolicName": "dn_querybuilder",
-    "Bundle-Version": "3.1.0",
+    "Bundle-Version": "3.1.1",
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
     "Bundle-Vendor": "con terra GmbH",
@@ -15,6 +15,9 @@
         },
         {
             "name": "notifier"
+        },
+        {
+            "name": "agssearch"
         }
     ],
     "CSS-Themes-Extension": [

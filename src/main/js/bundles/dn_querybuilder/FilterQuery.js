@@ -65,9 +65,17 @@ define([
                 });
                 window.show();
             } else {
+                var geom;
+                if (customquery.geometry) {
+                    geom = customquery.geometry;
+                }
                 var customQueryString = JSON.stringify(customquery);
                 customQueryString = this._replacer.replace(customQueryString);
                 customquery = JSON.parse(customQueryString);
+                var geom;
+                if (customquery.geometry) {
+                    customquery["geometry"] = geom;
+                }
                 var options = {};
                 options.count = event.options.count;
                 options.ignoreCase = event.options.ignoreCase;
