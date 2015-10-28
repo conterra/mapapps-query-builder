@@ -138,11 +138,11 @@ define([
                         config.options = {};
                     }
                     // search stores
-                    var stores = this._agsstores;
+                    var stores = this._stores;
                     var storeData = this._getStoreData(stores);
                     var wizardI18n = this._i18n.get().widget.wizard;
                     return ct_when(storeData, function (storeData) {
-                        var wizard = new ToolsBuilderWizard({storeData: storeData, globalProperties: this._properties, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, agsstores: this._agsstores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer, replacer: this._replacer});
+                        var wizard = new ToolsBuilderWizard({storeData: storeData, globalProperties: this._properties, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, stores: this._stores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer, replacer: this._replacer});
                         return wizard;
                     }, this);
 

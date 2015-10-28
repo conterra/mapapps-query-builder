@@ -251,7 +251,7 @@
                     <!-- add here properties which are used in plugin configuration resolution -->
                     <properties>
                         <!-- deployment of map.apps installation -->
-                        <mapapps.remote.base>http://vsdev1114.esri-de.com/ct-mapapps-webapp-3.2.1</mapapps.remote.base>
+                        <mapapps.remote.base>http://vsdev1114.esri-de.com/ct-mapapps-webapp-3.3.0</mapapps.remote.base>
                     </properties>
                 </configuration>
             </plugin>
@@ -466,7 +466,7 @@
         <!-- dojo custom build parameters -->
         <js.build.outputPath>${project.build.directory}/${project.artifactId}/js</js.build.outputPath>
         <!-- mapapps.version -->
-        <mapapps.version>3.2.1</mapapps.version>
+        <mapapps.version>3.3.0</mapapps.version>
         <!-- java lib versions -->
         <ct.jsregistry.version>1.0.9</ct.jsregistry.version>
         <ct.jsrt-test.version>1.0.6</ct.jsrt-test.version>

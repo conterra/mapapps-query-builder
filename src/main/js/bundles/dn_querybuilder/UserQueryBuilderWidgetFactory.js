@@ -15,16 +15,48 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/_base/array",
     "./UserQueryBuilderWidget"
-], function (declare,
+], function (declare, d_array,
         UserQueryBuilderWidget) {
     return declare([], {
+        constructor: function () {
+            this._stores = [];
+            this.inherited(arguments);
+        },
         activate: function () {
             this.inherited(arguments);
+            this._createWidget();
+        },
+        deactivate: function () {
+            //this.widget._clear();
+        },
+        createInstance: function () {
+            return this.widget;
+        },
+        /*addStores: function (store) {
+            this._stores.push(store);
+            if (this.widget)
+                this.widget.onNewStores(this._stores);
+        },
+        removeStores: function (store) {
+            var stores = [];
+            d_array.forEach(this._stores, function (s, i) {
+                if (s) {
+                    if (store.id !== s.id) {
+                        stores.push(s);
+                    }
+                }
+            }, this);
+            this._stores = stores;
+            if (this.widget)
+                this.widget.onNewStores(this._stores);
+        },*/
+        _createWidget: function () {
             var props = this._properties;
             var i18n = this._i18n.get();
             var tool = this._tool;
-            var stores = this._stores;
+            var stores = this.stores;
             var mapState = this._mapState;
             var dataModel = this._dataModel;
             var replacer = this._replacer;
@@ -39,12 +71,6 @@ define([
                 replacer: replacer,
                 logService: logService
             });
-        },
-        deactivate: function () {
-            //this.widget._clear();
-        },
-        createInstance: function () {
-            return this.widget;
         }
     });
 });

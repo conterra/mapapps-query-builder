@@ -291,7 +291,7 @@ define([
         },
         _getSelectedStore: function (id) {
             var s;
-            d_array.forEach(this.agsstores, function (store) {
+            d_array.forEach(this.stores, function (store) {
                 if (id === store.id) {
                     s = store;
                 }

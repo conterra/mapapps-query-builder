@@ -35,7 +35,7 @@
                     "t": 100,
                     "l": 20,
                     "w": 632,
-                    "h": 270
+                    "h": 280
                 },
                 "dockTool": "userQueryBuilderTool",
                 "closable": true,
@@ -110,7 +110,7 @@
             "immediate": true,
             "references": [
                 {
-                    "name": "_stores",
+                    "name": "stores",
                     "providing": "ct.api.Store",
                     "cardinality": "1..n",
                     "filter": "(useIn=selection)"

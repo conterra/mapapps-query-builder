@@ -91,9 +91,9 @@
                     "providing": "dn_replacer.Replacer"
                 },
                 {
-                    "name": "_agsstores",
+                    "name": "_stores",
                     "providing": "ct.api.Store",
-                    "cardinality": "0..n",
+                    "cardinality": "1..n",
                     "filter": "(useIn=selection)"
                 }
             ]

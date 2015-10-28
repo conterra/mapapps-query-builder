@@ -69,7 +69,6 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-
             // search stores
             var stores = this.stores;
             var storeData = this._getStoreData(stores);
@@ -77,6 +76,19 @@ define([
                 this.storeData = storeData;
                 this._init();
                 this._addField();
+            }, this);
+        },
+        onNewStores: function (stores) {
+            this.stores = stores;
+            var storeData = this._getStoreData(stores);
+            ct_when(storeData, function (storeData) {
+                debugger
+                this.storeData = storeData;
+                var store = new Memory({
+                    data: this.storeData
+                });
+                if (this._filteringSelect)
+                    this._filteringSelect.set("store", store);
             }, this);
         },
         _init: function () {
@@ -237,19 +249,18 @@ define([
             this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
             var geom;
-            if(complexQuery.geometry) {
+            if (complexQuery.geometry) {
                 geom = complexQuery.geometry;
             }
             var customQueryString = JSON.stringify(complexQuery);
             customQueryString = this.replacer.replace(customQueryString);
             complexQuery = JSON.parse(customQueryString);
-            if(complexQuery.geometry) {
+            if (complexQuery.geometry) {
                 complexQuery["geometry"] = geom;
             }
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStore(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
-
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);
@@ -268,9 +279,6 @@ define([
                     message: e
                 });
             }, this);
-
-
-
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;
