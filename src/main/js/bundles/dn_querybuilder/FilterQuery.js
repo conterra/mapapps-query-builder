@@ -54,14 +54,14 @@ define([
                 var window = this._windowManager.createWindow({
                     title: i18n.wizard.editWindowTitle,
                     marginBox: {
-                        w: 540,
+                        w: 550,
                         h: 274,
                         t: 100,
                         l: 20
                     },
                     content: widget,
                     closable: true,
-                    resizable: false
+                    resizable: true
                 });
                 window.show();
             } else {

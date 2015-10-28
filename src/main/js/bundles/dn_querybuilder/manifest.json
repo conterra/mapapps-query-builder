@@ -34,13 +34,13 @@
                 "marginBox": {
                     "t": 100,
                     "l": 20,
-                    "w": 625,
+                    "w": 632,
                     "h": 270
                 },
                 "dockTool": "userQueryBuilderTool",
                 "closable": true,
                 "minimizeOnClose": true,
-                "resizable": false
+                "resizable": true
             }
         }
     ],
