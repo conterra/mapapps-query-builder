@@ -35,6 +35,7 @@ define([
     "ct/_Connect",
     "ct/async",
     "ct/_when",
+    "ct/array",
     "ct/store/Filter",
     "ct/util/css"
 ], function (declare,
@@ -58,6 +59,7 @@ define([
         _Connect,
         ct_async,
         ct_when,
+        ct_array,
         Filter,
         ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
@@ -170,7 +172,7 @@ define([
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
                 source: this,
-                store: this._getSelectedStore(storeId),
+                store: this._getSelectedStoreObj(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 type: "user"
@@ -206,7 +208,7 @@ define([
         },
         _getFields: function () {
             var storeId = this._filteringSelect.get("value");
-            var store = this._getSelectedStore(storeId);
+            var store = this._getSelectedStoreObj(storeId);
             var metadata = store.getMetadata();
             var fields = metadata.fields;
             var storeData = [];
@@ -236,14 +238,15 @@ define([
                 });
             });
         },
-        _getSelectedStore: function (id) {
-            var s;
+        _getSelectedStoreObj: function (id) {
+            /*var s;
             d_array.forEach(this.stores, function (store) {
                 if (id === store.id) {
                     s = store;
                 }
             }, this);
-            return s;
+            return s;*/
+            return ct_array.arraySearchFirst(this.stores, {id: id});
         },
         _onDone: function () {
             this._setProcessing(true);
@@ -259,7 +262,7 @@ define([
                 complexQuery["geometry"] = geom;
             }
             var storeId = this._filteringSelect.get("value");
-            var store = this._getSelectedStore(storeId);
+            var store = this._getSelectedStoreObj(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {

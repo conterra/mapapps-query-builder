@@ -289,18 +289,19 @@ define([
         _onCancel: function () {
             //needed
         },
-        _getSelectedStore: function (id) {
-            var s;
+        _getSelectedStoreObj: function (id) {
+            /*var s;
             d_array.forEach(this.stores, function (store) {
                 if (id === store.id) {
                     s = store;
                 }
             }, this);
-            return s;
+            return s;*/
+            return ct_array.arraySearchFirst(this.stores, {id: id});
         },
         _getFields: function () {
             var storeId = this._storeSelect.value;
-            var store = this._getSelectedStore(storeId);
+            var store = this._getSelectedStoreObj(storeId);
             //
             var metadata = store.getMetadata();
             var fields = metadata.fields;
@@ -348,7 +349,7 @@ define([
             var storeId = this._storeSelect.value;
             var fieldWidget = new FieldWidget({
                 source: this,
-                store: this._getSelectedStore(storeId),
+                store: this._getSelectedStoreObj(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 fieldId: fieldId,
@@ -366,7 +367,7 @@ define([
             var storeData = this._getFields();
             var fieldWidget = new FieldWidget({
                 source: this,
-                store: this._getSelectedStore(storeId),
+                store: this._getSelectedStoreObj(storeId),
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 type: "admin"
