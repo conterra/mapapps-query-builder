@@ -20,6 +20,7 @@
             "toolrules",
             "templates",
             "templatelayout",
+            "splashscreen",
             "windowmanager",
             "toolset",
             "basemaptoggler",
@@ -53,9 +54,7 @@
                     "omniSearchDefaultLabel": "Suchbegriff eingeben...",
                     "fetchIdProperty": true,
                     "enablePagination": false,
-                    "id": "airtraffic",
-                    "pid": "agssearch-AGSStore-1",
-                    "type": "Unbekannt"
+                    "id": "airtraffic"
                 },
                 {
                     "title": "USA (Counties)",
