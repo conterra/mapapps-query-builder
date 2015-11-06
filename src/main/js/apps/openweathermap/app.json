@@ -665,10 +665,9 @@
             ],
             "enabled": true
         },
-        "dn_replacer": {
+        "dn_queryplaceholder": {
             "Replacer": {
                 "placeholder": {
-                    "user1": "Peter"
                 }
             }
         },
