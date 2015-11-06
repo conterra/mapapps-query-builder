@@ -534,7 +534,7 @@
             ],
             "enabled": true
         },
-        "dn_replacer": {
+        "dn_queryplaceholder": {
             "Replacer": {
                 "placeholder": {
                 }
