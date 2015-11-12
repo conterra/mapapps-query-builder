@@ -269,15 +269,15 @@ define([
                     this.dataModel.setDatasource(filter);
                     this._setProcessing(false);
                 } else {
-                    this.logService.info({
+                    this.logService.warn({
                         id: 0,
-                        message: "no results found for your query"
+                        message: this.i18n.no_results_error
                     });
                     this._setProcessing(false);
                 }
             }, function (e) {
                 this._setProcessing(false);
-                this.logService.info({
+                this.logService.warn({
                     id: e.code,
                     message: e
                 });

@@ -56,14 +56,14 @@
                 "title": "Query a Store",
                 "toolRole": "toolset",
                 "iconClass": "icon-info",
-                "clickHandler": "onFilterStoreClicked",
+                "clickHandler": "onQueryToolClicked",
                 "customquery": {},
                 "storeId": "*"
             },
             "references": [
                 {
                     "name": "handlerScope",
-                    "providing": "filter_query.FilterQuery"
+                    "providing": "querybuilder.Query"
                 }, {
                     "name": "store",
                     "providing": "ct.api.Store",
@@ -71,8 +71,8 @@
                 }
             ]
         }, {
-            "name": "FilterQuery",
-            "provides": ["filter_query.FilterQuery"],
+            "name": "Query",
+            "provides": ["querybuilder.Query"],
             "references": [{
                     "name": "_eventService",
                     "providing": "ct.framework.api.EventService"

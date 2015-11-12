@@ -17,7 +17,7 @@ define({
     root:
             {
                 bundleName: "Query Builder Config",
-                bundleDescription: "Configuration bundle for FilterQuery",
+                bundleDescription: "Configuration bundle for Query Builder",
                 windowTitle: "Query Builder Config",
                 description: "Settings for the Query Builder bundle",
                 widget: {

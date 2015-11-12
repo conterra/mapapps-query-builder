@@ -54,6 +54,7 @@ define({
                     userExtentYes: "current extent",
                     userExtentNo: "everywhere",
                     userWindowTitle: "Build your own Query",
+                    no_results_error: "No results found for your query!",
                     fields: {
                         typeInValue: "type in value",
                         is: "is",

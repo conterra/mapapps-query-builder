@@ -48,10 +48,11 @@ define({
         userStore: "Was suchen?",
         userUseExtent: "Wo suchen?",
         userDone: "Los gehts",
-        userMatch: "Suche verknüpfen mit...",
+        userMatch: "Suche verkn\u00fcpfen mit...",
         userExtentYes: "auf sichtbarer Karte",
         userExtentNo: "\u00fcberall",
         userWindowTitle: "Eigene Abfrage erstellen",
+        no_results_error: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!",
         fields: {
             typeInValue: "Wert eingeben",
             is: "ist gleich",

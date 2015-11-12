@@ -15,7 +15,7 @@
  */
 define([
     ".",
-    "./FilterQuery",
+    "./Query",
     "./UserQueryBuilderWidget",
     "./UserQueryBuilderWidgetFactory",
     "ct/tools/Tool",

@@ -24,7 +24,7 @@ define([
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
         // TODO: better integrate the filter code inside the SearchStoreTool of the result center?
-        onFilterStoreClicked: function (event) {
+        onQueryToolClicked: function (event) {
             var store = event.store;
             if (!store) {
                 // ignore
@@ -92,15 +92,15 @@ define([
                         this._dataModel.setDatasource(filter);
                         this._setProcessing(false);
                     } else {
-                        this._logService.info({
+                        this._logService.warn({
                             id: 0,
-                            message: "no results found for your query"
+                            message: this._i18n.get().wizard.no_results_error
                         });
                         this._setProcessing(false);
                     }
                 }, function (e) {
                     this._setProcessing(false);
-                    this._logService.info({
+                    this._logService.warn({
                         id: e.code,
                         message: e
                     });
