@@ -1,6 +1,6 @@
 {
     "Bundle-SymbolicName": "dn_querybuilder",
-    "Bundle-Version": "3.1.2-SNAPSHOT",
+    "Bundle-Version": "3.1.2",
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
     "Bundle-Vendor": "con terra GmbH",
@@ -96,6 +96,12 @@
                 {
                     "name": "_replacer",
                     "providing": "dn_replacer.Replacer"
+                },
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "cardinality": "0..n",
+                    "filter": "(toolRole=toolset)"
                 }]
         }, {
             "name": "UserQueryBuilderWidgetFactory",

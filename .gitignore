@@ -2,4 +2,3 @@ target/*
 .idea/*
 *.iml
 nbactions.xml
-/build.properties

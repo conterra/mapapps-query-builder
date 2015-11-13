@@ -98,8 +98,7 @@ define([
             this._createGUISettings();
             this._createGUIFields();
         },
-        _setProcessing: function (processing) {
-            var tool = this.tool;
+        _setProcessing: function (tool, processing) {
             if (tool) {
                 tool.set("processing", processing);
             }
@@ -248,21 +247,24 @@ define([
             }
         },
         _onDone: function () {
-            this._setProcessing(true);
+            this._setProcessing(this.tool, true);
             var complexQuery = this._getComplexQuery();
             var geom;
-            if(complexQuery.geometry) {
+            if (complexQuery.geometry) {
                 geom = complexQuery.geometry;
             }
             var customQueryString = JSON.stringify(complexQuery);
             customQueryString = this.replacer.replace(customQueryString);
             complexQuery = JSON.parse(customQueryString);
-            if(complexQuery.geometry) {
+            if (complexQuery.geometry) {
                 complexQuery["geometry"] = geom;
             }
             var store = this.store;
             var options = {};
-            options.count = this.properties.options.count;
+            var count = this.properties.options.count;
+            if (count >= 0) {
+                options.count = count;
+            }
             options.ignoreCase = this.properties.options.ignoreCase;
             options.locale = this.properties.options.locale;
             var filter = new Filter(store, complexQuery, options);
@@ -270,16 +272,16 @@ define([
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);
-                    this._setProcessing(false);
+                    this._setProcessing(this.tool, false);
                 } else {
                     this.logService.warn({
                         id: 0,
                         message: this.i18n.no_results_error
                     });
-                    this._setProcessing(false);
+                    this._setProcessing(this.tool, false);
                 }
             }, function (e) {
-                this._setProcessing(false);
+                this._setProcessing(this.tool, false);
                 this.logService.warn({
                     id: e.code,
                     message: e

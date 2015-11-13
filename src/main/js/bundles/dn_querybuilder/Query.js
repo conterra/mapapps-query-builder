@@ -65,6 +65,7 @@ define([
                 });
                 window.show();
             } else {
+                this._setProcessing(event.tool, true);
                 var geom;
                 if (customquery.geometry) {
                     geom = customquery.geometry;
@@ -77,7 +78,10 @@ define([
                     customquery["geometry"] = geom;
                 }
                 var options = {};
-                options.count = event.options.count;
+                var count = event.options.count;
+                if (count >= 0) {
+                    options.count = count;
+                }
                 options.ignoreCase = event.options.ignoreCase;
                 options.locale = event.options.locale;
                 /*this._eventService.postEvent(topic, {
@@ -90,16 +94,16 @@ define([
                 ct_when(filter.query({}, {count: 0}).total, function (total) {
                     if (total) {
                         this._dataModel.setDatasource(filter);
-                        this._setProcessing(false);
+                        this._setProcessing(event.tool, false);
                     } else {
                         this._logService.warn({
                             id: 0,
                             message: this._i18n.get().wizard.no_results_error
                         });
-                        this._setProcessing(false);
+                        this._setProcessing(event.tool, false);
                     }
                 }, function (e) {
-                    this._setProcessing(false);
+                    this._setProcessing(event.tool, false);
                     this._logService.warn({
                         id: e.code,
                         message: e
@@ -107,8 +111,7 @@ define([
                 }, this);
             }
         },
-        _setProcessing: function (processing) {
-            var tool = this.tool;
+        _setProcessing: function (tool, processing) {
             if (tool) {
                 tool.set("processing", processing);
             }
