@@ -185,8 +185,7 @@ define([
             } else {
             }
             var children = this._queryNode.children;
-            if (children.length > 0)
-            {
+            if (children.length > 0) {
                 customQuery[match] = [];
             }
             d_array.forEach(children, function (child) {
@@ -291,35 +290,44 @@ define([
         },
         _getSelectedStoreObj: function (id) {
             /*var s;
-            d_array.forEach(this.stores, function (store) {
-                if (id === store.id) {
-                    s = store;
-                }
-            }, this);
-            return s;*/
+             d_array.forEach(this.stores, function (store) {
+             if (id === store.id) {
+             s = store;
+             }
+             }, this);
+             return s;*/
             return ct_array.arraySearchFirst(this.stores, {id: id});
         },
         _getFields: function () {
             var storeId = this._storeSelect.value;
             var store = this._getSelectedStoreObj(storeId);
             //
+            var def = new Deferred();
             var metadata = store.getMetadata();
-            var fields = metadata.fields;
-            var storeData = [];
-            d_array.forEach(fields, function (field) {
-                var codedValues = [];
-                if (field.domain) {
-                    codedValues = field.domain.codedValues;
-                }
-                var codedValueString = "";
-                if (codedValues.length > 0) {
-                    codedValueString = "[CV]";
-                }
-                if (field.type !== "geometry") {
-                    storeData.push({id: field.name, title: field.title + " (" + field.type + ") " + codedValueString, type: field.type, codedValues: codedValues});
-                }
-            });
-            return storeData;
+            ct_when(metadata, function (metadata) {
+                var fields = metadata.fields;
+                var storeData = [];
+                d_array.forEach(fields, function (field) {
+                    var codedValues = [];
+                    if (field.domain) {
+                        codedValues = field.domain.codedValues;
+                    }
+                    var codedValueString = "";
+                    if (codedValues.length > 0) {
+                        codedValueString = "[CV]";
+                    }
+                    if (field.type !== "geometry") {
+                        storeData.push({
+                            id: field.name,
+                            title: field.title + " (" + field.type + ") " + codedValueString,
+                            type: field.type,
+                            codedValues: codedValues
+                        });
+                    }
+                });
+                def.resolve(storeData);
+            }, this);
+            return def;
         },
         _addDataField: function (field, editOptions) {
             var fieldId;
@@ -346,34 +354,39 @@ define([
                 }
             }
             var storeData = this._getFields();
-            var storeId = this._storeSelect.value;
-            var fieldWidget = new FieldWidget({
-                source: this,
-                store: this._getSelectedStoreObj(storeId),
-                storeData: storeData,
-                i18n: this.i18n.fields,
-                fieldId: fieldId,
-                compareId: compareId,
-                value: value,
-                not: not,
-                editOptions: editOptions,
-                type: "admin"
-            });
-            domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            this._changeChildrenButtons();
+            ct_when(storeData, function (storeData) {
+                var storeId = this._storeSelect.value;
+                var fieldWidget = new FieldWidget({
+                    source: this,
+                    store: this._getSelectedStoreObj(storeId),
+                    storeData: storeData,
+                    i18n: this.i18n.fields,
+                    fieldId: fieldId,
+                    compareId: compareId,
+                    value: value,
+                    not: not,
+                    editOptions: editOptions,
+                    type: "admin"
+                });
+                domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+                this._changeChildrenButtons();
+            },this);
+
         },
         _addField: function () {
             var storeId = this._storeSelect.value;
             var storeData = this._getFields();
-            var fieldWidget = new FieldWidget({
-                source: this,
-                store: this._getSelectedStoreObj(storeId),
-                storeData: storeData,
-                i18n: this.i18n.fields,
-                type: "admin"
-            });
-            domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            this._changeChildrenButtons();
+            ct_when(storeData, function (storeData) {
+                var fieldWidget = new FieldWidget({
+                    source: this,
+                    store: this._getSelectedStoreObj(storeId),
+                    storeData: storeData,
+                    i18n: this.i18n.fields,
+                    type: "admin"
+                });
+                domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+                this._changeChildrenButtons();
+            },this);
         },
         _removeLastField: function () {
             this._queryNode.removeChild(this._queryNode.lastChild);
@@ -525,7 +538,11 @@ define([
             var placeholderObj = this.replacer.get("placeholder");
             var placeholderArray = [];
             for (var placeholder in placeholderObj) {
-                placeholderArray.push({id: placeholder, key: "${" + placeholder + "}", value: placeholderObj[placeholder]});
+                placeholderArray.push({
+                    id: placeholder,
+                    key: "${" + placeholder + "}",
+                    value: placeholderObj[placeholder]
+                });
             }
             var store = new ComplexMemoryStore({
                 data: placeholderArray,
