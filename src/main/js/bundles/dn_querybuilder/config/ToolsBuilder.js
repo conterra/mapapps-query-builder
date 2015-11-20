@@ -24,12 +24,13 @@ define([
     "ct/_string",
     "./ToolsBuilderWidget",
     "./ToolsBuilderWizard",
+    "./MetadataAnalyzer",
     "ct/store/ComplexMemory",
     "ct/_when",
     "ct/Hash",
     "ct/async",
     "dijit/registry"
-], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ct_async, d_registry) {
+], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, MetadataAnalyzer, ComplexMemoryStore, ct_when, Hash, ct_async, d_registry) {
     return declare([_Connect],
             {
                 createInstance: function () {
@@ -139,7 +140,8 @@ define([
                     }
                     // search stores
                     var stores = this._stores;
-                    var storeData = this._getStoreData(stores);
+                    var metadataAnalyzer = new MetadataAnalyzer();
+                    var storeData = metadataAnalyzer.getStoreData(stores);
                     var wizardI18n = this._i18n.get().widget.wizard;
                     return ct_when(storeData, function (storeData) {
                         var wizard = new ToolsBuilderWizard({storeData: storeData, globalProperties: this._properties, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, stores: this._stores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer, replacer: this._replacer});
@@ -249,17 +251,6 @@ define([
                     this._initConfigStore();
                     var widget = this._widget;
                     widget.updateGrid();
-                },
-                _getStoreData: function (stores) {
-                    return ct_async.join(d_array.map(stores, function (s) {
-                        return s.getMetadata();
-                    })).then(function (metadata) {
-                        return d_array.map(metadata, function (metadata, index) {
-                            var id = stores[index].id;
-                            var title = metadata.title || id;
-                            return {name: title, id: id};
-                        });
-                    });
                 }
             });
 });

@@ -29,7 +29,7 @@
                 "parentNodeId": "appBuilderToolsNode",
                 "children": [
                     {
-                        "widget": "toolsBuilderwidget",
+                        "widget": "toolsBuilderWidget",
                         "title": "${windowTitle}",
                         "iconUrl": "resource('styles/images/bundleIcon.png')"
                     }
@@ -47,7 +47,7 @@
                 "widgetProperties": {
                     "bid": "dn_querybuilder",
                     "pid": "dn_querybuilder-QueryTools-Factory",
-                    "id": "toolsBuilderwidget",
+                    "id": "toolsBuilderWidget",
                     "description": "${description}"
                 },
                 "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/latest/themes/webFontsGallery.html",

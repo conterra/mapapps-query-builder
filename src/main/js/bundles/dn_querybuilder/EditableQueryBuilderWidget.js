@@ -15,6 +15,7 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/_base/Deferred",
     "dojo/dom-construct",
     "dojo/_base/array",
     "dijit/_WidgetBase",
@@ -22,6 +23,7 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/EditableQueryBuilderWidget.html",
     "./config/FieldWidget",
+    "./config/MetadataAnalyzer",
     "dojo/_base/lang",
     "dojo/html",
     "dojo/json",
@@ -38,6 +40,7 @@ define([
     "ct/store/Filter",
     "ct/util/css"
 ], function (declare,
+        Deferred,
         domConstruct,
         d_array,
         _WidgetBase,
@@ -45,6 +48,7 @@ define([
         _WidgetsInTemplateMixin,
         templateStringContent,
         FieldWidget,
+        MetadataAnalyzer,
         d_lang,
         d_html,
         JSON,
@@ -70,7 +74,8 @@ define([
         startup: function () {
             this.inherited(arguments);
             var stores = [this.store];
-            var storeData = this._getStoreData(stores);
+            var metadataAnalyzer = new MetadataAnalyzer();
+            var storeData = metadataAnalyzer.getStoreData(stores);
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
                 this._init();
@@ -116,26 +121,6 @@ define([
                 ct_css.switchHidden(this._matchDiv, true);
             }
         },
-        _getFields: function () {
-            var store = this.store;
-            var metadata = store.getMetadata();
-            var fields = metadata.fields;
-            var storeData = [];
-            d_array.forEach(fields, function (field) {
-                var codedValues = [];
-                if (field.domain) {
-                    codedValues = field.domain.codedValues;
-                }
-                var codedValueString = "";
-                if (codedValues.length > 0) {
-                    codedValueString = "[CV]";
-                }
-                if (field.type !== "geometry") {
-                    storeData.push({id: field.name, title: field.title + " (" + field.type + ") " + codedValueString, type: field.type, codedValues: codedValues});
-                }
-            });
-            return storeData;
-        },
         _addDataField: function (field, editOptions) {
             var fieldId;
             var compareId;
@@ -160,31 +145,24 @@ define([
                     }
                 }
             }
-            var storeData = this._getFields();
-            var fieldWidget = new FieldWidget({
-                source: this,
-                store: this.store,
-                storeData: storeData,
-                i18n: this.i18n.fields,
-                fieldId: fieldId,
-                compareId: compareId,
-                value: value,
-                not: not,
-                editOptions: editOptions,
-                type: "editing"
-            });
-            domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-        },
-        _getStoreData: function (stores) {
-            return ct_async.join(d_array.map(stores, function (s) {
-                return s.getMetadata();
-            })).then(function (metadata) {
-                return d_array.map(metadata, function (metadata, index) {
-                    var id = stores[index].id;
-                    var title = metadata.title || id;
-                    return {name: title, id: id};
+            var store = this.store;
+            var metadataAnalyzer = new MetadataAnalyzer();
+            var fieldData = metadataAnalyzer.getFields(store);
+            ct_when(fieldData, function (storeData) {
+                var fieldWidget = new FieldWidget({
+                    source: this,
+                    store: this.store,
+                    storeData: storeData,
+                    i18n: this.i18n.fields,
+                    fieldId: fieldId,
+                    compareId: compareId,
+                    value: value,
+                    not: not,
+                    editOptions: editOptions,
+                    type: "editing"
                 });
-            });
+                domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+            }, this);
         },
         _createGUISettings: function () {
             var ynStore = this._ynStore = new Memory({

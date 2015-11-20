@@ -15,6 +15,7 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/_base/Deferred",
     "dojo/dom-construct",
     "dojo/_base/array",
     "dijit/_WidgetBase",
@@ -22,6 +23,7 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/UserQueryBuilderWidget.html",
     "./config/FieldWidget",
+    "./config/MetadataAnalyzer",
     "dojo/_base/lang",
     "dojo/json",
     "dojo/store/Memory",
@@ -39,6 +41,7 @@ define([
     "ct/store/Filter",
     "ct/util/css"
 ], function (declare,
+        Deferred,
         domConstruct,
         d_array,
         _WidgetBase,
@@ -46,6 +49,7 @@ define([
         _WidgetsInTemplateMixin,
         templateStringContent,
         FieldWidget,
+        MetadataAnalyzer,
         d_lang,
         JSON,
         Memory,
@@ -73,7 +77,8 @@ define([
             this.inherited(arguments);
             // search stores
             var stores = this.stores;
-            var storeData = this._getStoreData(stores);
+            var metadataAnalyzer = new MetadataAnalyzer();
+            var storeData = metadataAnalyzer.getStoreData(stores);
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
                 this._init();
@@ -84,7 +89,6 @@ define([
             this.stores = stores;
             var storeData = this._getStoreData(stores);
             ct_when(storeData, function (storeData) {
-                debugger
                 this.storeData = storeData;
                 var store = new Memory({
                     data: this.storeData
@@ -169,17 +173,21 @@ define([
         },
         _addField: function () {
             var storeId = this._filteringSelect.get("value");
-            var storeData = this._getFields();
-            var fieldWidget = new FieldWidget({
-                source: this,
-                store: this._getSelectedStoreObj(storeId),
-                storeData: storeData,
-                i18n: this.i18n.fields,
-                type: "user"
-            });
-            domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            this._changeMatchVisibility();
-            this._changeChildrenButtons();
+            var store = this._getSelectedStoreObj(storeId);
+            var metadataAnalyzer = new MetadataAnalyzer();
+            var fieldData = metadataAnalyzer.getFields(store);
+            ct_when(fieldData, function (storeData) {
+                var fieldWidget = new FieldWidget({
+                    source: this,
+                    store: this._getSelectedStoreObj(storeId),
+                    storeData: storeData,
+                    i18n: this.i18n.fields,
+                    type: "user"
+                });
+                domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
+                this._changeMatchVisibility();
+                this._changeChildrenButtons();
+            }, this);
         },
         _removeLastField: function () {
             this._queryNode.removeChild(this._queryNode.lastChild);
@@ -206,46 +214,7 @@ define([
                 }
             });
         },
-        _getFields: function () {
-            var storeId = this._filteringSelect.get("value");
-            var store = this._getSelectedStoreObj(storeId);
-            var metadata = store.getMetadata();
-            var fields = metadata.fields;
-            var storeData = [];
-            d_array.forEach(fields, function (field) {
-                var codedValues = [];
-                if (field.domain) {
-                    codedValues = field.domain.codedValues;
-                }
-                var codedValueString = "";
-                if (codedValues.length > 0) {
-                    codedValueString = "[CV]";
-                }
-                if (field.type !== "geometry") {
-                    storeData.push({id: field.name, title: field.title + " (" + field.type + ") " + codedValueString, type: field.type, codedValues: codedValues});
-                }
-            });
-            return storeData;
-        },
-        _getStoreData: function (stores) {
-            return ct_async.join(d_array.map(stores, function (s) {
-                return s.getMetadata();
-            })).then(function (metadata) {
-                return d_array.map(metadata, function (metadata, index) {
-                    var id = stores[index].id;
-                    var title = metadata.title || id;
-                    return {name: title, id: id};
-                });
-            });
-        },
         _getSelectedStoreObj: function (id) {
-            /*var s;
-            d_array.forEach(this.stores, function (store) {
-                if (id === store.id) {
-                    s = store;
-                }
-            }, this);
-            return s;*/
             return ct_array.arraySearchFirst(this.stores, {id: id});
         },
         _onDone: function () {

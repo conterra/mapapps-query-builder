@@ -31,6 +31,7 @@ define([
     "ct/ui/controls/dataview/DataView",
     "wizard/_BuilderWidget",
     "./FieldWidget",
+    "./MetadataAnalyzer",
     "dijit/registry",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -45,7 +46,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, MetadataAnalyzer, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -289,45 +290,7 @@ define([
             //needed
         },
         _getSelectedStoreObj: function (id) {
-            /*var s;
-             d_array.forEach(this.stores, function (store) {
-             if (id === store.id) {
-             s = store;
-             }
-             }, this);
-             return s;*/
             return ct_array.arraySearchFirst(this.stores, {id: id});
-        },
-        _getFields: function () {
-            var storeId = this._storeSelect.value;
-            var store = this._getSelectedStoreObj(storeId);
-            //
-            var def = new Deferred();
-            var metadata = store.getMetadata();
-            ct_when(metadata, function (metadata) {
-                var fields = metadata.fields;
-                var storeData = [];
-                d_array.forEach(fields, function (field) {
-                    var codedValues = [];
-                    if (field.domain) {
-                        codedValues = field.domain.codedValues;
-                    }
-                    var codedValueString = "";
-                    if (codedValues.length > 0) {
-                        codedValueString = "[CV]";
-                    }
-                    if (field.type !== "geometry") {
-                        storeData.push({
-                            id: field.name,
-                            title: field.title + " (" + field.type + ") " + codedValueString,
-                            type: field.type,
-                            codedValues: codedValues
-                        });
-                    }
-                });
-                def.resolve(storeData);
-            }, this);
-            return def;
         },
         _addDataField: function (field, editOptions) {
             var fieldId;
@@ -353,8 +316,11 @@ define([
                     }
                 }
             }
-            var storeData = this._getFields();
-            ct_when(storeData, function (storeData) {
+            var storeId = this._storeSelect.value;
+            var store = this._getSelectedStoreObj(storeId);
+            var metadataAnalyzer = new MetadataAnalyzer();
+            var fieldData = metadataAnalyzer.getFields(store);
+            ct_when(fieldData, function (storeData) {
                 var storeId = this._storeSelect.value;
                 var fieldWidget = new FieldWidget({
                     source: this,
@@ -370,13 +336,14 @@ define([
                 });
                 domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
                 this._changeChildrenButtons();
-            },this);
-
+            }, this);
         },
         _addField: function () {
             var storeId = this._storeSelect.value;
-            var storeData = this._getFields();
-            ct_when(storeData, function (storeData) {
+            var store = this._getSelectedStoreObj(storeId);
+            var metadataAnalyzer = new MetadataAnalyzer();
+            var fieldData = metadataAnalyzer.getFields(store);
+            ct_when(fieldData, function (storeData) {
                 var fieldWidget = new FieldWidget({
                     source: this,
                     store: this._getSelectedStoreObj(storeId),
@@ -386,7 +353,7 @@ define([
                 });
                 domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
                 this._changeChildrenButtons();
-            },this);
+            }, this);
         },
         _removeLastField: function () {
             this._queryNode.removeChild(this._queryNode.lastChild);
