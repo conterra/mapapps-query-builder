@@ -140,8 +140,9 @@ define([
                     }
                     // search stores
                     var stores = this._stores;
+                    var storesInfo = this._stores_info;
                     var metadataAnalyzer = new MetadataAnalyzer();
-                    var storeData = metadataAnalyzer.getStoreData(stores);
+                    var storeData = metadataAnalyzer.getStoreData(stores, storesInfo);
                     var wizardI18n = this._i18n.get().widget.wizard;
                     return ct_when(storeData, function (storeData) {
                         var wizard = new ToolsBuilderWizard({storeData: storeData, globalProperties: this._properties, properties: config, i18n: wizardI18n, windowManager: this._windowManager, appCtx: this._appCtx, stores: this._stores, mapState: this._mapState, mapModel: this._mapModel, coordinateTransformer: this._coordinateTransformer, replacer: this._replacer});

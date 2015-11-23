@@ -98,6 +98,12 @@
                     "providing": "dn_replacer.Replacer"
                 },
                 {
+                    "name": "stores",
+                    "providing": "ct.api.Store",
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
+                },
+                {
                     "name": "_tool",
                     "providing": "ct.tools.Tool",
                     "cardinality": "0..n",

@@ -53,7 +53,7 @@ define([
             }, this);
             return def;
         },
-        getStoreData: function (stores) {
+        getStoreData: function (stores, storesInfo) {
             return ct_async.join(d_array.map(stores, function (s) {
                 return s.getMetadata();
             })).then(function (metadata) {
@@ -68,7 +68,12 @@ define([
                 d_array.forEach(metadata, function (m, index) {
                     if (m.fields.length > 0) {
                         var id = stores[index].id;
-                        var title = m.title || id;
+                        var title;
+                        if (storesInfo) {
+                            title = storesInfo[index].title || id;
+                        } else {
+                            title = m.title || id;
+                        }
                         result.push({name: title, id: id});
                     }
                 });

@@ -74,8 +74,9 @@ define([
         startup: function () {
             this.inherited(arguments);
             var stores = [this.store];
+            var storesInfo = [this.storesInfo];
             var metadataAnalyzer = new MetadataAnalyzer();
-            var storeData = metadataAnalyzer.getStoreData(stores);
+            var storeData = metadataAnalyzer.getStoreData(stores, storesInfo);
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
                 this._init();

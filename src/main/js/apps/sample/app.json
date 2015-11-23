@@ -120,7 +120,7 @@
                     "id": "_AGS_STORE_1441195705828"
                 },
                 {
-                    "title": "Zensus Deutschland 2011 (Zensus 2011 Bundesländer)",
+                    "title": "Zensus 2011 Bundesländer",
                     "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
                     "omniSearchLabelAttr": "NAME",
                     "omniSearchSearchAttr": "NAME",
@@ -141,7 +141,7 @@
                     "id": "_AGS_STORE_1442226070628"
                 },
                 {
-                    "title": "Zensus Deutschland 2011 (Zensus 2011 Kreise)",
+                    "title": "Zensus 2011 Kreise",
                     "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
                     "omniSearchLabelAttr": "NAME",
                     "omniSearchSearchAttr": "NAME",
@@ -162,7 +162,7 @@
                     "id": "_AGS_STORE_1442227045951"
                 },
                 {
-                    "title": "Zensus Deutschland 2011 (Zensus 2011 Gemeinden)",
+                    "title": "Zensus 2011 Gemeinden",
                     "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
                     "omniSearchLabelAttr": "NAME",
                     "omniSearchSearchAttr": "NAME",
@@ -183,7 +183,7 @@
                     "id": "_AGS_STORE_1442227058500"
                 },
                 {
-                    "title": "Earthquakes (Earthquakes)",
+                    "title": "Earthquakes",
                     "description": "Earthquake data for the last 90 days from the USGS. In addition to web-based maps and html pages, USGS provides <a href=\"http://earthquake.usgs.gov/earthquakes/\">several alternative ways</a> to obtain real-time earthquake lists. Earthquake information is extracted from a merged catalog of earthquakes located by the USGS and <a href=\"http://earthquake.usgs.gov/earthquakes/aboutmaps.php#datasources\">contributing networks</a>. Earthquakes will be broadcast within a few minutes for California events, and within 30-minutes for worldwide events\n<br><br>\nWe gather this data from the <a href=\"http://earthquake.usgs.gov/earthquakes/catalogs/\">USGS xml feed</a>. These shape files from the kml feed are parsed using the <a href=\"http://resources.esri.com/publicsafety/index.cfm?fa=codeGalleryDetails&scriptID=16421\">Aggregated Live Feeds methodology</a> to take the returned information and serve the data through ArcGIS Server as a map service. ",
                     "omniSearchLabelAttr": "LOCATION",
                     "omniSearchSearchAttr": "LOCATION",

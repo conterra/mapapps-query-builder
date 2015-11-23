@@ -18,8 +18,9 @@ define([
     "dojo/json",
     "ct/store/Filter",
     "ct/_when",
+    "ct/array",
     "./EditableQueryBuilderWidget"
-], function (declare, JSON, Filter, ct_when, EditableQueryBuilderWidget) {
+], function (declare, JSON, Filter, ct_when, ct_array, EditableQueryBuilderWidget) {
     return declare([], {
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
@@ -41,11 +42,13 @@ define([
                 var dataModel = this._dataModel;
                 var replacer = this._replacer;
                 var logService = this._logService;
+                var storesInfo = this._getStoreInfoData(store);
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
                     tool: tool,
                     store: store,
+                    storesInfo: storesInfo,
                     mapState: mapState,
                     dataModel: dataModel,
                     replacer: replacer,
@@ -115,6 +118,9 @@ define([
             if (tool) {
                 tool.set("processing", processing);
             }
+        },
+        _getStoreInfoData: function (store) {
+            return ct_array.arraySearchFirst(this.stores_info, {id: store.id});
         }
     });
 });
