@@ -19,8 +19,9 @@ define([
     "dojo/_base/Deferred",
     "dojo/_base/array",
     "ct/async",
+    "ct/array",
     "ct/_when"
-], function (d_lang, declare, Deferred, d_array, ct_async, ct_when) {
+], function (d_lang, declare, Deferred, d_array, ct_async, ct_array, ct_when) {
 
     return declare([], {
         constructor: function () {
@@ -70,7 +71,8 @@ define([
                         var id = stores[index].id;
                         var title;
                         if (storesInfo) {
-                            title = storesInfo[index].title || id;
+                            var storeInfoTitle = ct_array.arraySearchFirst(storesInfo, {id: id}).title;
+                            title = storeInfoTitle || id;
                         } else {
                             title = m.title || id;
                         }
@@ -79,6 +81,9 @@ define([
                 });
                 return result;
             });
+        },
+        _getStoreInfoData: function (id) {
+            return ct_array.arraySearchFirst(this.storesInfo, {id: id});
         }
     });
 });
