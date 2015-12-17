@@ -1,6 +1,6 @@
 {
     "Bundle-SymbolicName": "dn_queryplaceholder",
-    "Bundle-Version": "1.0.2-SNAPSHOT",
+    "Bundle-Version": "1.0.1",
     "Bundle-Name": "Queryplaceholder",
     "Bundle-Description": "Replaces placeholder",
     "Bundle-Vendor": "con terra GmbH",
