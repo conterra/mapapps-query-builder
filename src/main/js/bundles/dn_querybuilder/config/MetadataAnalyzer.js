@@ -67,7 +67,7 @@ define([
                  });*/
                 var result = [];
                 d_array.forEach(metadata, function (m, index) {
-                    if (m.fields.length > 0) {
+                    if (m.fields && m.fields.length > 0) {
                         var id = stores[index].id;
                         var title;
                         if (storesInfo) {

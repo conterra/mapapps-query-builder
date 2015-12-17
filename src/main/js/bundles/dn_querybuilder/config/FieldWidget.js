@@ -383,6 +383,9 @@ define([
             compareSelect.startup();
         },
         _getDistinctValues: function (selectedField) {
+            if (!this.store.target){
+                return [];
+            }
             var query = new Query();
             var queryTask = new QueryTask(this.store.target);
             query.where = "1=1";
