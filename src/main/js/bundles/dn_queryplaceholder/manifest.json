@@ -5,7 +5,7 @@
     "Bundle-Description": "Replaces placeholder",
     "Bundle-Vendor": "con terra GmbH",
     "Bundle-Category": [],
-    "Product-Name": "map.apps Developer Network",
+    "Product-Name": "con terra Developer Network",
     "Require-Bundle": [
         {
             "name": "authentication",
