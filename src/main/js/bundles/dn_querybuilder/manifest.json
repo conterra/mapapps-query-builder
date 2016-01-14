@@ -4,7 +4,7 @@
     "Bundle-Name": "${bundleName}",
     "Bundle-Description": "${bundleDescription}",
     "Bundle-Vendor": "con terra GmbH",
-    "Product-Name": "map.apps Developer Network",
+    "Product-Name": "con terra Developer Network",
     "Config-Bundle-Location": "/config",
     "Require-Bundle": [
         {
