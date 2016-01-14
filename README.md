@@ -4,6 +4,9 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 ### Sample App ###
 http://www.mapapps.de/mapapps/resources/apps/downloads_query_builder/index.html
 
+### Video Tutorial ###
+https://youtu.be/yP2quHAXXPI
+
 ### Define the mapapps remote base
 Before you can run the project you have to define the mapapps.remote.base property in the pom.xml-file:
 `<mapapps.remote.base>http://%YOURSERVER%/ct-mapapps-webapp-%VERSION%</mapapps.remote.base>`
