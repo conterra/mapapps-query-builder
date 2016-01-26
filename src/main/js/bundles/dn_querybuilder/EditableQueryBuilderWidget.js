@@ -109,19 +109,6 @@ define([
                 tool.set("processing", processing);
             }
         },
-        _iconClassHelp: function () {
-            var winURL = 'http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/3.2.1/themes/webFontsGallery.html';
-            var winName = 'win1';
-            var winSize = 'width=800,height=600,scrollbars=yes';
-            var ref = window.open(winURL, winName, winSize);
-        },
-        _changeExtentVisibility: function () {
-            if (this._queryNode.children.length > 1) {
-                ct_css.switchHidden(this._matchDiv, false);
-            } else {
-                ct_css.switchHidden(this._matchDiv, true);
-            }
-        },
         _addDataField: function (field, editOptions) {
             var fieldId;
             var compareId;

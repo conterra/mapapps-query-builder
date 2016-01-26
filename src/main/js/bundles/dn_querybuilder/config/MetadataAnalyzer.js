@@ -58,13 +58,6 @@ define([
             return ct_async.join(d_array.map(stores, function (s) {
                 return s.getMetadata();
             })).then(function (metadata) {
-                /*return d_array.map(metadata, function (metadata, index) {
-                 if (metadata.fields.length > 0) {
-                 var id = stores[index].id;
-                 var title = metadata.title || id;
-                 return {name: title, id: id};
-                 }
-                 });*/
                 var result = [];
                 d_array.forEach(metadata, function (m, index) {
                     if (m.fields && m.fields.length > 0) {

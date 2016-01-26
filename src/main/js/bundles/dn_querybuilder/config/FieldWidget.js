@@ -369,7 +369,6 @@ define([
                 this._compareSelect.set("disabled", this.compareSelectDisabled);
             if (this.valueSelectDisabled)
                 this._valueField.set("disabled", this.valueSelectDisabled);
-            //this.connect(this._valueField, "onChange", this._onEdit);
         },
         _createCompareSelect: function (value, compareStore) {
             var compareSelect = this._compareSelect = new FilteringSelect({
@@ -561,20 +560,8 @@ define([
             }
             return result;
         },
-        _onEdit: function () {
-            var fieldType = this.getSelectedFieldType();
-            if (fieldType === "string" || fieldType === "date") {
-                if (this.replacer) {
-                    var result = this._valueField.value;
-                    result = this.replacer.replace(result);
-                    this._valueField.set("value", result);
-                }
-            }
-        },
-        _validator: function (a, b) {
+        _validator: function () {
             return true;
-            /*return RegExp("^(?:" + this._computeRegexp(b) + ")" + (this.required ?
-             "" : "?") + "$").test(a) && (!this.required || !this._isEmpty(a)) && (this._isEmpty(a) || void 0 !== this.parse(a, b));*/
         }
     });
 });
