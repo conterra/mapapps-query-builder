@@ -183,7 +183,6 @@ define([
                 customQuery.geometry = {
                     $contains: extent
                 };
-            } else {
             }
             var children = this._queryNode.children;
             if (children.length > 0) {
@@ -320,6 +319,7 @@ define([
             var store = this._getSelectedStoreObj(storeId);
             var metadataAnalyzer = new MetadataAnalyzer();
             var fieldData = metadataAnalyzer.getFields(store);
+
             ct_when(fieldData, function (storeData) {
                 var storeId = this._storeSelect.value;
                 var fieldWidget = new FieldWidget({
