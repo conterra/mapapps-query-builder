@@ -86,7 +86,7 @@ define([
                 this._addField();
             }, this);
         },
-        onNewStores: function (stores) {
+        /*onNewStores: function (stores) {
             this.stores = stores;
             var storeData = this._getStoreData(stores);
             ct_when(storeData, function (storeData) {
@@ -97,7 +97,7 @@ define([
                 if (this._filteringSelect)
                     this._filteringSelect.set("store", store);
             }, this);
-        },
+        },*/
         _init: function () {
 
             this.maxComboBoxHeight = 160;

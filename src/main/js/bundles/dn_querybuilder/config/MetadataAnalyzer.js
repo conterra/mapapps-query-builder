@@ -73,6 +73,7 @@ define([
                     }
                 });
                 return result;
+            }, function (error) {
             });
         },
         _getStoreInfoData: function (id) {
