@@ -215,7 +215,11 @@ define([
         _onDone: function () {
             this._setProcessing(this.tool, true);
             var complexQuery = this._getComplexQuery();
-            var geom;
+
+            this._searchReplacer(complexQuery);
+
+            //replacer
+            /*var geom;
             if (complexQuery.geometry) {
                 geom = complexQuery.geometry;
             }
@@ -224,7 +228,8 @@ define([
             complexQuery = JSON.parse(customQueryString);
             if (complexQuery.geometry) {
                 complexQuery["geometry"] = geom;
-            }
+            }*/
+
             var store = this.store;
             var options = {};
             var count = this.properties.options.count;
@@ -287,6 +292,17 @@ define([
                 }
             }, this);
             return customQuery;
+        },
+        _searchReplacer: function (o) {
+            for (var i in o) {
+                var value = o[i];
+                if (typeof(value) === "string") {
+                    o[i] = this.replacer.replace(value);
+                }
+                if (value !== null && typeof(value) == "object") {
+                    this._searchReplacer(value);
+                }
+            }
         }
     });
 });

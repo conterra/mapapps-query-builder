@@ -23,11 +23,13 @@ define([
     return declare([], {
         getPlaceholder: function () {
             var dateObj = new Date();
-            var date = d_locale.format(dateObj, {datePattern: "yyyy-MM-dd", selector: 'date'});
-            var time = d_locale.format(dateObj, {datePattern: "HH:mm:ss", selector: 'date'});
+            var dateString = d_locale.format(dateObj, {datePattern: "yyyy-MM-dd", selector: 'date'});
+            var date = new Date();
+            var timeString = d_locale.format(dateObj, {datePattern: "HH:mm:ss", selector: 'date'});
             var placeholder = {};
             placeholder["current_date"] = date;
-            placeholder["current_time"] = time;
+            placeholder["current_date_string"] = dateString;
+            placeholder["current_time_string"] = timeString;
             return placeholder;
         },
         reEvaluate: function () {

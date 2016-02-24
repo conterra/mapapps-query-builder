@@ -20,14 +20,12 @@ define([
     "dojo/string",
     "ct/Stateful",
     "ct/_when"
-], function (
-        declare,
-        d_lang,
-        d_array,
-        d_string,
-        Stateful,
-        ct_when
-        ) {
+], function (declare,
+             d_lang,
+             d_array,
+             d_string,
+             Stateful,
+             ct_when) {
     return declare([Stateful], {
         activate: function () {
             this.placeholder = this.placeholder || {};
@@ -35,7 +33,14 @@ define([
         },
         replace: function (string) {
             this.refresh();
-            return d_string.substitute(string, this.placeholder);
+            string = string.substring(2, string.length - 1);
+            for (var i in this.placeholder) {
+                if (i === string) {
+                    return this.placeholder[i]
+                }
+            }
+
+            //return d_string.substitute(string, this.placeholder);
         },
         _getPlaceholder: function () {
             this.refresh();

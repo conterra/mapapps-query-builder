@@ -545,7 +545,7 @@ define([
                 if (result === undefined || result === null) {
                     result = this._valueField.displayedValue;
                 } else {
-                    result = d_locale.format(result, {datePattern: "yyyy-MM-dd", selector: 'date'});
+                    //result = d_locale.format(result, {datePattern: "yyyy-MM-dd", selector: 'date'});
                 }
             } else if (fieldType === "string") {
                 if (this.replacer) {

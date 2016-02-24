@@ -41,31 +41,31 @@ define([
     "ct/store/Filter",
     "ct/util/css"
 ], function (declare,
-        Deferred,
-        domConstruct,
-        d_array,
-        _WidgetBase,
-        _TemplatedMixin,
-        _WidgetsInTemplateMixin,
-        templateStringContent,
-        FieldWidget,
-        MetadataAnalyzer,
-        d_lang,
-        JSON,
-        Memory,
-        d_registry,
-        TextBox,
-        ValidationTextBox,
-        FilteringSelect,
-        Button,
-        ContentPane,
-        BorderContainer,
-        _Connect,
-        ct_async,
-        ct_when,
-        ct_array,
-        Filter,
-        ct_css) {
+             Deferred,
+             domConstruct,
+             d_array,
+             _WidgetBase,
+             _TemplatedMixin,
+             _WidgetsInTemplateMixin,
+             templateStringContent,
+             FieldWidget,
+             MetadataAnalyzer,
+             d_lang,
+             JSON,
+             Memory,
+             d_registry,
+             TextBox,
+             ValidationTextBox,
+             FilteringSelect,
+             Button,
+             ContentPane,
+             BorderContainer,
+             _Connect,
+             ct_async,
+             ct_when,
+             ct_array,
+             Filter,
+             ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin, _Connect], {
         templateString: templateStringContent,
@@ -87,17 +87,17 @@ define([
             }, this);
         },
         /*onNewStores: function (stores) {
-            this.stores = stores;
-            var storeData = this._getStoreData(stores);
-            ct_when(storeData, function (storeData) {
-                this.storeData = storeData;
-                var store = new Memory({
-                    data: this.storeData
-                });
-                if (this._filteringSelect)
-                    this._filteringSelect.set("store", store);
-            }, this);
-        },*/
+         this.stores = stores;
+         var storeData = this._getStoreData(stores);
+         ct_when(storeData, function (storeData) {
+         this.storeData = storeData;
+         var store = new Memory({
+         data: this.storeData
+         });
+         if (this._filteringSelect)
+         this._filteringSelect.set("store", store);
+         }, this);
+         },*/
         _init: function () {
 
             this.maxComboBoxHeight = 160;
@@ -215,16 +215,21 @@ define([
         _onDone: function () {
             this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
-            var geom;
-            if (complexQuery.geometry) {
-                geom = complexQuery.geometry;
-            }
-            var customQueryString = JSON.stringify(complexQuery);
-            customQueryString = this.replacer.replace(customQueryString);
-            complexQuery = JSON.parse(customQueryString);
-            if (complexQuery.geometry) {
-                complexQuery["geometry"] = geom;
-            }
+
+            this._searchReplacer(complexQuery);
+
+            //replacer
+            /*var geom;
+             if (complexQuery.geometry) {
+             geom = complexQuery.geometry;
+             }
+             var customQueryString = JSON.stringify(complexQuery);
+             customQueryString = this.replacer.replace(customQueryString);
+             complexQuery = JSON.parse(customQueryString);
+             if (complexQuery.geometry) {
+             complexQuery["geometry"] = geom;
+             }*/
+
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
@@ -258,8 +263,7 @@ define([
                 };
             }
             var children = this._queryNode.children;
-            if (children.length > 0)
-            {
+            if (children.length > 0) {
                 customQuery[match] = [];
             }
             d_array.forEach(children, function (child) {
@@ -280,6 +284,18 @@ define([
                 }
             }, this);
             return customQuery;
+        },
+        _searchReplacer: function (o) {
+            for (var i in o) {
+                var value = o[i];
+                if (typeof(value) === "string")
+                    if (value.substring(0, 1) === "$")
+                        o[i] = this.replacer.replace(value);
+
+                if (value !== null && typeof(value) == "object") {
+                    this._searchReplacer(value);
+                }
+            }
         }
     });
 });

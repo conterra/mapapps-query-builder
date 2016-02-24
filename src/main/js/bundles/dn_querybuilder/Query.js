@@ -69,7 +69,11 @@ define([
                 window.show();
             } else {
                 this._setProcessing(event.tool, true);
-                var geom;
+
+                this._searchReplacer(complexQuery);
+
+                // replacer
+                /*var geom;
                 if (customquery.geometry) {
                     geom = customquery.geometry;
                 }
@@ -79,7 +83,8 @@ define([
                 var geom;
                 if (customquery.geometry) {
                     customquery["geometry"] = geom;
-                }
+                }*/
+
                 var options = {};
                 var count = event.options.count;
                 if (count >= 0) {
@@ -121,6 +126,17 @@ define([
         },
         _getStoreInfoData: function (store) {
             return ct_array.arraySearchFirst(this.stores_info, {id: store.id});
+        },
+        _searchReplacer: function (o) {
+            for (var i in o) {
+                var value = o[i];
+                if (typeof(value) === "string") {
+                    o[i] = this._replacer.replace(value);
+                }
+                if (value !== null && typeof(value) == "object") {
+                    this._searchReplacer(value);
+                }
+            }
         }
     });
 });
