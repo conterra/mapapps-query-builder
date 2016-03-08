@@ -218,18 +218,6 @@ define([
 
             this._searchReplacer(complexQuery);
 
-            //replacer
-            /*var geom;
-             if (complexQuery.geometry) {
-             geom = complexQuery.geometry;
-             }
-             var customQueryString = JSON.stringify(complexQuery);
-             customQueryString = this.replacer.replace(customQueryString);
-             complexQuery = JSON.parse(customQueryString);
-             if (complexQuery.geometry) {
-             complexQuery["geometry"] = geom;
-             }*/
-
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
             var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
