@@ -22,10 +22,13 @@ define([
     "./EditableQueryBuilderWidget"
 ], function (declare, JSON, Filter, ct_when, ct_array, EditableQueryBuilderWidget) {
     return declare([], {
+        activate: function (componentContext) {
+            this._bundleContext = componentContext.getBundleContext();
+        },
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
         // TODO: better integrate the filter code inside the SearchStoreTool of the result center?
-        onQueryToolClicked: function (event) {
+        onQueryToolActivated: function (event) {
             var store = event.store;
             if (!store) {
                 // ignore
@@ -54,36 +57,18 @@ define([
                     replacer: replacer,
                     logService: logService
                 });
-                var window = this._windowManager.createWindow({
-                    title: i18n.wizard.editWindowTitle,
-                    marginBox: {
-                        w: 550,
-                        h: 274,
-                        t: 100,
-                        l: 20
-                    },
-                    content: widget,
-                    closable: true,
-                    resizable: true
-                });
-                window.show();
+
+                var serviceProperties = {
+                    "widgetRole": "editableQueryBuilderWidget"
+                };
+                var interfaces = ["dijit.Widget"];
+
+                this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
+
             } else {
                 this._setProcessing(event.tool, true);
 
-                this._searchReplacer(complexQuery);
-
-                // replacer
-                /*var geom;
-                if (customquery.geometry) {
-                    geom = customquery.geometry;
-                }
-                var customQueryString = JSON.stringify(customquery);
-                customQueryString = this._replacer.replace(customQueryString);
-                customquery = JSON.parse(customQueryString);
-                var geom;
-                if (customquery.geometry) {
-                    customquery["geometry"] = geom;
-                }*/
+                this._searchReplacer(customquery);
 
                 var options = {};
                 var count = event.options.count;
@@ -117,6 +102,17 @@ define([
                         message: e
                     });
                 }, this);
+            }
+        },
+        onQueryToolDeactivated: function () {
+            var registration = this._serviceregistration;
+
+            // clear the reference
+            this._serviceregistration = null;
+
+            if (registration) {
+                // call unregister
+                registration.unregister();
             }
         },
         _setProcessing: function (tool, processing) {

@@ -33,12 +33,13 @@ define([
         },
         replace: function (string) {
             this.refresh();
-            string = string.substring(2, string.length - 1);
+            var s = string.substring(2, string.length - 1);
             for (var i in this.placeholder) {
-                if (i === string) {
+                if (i === s) {
                     return this.placeholder[i]
                 }
             }
+            return string;
 
             //return d_string.substitute(string, this.placeholder);
         },

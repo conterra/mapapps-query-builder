@@ -1,168 +1,190 @@
 {
-    "Bundle-SymbolicName": "dn_querybuilder",
-    "Bundle-Version": "3.1.7-SNAPSHOT",
-    "Bundle-Name": "${bundleName}",
-    "Bundle-Description": "${bundleDescription}",
-    "Bundle-Vendor": "con terra GmbH",
-    "Product-Name": "con terra Developer Network",
-    "Config-Bundle-Location": "/config",
-    "Require-Bundle": [
+  "Bundle-SymbolicName": "dn_querybuilder",
+  "Bundle-Version": "3.1.7-SNAPSHOT",
+  "Bundle-Name": "${bundleName}",
+  "Bundle-Description": "${bundleDescription}",
+  "Bundle-Vendor": "con terra GmbH",
+  "Product-Name": "con terra Developer Network",
+  "Config-Bundle-Location": "/config",
+  "Require-Bundle": [
+    {
+      "name": "dn_queryplaceholder"
+    },
+    {
+      "name": "resultcenter"
+    },
+    {
+      "name": "notifier"
+    },
+    {
+      "name": "agssearch"
+    }
+  ],
+  "CSS-Themes-Extension": [
+    {
+      "name": "*",
+      "files": [
+        "./styles/styles.css"
+      ]
+    }
+  ],
+  "layout-widgets": [
+    {
+      "role": "userQueryBuilderWidget",
+      "window": {
+        "title": "${wizard.userWindowTitle}",
+        "marginBox": {
+          "w": 632,
+          "h": 280
+        },
+        "dockTool": "userQueryBuilderTool",
+        "closable": true,
+        "minimizeOnClose": true,
+        "resizable": true
+      }
+    },
+    {
+      "role": "editableQueryBuilderWidget",
+      "window": {
+        "title": "${wizard.editWindowTitle}",
+        "marginBox": {
+          "w": 550,
+          "h": 274
+        },
+        "closable": false,
+        "minimizeOnClose": true,
+        "resizable": true
+      }
+    }
+  ],
+  "Components": [
+    {
+      "name": "QueryTools",
+      "impl": "ct.tools.Tool",
+      "provides": [
+        "ct.tools.Tool"
+      ],
+      "propertiesConstructor": true,
+      "componentFactory": true,
+      "properties": {
+        "id": "querytool",
+        "title": "Query a Store",
+        "toolRole": "toolset",
+        "iconClass": "icon-info",
+        "activateHandler": "onQueryToolActivated",
+        "deactivateHandler": "onQueryToolDeactivated",
+        "customquery": {},
+        "storeId": "*",
+        "togglable": true
+      },
+      "references": [
         {
-            "name": "dn_queryplaceholder"
+          "name": "handlerScope",
+          "providing": "querybuilder.Query"
         },
         {
-            "name": "resultcenter"
+          "name": "store",
+          "providing": "ct.api.Store",
+          "filter": "(id={storeId})"
+        }
+      ]
+    },
+    {
+      "name": "Query",
+      "provides": [
+        "querybuilder.Query"
+      ],
+      "references": [
+        {
+          "name": "_eventService",
+          "providing": "ct.framework.api.EventService"
         },
         {
-            "name": "notifier"
+          "name": "_mapState",
+          "providing": "ct.mapping.map.MapState"
         },
         {
-            "name": "agssearch"
-        }
-    ],
-    "CSS-Themes-Extension": [
-        {
-            "name": "*",
-            "files": ["./styles/styles.css"]
-        }
-    ],
-    "layout-widgets": [
-        {
-            "role": "userQueryBuilderWidget",
-            "window": {
-                "title": "${wizard.userWindowTitle}",
-                "marginBox": {
-                    "t": 100,
-                    "l": 20,
-                    "w": 632,
-                    "h": 280
-                },
-                "dockTool": "userQueryBuilderTool",
-                "closable": true,
-                "minimizeOnClose": true,
-                "resizable": true
-            }
-        }
-    ],
-    "Components": [
-        {
-            "name": "QueryTools",
-            "impl": "ct.tools.Tool",
-            "provides": ["ct.tools.Tool"],
-            "propertiesConstructor": true,
-            "componentFactory": true,
-            "properties": {
-                "id": "querytool",
-                "title": "Query a Store",
-                "toolRole": "toolset",
-                "iconClass": "icon-info",
-                "clickHandler": "onQueryToolClicked",
-                "customquery": {},
-                "storeId": "*"
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "querybuilder.Query"
-                }, {
-                    "name": "store",
-                    "providing": "ct.api.Store",
-                    "filter": "(id={storeId})"
-                }
-            ]
-        }, {
-            "name": "Query",
-            "provides": ["querybuilder.Query"],
-            "references": [{
-                    "name": "_eventService",
-                    "providing": "ct.framework.api.EventService"
-                },
-                {
-                    "name": "_mapState",
-                    "providing": "ct.mapping.map.MapState"
-                },
-                {
-                    "name": "_dataModel",
-                    "providing": "ct.resultcenter.DataModel"
-                },
-                {
-                    "name": "_windowManager",
-                    "providing": "ct.framework.api.WindowManager"
-                },
-                {
-                    "name": "_logService",
-                    "providing": "ct.framework.api.LogService"
-                },
-                {
-                    "name": "_replacer",
-                    "providing": "dn_replacer.Replacer"
-                },
-                {
-                    "name": "stores",
-                    "providing": "ct.api.Store",
-                    "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
-                },
-                {
-                    "name": "_tool",
-                    "providing": "ct.tools.Tool",
-                    "cardinality": "0..n",
-                    "filter": "(toolRole=toolset)"
-                }]
-        }, {
-            "name": "UserQueryBuilderWidgetFactory",
-            "provides": [
-                "dijit.Widget",
-                "ct.framework.api.EventHandler"
-            ],
-            "properties": {
-                "widgetRole": "userQueryBuilderWidget"
-            },
-            "instanceFactory": true,
-            "immediate": true,
-            "references": [
-                {
-                    "name": "stores",
-                    "providing": "ct.api.Store",
-                    "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
-                },
-                {
-                    "name": "_mapState",
-                    "providing": "ct.mapping.map.MapState"
-                },
-                {
-                    "name": "_tool",
-                    "providing": "ct.tools.Tool",
-                    "filter": "(id=userQueryBuilderTool)"
-                },
-                {
-                    "name": "_dataModel",
-                    "providing": "ct.resultcenter.DataModel"
-                },
-                {
-                    "name": "_logService",
-                    "providing": "ct.framework.api.LogService"
-                },
-                {
-                    "name": "_replacer",
-                    "providing": "dn_replacer.Replacer"
-                }
-            ]
+          "name": "_dataModel",
+          "providing": "ct.resultcenter.DataModel"
         },
         {
-            "name": "newTool",
-            "impl": "ct/tools/Tool",
-            "provides": ["ct.tools.Tool"],
-            "propertiesConstructor": true,
-            "properties": {
-                "id": "userQueryBuilderTool",
-                "toolRole": "toolset",
-                "title": "${wizard.toolTitle}",
-                "tooltip": "${wizard.toolToolTip}",
-                "togglable": false,
-                "iconClass": "icon-custom-info-help"
-            }
+          "name": "_logService",
+          "providing": "ct.framework.api.LogService"
+        },
+        {
+          "name": "_replacer",
+          "providing": "dn_replacer.Replacer"
+        },
+        {
+          "name": "stores",
+          "providing": "ct.api.Store",
+          "cardinality": "1..n",
+          "filter": "(useIn=selection)"
+        },
+        {
+          "name": "_tool",
+          "providing": "ct.tools.Tool",
+          "cardinality": "0..n",
+          "filter": "(toolRole=toolset)"
         }
-    ]
+      ]
+    },
+    {
+      "name": "UserQueryBuilderWidgetFactory",
+      "provides": [
+        "dijit.Widget",
+        "ct.framework.api.EventHandler"
+      ],
+      "properties": {
+        "widgetRole": "userQueryBuilderWidget"
+      },
+      "instanceFactory": true,
+      "immediate": true,
+      "references": [
+        {
+          "name": "stores",
+          "providing": "ct.api.Store",
+          "cardinality": "1..n",
+          "filter": "(useIn=selection)"
+        },
+        {
+          "name": "_mapState",
+          "providing": "ct.mapping.map.MapState"
+        },
+        {
+          "name": "_tool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=userQueryBuilderTool)"
+        },
+        {
+          "name": "_dataModel",
+          "providing": "ct.resultcenter.DataModel"
+        },
+        {
+          "name": "_logService",
+          "providing": "ct.framework.api.LogService"
+        },
+        {
+          "name": "_replacer",
+          "providing": "dn_replacer.Replacer"
+        }
+      ]
+    },
+    {
+      "name": "newTool",
+      "impl": "ct/tools/Tool",
+      "provides": [
+        "ct.tools.Tool"
+      ],
+      "propertiesConstructor": true,
+      "properties": {
+        "id": "userQueryBuilderTool",
+        "toolRole": "toolset",
+        "title": "${wizard.toolTitle}",
+        "tooltip": "${wizard.toolToolTip}",
+        "togglable": false,
+        "iconClass": "icon-custom-info-help"
+      }
+    }
+  ]
 }
