@@ -56,6 +56,7 @@ To add a toolset to your app that contains the Query Tools, copy the following c
 ```
 
 Enable user querybuilder tool:
+
 To enable user query tools in your app, add the "userQueryBuilderTool" to your toolset:
 ```
 "toolset": {
@@ -83,4 +84,5 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 ```
 
 More information about how to place a widget:
+
 http://developernetwork.conterra.de/de/documentation/mapapps/developers-documentation/templates
