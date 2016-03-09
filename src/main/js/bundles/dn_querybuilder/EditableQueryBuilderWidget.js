@@ -40,30 +40,30 @@ define([
     "ct/store/Filter",
     "ct/util/css"
 ], function (declare,
-        Deferred,
-        domConstruct,
-        d_array,
-        _WidgetBase,
-        _TemplatedMixin,
-        _WidgetsInTemplateMixin,
-        templateStringContent,
-        FieldWidget,
-        MetadataAnalyzer,
-        d_lang,
-        d_html,
-        JSON,
-        Memory,
-        d_registry,
-        TextBox,
-        ValidationTextBox,
-        FilteringSelect,
-        Button,
-        ContentPane,
-        BorderContainer,
-        ct_async,
-        ct_when,
-        Filter,
-        ct_css) {
+             Deferred,
+             domConstruct,
+             d_array,
+             _WidgetBase,
+             _TemplatedMixin,
+             _WidgetsInTemplateMixin,
+             templateStringContent,
+             FieldWidget,
+             MetadataAnalyzer,
+             d_lang,
+             d_html,
+             JSON,
+             Memory,
+             d_registry,
+             TextBox,
+             ValidationTextBox,
+             FilteringSelect,
+             Button,
+             ContentPane,
+             BorderContainer,
+             ct_async,
+             ct_when,
+             Filter,
+             ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
         templateString: templateStringContent,
@@ -213,7 +213,8 @@ define([
             }
         },
         _onDone: function () {
-            this._setProcessing(this.tool, true);
+            var tool = this.tool;
+            this._setProcessing(tool, true);
             var complexQuery = this._getComplexQuery();
 
             this._searchReplacer(complexQuery);
@@ -231,16 +232,16 @@ define([
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);
-                    this._setProcessing(this.tool, false);
+                    this._setProcessing(tool, false);
                 } else {
                     this.logService.warn({
                         id: 0,
                         message: this.i18n.no_results_error
                     });
-                    this._setProcessing(this.tool, false);
+                    this._setProcessing(tool, false);
                 }
             }, function (e) {
-                this._setProcessing(this.tool, false);
+                this._setProcessing(tool, false);
                 this.logService.warn({
                     id: e.code,
                     message: e
@@ -258,8 +259,7 @@ define([
                 };
             }
             var children = this._queryNode.children;
-            if (children.length > 0)
-            {
+            if (children.length > 0) {
                 customQuery[match] = [];
             }
             d_array.forEach(children, function (child) {
@@ -292,7 +292,7 @@ define([
                 }
             }
         },
-        deactivateTool: function() {
+        deactivateTool: function () {
             this.tool.set("active", false);
         }
     });
