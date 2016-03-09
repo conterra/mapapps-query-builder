@@ -51,9 +51,12 @@
           "w": 550,
           "h": 274
         },
-        "closable": false,
+        "closable": true,
         "minimizeOnClose": true,
         "resizable": true
+      },
+      "windowevents": {
+        "onHide": "deactivateTool"
       }
     }
   ],

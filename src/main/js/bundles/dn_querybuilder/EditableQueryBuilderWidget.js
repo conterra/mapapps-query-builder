@@ -291,6 +291,9 @@ define([
                     this._searchReplacer(value);
                 }
             }
+        },
+        deactivateTool: function() {
+            this.tool.set("active", false);
         }
     });
 });

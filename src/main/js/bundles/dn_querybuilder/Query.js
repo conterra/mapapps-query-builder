@@ -84,6 +84,9 @@ define([
 
                 var filter = new Filter(store, customquery, options);
 
+                var tool = event.tool;
+                tool.set("active", false);
+
                 ct_when(filter.query({}, {count: 0}).total, function (total) {
                     if (total) {
                         this._dataModel.setDatasource(filter);
