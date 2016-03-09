@@ -185,7 +185,7 @@
         "toolRole": "toolset",
         "title": "${wizard.toolTitle}",
         "tooltip": "${wizard.toolToolTip}",
-        "togglable": false,
+        "togglable": true,
         "iconClass": "icon-custom-info-help"
       }
     }
