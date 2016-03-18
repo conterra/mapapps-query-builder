@@ -7,9 +7,6 @@
       "localbundles",
       "bundles"
     ],
-    "styles": [
-      "${app}:app.css"
-    ],
     "allowedBundles": [
       "wizard",
       "contentviewer",
@@ -29,6 +26,7 @@
       "windowmanager",
       "toolset",
       "basemaptoggler",
+      "banner",
       "dn_querybuilder",
       "config"
     ]
@@ -252,6 +250,13 @@
         }
       ],
       "enabled": true
+    },
+    "banner": {
+      "BannerWidget": {
+        "image": "https://conterra.de/~/media/conterra/images/site_logos/conterra-logo.ashx",
+        "imagePosition": "above",
+        "link": "http://conterra.de"
+      }
     },
     "contentviewer": {
       "ContentRegistration": {
