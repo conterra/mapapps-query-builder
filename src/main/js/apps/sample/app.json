@@ -27,8 +27,7 @@
       "toolset",
       "basemaptoggler",
       "banner",
-      "dn_querybuilder",
-      "config"
+      "dn_querybuilder"
     ]
   },
   "bundles": {
