@@ -23,7 +23,6 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/UserQueryBuilderWidget.html",
     "./config/FieldWidget",
-    "./config/MetadataAnalyzer",
     "dojo/_base/lang",
     "dojo/json",
     "dojo/store/Memory",
@@ -49,7 +48,6 @@ define([
              _WidgetsInTemplateMixin,
              templateStringContent,
              FieldWidget,
-             MetadataAnalyzer,
              d_lang,
              JSON,
              Memory,
@@ -78,8 +76,7 @@ define([
             // search stores
             var stores = this.stores;
             var storesInfo = this.storesInfo;
-            var metadataAnalyzer = new MetadataAnalyzer();
-            var storeData = metadataAnalyzer.getStoreData(stores, storesInfo);
+            var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
                 this._init();
@@ -112,10 +109,10 @@ define([
                 style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
-            var extentStore = this._extentStore = new Memory({
+            var extentStore = new Memory({
                 data: [
-                    {name: this.i18n.userExtentYes, id: true},
-                    {name: this.i18n.userExtentNo, id: false}
+                    {name: this.i18n.userExtentEverywhere, id: false},
+                    {name: this.i18n.userExtentCurrent, id: true}
                 ]
             });
             this._extentSelect = new FilteringSelect({
@@ -127,7 +124,7 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._extentNode);
-            var matchStore = this._matchStore = new Memory({
+            var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
                     {name: this.i18n.or, id: "$or"}
@@ -169,8 +166,7 @@ define([
         _addField: function () {
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
-            var metadataAnalyzer = new MetadataAnalyzer();
-            var fieldData = metadataAnalyzer.getFields(store);
+            var fieldData = this.metadataAnalyzer.getFields(store);
             ct_when(fieldData, function (storeData) {
                 var fieldWidget = new FieldWidget({
                     source: this,

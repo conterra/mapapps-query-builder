@@ -23,7 +23,6 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/EditableQueryBuilderWidget.html",
     "./config/FieldWidget",
-    "./config/MetadataAnalyzer",
     "dojo/_base/lang",
     "dojo/html",
     "dojo/json",
@@ -48,7 +47,6 @@ define([
              _WidgetsInTemplateMixin,
              templateStringContent,
              FieldWidget,
-             MetadataAnalyzer,
              d_lang,
              d_html,
              JSON,
@@ -75,11 +73,15 @@ define([
             this.inherited(arguments);
             var stores = [this.store];
             var storesInfo = [this.storesInfo];
-            var metadataAnalyzer = new MetadataAnalyzer();
-            var storeData = metadataAnalyzer.getStoreData(stores, storesInfo);
+            var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
             return ct_when(storeData, function (storeData) {
                 this.storeData = storeData;
-                this._init();
+                if (storeData.length > 0) {
+                    this._init();
+                    ct_css.switchHidden(this._errorNode, true);
+                } else {
+                    ct_css.switchHidden(this._containerNode.domNode, true);
+                }
             }, this);
         },
         resize: function (dim) {
@@ -134,8 +136,7 @@ define([
                 }
             }
             var store = this.store;
-            var metadataAnalyzer = new MetadataAnalyzer();
-            var fieldData = metadataAnalyzer.getFields(store);
+            var fieldData = this.metadataAnalyzer.getFields(store);
             ct_when(fieldData, function (storeData) {
                 var fieldWidget = new FieldWidget({
                     source: this,
@@ -153,16 +154,16 @@ define([
             }, this);
         },
         _createGUISettings: function () {
-            var ynStore = this._ynStore = new Memory({
+            var extentStore = new Memory({
                 data: [
-                    {name: this.i18n.userExtentYes, id: true},
-                    {name: this.i18n.userExtentNo, id: false}
+                    {name: this.i18n.userExtentEverywhere, id: false},
+                    {name: this.i18n.userExtentCurrent, id: true}
                 ]
             });
             this._extentSelect = new FilteringSelect({
                 name: "extent",
                 value: false,
-                store: ynStore,
+                store: extentStore,
                 searchAttr: "name",
                 style: "width: 155px;",
                 required: true,
@@ -170,7 +171,7 @@ define([
                 disabled: true
             }, this._extentNode);
 
-            var matchStore = this._matchStore = new Memory({
+            var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
                     {name: this.i18n.or, id: "$or"}

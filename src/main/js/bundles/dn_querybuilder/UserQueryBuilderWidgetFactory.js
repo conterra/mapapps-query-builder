@@ -62,6 +62,7 @@ define([
             var dataModel = this._dataModel;
             var replacer = this._replacer;
             var logService = this._logService;
+            var metadataAnalyzer = this._metadataAnalyzer;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -71,7 +72,8 @@ define([
                 mapState: mapState,
                 dataModel: dataModel,
                 replacer: replacer,
-                logService: logService
+                logService: logService,
+                metadataAnalyzer : metadataAnalyzer
             });
         }
     });

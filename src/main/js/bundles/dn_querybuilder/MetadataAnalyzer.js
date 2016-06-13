@@ -28,7 +28,15 @@ define([
         },
         getFields: function (store) {
             var def = new Deferred();
-            var metadata = store.getMetadata();
+            try {
+                var metadata = store.getMetadata();
+            }
+            catch (e) {
+                this._logService.warn({
+                    id: 0,
+                    message: e
+                });
+            }
             ct_when(metadata, function (metadata) {
                 var fields = metadata.fields;
                 var storeData = [];

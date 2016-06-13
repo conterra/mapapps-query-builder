@@ -31,7 +31,6 @@ define([
     "ct/ui/controls/dataview/DataView",
     "wizard/_BuilderWidget",
     "./FieldWidget",
-    "./MetadataAnalyzer",
     "dijit/registry",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -46,7 +45,7 @@ define([
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, MetadataAnalyzer, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
         templateString: template,
@@ -317,8 +316,7 @@ define([
             }
             var storeId = this._storeSelect.value;
             var store = this._getSelectedStoreObj(storeId);
-            var metadataAnalyzer = new MetadataAnalyzer();
-            var fieldData = metadataAnalyzer.getFields(store);
+            var fieldData = this.metadataAnalyzer.getFields(store);
 
             ct_when(fieldData, function (storeData) {
                 var storeId = this._storeSelect.value;
@@ -341,8 +339,7 @@ define([
         _addField: function () {
             var storeId = this._storeSelect.value;
             var store = this._getSelectedStoreObj(storeId);
-            var metadataAnalyzer = new MetadataAnalyzer();
-            var fieldData = metadataAnalyzer.getFields(store);
+            var fieldData = this.metadataAnalyzer.getFields(store);
             ct_when(fieldData, function (storeData) {
                 var fieldWidget = new FieldWidget({
                     source: this,

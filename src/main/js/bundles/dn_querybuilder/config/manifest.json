@@ -1,184 +1,202 @@
 {
-    "Bundle-SymbolicName": "querybuilder-config",
-    "Bundle-Version": "3.1.7-SNAPSHOT",
-    "Bundle-Name": "${bundleName}",
-    "Bundle-Description": "${bundleDescription}",
-    "Bundle-Vendor": "con terra GmbH",
-    "Require-Bundle": [
+  "Bundle-SymbolicName": "querybuilder-config",
+  "Bundle-Version": "3.1.8-SNAPSHOT",
+  "Bundle-Name": "${bundleName}",
+  "Bundle-Description": "${bundleDescription}",
+  "Bundle-Vendor": "con terra GmbH",
+  "Require-Bundle": [
+    {
+      "name": "dataform"
+    },
+    {
+      "name": "wizard"
+    },
+    {
+      "name": "agssearch"
+    }
+  ],
+  "CSS-Themes-Extension": [
+    {
+      "name": "*",
+      "files": [
+        "./styles/styles.css"
+      ]
+    }
+  ],
+  "Components": [
+    {
+      "name": "BuilderEntry",
+      "impl": "ct/Stateful",
+      "provides": [
+        "wizard.MenuEntry"
+      ],
+      "propertiesConstructor": true,
+      "properties": {
+        "parentNodeId": "appBuilderToolsNode",
+        "children": [
+          {
+            "widget": "toolsBuilderWidget",
+            "title": "${windowTitle}",
+            "iconUrl": "resource('styles/images/bundleIcon.png')"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ToolsBuilder",
+      "provides": [
+        "dijit.wizard.Widget",
+        "dn_querybuilder.ToolsBuilderWidget"
+      ],
+      "instanceFactory": true,
+      "properties": {
+        "widgetProperties": {
+          "bid": "dn_querybuilder",
+          "pid": "dn_querybuilder-QueryTools-Factory",
+          "id": "toolsBuilderWidget",
+          "description": "${description}"
+        },
+        "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/latest/themes/webFontsGallery.html",
+        "complexQueryDocUrl": "http://developernetwork.conterra.de/en/documentation/mapapps/developers-documentation/complex-query-dojostore"
+      },
+      "references": [
         {
-            "name": "dataform"
+          "name": "_windowManager",
+          "providing": "ct.framework.api.WindowManager"
         },
         {
-            "name": "wizard"
+          "name": "_appCtx",
+          "providing": "ct.framework.api.ApplicationContext"
         },
         {
-            "name": "agssearch"
+          "name": "_configAdminService",
+          "providing": "ct.framework.api.ConfigurationAdmin"
+        },
+        {
+          "name": "_toolbar",
+          "providing": "dn_querybuilder.Toolbar"
+        },
+        {
+          "name": "_dataformService",
+          "providing": "dataform.DataFormService"
+        },
+        {
+          "name": "_mapState",
+          "providing": "ct.mapping.map.MapState"
+        },
+        {
+          "name": "_mapModel",
+          "providing": "ct.mapping.map.MapModel"
+        },
+        {
+          "name": "_coordinateTransformer",
+          "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
+        },
+        {
+          "name": "_replacer",
+          "providing": "dn_replacer.Replacer"
+        },
+        {
+          "name": "_metadataAnalyzer",
+          "providing": "dn_querybuilder.MetadataAnalyzer"
+        },
+        {
+          "name": "_stores",
+          "providing": "ct.api.Store",
+          "cardinality": "1..n",
+          "filter": "(useIn=selection)"
         }
-    ],
-    "CSS-Themes-Extension": [{
-            "name": "*",
-            "files": ["./styles/styles.css"]
-        }],
-    "Components": [
+      ]
+    },
+    {
+      "name": "Toolbar",
+      "impl": "ct/tools/ToolContainer",
+      "provides": [
+        "dn_querybuilder.Toolbar"
+      ],
+      "references": [
         {
-            "name": "BuilderEntry",
-            "impl": "ct/Stateful",
-            "provides": ["wizard.MenuEntry"],
-            "propertiesConstructor": true,
-            "properties": {
-                "parentNodeId": "appBuilderToolsNode",
-                "children": [
-                    {
-                        "widget": "toolsBuilderWidget",
-                        "title": "${windowTitle}",
-                        "iconUrl": "resource('styles/images/bundleIcon.png')"
-                    }
-                ]
-            }
-        },
-        {
-            "name": "ToolsBuilder",
-            "provides": [
-                "dijit.wizard.Widget",
-                "queryconfig.ToolsBuilderWidget"
-            ],
-            "instanceFactory": true,
-            "properties": {
-                "widgetProperties": {
-                    "bid": "dn_querybuilder",
-                    "pid": "dn_querybuilder-QueryTools-Factory",
-                    "id": "toolsBuilderWidget",
-                    "description": "${description}"
-                },
-                "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/latest/themes/webFontsGallery.html",
-                "complexQueryDocUrl": "http://developernetwork.conterra.de/en/documentation/mapapps/developers-documentation/complex-query-dojostore"
-            },
-            "references": [
-                {
-                    "name": "_windowManager",
-                    "providing": "ct.framework.api.WindowManager"
-                },
-                {
-                    "name": "_appCtx",
-                    "providing": "ct.framework.api.ApplicationContext"
-                },
-                {
-                    "name": "_configAdminService",
-                    "providing": "ct.framework.api.ConfigurationAdmin"
-                },
-                {
-                    "name": "_toolbar",
-                    "providing": "queryconfig.Toolbar"
-                },
-                {
-                    "name": "_dataformService",
-                    "providing": "dataform.DataFormService"
-                },
-                {
-                    "name": "_mapState",
-                    "providing": "ct.mapping.map.MapState"
-                },
-                {
-                    "name": "_mapModel",
-                    "providing": "ct.mapping.map.MapModel"
-                },
-                {
-                    "name": "_coordinateTransformer",
-                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
-                },
-                {
-                    "name": "_replacer",
-                    "providing": "dn_replacer.Replacer"
-                },
-                {
-                    "name": "_stores",
-                    "providing": "ct.api.Store",
-                    "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
-                }
-            ]
-        },
-        {
-            "name": "Toolbar",
-            "impl": "ct/tools/ToolContainer",
-            "provides": ["queryconfig.Toolbar"],
-            "references": [
-                {
-                    "name": "tool",
-                    "providing": "ct.tools.Tool",
-                    "cardinality": "0..n",
-                    "filter": "(toolRole=queryconfigtool)"
-                }
-            ]
-        },
-        {
-            "name": "AddServiceTool",
-            "impl": "ct/tools/Tool",
-            "provides": ["ct.tools.Tool"],
-            "enabled": true,
-            "propertiesConstructor": true,
-            "properties": {
-                "priority": 3,
-                "toolRole": "queryconfigtool",
-                "id": "addServiceTool",
-                "title": "ADD",
-                "iconClass": "icon-plus",
-                "tooltip": "${widget.window.addTool}",
-                "togglable": false,
-                "clickHandler": "createQueryTool"
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "queryconfig.ToolsBuilderWidget"
-                }
-            ]
-        },
-        {
-            "name": "RemoveServiceTool",
-            "impl": "ct/tools/Tool",
-            "provides": ["ct.tools.Tool"],
-            "enabled": true,
-            "propertiesConstructor": true,
-            "properties": {
-                "priority": 2,
-                "toolRole": "queryconfigtool",
-                "id": "removeSelectedServiceTool",
-                "title": "REMOVE",
-                "iconClass": "icon-minus",
-                "tooltip": "${widget.window.removeTool}",
-                "togglable": false,
-                "clickHandler": "removeQueryTool"
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "queryconfig.ToolsBuilderWidget"
-                }
-            ]
-        },
-        {
-            "name": "CopyServiceTool",
-            "impl": "ct/tools/Tool",
-            "provides": ["ct.tools.Tool"],
-            "enabled": true,
-            "propertiesConstructor": true,
-            "properties": {
-                "priority": 1,
-                "toolRole": "queryconfigtool",
-                "id": "copySelectedServiceTool",
-                "title": "REMOVE",
-                "iconClass": "icon-editor-copy",
-                "tooltip": "${widget.window.copyTool}",
-                "togglable": false,
-                "clickHandler": "copyQueryTool"
-            },
-            "references": [
-                {
-                    "name": "handlerScope",
-                    "providing": "queryconfig.ToolsBuilderWidget"
-                }
-            ]
+          "name": "tool",
+          "providing": "ct.tools.Tool",
+          "cardinality": "0..n",
+          "filter": "(toolRole=queryconfigtool)"
         }
-    ]
+      ]
+    },
+    {
+      "name": "AddServiceTool",
+      "impl": "ct/tools/Tool",
+      "provides": [
+        "ct.tools.Tool"
+      ],
+      "enabled": true,
+      "propertiesConstructor": true,
+      "properties": {
+        "priority": 3,
+        "toolRole": "queryconfigtool",
+        "id": "addServiceTool",
+        "title": "ADD",
+        "iconClass": "icon-plus",
+        "tooltip": "${widget.window.addTool}",
+        "togglable": false,
+        "clickHandler": "createQueryTool"
+      },
+      "references": [
+        {
+          "name": "handlerScope",
+          "providing": "dn_querybuilder.ToolsBuilderWidget"
+        }
+      ]
+    },
+    {
+      "name": "RemoveServiceTool",
+      "impl": "ct/tools/Tool",
+      "provides": [
+        "ct.tools.Tool"
+      ],
+      "enabled": true,
+      "propertiesConstructor": true,
+      "properties": {
+        "priority": 2,
+        "toolRole": "queryconfigtool",
+        "id": "removeSelectedServiceTool",
+        "title": "REMOVE",
+        "iconClass": "icon-minus",
+        "tooltip": "${widget.window.removeTool}",
+        "togglable": false,
+        "clickHandler": "removeQueryTool"
+      },
+      "references": [
+        {
+          "name": "handlerScope",
+          "providing": "dn_querybuilder.ToolsBuilderWidget"
+        }
+      ]
+    },
+    {
+      "name": "CopyServiceTool",
+      "impl": "ct/tools/Tool",
+      "provides": [
+        "ct.tools.Tool"
+      ],
+      "enabled": true,
+      "propertiesConstructor": true,
+      "properties": {
+        "priority": 1,
+        "toolRole": "queryconfigtool",
+        "id": "copySelectedServiceTool",
+        "title": "REMOVE",
+        "iconClass": "icon-editor-copy",
+        "tooltip": "${widget.window.copyTool}",
+        "togglable": false,
+        "clickHandler": "copyQueryTool"
+      },
+      "references": [
+        {
+          "name": "handlerScope",
+          "providing": "dn_querybuilder.ToolsBuilderWidget"
+        }
+      ]
+    }
+  ]
 }

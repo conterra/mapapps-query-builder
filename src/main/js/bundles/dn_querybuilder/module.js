@@ -16,8 +16,10 @@
 define([
     ".",
     "./Query",
+    "./EditableQueryBuilderWidget",
     "./UserQueryBuilderWidget",
     "./UserQueryBuilderWidgetFactory",
+    "./MetadataAnalyzer",
     "ct/tools/Tool",
     "ct/store/Filter"
 ], {});

@@ -46,6 +46,7 @@ define([
                 var replacer = this._replacer;
                 var logService = this._logService;
                 var storesInfo = this._getStoreInfoData(store);
+                var metadataAnalyzer = this._metadataAnalyzer;
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
@@ -55,7 +56,8 @@ define([
                     mapState: mapState,
                     dataModel: dataModel,
                     replacer: replacer,
-                    logService: logService
+                    logService: logService,
+                    metadataAnalyzer: metadataAnalyzer
                 });
 
                 var serviceProperties = {
