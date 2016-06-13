@@ -186,27 +186,6 @@
           "id": "_AGS_STORE_1442227058500"
         },
         {
-          "title": "Earthquakes (Earthquakes)",
-          "description": "Earthquake data for the last 90 days from the USGS. In addition to web-based maps and html pages, USGS provides <a href=\"http://earthquake.usgs.gov/earthquakes/\">several alternative ways</a> to obtain real-time earthquake lists. Earthquake information is extracted from a merged catalog of earthquakes located by the USGS and <a href=\"http://earthquake.usgs.gov/earthquakes/aboutmaps.php#datasources\">contributing networks</a>. Earthquakes will be broadcast within a few minutes for California events, and within 30-minutes for worldwide events\n<br><br>\nWe gather this data from the <a href=\"http://earthquake.usgs.gov/earthquakes/catalogs/\">USGS xml feed</a>. These shape files from the kml feed are parsed using the <a href=\"http://resources.esri.com/publicsafety/index.cfm?fa=codeGalleryDetails&scriptID=16421\">Aggregated Live Feeds methodology</a> to take the returned information and serve the data through ArcGIS Server as a map service. ",
-          "omniSearchLabelAttr": "LOCATION",
-          "omniSearchSearchAttr": "LOCATION",
-          "idProperty": "OBJECTID",
-          "url": "http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer/0",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "_AGS_STORE_1442227368735"
-        },
-        {
           "title": "USA (Cities)",
           "description": "",
           "omniSearchLabelAttr": "areaname",
@@ -232,7 +211,7 @@
     },
     "banner": {
       "BannerWidget": {
-        "image": "https://conterra.de/~/media/conterra/images/site_logos/conterra-logo.ashx",
+        "image": "https://www.conterra.de/~/media/conterra/images/site_logos/conterra-logo.ashx",
         "imagePosition": "above",
         "link": "http://conterra.de"
       }
@@ -681,39 +660,6 @@
             ]
           },
           "storeId": "owm_datastore"
-        },
-        {
-          "id": "fc_1442490426938",
-          "title": "Strong Earthquakes [editable]",
-          "iconClass": "icon-custom-info",
-          "customquery": {
-            "$and": [
-              {
-                "MAGNITUDE": {
-                  "$gte": 7
-                }
-              }
-            ]
-          },
-          "options": {
-            "mode": "builder",
-            "editable": true,
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            },
-            "editOptions": [
-              {
-                "not": false,
-                "field": false,
-                "compare": false,
-                "value": true
-              }
-            ]
-          },
-          "storeId": "_AGS_STORE_1442227368735"
         }
       ],
       "enabled": true
@@ -962,21 +908,6 @@
                 }
               ],
               "options": {}
-            },
-            {
-              "id": "service_78247",
-              "url": "http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Earthquakes/MapServer",
-              "type": "AGS_DYNAMIC",
-              "title": "Earthquakes",
-              "description": "Earthquake data for the last 90 days from the USGS. In addition to web-based maps and html pages, USGS provides <a href=\"http://earthquake.usgs.gov/earthquakes/\">several alternative ways</a> to obtain real-time earthquake lists. Earthquake information is extracted from a merged catalog of earthquakes located by the USGS and <a href=\"http://earthquake.usgs.gov/earthquakes/aboutmaps.php#datasources\">contributing networks</a>. Earthquakes will be broadcast within a few minutes for California events, and within 30-minutes for worldwide events\n<br><br>\nWe gather this data from the <a href=\"http://earthquake.usgs.gov/earthquakes/catalogs/\">USGS xml feed</a>. These shape files from the kml feed are parsed using the <a href=\"http://www.esriurl.com/LiveFeed\">Aggregated Live Feeds methodology</a> to take the returned information and serve the data through ArcGIS Server as a map service. ",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "Earthquakes",
-                  "enabled": true
-                }
-              ],
-              "options": {}
             }
           ]
         }
@@ -1056,14 +987,6 @@
           "id": "selectionTool_1442223158783",
           "storeId": "_AGS_STORE_1442223158773",
           "title": "WorldToCache (World Cities)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442227368755",
-          "storeId": "_AGS_STORE_1442227368735",
-          "title": "Earthquakes (Earthquakes)"
         },
         {
           "geoType": "Extent",
