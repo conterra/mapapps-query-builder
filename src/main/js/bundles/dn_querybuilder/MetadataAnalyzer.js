@@ -80,6 +80,9 @@ define([
                         result.push({name: title, id: id});
                     }
                 });
+                result.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
                 return result;
             }, function (error) {
             });
