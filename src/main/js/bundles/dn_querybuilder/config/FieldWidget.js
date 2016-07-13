@@ -44,37 +44,38 @@ define([
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
 ], function (d_lang,
-        declare,
-        Deferred,
-        parser,
-        d_array,
-        _Connect,
-        ct_when,
-        ct_css,
-        Query,
-        QueryTask,
-        _WidgetBase,
-        _TemplatedMixin,
-        _WidgetsInTemplateMixin,
-        template,
-        TextBox,
-        NumberTextBox,
-        ValidationTextBox,
-        ComboBox,
-        FilteringSelect,
-        Select,
-        Button,
-        DateTextBox,
-        CheckBox,
-        Memory,
-        domConstruct,
-        d_locale,
-        ObjectStore,
-        ContentPane,
-        BorderContainer) {
+             declare,
+             Deferred,
+             parser,
+             d_array,
+             _Connect,
+             ct_when,
+             ct_css,
+             Query,
+             QueryTask,
+             _WidgetBase,
+             _TemplatedMixin,
+             _WidgetsInTemplateMixin,
+             template,
+             TextBox,
+             NumberTextBox,
+             ValidationTextBox,
+             ComboBox,
+             FilteringSelect,
+             Select,
+             Button,
+             DateTextBox,
+             CheckBox,
+             Memory,
+             domConstruct,
+             d_locale,
+             ObjectStore,
+             ContentPane,
+             BorderContainer) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
         templateString: template,
+        baseClass: "fieldWidget",
         postCreate: function () {
             this.inherited(arguments);
             ct_when(this.store.getMetadata(), function (metadata) {
@@ -382,7 +383,7 @@ define([
             compareSelect.startup();
         },
         _getDistinctValues: function (selectedField) {
-            if (!this.store.target){
+            if (!this.store.target) {
                 return [];
             }
             var query = new Query();

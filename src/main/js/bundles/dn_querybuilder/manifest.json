@@ -11,6 +11,10 @@
       "name": "dn_queryplaceholder"
     },
     {
+      "name": "dn_querygeometry",
+      "policy": "optional"
+    },
+    {
       "name": "resultcenter"
     },
     {
@@ -35,7 +39,7 @@
         "title": "${wizard.userWindowTitle}",
         "marginBox": {
           "w": 632,
-          "h": 280
+          "h": 320
         },
         "dockTool": "userQueryBuilderTool",
         "closable": true,
@@ -152,15 +156,26 @@
     {
       "name": "UserQueryBuilderWidgetFactory",
       "provides": [
-        "dijit.Widget",
-        "ct.framework.api.EventHandler"
+        "ct.framework.api.EventHandler",
+        "dijit.Widget"
       ],
       "properties": {
+        "Event-Topics": [
+          {
+            "topic": "ct/dn_querygeometry/GEOMETRY",
+            "method": "saveInputGeometry"
+          }
+        ],
         "widgetRole": "userQueryBuilderWidget"
       },
+      "propertiesConstructor": true,
       "instanceFactory": true,
       "immediate": true,
       "references": [
+        {
+          "name": "eventService",
+          "providing": "ct.framework.api.EventService"
+        },
         {
           "name": "stores",
           "providing": "ct.api.Store",
@@ -191,6 +206,17 @@
         {
           "name": "_metadataAnalyzer",
           "providing": "dn_querybuilder.MetadataAnalyzer"
+        },
+        {
+          "name": "querygeometryTool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=querygeometryTool)",
+          "cardinality" : "0..1"
+        },
+        {
+          "name": "drawGeometryHandler",
+          "providing": "dn_querygeometry.DrawGeometryHandler",
+          "cardinality" : "0..1"
         }
       ]
     },

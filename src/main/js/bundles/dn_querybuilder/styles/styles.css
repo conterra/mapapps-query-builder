@@ -14,64 +14,70 @@
  * limitations under the License.
  */
 
-.userQueryBuilderWizard .inputContainer label{
+.userQueryBuilderWizard .inputContainer label {
     display: inline-block;
     min-width: 160px;
     max-width: 300px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 }
 
 .userQueryBuilderWizard .inputContainer {
-    height: 70px;
+    height: 94px;
 }
 
-.userQueryBuilderWizard .inputContainer .settings{
-    height: 35px;
-}
-
-.userQueryBuilderWizard .inline{
-    display: inline;
-}
-
-.userQueryBuilderWizard .fieldWidget{
+.userQueryBuilderWizard .inputContainer .settingsDiv {
     margin-bottom: 2px;
 }
 
-.userQueryBuilderWizard .fieldWidget .notNode{
+.userQueryBuilderWizard .inputContainer .dijitButton {
+    margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.userQueryBuilderWizard .inline {
+    display: inline;
+}
+
+.userQueryBuilderWizard .fieldWidget {
+    margin-bottom: 2px;
+}
+
+.userQueryBuilderWizard .fieldWidget .notNode {
     margin-right: 5px;
     display: inline;
 }
 
-.editableQueryBuilderWizard .title{
+.editableQueryBuilderWizard .title {
     margin-bottom: 5px;
 }
 
-.editableQueryBuilderWizard .inputContainer label{
+.editableQueryBuilderWizard .inputContainer label {
     display: inline-block;
     min-width: 160px;
     max-width: 300px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 }
 
-.editableQueryBuilderWizard .inputContainer .noWidth{
+.editableQueryBuilderWizard .inputContainer .noWidth {
     display: inline-block;
     min-width: 0px;
     max-width: 300px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 }
 
-.editableQueryBuilderWizard .inline{
+.editableQueryBuilderWizard .inline {
     display: inline;
 }
 
-.editableQueryBuilderWizard .fieldWidget{
+.editableQueryBuilderWizard .fieldWidget {
     margin-bottom: 2px;
 }
 
-.editableQueryBuilderWizard .fieldWidget .notNode{
+.editableQueryBuilderWizard .fieldWidget .notNode {
     margin-right: 5px;
     display: inline;
 }

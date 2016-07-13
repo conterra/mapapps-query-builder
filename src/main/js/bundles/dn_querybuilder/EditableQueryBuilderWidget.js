@@ -154,22 +154,22 @@ define([
             }, this);
         },
         _createGUISettings: function () {
-            var extentStore = new Memory({
+            var geometryStore = new Memory({
                 data: [
-                    {name: this.i18n.userExtentEverywhere, id: false},
-                    {name: this.i18n.userExtentCurrent, id: true}
+                    {name: this.i18n.userGeometryEverywhere, id: false},
+                    {name: this.i18n.userGeometryEnhanced, id: true}
                 ]
             });
-            this._extentSelect = new FilteringSelect({
-                name: "extent",
+            this._geometrySelect = new FilteringSelect({
+                name: "geometry",
                 value: false,
-                store: extentStore,
+                store: geometryStore,
                 searchAttr: "name",
                 style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
-            }, this._extentNode);
+            }, this._geometryNode);
 
             var matchStore = new Memory({
                 data: [
@@ -193,9 +193,9 @@ define([
             var customQuery = properties.customquery;
             var match;
             if (customQuery.geometry) {
-                this._extentSelect.set("value", true);
+                this._geometrySelect.set("value", true);
             } else {
-                this._extentSelect.set("value", false);
+                this._geometrySelect.set("value", false);
             }
             if (customQuery.$and) {
                 this._matchSelect.set("value", "$and");
@@ -252,12 +252,9 @@ define([
         _getComplexQuery: function () {
             var match = this._matchSelect.value;
             var customQuery = {};
-            var extent;
-            if (this._extentSelect.value === true) {
-                extent = this.mapState.getExtent();
-                customQuery.geometry = {
-                    $contains: extent
-                };
+            if (this._geometrySelect.value === true) {
+                var properties = this.properties;
+                customQuery.geometry = properties.customquery.geometry
             }
             var children = this._queryNode.children;
             if (children.length > 0) {

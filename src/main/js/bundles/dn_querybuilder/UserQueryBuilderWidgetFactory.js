@@ -16,10 +16,11 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
-    "./UserQueryBuilderWidget"
+    "./UserQueryBuilderWidget",
+    "ct/_Connect"
 ], function (declare, d_array,
-        UserQueryBuilderWidget) {
-    return declare([], {
+             UserQueryBuilderWidget, _Connect) {
+    return declare([_Connect], {
         constructor: function () {
             //this._stores = [];
             this.inherited(arguments);
@@ -29,29 +30,11 @@ define([
             this._createWidget();
         },
         deactivate: function () {
-            //this.widget._clear();
+            this.disconnect();
         },
         createInstance: function () {
             return this.widget;
         },
-        /*addStores: function (store) {
-            this._stores.push(store);
-            //if (this.widget)
-            //   this.widget.onNewStores(this._stores);
-        },
-        removeStores: function (store) {
-         var stores = [];
-         d_array.forEach(this._stores, function (s, i) {
-         if (s) {
-         if (store.id !== s.id) {
-         stores.push(s);
-         }
-         }
-         }, this);
-         this._stores = stores;
-         if (this.widget)
-         this.widget.onNewStores(this._stores);
-         },*/
         _createWidget: function () {
             var props = this._properties;
             var i18n = this._i18n.get();
@@ -63,6 +46,8 @@ define([
             var replacer = this._replacer;
             var logService = this._logService;
             var metadataAnalyzer = this._metadataAnalyzer;
+            var querygeometryTool = this.querygeometryTool;
+            var drawGeometryHandler = this.drawGeometryHandler;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -73,8 +58,21 @@ define([
                 dataModel: dataModel,
                 replacer: replacer,
                 logService: logService,
-                metadataAnalyzer : metadataAnalyzer
+                metadataAnalyzer: metadataAnalyzer,
+                querygeometryTool: querygeometryTool,
+                drawGeometryHandler: drawGeometryHandler
             });
+        },
+        setDrawGeometryHandler: function (service) {
+            if (this.widget)
+                this.widget.drawGeometryHandler = service;
+            this.connect(this._tool, "onDeactivate", function () {
+                service.clearGraphics();
+            }, this);
+        },
+        setQueryGeometryTool: function (service) {
+            if (this.widget)
+                this.widget.querygeometryTool = service;
         }
     });
 });

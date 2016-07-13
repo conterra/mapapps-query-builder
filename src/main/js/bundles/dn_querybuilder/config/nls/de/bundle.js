@@ -41,10 +41,13 @@ define({
             complexQueryHelp: "Hilfe zur Complex Query",
             customQuery: "Custom Query",
             queryDefinition: "Query Definiton",
-            useExtent: "Auswahl auf aktuellen Kartenausschnitt begrenzen",
+            useGeometry: "Suchgeometrie verwenden",
+            useExtent: "Nur aktueller Kartenausschnitt",
+            chooseGeometry: "Geometrie festlegen",
             count: "Anzahl der Ergebnisse",
             ignoreCase: "Groß-/Kleinschreibung unterscheiden",
             locale: "Sprache",
+            spatialRelation: "R\u00e4umliche Relation",
             editable: "Editierbar",
             addField: "Feld hinzuf\u00fcgen",
             store: "Datenquelle",
@@ -57,6 +60,12 @@ define({
             or: "oder",
             yes: "ja",
             no: "nein",
+            spatialRelations: {
+                intersects: "ber\u00fchrt",
+                contains: "enthalten in",
+                crosses: "schneidet",
+                within: "enth\u00e4lt"
+            },
             fields: {
                 typeInValue: "Wert eingeben",
                 is: "ist gleich",

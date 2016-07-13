@@ -83,20 +83,9 @@ define([
                 this._addField();
             }, this);
         },
-        /*onNewStores: function (stores) {
-         this.stores = stores;
-         var storeData = this._getStoreData(stores);
-         ct_when(storeData, function (storeData) {
-         this.storeData = storeData;
-         var store = new Memory({
-         data: this.storeData
-         });
-         if (this._filteringSelect)
-         this._filteringSelect.set("store", store);
-         }, this);
-         },*/
         _init: function () {
-
+            ct_css.switchHidden(this._geometryButton.domNode, true);
+            ct_css.switchHidden(this._spatialRelationDiv, true);
             this.maxComboBoxHeight = 160;
             var store = new Memory({
                 data: this.storeData
@@ -109,21 +98,66 @@ define([
                 style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
-            var extentStore = new Memory({
+            if (this.querygeometryTool) {
+                var geometryStore = new Memory({
+                    data: [
+                        {name: this.i18n.userGeometryEverywhere, id: false},
+                        {name: this.i18n.userGeometryEnhanced, id: true}
+                    ]
+                });
+                this._geometrySelect = new FilteringSelect({
+                    name: "geometry",
+                    value: false,
+                    store: geometryStore,
+                    searchAttr: "name",
+                    style: "width: 155px;",
+                    required: true,
+                    maxHeight: this.maxComboBoxHeight
+                }, this._geometryNode);
+                this.connect(this._geometrySelect, "onChange", function (value) {
+                    if (value === true) {
+                        ct_css.switchHidden(this._geometryButton.domNode, false);
+                        ct_css.switchHidden(this._spatialRelationDiv, false);
+                    } else {
+                        this.drawGeometryHandler.clearGraphics();
+                        ct_css.switchHidden(this._geometryButton.domNode, true);
+                        ct_css.switchHidden(this._spatialRelationDiv, true);
+                    }
+                });
+            } else {
+                var geometryStore = new Memory({
+                    data: [
+                        {name: this.i18n.userGeometryEverywhere, id: false},
+                        {name: this.i18n.userGeometryExtent, id: true}
+                    ]
+                });
+                this._geometrySelect = new FilteringSelect({
+                    name: "geometry",
+                    value: false,
+                    store: geometryStore,
+                    searchAttr: "name",
+                    style: "width: 155px;",
+                    required: true,
+                    maxHeight: this.maxComboBoxHeight
+                }, this._geometryNode);
+            }
+            var spatialRelationStore = new Memory({
                 data: [
-                    {name: this.i18n.userExtentEverywhere, id: false},
-                    {name: this.i18n.userExtentCurrent, id: true}
+                    {name: this.i18n.spatialRelations.contains, id: "contains"},
+                    {name: this.i18n.spatialRelations.within, id: "within"},
+                    {name: this.i18n.spatialRelations.intersects, id: "intersects"},
+                    {name: this.i18n.spatialRelations.crosses, id: "crosses"}
                 ]
             });
-            this._extentSelect = new FilteringSelect({
-                name: "extent",
-                value: false,
-                store: extentStore,
+            this._spatialRelationSelect = new FilteringSelect({
+                name: "spatialRelation",
+                value: "contains",
+                store: spatialRelationStore,
                 searchAttr: "name",
                 style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
-            }, this._extentNode);
+            }, this._spatialRelationNode);
             var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -141,6 +175,10 @@ define([
             }, this._matchNode);
             this._changeMatchVisibility();
             this.connect(filteringSelect, "onChange", this._removeFields);
+            this.connect(this.tool, "onActivate", function () {
+                if (this._geometry)
+                    this.drawGeometryHandler.drawGeometry(this._geometry);
+            }, this);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {
@@ -236,15 +274,27 @@ define([
                 });
             }, this);
         },
+        _onChooseGeometry: function () {
+            this.querygeometryTool.set("active", true);
+        },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;
             var customQuery = {};
-            var extent;
-            if (this._extentSelect.value === true) {
-                extent = this.mapState.getExtent();
-                customQuery.geometry = {
-                    $contains: extent
-                };
+            if (this._geometrySelect.value === true) {
+                if(this.querygeometryTool) {
+                    var geometry = this._geometry;
+                    if (geometry) {
+                        var spatialRelation = this._spatialRelationSelect.value;
+                        var operator = "$" + spatialRelation;
+                        customQuery.geometry = {};
+                        customQuery.geometry[operator] = geometry;
+                    }
+                } else {
+                    var extent = this.mapState.getExtent();
+                    customQuery.geometry = {
+                        $contains: extent
+                    };
+                }
             }
             var children = this._queryNode.children;
             if (children.length > 0) {
@@ -275,11 +325,15 @@ define([
                 if (typeof(value) === "string")
                     if (value.substring(0, 1) === "$")
                         o[i] = this.replacer.replace(value);
-
                 if (value !== null && typeof(value) == "object") {
                     this._searchReplacer(value);
                 }
             }
+        },
+        saveInputGeometry: function (event) {
+            this._geometry = event.getProperty("geometry");
+            this.querygeometryTool.set("active", false);
+            //this.tool.set("active", true);
         }
     });
 });

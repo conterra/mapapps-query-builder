@@ -42,10 +42,13 @@ define({
                 complexQueryHelp: "Complex Query Help",
                 customQuery: "Custom Query",
                 queryDefinition: "Query definiton",
+                useGeometry: "Use search geometry",
                 useExtent: "Use Current extent",
+                chooseGeometry: "Choose geometry",
                 count: "Result Count",
                 ignoreCase: "Case Sensitive",
                 locale: "Language",
+                spatialRelation: "Spatial Relation",
                 editable: "Editable",
                 addField: "Add Field",
                 store: "Store",
@@ -58,6 +61,12 @@ define({
                 or: "or",
                 yes: "yes",
                 no: "no",
+                spatialRelations: {
+                    intersects: "intersects",
+                    contains: "contains",
+                    crosses: "crosses",
+                    within: "within"
+                },
                 fields: {
                     typeInValue: "type in value",
                     is: "is",

@@ -1,18 +1,18 @@
 <div>
     <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters: false, design: 'headline'">
         <div data-dojo-attach-point="_topNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'" class="inputContainer">
-            <div>
+            <div class="settingsDiv">
                 <label>${i18n.title}</label>
                 <input type="text" name="title" value="" data-dojo-type="dijit/form/ValidationTextBox" required="true" placeHolder="${i18n.typeInTitle}" data-dojo-attach-point="_titleTextBox" data-dojo-props="intermediateChanges: 'true'"/>
             </div>
-            <div>
+            <div class="settingsDiv">
                 <label>${i18n.iconClass}</label>
                 <input type="text" name="iconClass" data-dojo-type="dijit/form/ValidationTextBox" required="true" data-dojo-attach-point="_iconClassTextBox"  data-dojo-props="intermediateChanges: 'true'"/>
-                <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_iconClassHelp" class="button">
+                <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_iconClassHelp">
                     ?
                 </button>
             </div>
-            <div data-dojo-attach-point="_storeIdNode">
+            <div class="settingsDiv" data-dojo-attach-point="_storeIdNode">
                 <label>${i18n.store}</label>
                 <input data-dojo-attach-point="_filteringNode">
             </div>
@@ -27,15 +27,23 @@
                         </button>
                     </div>
                     <div class="settings">
-                        <div>
-                            <label>${i18n.useExtent}</label>
-                            <input data-dojo-attach-point="_extentNode"/>
+                        <div class="settingsDiv">
+                            <label data-dojo-attach-point="_geometryLabel">${i18n.useExtent}</label>
+                            <input data-dojo-attach-point="_geometryNode"/>
+                            <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button" type="button"
+                                    data-dojo-attach-event="onClick:_onChooseGeometry">
+                                ${i18n.chooseGeometry}
+                            </button>
                         </div>
-                        <div>
+                        <div class="settingsDiv" data-dojo-attach-point="_spatialRelationDiv">
+                            <label>${i18n.spatialRelation}</label>
+                            <input data-dojo-attach-point="_spatialRelationNode"/>
+                        </div>
+                        <div class="settingsDiv">
                             <label>${i18n.editable}</label>
                             <input data-dojo-attach-point="_editableNode"/>
                         </div>
-                        <div>
+                        <div class="settingsDiv">
                             <label>${i18n.match}</label>
                             <input data-dojo-attach-point="_matchNode"/>
                         </div>
@@ -46,16 +54,16 @@
                 </div>
             </div>
             <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.options}" data-dojo-attach-point="_optionsTab">
-                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'" class="options">
-                    <div>
+                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'" class="settings">
+                    <div class="settingsDiv">
                         <label>${i18n.count}</label>
                         <input data-dojo-attach-point="_countNode"/>
                     </div>
-                    <div>
+                    <div class="settingsDiv">
                         <label>${i18n.ignoreCase}</label>
                         <input data-dojo-attach-point="_ignoreCaseNode"/>
                     </div>
-                    <div>
+                    <div class="settingsDiv">
                         <label>${i18n.locale}</label>
                         <input data-dojo-attach-point="_localeNode"/>
                     </div>

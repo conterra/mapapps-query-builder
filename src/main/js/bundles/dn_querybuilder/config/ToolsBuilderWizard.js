@@ -53,7 +53,14 @@ define([
         constructor: function (opts) {
         },
         destroyInstance: function (instance) {
+            this.disconnect();
             instance.destroyRecursive();
+        },
+        destroy: function () {
+            if (this.drawGeometryHandler)
+                this.drawGeometryHandler.clearGraphics();
+            this.disconnect();
+            this.inherited(arguments);
         },
         postCreate: function () {
             this.inherited(arguments);
@@ -76,6 +83,7 @@ define([
             this._iconClassTextBox.set("value", this.properties.iconClass);
             var customQueryString = JSON.stringify(this.properties.customquery, "", "\t");
             this._customQueryTextArea.set("value", customQueryString);
+            ct_css.switchHidden(this._geometryButton.domNode, true);
             this._createOptionsGUI();
             var valid = this._validateCustomQuery(customQueryString);
             if (valid) {
@@ -126,6 +134,8 @@ define([
             this._createWindow(url, "Complex Query Documentation");
         },
         _onDone: function () {
+            if (this.drawGeometryHandler)
+                this.drawGeometryHandler.clearGraphics();
             ct_when(this._saveProperties(), this._onReady);
         },
         _onReady: function () {
@@ -176,12 +186,21 @@ define([
         _getComplexQuery: function () {
             var match = this._matchSelect.value;
             var customQuery = {};
-            var extent;
-            if (this._extentSelect.value === true) {
-                extent = this.mapState.getExtent();
-                customQuery.geometry = {
-                    $contains: extent
-                };
+            if (this._geometrySelect.value === true) {
+                if (this.querygeometryTool) {
+                    var geometry = this.widget._geometry;
+                    if (geometry) {
+                        var spatialRelation = this._spatialRelationSelect.value;
+                        var operator = "$" + spatialRelation;
+                        customQuery.geometry = {};
+                        customQuery.geometry[operator] = geometry;
+                    }
+                } else {
+                    var extent = this.mapState.getExtent();
+                    customQuery.geometry = {
+                        $contains: extent
+                    };
+                }
             }
             var children = this._queryNode.children;
             if (children.length > 0) {
@@ -222,14 +241,15 @@ define([
         },
         _validateCustomQuery: function (customQueryString) {
             var result = false;
+            var customQueryObj;
             if (customQueryString) {
                 try {
-                    var customQueryObj = JSON.parse(customQueryString);
+                    customQueryObj = JSON.parse(customQueryString);
                 } catch (e) {
                     return false;
                 }
             } else {
-                var customQueryObj = this.properties.customquery;
+                customQueryObj = this.properties.customquery;
             }
             if (JSON.stringify(customQueryObj) === "{}")
                 return true;
@@ -241,10 +261,11 @@ define([
                 obj1.push(customQueryObj[child]);
                 obj2.push(child);
             }
+            var objects, results;
             if (i === 1) {
                 if (obj2[0] === "$and" || obj2[0] === "$or") {
-                    var objects = obj1[0];
-                    var results = 0;
+                    objects = obj1[0];
+                    results = 0;
                     d_array.forEach(objects, function (object, i) {
                         i = 0;
                         for (var child in object) {
@@ -263,8 +284,8 @@ define([
             } else if (i === 2) {
                 if (obj2[0] === "geometry") {
                     if (obj2[1] === "$and" || obj2[1] === "$or") {
-                        var objects = obj1[0];
-                        var results = 0;
+                        objects = obj1[0];
+                        results = 0;
                         d_array.forEach(objects, function (object, i) {
                             i = 0;
                             for (var child in object) {
@@ -285,7 +306,8 @@ define([
             return result;
         },
         _onCancel: function () {
-            //needed
+            if (this.drawGeometryHandler)
+                this.drawGeometryHandler.clearGraphics();
         },
         _getSelectedStoreObj: function (id) {
             return ct_array.arraySearchFirst(this.stores, {id: id});
@@ -375,22 +397,61 @@ define([
             });
         },
         _createBuilderGUI: function (textAreaCustomQuery) {
+            ct_css.switchHidden(this._spatialRelationDiv, true);
+            var geometryStore = new Memory({
+                data: [
+                    {name: this.i18n.yes, id: true},
+                    {name: this.i18n.no, id: false}
+                ]
+            });
             var ynStore = new Memory({
                 data: [
                     {name: this.i18n.yes, id: true},
                     {name: this.i18n.no, id: false}
                 ]
             });
-            if (!this._extentSelect) {
-                this._extentSelect = new FilteringSelect({
-                    name: "extent",
+            var spatialRelationStore = new Memory({
+                data: [
+                    {name: this.i18n.spatialRelations.contains, id: "contains"},
+                    {name: this.i18n.spatialRelations.within, id: "within"},
+                    {name: this.i18n.spatialRelations.intersects, id: "intersects"},
+                    {name: this.i18n.spatialRelations.crosses, id: "crosses"}
+                ]
+            });
+            if (!this._geometrySelect) {
+                this._geometrySelect = new FilteringSelect({
+                    name: "geometry",
                     value: false,
-                    store: ynStore,
+                    store: geometryStore,
                     searchAttr: "name",
                     style: "width: 80px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._extentNode);
+                }, this._geometryNode);
+            }
+            if (this.querygeometryTool) {
+                this._geometryLabel.innerHTML = this.i18n.useGeometry;
+                this.connect(this._geometrySelect, "onChange", function (value) {
+                    if (value === true) {
+                        ct_css.switchHidden(this._geometryButton.domNode, false);
+                        ct_css.switchHidden(this._spatialRelationDiv, false);
+                    } else {
+                        this.drawGeometryHandler.clearGraphics();
+                        ct_css.switchHidden(this._geometryButton.domNode, true);
+                        ct_css.switchHidden(this._spatialRelationDiv, true);
+                    }
+                });
+            }
+            if (!this._spatialRelationSelect) {
+                this._spatialRelationSelect = new FilteringSelect({
+                    name: "spatialRelation",
+                    value: "contains",
+                    store: spatialRelationStore,
+                    searchAttr: "name",
+                    style: "width: 80px;",
+                    required: true,
+                    maxHeight: this.maxComboBoxHeight
+                }, this._spatialRelationNode);
             }
             if (!this._editableSelect) {
                 this._editableSelect = new FilteringSelect({
@@ -420,19 +481,32 @@ define([
                 }, this._matchNode);
             }
             var properties = this.properties;
+            var customQuery;
             if (textAreaCustomQuery) {
-                var customQuery = textAreaCustomQuery;
+                customQuery = textAreaCustomQuery;
             } else {
-                var customQuery = properties.customquery;
+                customQuery = properties.customquery;
             }
             if (properties.options.editable !== undefined) {
                 var editable = properties.options.editable;
                 this._editableSelect.set("value", editable);
             }
             if (customQuery.geometry) {
-                this._extentSelect.set("value", true);
-            } else {
-                this._extentSelect.set("value", false);
+                this._geometrySelect.set("value", true);
+                if (this.querygeometryTool) {
+                    ct_css.switchHidden(this._spatialRelationDiv, false);
+                    var spatialRelation = Object.keys(customQuery.geometry)[0];
+                    var geom = customQuery.geometry[spatialRelation];
+                    this.widget._geometry = geom;
+                    if (!textAreaCustomQuery)
+                        this.drawGeometryHandler.drawGeometry(geom);
+                    /*try {
+                     this.mapState.setExtent(geom.getExtent());
+                     } catch (e) {
+                     }*/
+                    spatialRelation = spatialRelation.substr(1, spatialRelation.length - 1);
+                    this._spatialRelationSelect.set("value", spatialRelation);
+                }
             }
             var match;
             if (customQuery.$and) {
@@ -597,6 +671,9 @@ define([
             var customQueryString = that._customQueryTextArea.get("value");
             var valid = that._validateCustomQuery(customQueryString);
             that._builderTab.set("disabled", !valid);
+        },
+        _onChooseGeometry: function () {
+            this.querygeometryTool.set("active", true);
         }
     });
 });

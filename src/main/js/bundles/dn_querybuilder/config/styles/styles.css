@@ -14,22 +14,7 @@
  * limitations under the License.
  */
 
-.queryBuilderWizard .inputContainer label{
-    display: inline-block;
-    min-width: 150px;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.queryBuilderWizard .settings label{
-    display: inline-block;
-    min-width: 250px;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.queryBuilderWizard .options label{
+.queryBuilderWizard .inputContainer label {
     display: inline-block;
     min-width: 200px;
     max-width: 300px;
@@ -37,26 +22,65 @@
     text-overflow: ellipsis;
 }
 
-.queryBuilderWizard .head{
-    margin-bottom: 8px;
-}
-
-.queryBuilderWizard .rightFloatingButton{
-    float: right;
-}
-.queryBuilderWizard .button{
-    padding-bottom: 5px;
-}
-
-.queryBuilderWizard .inline{
-    display: inline;
-}
-
-.queryBuilderWizard .fieldWidget{
+.queryBuilderWizard .inputContainer .settingsDiv {
     margin-bottom: 2px;
 }
 
-.queryBuilderWizard .fieldWidget .notNode{
+.queryBuilderWizard .inputContainer .dijitButton {
+    margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.queryBuilderWizard .settings {
+    height: 90px;
+}
+
+.queryBuilderWizard .settings label {
+    display: inline-block;
+    min-width: 200px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.queryBuilderWizard .settings .settingsDiv {
+    margin-bottom: 2px;
+}
+
+.queryBuilderWizard .settings .dijitButton {
+    margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.queryBuilderWizard .head {
+    margin-bottom: 8px;
+}
+
+.queryBuilderWizard .rightFloatingButton {
+    float: right;
+}
+
+.queryBuilderWizard .inline {
+    display: inline;
+}
+
+.queryBuilderWizard .fieldWidget {
+    margin-bottom: 5px;
+}
+
+.queryBuilderWizard .fieldWidget .notNode {
     margin-right: 5px;
     display: inline;
+}
+
+.queryBuilderWizard .fieldWidget .inline {
+    display: inline;
+}
+
+.queryBuilderWizard .fieldWidget .dijitButton {
+    margin-left: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
 }

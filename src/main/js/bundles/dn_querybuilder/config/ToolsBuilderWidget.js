@@ -158,6 +158,10 @@ define(["dojo/_base/declare",
         onEditQueryTool: function () {
         },
         onCopyQueryTool: function () {
+        },
+        saveInputGeometry: function (event) {
+            this._geometry = event.getProperty("geometry");
+            this.querygeometryTool.set("active", false);
         }
     });
 });
