@@ -56,6 +56,7 @@ define({
             userChooseGeometry: "Choose geometry",
             userWindowTitle: "Build your own Query",
             userSpatialRelation: "Spatial Relation",
+            userSelectedFeatures: "Selected Features",
             no_results_error: "No results found for your query!",
             serviceUnavailable: "Service unavailable!",
             spatialRelations: {

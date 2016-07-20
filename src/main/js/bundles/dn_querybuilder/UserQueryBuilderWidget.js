@@ -81,6 +81,22 @@ define([
                 this.storeData = storeData;
                 this._init();
                 this._addField();
+                this.connect(this.dataModel, "onDatasourceChanged", function (arguments) {
+                    var datasource = arguments.filteredDatasource;
+                    var index = ct_array.arrayFirstIndexOf(this._filteringSelect.store.data, {id: "resultcenterDatasource"});
+                    if (datasource) {
+                        if (index === -1) {
+                            this._filteringSelect.store.add({
+                                id: "resultcenterDatasource",
+                                name: this.i18n.userSelectedFeatures
+                            });
+                        }
+                    } else {
+                        if (index > -1)
+                            this._filteringSelect.store.remove("resultcenterDatasource");
+                        this._filteringSelect.set("value", this._filteringSelect.store.data[0].id);
+                    }
+                });
             }, this);
         },
         _init: function () {
@@ -244,7 +260,11 @@ define([
             });
         },
         _getSelectedStoreObj: function (id) {
-            return ct_array.arraySearchFirst(this.stores, {id: id});
+            var store = ct_array.arraySearchFirst(this.stores, {id: id});
+            if(!store) {
+                store = this.dataModel.filteredDatasource;
+            }
+            return store;
         },
         _onDone: function () {
             this._setProcessing(true);
@@ -281,7 +301,7 @@ define([
             var match = this._matchSelect.value;
             var customQuery = {};
             if (this._geometrySelect.value === true) {
-                if(this.querygeometryTool) {
+                if (this.querygeometryTool) {
                     var geometry = this._geometry;
                     if (geometry) {
                         var spatialRelation = this._spatialRelationSelect.value;

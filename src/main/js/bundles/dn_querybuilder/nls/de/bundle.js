@@ -55,6 +55,7 @@ define({
         userChooseGeometry: "Geometrie festlegen",
         userWindowTitle: "Eigene Abfrage erstellen",
         userSpatialRelation: "R\u00e4umliche Verkn\u00fcpfung",
+        userSelectedFeatures: "Selektierte Objekte",
         no_results_error: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!",
         serviceUnavailable: "Service nicht erreichbar!",
         spatialRelations: {
