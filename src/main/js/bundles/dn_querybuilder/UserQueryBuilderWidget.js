@@ -81,8 +81,8 @@ define([
                 this.storeData = storeData;
                 this._init();
                 this._addField();
-                this.connect(this.dataModel, "onDatasourceChanged", function (arguments) {
-                    var datasource = arguments.filteredDatasource;
+                this.connect(this.dataModel, "onDatasourceChanged", function (args) {
+                    var datasource = args.filteredDatasource;
                     var index = ct_array.arrayFirstIndexOf(this._filteringSelect.store.data, {id: "resultcenterDatasource"});
                     if (datasource) {
                         if (index === -1) {
