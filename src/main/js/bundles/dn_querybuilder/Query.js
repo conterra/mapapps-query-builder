@@ -35,12 +35,11 @@ define([
                 return;
             }
             var customquery = event.customquery;
-
             var topic = "ct/selection/SELECTION_END";
+            var tool = event.tool;
             if (event.options.editable === true) {
                 var props = event._properties;
                 var i18n = event._i18n.get();
-                var tool = event.tool;
                 var mapState = this._mapState;
                 var dataModel = this._dataModel;
                 var replacer = this._replacer;
@@ -69,7 +68,6 @@ define([
 
             } else {
                 this._setProcessing(event.tool, true);
-
                 this._searchReplacer(customquery);
 
                 var options = {};
@@ -85,8 +83,6 @@ define([
                  });*/
 
                 var filter = new Filter(store, customquery, options);
-
-                var tool = event.tool;
                 tool.set("active", false);
 
                 ct_when(filter.query({}, {count: 0}).total, function (total) {

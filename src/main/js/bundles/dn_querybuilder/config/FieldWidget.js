@@ -133,23 +133,23 @@ define([
             }
             if (this.type !== "editing") {
                 if (first) {
-                    var addButton = new Button({
+                    var firstAddButton = new Button({
                         label: "+",
                         onClick: d_lang.hitch(this, function () {
                             this.source._addField();
                         })
                     });
-                    domConstruct.place(addButton.domNode, this._buttonNode, "last");
-                    addButton.startup();
+                    domConstruct.place(firstAddButton.domNode, this._buttonNode, "last");
+                    firstAddButton.startup();
                 } else if (last) {
-                    var removeButton = new Button({
+                    var lastRemoveButton = new Button({
                         label: "-",
                         onClick: d_lang.hitch(this, function () {
                             this.source._removeLastField();
                         })
                     });
-                    domConstruct.place(removeButton.domNode, this._buttonNode, "last");
-                    removeButton.startup();
+                    domConstruct.place(lastRemoveButton.domNode, this._buttonNode, "last");
+                    lastRemoveButton.startup();
                     var addButton = new Button({
                         label: "+",
                         onClick: d_lang.hitch(this, function () {
@@ -178,7 +178,7 @@ define([
             var fieldStore = this._fieldStore = new Memory({
                 data: fieldData
             });
-            var fieldSelect = this._fieldSelect = new FilteringSelect({
+            this._fieldSelect = new FilteringSelect({
                 name: "fields",
                 value: this.fieldId || fieldData[0].id,
                 store: fieldStore,
@@ -224,8 +224,9 @@ define([
                 this._valueNode.removeChild(this._valueNode.firstChild);
             }
             var compareSelect = this._compareSelect;
+            var compareStore, valueSelect;
             if (codedValues.length > 0) {
-                var compareStore = this._compareStore = this._createCodedValueStore();
+                compareStore = this._compareStore = this._createCodedValueStore();
                 if (this._compareSelect) {
                     compareSelect.set("store", compareStore);
                     compareSelect.set("value", this.compareId || "$eq");
@@ -239,7 +240,7 @@ define([
                 var codedValueStore = new Memory({
                     data: codedValueData
                 });
-                var valueSelect = this._valueField = new FilteringSelect({
+                valueSelect = this._valueField = new FilteringSelect({
                     name: "value",
                     value: this.value || codedValueData[0].id,
                     store: codedValueStore,
@@ -253,7 +254,7 @@ define([
                 valueSelect.startup();
             } else {
                 if (type === "string") {
-                    var compareStore = this._compareStore = this._createStringStore();
+                    compareStore = this._createStringStore();
                     if (this._compareSelect) {
                         compareSelect.set("store", compareStore);
                         compareSelect.set("value", this.compareId || "$eq");
@@ -261,7 +262,7 @@ define([
                         this._createCompareSelect("$eq", compareStore);
                     }
                 } else if (type === "number" || type === "integer" || type === "single" || type === "double") {
-                    var compareStore = this._compareStore = this._createNumberStore();
+                    compareStore = this._createNumberStore();
                     if (this._compareSelect) {
                         compareSelect.set("store", compareStore);
                         compareSelect.set("value", this.compareId || "$eq");
@@ -269,7 +270,7 @@ define([
                         this._createCompareSelect("$eq", compareStore);
                     }
                 } else if (type === "boolean") {
-                    var compareStore = this._compareStore = this._createBooleanStore();
+                    compareStore = this._createBooleanStore();
                     if (this._compareSelect) {
                         compareSelect.set("store", compareStore);
                         compareSelect.set("value", this.compareId || "$eq");
@@ -277,7 +278,7 @@ define([
                         this._createCompareSelect("$eq", compareStore);
                     }
                 } else if (type === "date") {
-                    var compareStore = this._compareStore = this._createDateStore();
+                    compareStore = this._createDateStore();
                     if (this._compareSelect) {
                         compareSelect.set("store", compareStore);
                         compareSelect.set("value", this.compareId || "$lte");
@@ -317,7 +318,6 @@ define([
                             valueComboBox.set('disabled', false);
                     }, this);
                 } else {
-                    var valueSelect;
                     if (type === "date") {
                         var value;
                         if (this.fieldId === this.getSelectedField()) {
@@ -406,36 +406,33 @@ define([
         },
         _createCodedValueStore: function () {
             var i18n = this.i18n;
-            var store = new Memory({
+            return new Memory({
                 data: [
                     {id: "$eq", name: i18n.is}
                 ]
             });
-            return store;
         },
         _createBooleanStore: function () {
             var i18n = this.i18n;
-            var store = new Memory({
+            return new Memory({
                 data: [
                     {id: "$eq", name: i18n.is}
                 ]
             });
-            return store;
         },
         _createStringStore: function () {
             var i18n = this.i18n;
-            var store = new Memory({
+            return new Memory({
                 data: [
                     {id: "$eq", name: i18n.is},
                     {id: "$eqw", name: i18n.eqw},
                     {id: "$suggest", name: i18n.suggest}
                 ]
             });
-            return store;
         },
         _createNumberStore: function () {
             var i18n = this.i18n;
-            var store = new Memory({
+            return new Memory({
                 data: [
                     {id: "$eq", name: i18n.is},
                     {id: "$gt", name: i18n.is_greater_than},
@@ -444,17 +441,15 @@ define([
                     {id: "$lte", name: i18n.is_less_or_equal}
                 ]
             });
-            return store;
         },
         _createDateStore: function () {
             var i18n = this.i18n;
-            var store = new Memory({
+            return new Memory({
                 data: [
                     {id: "$lte", name: i18n.before},
                     {id: "$gte", name: i18n.after}
                 ]
             });
-            return store;
         },
         _createCheckBoxes: function () {
             var not = false;
@@ -502,8 +497,7 @@ define([
             }
         },
         getSelectedField: function () {
-            var result = this._fieldSelect.value;
-            return result;
+            return this._fieldSelect.value;
         },
         getSelectedFieldType: function () {
             var data = this._fieldSelect.store.data;
@@ -516,28 +510,22 @@ define([
             return result;
         },
         getSelectedCompare: function () {
-            var result = this._compareSelect.value;
-            return result;
+            return this._compareSelect.value;
         },
         getSelectedNot: function () {
-            var result = this._notSelect.value;
-            return result;
+            return this._notSelect.value;
         },
         getNotCheckBoxValue: function () {
-            var result = this._notCheckBox.checked;
-            return result;
+            return this._notCheckBox.checked;
         },
         getFieldCheckBoxValue: function () {
-            var result = this._fieldCheckBox.checked;
-            return result;
+            return this._fieldCheckBox.checked;
         },
         getCompareCheckBoxValue: function () {
-            var result = this._compareCheckBox.checked;
-            return result;
+            return this._compareCheckBox.checked;
         },
         getValueCheckBoxValue: function () {
-            var result = this._valueCheckBox.checked;
-            return result;
+            return this._valueCheckBox.checked;
         },
         getValue: function () {
             var result = this._valueField.value;

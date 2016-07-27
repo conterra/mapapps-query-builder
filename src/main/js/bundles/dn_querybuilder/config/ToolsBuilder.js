@@ -143,7 +143,7 @@ define([
                 var storeData = this._metadataAnalyzer.getStoreData(stores, storesInfo);
                 var wizardI18n = this._i18n.get().widget.wizard;
                 return ct_when(storeData, function (storeData) {
-                    var wizard = new ToolsBuilderWizard({
+                    return new ToolsBuilderWizard({
                         widget: this._widget,
                         storeData: storeData,
                         globalProperties: this._properties,
@@ -160,7 +160,6 @@ define([
                         querygeometryTool: this._querygeometryTool,
                         drawGeometryHandler: this._drawGeometryHandler
                     });
-                    return wizard;
                 }, this);
 
             },

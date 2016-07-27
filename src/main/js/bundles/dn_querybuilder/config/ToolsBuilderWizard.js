@@ -147,8 +147,7 @@ define([
             }
             if (this._builderTab.get("selected")) {
                 this.properties.options.mode = "builder";
-                var customQuery = this._getComplexQuery();
-                this.properties.customquery = customQuery;
+                this.properties.customquery = this._getComplexQuery();
                 this.properties.options.editable = this._editableSelect.value;
                 if (this.properties.options.editable === true) {
                     this.properties.options.editOptions = [];

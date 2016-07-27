@@ -114,8 +114,9 @@ define([
                 style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
+            var geometryStore;
             if (this.querygeometryTool) {
-                var geometryStore = new Memory({
+                geometryStore = new Memory({
                     data: [
                         {name: this.i18n.userGeometryEverywhere, id: false},
                         {name: this.i18n.userGeometryEnhanced, id: true}
@@ -141,7 +142,7 @@ define([
                     }
                 });
             } else {
-                var geometryStore = new Memory({
+                geometryStore = new Memory({
                     data: [
                         {name: this.i18n.userGeometryEverywhere, id: false},
                         {name: this.i18n.userGeometryExtent, id: true}
@@ -192,8 +193,8 @@ define([
             this._changeMatchVisibility();
             this.connect(filteringSelect, "onChange", this._removeFields);
             this.connect(this.tool, "onActivate", function () {
-                if (this._geometry)
-                    this.drawGeometryHandler.drawGeometry(this._geometry);
+                /*if (this._geometry)
+                 this.drawGeometryHandler.drawGeometry(this._geometry);*/
             }, this);
         },
         resize: function (dim) {
@@ -353,7 +354,6 @@ define([
         saveInputGeometry: function (event) {
             this._geometry = event.getProperty("geometry");
             this.querygeometryTool.set("active", false);
-            //this.tool.set("active", true);
         }
     });
 });
