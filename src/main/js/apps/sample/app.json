@@ -46,8 +46,11 @@
           "omniSearchLabelAttr": "osm_name",
           "omniSearchSearchAttr": "osm_name",
           "idProperty": "OBJECTID",
-          "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/0",
-          "useIn": "selection",
+          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+          "useIn": [
+            "omnisearch",
+            "selection"
+          ],
           "filterOptions": {
             "suggestContains": true
           },
@@ -56,7 +59,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "airtraffic"
+          "id": "_AGS_STORE_1469615663725"
         },
         {
           "title": "USA (Counties)",
@@ -430,29 +433,29 @@
           "storeId": "stoerungen"
         },
         {
-          "id": "fc_1441023991013",
+          "id": "fc_1469615816195",
           "title": "Where are Germany's airports?",
-          "iconClass": "icon-airport",
-          "storeId": "airtraffic",
+          "iconClass": "icon-custom-info",
           "customquery": {
             "$and": [
               {
                 "OBJECTID": {
-                  "$gt": -1
+                  "$gt": 0
                 }
               }
             ]
           },
           "options": {
-            "editable": false,
             "mode": "builder",
+            "editable": false,
             "count": -1,
             "ignoreCase": false,
             "locale": {
               "language": "en",
               "country": "EN"
             }
-          }
+          },
+          "storeId": "_AGS_STORE_1469615663725"
         },
         {
           "id": "fc_1441982464561",
