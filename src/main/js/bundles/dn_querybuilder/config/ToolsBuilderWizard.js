@@ -185,6 +185,7 @@ define([
         _getComplexQuery: function () {
             var match = this._matchSelect.value;
             var customQuery = {};
+            var extent = this.mapState.getExtent();
             if (this._geometrySelect.value === true) {
                 if (this.querygeometryTool) {
                     var geometry = this.widget._geometry;
@@ -193,9 +194,12 @@ define([
                         var operator = "$" + spatialRelation;
                         customQuery.geometry = {};
                         customQuery.geometry[operator] = geometry;
+                    } else {
+                        customQuery.geometry = {
+                            $contains: extent
+                        };
                     }
                 } else {
-                    var extent = this.mapState.getExtent();
                     customQuery.geometry = {
                         $contains: extent
                     };
