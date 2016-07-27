@@ -11,7 +11,7 @@
                 <label>${i18n.userUseGeometry}</label>
                 <input data-dojo-attach-point="_geometryNode">
                 <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button" type="button"
-                        data-dojo-attach-event="onClick:_onChooseGeometry">
+                        data-dojo-attach-event="onClick:_onChooseGeometry" data-dojo-props="iconClass:'icon-tool'">
                     ${i18n.userChooseGeometry}
                 </button>
             </div>
@@ -30,7 +30,7 @@
         </div>
         <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
              data-dojo-props="region: 'bottom'">
-            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone">
+            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone" data-dojo-props="iconClass:'icon-magnifier'">
                 ${i18n.userDone}
             </button>
         </div>
