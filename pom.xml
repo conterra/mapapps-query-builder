@@ -466,10 +466,10 @@
         <!-- dojo custom build parameters -->
         <js.build.outputPath>${project.build.directory}/${project.artifactId}/js</js.build.outputPath>
         <!-- mapapps.version -->
-        <mapapps.version>3.5.2</mapapps.version>
+        <mapapps.version>3.6.0</mapapps.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.0.13</ct.jsregistry.version>
-        <ct.jsrt-test.version>1.0.6</ct.jsrt-test.version>
+        <ct.jsregistry.version>1.0.15</ct.jsregistry.version>
+        <ct.jsrt-test.version>1.0.7</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
