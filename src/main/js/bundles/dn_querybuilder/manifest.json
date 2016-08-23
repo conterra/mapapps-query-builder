@@ -39,7 +39,7 @@
         "title": "${wizard.userWindowTitle}",
         "marginBox": {
           "w": 632,
-          "h": 320
+          "h": 300
         },
         "dockTool": "userQueryBuilderTool",
         "closable": true,

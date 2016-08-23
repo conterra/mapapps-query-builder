@@ -19,6 +19,11 @@
                 <label>${i18n.userSpatialRelation}</label>
                 <input data-dojo-attach-point="_spatialRelationNode"/>
             </div>
+            <div class="settingsDiv" data-dojo-attach-point="_useOnlyGeometryDiv">
+                <label>${i18n.userUseOnlyGeometry}</label>
+                <input data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_useOnlyGeometry" value="agreed"
+                       data-dojo-attach-event="onChange:_onUseOnlyGeometry">
+            </div>
             <div class="settingsDiv" data-dojo-attach-point="_matchDiv">
                 <label>${i18n.userMatch}</label>
                 <input data-dojo-attach-point="_matchNode">
@@ -30,7 +35,8 @@
         </div>
         <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
              data-dojo-props="region: 'bottom'">
-            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone" data-dojo-props="iconClass:'icon-magnifier'">
+            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone"
+                    data-dojo-props="iconClass:'icon-magnifier'">
                 ${i18n.userDone}
             </button>
         </div>

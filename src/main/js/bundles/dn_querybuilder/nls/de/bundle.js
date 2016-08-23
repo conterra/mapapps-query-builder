@@ -52,6 +52,7 @@ define({
         userGeometryEverywhere: "\u00fcberall",
         userGeometryEnhanced: "Geometrie",
         userGeometryExtent: "Aktueller Kartenausschnitt",
+        userUseOnlyGeometry: "Rein geometrische Abfrage",
         userChooseGeometry: "Geometrie festlegen",
         userWindowTitle: "Eigene Abfrage erstellen",
         userSpatialRelation: "R\u00e4umliche Verkn\u00fcpfung",

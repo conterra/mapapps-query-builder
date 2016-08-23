@@ -102,6 +102,7 @@ define([
         _init: function () {
             ct_css.switchHidden(this._geometryButton.domNode, true);
             ct_css.switchHidden(this._spatialRelationDiv, true);
+            ct_css.switchHidden(this._useOnlyGeometryDiv, true);
             this.maxComboBoxHeight = 160;
             var store = new Memory({
                 data: this.storeData
@@ -135,10 +136,12 @@ define([
                     if (value === true) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);
                         ct_css.switchHidden(this._spatialRelationDiv, false);
+                        ct_css.switchHidden(this._useOnlyGeometryDiv, false);
                     } else {
                         this.drawGeometryHandler.clearGraphics();
                         ct_css.switchHidden(this._geometryButton.domNode, true);
                         ct_css.switchHidden(this._spatialRelationDiv, true);
+                        ct_css.switchHidden(this._useOnlyGeometryDiv, true);
                     }
                 });
             } else {
@@ -269,7 +272,26 @@ define([
         },
         _onDone: function () {
             this._setProcessing(true);
-            var complexQuery = this._getComplexQuery();
+            var complexQuery = {};
+            var checkBox = this._useOnlyGeometry;
+            if(!checkBox.checked) {
+                complexQuery = this._getComplexQuery()
+            } else {
+                if (this.querygeometryTool) {
+                    var geometry = this._geometry;
+                    if (geometry) {
+                        var spatialRelation = this._spatialRelationSelect.value;
+                        var operator = "$" + spatialRelation;
+                        complexQuery.geometry = {};
+                        complexQuery.geometry[operator] = geometry;
+                    }
+                } else {
+                    var extent = this.mapState.getExtent();
+                    complexQuery.geometry = {
+                        $contains: extent
+                    };
+                }
+            }
 
             this._searchReplacer(complexQuery);
 
@@ -297,6 +319,13 @@ define([
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
+        },
+        _onUseOnlyGeometry: function(value) {
+            if(value) {
+                ct_css.switchHidden(this._centerNode.domNode, true);
+            } else {
+                ct_css.switchHidden(this._centerNode.domNode, false);
+            }
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;

@@ -53,6 +53,7 @@ define({
             userGeometryEverywhere: "everywhere",
             userGeometryEnhanced: "geometry",
             userGeometryExtent: "current extent",
+            userUseOnlyGeometry: "Purely geometrical query",
             userChooseGeometry: "Choose geometry",
             userWindowTitle: "Build your own Query",
             userSpatialRelation: "Spatial Relation",
