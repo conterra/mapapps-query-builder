@@ -81,22 +81,6 @@ define([
                 this.storeData = storeData;
                 this._init();
                 this._addField();
-                this.connect(this.dataModel, "onDatasourceChanged", function (args) {
-                    var datasource = args.filteredDatasource;
-                    var index = ct_array.arrayFirstIndexOf(this._filteringSelect.store.data, {id: "resultcenterDatasource"});
-                    if (datasource) {
-                        if (index === -1) {
-                            this._filteringSelect.store.add({
-                                id: "resultcenterDatasource",
-                                name: this.i18n.userSelectedFeatures
-                            });
-                        }
-                    } else {
-                        if (index > -1)
-                            this._filteringSelect.store.remove("resultcenterDatasource");
-                        this._filteringSelect.set("value", this._filteringSelect.store.data[0].id);
-                    }
-                });
             }, this);
         },
         _init: function () {
@@ -194,6 +178,28 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
             this._changeMatchVisibility();
+            if(this.dataModel.filteredDatasource) {
+                this._filteringSelect.store.add({
+                    id: "resultcenterDatasource",
+                    name: this.i18n.userSelectedFeatures
+                });
+            }
+            this.connect(this.dataModel, "onDatasourceChanged", function (args) {
+                var datasource = args.filteredDatasource;
+                var index = ct_array.arrayFirstIndexOf(this._filteringSelect.store.data, {id: "resultcenterDatasource"});
+                if (datasource) {
+                    if (index === -1) {
+                        this._filteringSelect.store.add({
+                            id: "resultcenterDatasource",
+                            name: this.i18n.userSelectedFeatures
+                        });
+                    }
+                } else {
+                    if (index > -1)
+                        this._filteringSelect.store.remove("resultcenterDatasource");
+                    this._filteringSelect.set("value", this._filteringSelect.store.data[0].id);
+                }
+            });
             this.connect(filteringSelect, "onChange", this._removeFields);
             this.connect(this.tool, "onActivate", function () {
                 /*if (this._geometry)
