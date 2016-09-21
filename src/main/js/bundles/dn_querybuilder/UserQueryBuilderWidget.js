@@ -38,7 +38,8 @@ define([
     "ct/_when",
     "ct/array",
     "ct/store/Filter",
-    "ct/util/css"
+    "ct/util/css",
+    "./MemorySelectionStore"
 ], function (declare,
              Deferred,
              domConstruct,
@@ -63,7 +64,8 @@ define([
              ct_when,
              ct_array,
              Filter,
-             ct_css) {
+             ct_css,
+             MemorySelectionStore) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin, _Connect], {
         templateString: templateStringContent,
@@ -178,7 +180,7 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
             this._changeMatchVisibility();
-            if(this.dataModel.filteredDatasource) {
+            if (this.dataModel.filteredDatasource) {
                 this._filteringSelect.store.add({
                     id: "resultcenterDatasource",
                     name: this.i18n.userSelectedFeatures
@@ -271,7 +273,7 @@ define([
         },
         _getSelectedStoreObj: function (id) {
             var store = ct_array.arraySearchFirst(this.stores, {id: id});
-            if(!store) {
+            if (!store) {
                 store = this.dataModel.filteredDatasource;
             }
             return store;
@@ -280,7 +282,7 @@ define([
             this._setProcessing(true);
             var complexQuery = {};
             var checkBox = this._useOnlyGeometry;
-            if(!checkBox.checked) {
+            if (!checkBox.checked) {
                 complexQuery = this._getComplexQuery()
             } else {
                 if (this.querygeometryTool) {
@@ -303,31 +305,15 @@ define([
 
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
-            var filter = new Filter(store, complexQuery/*, {ignoreCase: true}*/);
-            ct_when(filter.query({}, {count: 0}).total, function (total) {
-                if (total) {
-                    this.dataModel.setDatasource(filter);
-                    this._setProcessing(false);
-                } else {
-                    this.logService.warn({
-                        id: 0,
-                        message: this.i18n.no_results_error
-                    });
-                    this._setProcessing(false);
-                }
-            }, function (e) {
-                this._setProcessing(false);
-                this.logService.warn({
-                    id: e.code,
-                    message: e
-                });
-            }, this);
+            var options = {}/*{ignoreCase: true}*/;
+
+            this._query(store, complexQuery, options);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
         },
-        _onUseOnlyGeometry: function(value) {
-            if(value) {
+        _onUseOnlyGeometry: function (value) {
+            if (value) {
                 ct_css.switchHidden(this._centerNode.domNode, true);
             } else {
                 ct_css.switchHidden(this._centerNode.domNode, false);
@@ -385,6 +371,48 @@ define([
                     this._searchReplacer(value);
                 }
             }
+        },
+        _query: function (store, complexQuery, options) {
+            options.fields = {geometry: 1};
+            ct_when(store.query(complexQuery, options), function (result) {
+                var wkid = this.mapState.getSpatialReference().wkid;
+                var geometries = d_array.map(result, function (item) {
+                    return item.geometry;
+                });
+                ct_when(this.coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
+                    d_array.forEach(transformedGeometries, function (tg, index) {
+                        result[index].geometry = tg;
+                    });
+                    var memorySelectionStore = new MemorySelectionStore({
+                        masterStore: store,
+                        data: result,
+                        idProperty: store.idProperty
+                    });
+                    this.dataModel.setDatasource(memorySelectionStore);
+                    this._setProcessing(false);
+                }, this);
+            }, this);
+        },
+        _defaultQuery: function (store, complexQuery, options) {
+            var filter = new Filter(store, complexQuery, options);
+            ct_when(filter.query({}, {count: 0}).total, function (total) {
+                if (total) {
+                    this.dataModel.setDatasource(filter);
+                    this._setProcessing(false);
+                } else {
+                    this.logService.warn({
+                        id: 0,
+                        message: this.i18n.no_results_error
+                    });
+                    this._setProcessing(false);
+                }
+            }, function (e) {
+                this._setProcessing(false);
+                this.logService.warn({
+                    id: e.code,
+                    message: e
+                });
+            }, this);
         },
         saveInputGeometry: function (event) {
             this._geometry = event.getProperty("geometry");

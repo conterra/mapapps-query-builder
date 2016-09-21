@@ -46,8 +46,9 @@ define([
             var replacer = this._replacer;
             var logService = this._logService;
             var metadataAnalyzer = this._metadataAnalyzer;
-            var querygeometryTool = this.querygeometryTool;
-            var drawGeometryHandler = this.drawGeometryHandler;
+            var querygeometryTool = this._querygeometryTool;
+            var drawGeometryHandler = this._drawGeometryHandler;
+            var coordinateTransformer = this._coordinateTransformer;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -60,7 +61,8 @@ define([
                 logService: logService,
                 metadataAnalyzer: metadataAnalyzer,
                 querygeometryTool: querygeometryTool,
-                drawGeometryHandler: drawGeometryHandler
+                drawGeometryHandler: drawGeometryHandler,
+                coordinateTransformer: coordinateTransformer
             });
         },
         setDrawGeometryHandler: function (service) {

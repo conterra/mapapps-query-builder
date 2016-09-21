@@ -16,11 +16,13 @@
 define([
     "dojo/_base/declare",
     "dojo/json",
+    "dojo/_base/array",
     "ct/store/Filter",
     "ct/_when",
     "ct/array",
-    "./EditableQueryBuilderWidget"
-], function (declare, JSON, Filter, ct_when, ct_array, EditableQueryBuilderWidget) {
+    "./EditableQueryBuilderWidget",
+    "./MemorySelectionStore"
+], function (declare, JSON, d_array, Filter, ct_when, ct_array, EditableQueryBuilderWidget, MemorySelectionStore) {
     return declare([], {
         activate: function (componentContext) {
             this._bundleContext = componentContext.getBundleContext();
@@ -36,7 +38,7 @@ define([
             }
             var customquery = event.customquery;
             var topic = "ct/selection/SELECTION_END";
-            var tool = event.tool;
+            var tool = this.tool = event.tool;
             if (event.options.editable === true) {
                 var props = event._properties;
                 var i18n = event._i18n.get();
@@ -67,7 +69,7 @@ define([
                 this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
 
             } else {
-                this._setProcessing(event.tool, true);
+                this._setProcessing(tool, true);
                 this._searchReplacer(customquery);
 
                 var options = {};
@@ -82,28 +84,52 @@ define([
                  store: customquery ? Filter(store, customquery, options) : store
                  });*/
 
-                var filter = new Filter(store, customquery, options);
-                tool.set("active", false);
-
-                ct_when(filter.query({}, {count: 0}).total, function (total) {
-                    if (total) {
-                        this._dataModel.setDatasource(filter);
-                        this._setProcessing(event.tool, false);
-                    } else {
-                        this._logService.warn({
-                            id: 0,
-                            message: this._i18n.get().wizard.no_results_error
-                        });
-                        this._setProcessing(event.tool, false);
-                    }
-                }, function (e) {
-                    this._setProcessing(event.tool, false);
-                    this._logService.warn({
-                        id: e.code,
-                        message: e
-                    });
-                }, this);
+                this._query(store, customquery, options);
             }
+        },
+        _query: function (store, complexQuery, options) {
+            options.fields = {geometry: 1};
+            ct_when(store.query(complexQuery, options), function (result) {
+                var wkid = this._mapState.getSpatialReference().wkid;
+                var geometries = d_array.map(result, function (item) {
+                    return item.geometry;
+                });
+                ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
+                    d_array.forEach(transformedGeometries, function (tg, index) {
+                        result[index].geometry = tg;
+                    });
+                    var memorySelectionStore = new MemorySelectionStore({
+                        masterStore: store,
+                        data: result,
+                        idProperty: store.idProperty
+                    });
+                    this._dataModel.setDatasource(memorySelectionStore);
+                    this._setProcessing(this.tool, false);
+                }, this);
+            }, this);
+        },
+        _defaultQuery: function (store, complexQuery, options) {
+            var filter = new Filter(store, complexQuery, options);
+            tool.set("active", false);
+
+            ct_when(filter.query({}, {count: 0}).total, function (total) {
+                if (total) {
+                    this._dataModel.setDatasource(filter);
+                    this._setProcessing(event.tool, false);
+                } else {
+                    this._logService.warn({
+                        id: 0,
+                        message: this._i18n.get().wizard.no_results_error
+                    });
+                    this._setProcessing(event.tool, false);
+                }
+            }, function (e) {
+                this._setProcessing(event.tool, false);
+                this._logService.warn({
+                    id: e.code,
+                    message: e
+                });
+            }, this);
         },
         onQueryToolDeactivated: function () {
             var registration = this._serviceregistration;
