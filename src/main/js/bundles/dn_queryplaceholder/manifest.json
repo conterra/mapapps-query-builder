@@ -5,7 +5,7 @@
     "Bundle-Description": "Replaces placeholder in the Query Builder bundle",
     "Bundle-Vendor": "con terra GmbH",
     "Bundle-Category": [],
-    "Product-Name": "con terra Developer Network",
+    "Product-Name": "devnet-mapapps-query-builder",
     "Require-Bundle": [
         {
             "name": "authentication",
