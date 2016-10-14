@@ -148,7 +148,8 @@ define([
                     value: value,
                     not: not,
                     editOptions: editOptions,
-                    type: "editing"
+                    type: "editing",
+                    queryBuilderProperties: this.queryBuilderProperties
                 });
                 domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             }, this);

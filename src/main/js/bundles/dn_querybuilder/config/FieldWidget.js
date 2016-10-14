@@ -40,7 +40,6 @@ define([
     "dojo/store/Memory",
     "dojo/dom-construct",
     "dojo/date/locale",
-    "dojo/data/ObjectStore",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
 ], function (d_lang,
@@ -69,7 +68,6 @@ define([
              Memory,
              domConstruct,
              d_locale,
-             ObjectStore,
              ContentPane,
              BorderContainer) {
 
@@ -80,6 +78,7 @@ define([
             this.inherited(arguments);
             ct_when(this.store.getMetadata(), function (metadata) {
                 this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
+                this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
                 if (this.type === "user") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
@@ -286,7 +285,7 @@ define([
                         this._createCompareSelect("$lte", compareStore);
                     }
                 }
-                if (this._supportsDistincts === true && type !== "date") {
+                if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
                     var valueComboBox = this._valueField = new ComboBox({
                         name: "value",
                         searchAttr: "id",
@@ -310,7 +309,7 @@ define([
                             data: distinctValueData
                         });
                         valueComboBox.set("store", distinctValueStore);
-                        var value = value = distinctValueData[0] && distinctValueData[0].id;
+                        var value = distinctValueData[0] && distinctValueData[0].id;
                         if (this.fieldId === this.getSelectedField() && this.value !== undefined)
                             value = this.value;
                         valueComboBox.set("value", value);

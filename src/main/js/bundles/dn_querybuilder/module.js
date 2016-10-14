@@ -19,6 +19,7 @@ define([
     "./EditableQueryBuilderWidget",
     "./UserQueryBuilderWidget",
     "./UserQueryBuilderWidgetFactory",
+    "./QueryBuilderProperties",
     "./MetadataAnalyzer",
     "ct/tools/Tool",
     "ct/store/Filter"

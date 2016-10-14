@@ -1,0 +1,17 @@
+{
+    "dataform-version": "1.0.0",
+    "size": {
+        "h": 300,
+        "w": 400
+    },
+    "type": "gridpanel",
+    "showLabels": true,
+    "cols": 1,
+    "children": [
+        {
+            "type": "checkbox",
+            "label": "${propertiesWidget.enableDistinctValues}",
+            "field": "enableDistinctValues"
+        }
+    ]
+}

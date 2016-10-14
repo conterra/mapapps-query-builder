@@ -17,8 +17,17 @@ define({
     root: {
         bundleName: "Query Builder Config",
         bundleDescription: "Configuration bundle for Query Builder",
-        windowTitle: "Query Builder Config",
+        title: "Query Builder Config",
         description: "Settings for the Query Builder bundle",
+        propertiesWidget: {
+            propertiesWidgetTitle: "Base Config",
+            propertiesWidgetDescription: "Basic settings for the Query Builder",
+            enableDistinctValues: "Distinct Values"
+        },
+        toolsBuilder: {
+            toolsBuilderTitle: "Query Tools",
+            toolsBuilderDescription: "Create your own Query Tools"
+        },
         widget: {
             window: {
                 title: "Name",

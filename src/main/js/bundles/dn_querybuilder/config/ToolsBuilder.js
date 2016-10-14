@@ -158,7 +158,8 @@ define([
                         replacer: this._replacer,
                         metadataAnalyzer: this._metadataAnalyzer,
                         querygeometryTool: this._querygeometryTool,
-                        drawGeometryHandler: this._drawGeometryHandler
+                        drawGeometryHandler: this._drawGeometryHandler,
+                        queryBuilderProperties: this._queryBuilderProperties
                     });
                 }, this);
 

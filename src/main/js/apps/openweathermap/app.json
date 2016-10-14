@@ -354,6 +354,9 @@
       }
     },
     "dn_querybuilder": {
+      "QueryBuilderProperties": {
+        "enableDistinctValues": true
+      },
       "QueryTools": [
         {
           "id": "fc_1441279619509",

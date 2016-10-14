@@ -355,7 +355,8 @@ define([
                     value: value,
                     not: not,
                     editOptions: editOptions,
-                    type: "admin"
+                    type: "admin",
+                    queryBuilderProperties: this.queryBuilderProperties
                 });
                 domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
                 this._changeChildrenButtons();

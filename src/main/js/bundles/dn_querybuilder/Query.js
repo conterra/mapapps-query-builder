@@ -48,6 +48,7 @@ define([
                 var logService = this._logService;
                 var storesInfo = this._getStoreInfoData(store);
                 var metadataAnalyzer = this._metadataAnalyzer;
+                var queryBuilderProperties = this._queryBuilderProperties;
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
@@ -58,20 +59,18 @@ define([
                     dataModel: dataModel,
                     replacer: replacer,
                     logService: logService,
-                    metadataAnalyzer: metadataAnalyzer
+                    metadataAnalyzer: metadataAnalyzer,
+                    queryBuilderProperties: queryBuilderProperties
                 });
-
                 var serviceProperties = {
                     "widgetRole": "editableQueryBuilderWidget"
                 };
                 var interfaces = ["dijit.Widget"];
-
                 this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
 
             } else {
                 this._setProcessing(tool, true);
                 this._searchReplacer(customquery);
-
                 var options = {};
                 var count = event.options.count;
                 if (count >= 0) {
@@ -83,7 +82,6 @@ define([
                  source: this,
                  store: customquery ? Filter(store, customquery, options) : store
                  });*/
-
                 this._query(store, customquery, options);
             }
         },

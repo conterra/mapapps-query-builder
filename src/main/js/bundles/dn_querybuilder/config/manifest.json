@@ -33,15 +33,55 @@
       "propertiesConstructor": true,
       "properties": {
         "parentNodeId": "appBuilderToolsNode",
-        "children": [
-          {
-            "widget": "toolsBuilderWidget",
-            "title": "${windowTitle}",
-            "iconUrl": "resource('styles/images/bundleIcon.png')",
-            "priority": -4
-          }
-        ]
+        "menuNode": {
+          "title": "${title}",
+          "description": "${description}",
+          "iconUrl": "resource('styles/images/bundleIcon.png')",
+          "children": [
+            {
+              "title": "${propertiesWidget.propertiesWidgetTitle}",
+              "widget": "propertiesWidget",
+              "iconUrl": "resource('styles/images/config.png')",
+              "priority": -1
+            },
+            {
+              "title": "${toolsBuilder.toolsBuilderTitle}",
+              "widget": "toolsBuilderWidget",
+              "iconUrl": "resource('styles/images/bundleIcon.png')",
+              "priority": -2
+            }
+          ]
+        }
       }
+    },
+    {
+      "name": "PropertiesWidget",
+      "impl": "wizard/DataFormBuilderWidgetFactory",
+      "provides": [
+        "dijit.wizard.Widget"
+      ],
+      "immediate": true,
+      "instanceFactory": true,
+      "properties": {
+        "dataformFile": "resource('./PropertiesWidget.json')",
+        "bid": "dn_querybuilder",
+        "pid": "dn_querybuilder-QueryBuilderProperties",
+        "id": "propertiesWidget",
+        "defaultProperties": {
+          "enableDistinctValues": true
+        },
+        "description": "${propertiesWidget.propertiesWidgetDescription}"
+      },
+      "references": [
+        {
+          "name": "_configAdminService",
+          "providing": "ct.framework.api.ConfigurationAdmin"
+        },
+        {
+          "name": "_dataformService",
+          "providing": "dataform.DataFormService"
+        }
+      ]
     },
     {
       "name": "ToolsBuilder",
@@ -62,7 +102,7 @@
           "bid": "dn_querybuilder",
           "pid": "dn_querybuilder-QueryTools-Factory",
           "id": "toolsBuilderWidget",
-          "description": "${description}"
+          "description": "${toolsBuilder.toolsBuilderDescription}"
         },
         "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/latest/themes/webFontsGallery.html",
         "complexQueryDocUrl": "http://developernetwork.conterra.de/en/documentation/mapapps/developers-documentation/complex-query-dojostore"
@@ -118,12 +158,16 @@
           "name": "_querygeometryTool",
           "providing": "ct.tools.Tool",
           "filter": "(id=querygeometryTool)",
-          "cardinality" : "0..1"
+          "cardinality": "0..1"
         },
         {
           "name": "_drawGeometryHandler",
           "providing": "dn_querygeometry.DrawGeometryHandler",
-          "cardinality" : "0..1"
+          "cardinality": "0..1"
+        },
+        {
+          "name": "_queryBuilderProperties",
+          "providing": "dn_querybuilder.QueryBuilderProperties"
         }
       ]
     },

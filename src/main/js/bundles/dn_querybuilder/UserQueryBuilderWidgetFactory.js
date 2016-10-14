@@ -49,6 +49,7 @@ define([
             var querygeometryTool = this._querygeometryTool;
             var drawGeometryHandler = this._drawGeometryHandler;
             var coordinateTransformer = this._coordinateTransformer;
+            var queryBuilderProperties = this._queryBuilderProperties;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -62,7 +63,8 @@ define([
                 metadataAnalyzer: metadataAnalyzer,
                 querygeometryTool: querygeometryTool,
                 drawGeometryHandler: drawGeometryHandler,
-                coordinateTransformer: coordinateTransformer
+                coordinateTransformer: coordinateTransformer,
+                queryBuilderProperties: queryBuilderProperties
             });
         },
         setDrawGeometryHandler: function (service) {
