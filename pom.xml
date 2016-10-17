@@ -468,8 +468,8 @@
         <!-- mapapps.version -->
         <mapapps.version>3.6.0</mapapps.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.0.15</ct.jsregistry.version>
-        <ct.jsrt-test.version>1.0.7</ct.jsrt-test.version>
+        <ct.jsregistry.version>1.0.23</ct.jsregistry.version>
+        <ct.jsrt-test.version>1.0.8</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
