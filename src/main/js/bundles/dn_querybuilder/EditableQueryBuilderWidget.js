@@ -65,7 +65,7 @@ define([
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
         templateString: templateStringContent,
-        baseClass: "editableQueryBuilderWizard",
+        baseClass: "editableQueryBuilderWidget",
         postCreate: function () {
             this.inherited(arguments);
         },
@@ -106,7 +106,8 @@ define([
             this._createGUISettings();
             this._createGUIFields();
         },
-        _setProcessing: function (tool, processing) {
+        _setProcessing: function (processing) {
+            var tool = this.tool;
             if (tool) {
                 tool.set("processing", processing);
             }
@@ -215,8 +216,7 @@ define([
             }
         },
         _onDone: function () {
-            var tool = this.tool;
-            this._setProcessing(tool, true);
+            this._setProcessing(true);
             var complexQuery = this._getComplexQuery();
 
             this._searchReplacer(complexQuery);
@@ -234,16 +234,16 @@ define([
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);
-                    this._setProcessing(tool, false);
+                    this._setProcessing(false);
                 } else {
                     this.logService.warn({
                         id: 0,
                         message: this.i18n.no_results_error
                     });
-                    this._setProcessing(tool, false);
+                    this._setProcessing(false);
                 }
             }, function (e) {
-                this._setProcessing(tool, false);
+                this._setProcessing(false);
                 this.logService.warn({
                     id: e.code,
                     message: e

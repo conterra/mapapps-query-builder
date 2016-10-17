@@ -69,7 +69,7 @@ define([
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin, _Connect], {
         templateString: templateStringContent,
-        baseClass: "userQueryBuilderWizard",
+        baseClass: "userQueryBuilderWidget",
         postCreate: function () {
             this.inherited(arguments);
         },

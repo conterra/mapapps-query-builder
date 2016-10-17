@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-.userQueryBuilderWizard .inputContainer label {
+.userQueryBuilderWidget .inputContainer label,
+.editableQueryBuilderWidget .inputContainer label {
     display: inline-block;
     min-width: 160px;
     max-width: 300px;
@@ -23,65 +24,46 @@
     vertical-align: middle;
 }
 
-.userQueryBuilderWizard .inputContainer {
+.userQueryBuilderWidget .inputContainer {
     height: 110px;
 }
 
-.userQueryBuilderWizard .inputContainer .settingsDiv {
+.userQueryBuilderWidget .inputContainer .settingsDiv {
     margin-bottom: 2px;
 }
 
-.userQueryBuilderWizard .inputContainer .dijitButton {
+.userQueryBuilderWidget .inputContainer .dijitButton {
     margin-left: 5px;
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.userQueryBuilderWizard .inline {
+.userQueryBuilderWidget .inline,
+.editableQueryBuilderWidget .inline {
     display: inline;
 }
 
-.userQueryBuilderWizard .fieldWidget {
+.userQueryBuilderWidget .fieldWidget,
+.editableQueryBuilderWidget .fieldWidget {
     margin-bottom: 2px;
 }
 
-.userQueryBuilderWizard .fieldWidget .notNode {
+.userQueryBuilderWidget .fieldWidget .notNode,
+.editableQueryBuilderWidget .fieldWidget .notNode {
     margin-right: 5px;
     display: inline;
 }
 
-.editableQueryBuilderWizard .title {
+.editableQueryBuilderWidget .title {
     margin-bottom: 5px;
 }
 
-.editableQueryBuilderWizard .inputContainer label {
-    display: inline-block;
-    min-width: 160px;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-}
-
-.editableQueryBuilderWizard .inputContainer .noWidth {
+.editableQueryBuilderWidget .inputContainer .noWidth {
     display: inline-block;
     min-width: 0px;
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.editableQueryBuilderWizard .inline {
-    display: inline;
-}
-
-.editableQueryBuilderWizard .fieldWidget {
-    margin-bottom: 2px;
-}
-
-.editableQueryBuilderWizard .fieldWidget .notNode {
-    margin-right: 5px;
-    display: inline;
 }
 
 
