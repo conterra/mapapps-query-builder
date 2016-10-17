@@ -281,34 +281,34 @@ define([
         },
         _onDone: function () {
             this._setProcessing(true);
-            var complexQuery = {};
+            var customQuery = {};
             var checkBox = this._useOnlyGeometry;
             if (!checkBox.checked) {
-                complexQuery = this._getComplexQuery()
+                customQuery = this._getComplexQuery()
             } else {
                 if (this.querygeometryTool) {
                     var geometry = this._geometry;
                     if (geometry) {
                         var spatialRelation = this._spatialRelationSelect.value;
                         var operator = "$" + spatialRelation;
-                        complexQuery.geometry = {};
-                        complexQuery.geometry[operator] = geometry;
+                        customQuery.geometry = {};
+                        customQuery.geometry[operator] = geometry;
                     }
                 } else {
                     var extent = this.mapState.getExtent();
-                    complexQuery.geometry = {
+                    customQuery.geometry = {
                         $contains: extent
                     };
                 }
             }
 
-            this._searchReplacer(complexQuery);
+            this._searchReplacer(customQuery);
 
             var storeId = this._filteringSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
-            this._query(store, complexQuery, options);
+            this._query(store, customQuery, options);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
@@ -373,9 +373,9 @@ define([
                 }
             }
         },
-        _query: function (store, complexQuery, options) {
+        _query: function (store, customQuery, options) {
             options.fields = {geometry: 1};
-            ct_when(store.query(complexQuery, options), function (result) {
+            ct_when(store.query(customQuery, options), function (result) {
                 var wkid = this.mapState.getSpatialReference().wkid;
                 var geometries = d_array.map(result, function (item) {
                     return item.geometry;
@@ -394,8 +394,8 @@ define([
                 }, this);
             }, this);
         },
-        _defaultQuery: function (store, complexQuery, options) {
-            var filter = new Filter(store, complexQuery, options);
+        _defaultQuery: function (store, customQuery, options) {
+            var filter = new Filter(store, customQuery, options);
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this.dataModel.setDatasource(filter);

@@ -49,6 +49,7 @@ define([
                 var storesInfo = this._getStoreInfoData(store);
                 var metadataAnalyzer = this._metadataAnalyzer;
                 var queryBuilderProperties = this._queryBuilderProperties;
+                var coordinateTransformer = this._coordinateTransformer;
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
@@ -60,7 +61,8 @@ define([
                     replacer: replacer,
                     logService: logService,
                     metadataAnalyzer: metadataAnalyzer,
-                    queryBuilderProperties: queryBuilderProperties
+                    queryBuilderProperties: queryBuilderProperties,
+                    coordinateTransformer: coordinateTransformer
                 });
                 var serviceProperties = {
                     "widgetRole": "editableQueryBuilderWidget"

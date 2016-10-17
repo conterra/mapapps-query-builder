@@ -22,7 +22,6 @@ define([
              UserQueryBuilderWidget, _Connect) {
     return declare([_Connect], {
         constructor: function () {
-            //this._stores = [];
             this.inherited(arguments);
         },
         activate: function () {

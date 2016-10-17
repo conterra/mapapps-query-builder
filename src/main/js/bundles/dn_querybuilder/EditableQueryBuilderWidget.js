@@ -37,7 +37,8 @@ define([
     "ct/async",
     "ct/_when",
     "ct/store/Filter",
-    "ct/util/css"
+    "ct/util/css",
+    "./MemorySelectionStore"
 ], function (declare,
              Deferred,
              domConstruct,
@@ -61,7 +62,8 @@ define([
              ct_async,
              ct_when,
              Filter,
-             ct_css) {
+             ct_css,
+             MemorySelectionStore) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin], {
         templateString: templateStringContent,
@@ -217,9 +219,9 @@ define([
         },
         _onDone: function () {
             this._setProcessing(true);
-            var complexQuery = this._getComplexQuery();
+            var customQuery = this._getComplexQuery();
 
-            this._searchReplacer(complexQuery);
+            this._searchReplacer(customQuery);
 
             var store = this.store;
             var options = {};
@@ -229,26 +231,8 @@ define([
             }
             options.ignoreCase = this.properties.options.ignoreCase;
             options.locale = this.properties.options.locale;
-            var filter = new Filter(store, complexQuery, options);
 
-            ct_when(filter.query({}, {count: 0}).total, function (total) {
-                if (total) {
-                    this.dataModel.setDatasource(filter);
-                    this._setProcessing(false);
-                } else {
-                    this.logService.warn({
-                        id: 0,
-                        message: this.i18n.no_results_error
-                    });
-                    this._setProcessing(false);
-                }
-            }, function (e) {
-                this._setProcessing(false);
-                this.logService.warn({
-                    id: e.code,
-                    message: e
-                });
-            }, this);
+            this._query(store, customQuery, options);
         },
         _getComplexQuery: function () {
             var match = this._matchSelect.value;
@@ -290,6 +274,48 @@ define([
                     this._searchReplacer(value);
                 }
             }
+        },
+        _query: function (store, customQuery, options) {
+            options.fields = {geometry: 1};
+            ct_when(store.query(customQuery, options), function (result) {
+                var wkid = this.mapState.getSpatialReference().wkid;
+                var geometries = d_array.map(result, function (item) {
+                    return item.geometry;
+                });
+                ct_when(this.coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
+                    d_array.forEach(transformedGeometries, function (tg, index) {
+                        result[index].geometry = tg;
+                    });
+                    var memorySelectionStore = new MemorySelectionStore({
+                        masterStore: store,
+                        data: result,
+                        idProperty: store.idProperty
+                    });
+                    this.dataModel.setDatasource(memorySelectionStore);
+                    this._setProcessing(false);
+                }, this);
+            }, this);
+        },
+        _defaultQuery: function (store, customQuery, options) {
+            var filter = new Filter(store, customQuery, options);
+            ct_when(filter.query({}, {count: 0}).total, function (total) {
+                if (total) {
+                    this.dataModel.setDatasource(filter);
+                    this._setProcessing(false);
+                } else {
+                    this.logService.warn({
+                        id: 0,
+                        message: this.i18n.no_results_error
+                    });
+                    this._setProcessing(false);
+                }
+            }, function (e) {
+                this._setProcessing(false);
+                this.logService.warn({
+                    id: e.code,
+                    message: e
+                });
+            }, this);
         },
         deactivateTool: function () {
             this.tool.set("active", false);
