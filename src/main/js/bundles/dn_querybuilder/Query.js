@@ -42,34 +42,27 @@ define([
             if (event.options.editable === true) {
                 var props = event._properties;
                 var i18n = event._i18n.get();
-                var mapState = this._mapState;
-                var dataModel = this._dataModel;
                 var replacer = this._replacer;
-                var logService = this._logService;
                 var storesInfo = this._getStoreInfoData(store);
                 var metadataAnalyzer = this._metadataAnalyzer;
                 var queryBuilderProperties = this._queryBuilderProperties;
-                var coordinateTransformer = this._coordinateTransformer;
+                var queryController = this._queryController;
                 var widget = this.widget = new EditableQueryBuilderWidget({
                     properties: props,
                     i18n: i18n.wizard,
                     tool: tool,
                     store: store,
                     storesInfo: storesInfo,
-                    mapState: mapState,
-                    dataModel: dataModel,
                     replacer: replacer,
-                    logService: logService,
                     metadataAnalyzer: metadataAnalyzer,
                     queryBuilderProperties: queryBuilderProperties,
-                    coordinateTransformer: coordinateTransformer
+                    queryController: queryController
                 });
                 var serviceProperties = {
                     "widgetRole": "editableQueryBuilderWidget"
                 };
                 var interfaces = ["dijit.Widget"];
                 this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
-
             } else {
                 this._setProcessing(tool, true);
                 this._searchReplacer(customquery);
@@ -84,52 +77,8 @@ define([
                  source: this,
                  store: customquery ? Filter(store, customquery, options) : store
                  });*/
-                this._query(store, customquery, options);
+                this._queryController.query(store, customquery, options, tool);
             }
-        },
-        _query: function (store, complexQuery, options) {
-            options.fields = {geometry: 1};
-            ct_when(store.query(complexQuery, options), function (result) {
-                var wkid = this._mapState.getSpatialReference().wkid;
-                var geometries = d_array.map(result, function (item) {
-                    return item.geometry;
-                });
-                ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
-                    d_array.forEach(transformedGeometries, function (tg, index) {
-                        result[index].geometry = tg;
-                    });
-                    var memorySelectionStore = new MemorySelectionStore({
-                        masterStore: store,
-                        data: result,
-                        idProperty: store.idProperty
-                    });
-                    this._dataModel.setDatasource(memorySelectionStore);
-                    this._setProcessing(this.tool, false);
-                }, this);
-            }, this);
-        },
-        _defaultQuery: function (store, complexQuery, options) {
-            var filter = new Filter(store, complexQuery, options);
-            tool.set("active", false);
-
-            ct_when(filter.query({}, {count: 0}).total, function (total) {
-                if (total) {
-                    this._dataModel.setDatasource(filter);
-                    this._setProcessing(event.tool, false);
-                } else {
-                    this._logService.warn({
-                        id: 0,
-                        message: this._i18n.get().wizard.no_results_error
-                    });
-                    this._setProcessing(event.tool, false);
-                }
-            }, function (e) {
-                this._setProcessing(event.tool, false);
-                this._logService.warn({
-                    id: e.code,
-                    message: e
-                });
-            }, this);
         },
         onQueryToolDeactivated: function () {
             var registration = this._serviceregistration;

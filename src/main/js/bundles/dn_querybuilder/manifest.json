@@ -130,18 +130,6 @@
           "providing": "ct.framework.api.EventService"
         },
         {
-          "name": "_mapState",
-          "providing": "ct.mapping.map.MapState"
-        },
-        {
-          "name": "_dataModel",
-          "providing": "ct.resultcenter.DataModel"
-        },
-        {
-          "name": "_logService",
-          "providing": "ct.framework.api.LogService"
-        },
-        {
           "name": "_replacer",
           "providing": "dn_replacer.Replacer"
         },
@@ -152,22 +140,40 @@
           "filter": "(useIn=selection)"
         },
         {
-          "name": "_tool",
-          "providing": "ct.tools.Tool",
-          "cardinality": "0..n",
-          "filter": "(toolRole=toolset)"
-        },
-        {
           "name": "_metadataAnalyzer",
           "providing": "dn_querybuilder.MetadataAnalyzer"
         },
         {
-          "name": "_coordinateTransformer",
-          "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
-        },
-        {
           "name": "_queryBuilderProperties",
           "providing": "dn_querybuilder.QueryBuilderProperties"
+        },
+        {
+          "name": "_queryController",
+          "providing": "dn_querybuilder.QueryController"
+        }
+      ]
+    },
+    {
+      "name": "QueryController",
+      "provides": [
+        "dn_querybuilder.QueryController"
+      ],
+      "references": [
+        {
+          "name": "_eventService",
+          "providing": "ct.framework.api.EventService"
+        },
+        {
+          "name": "_mapState",
+          "providing": "ct.mapping.map.MapState"
+        },
+        {
+          "name": "_dataModel",
+          "providing": "ct.resultcenter.DataModel"
+        },
+        {
+          "name": "_coordinateTransformer",
+          "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
         }
       ]
     },
@@ -214,20 +220,12 @@
           "providing": "ct.resultcenter.DataModel"
         },
         {
-          "name": "_logService",
-          "providing": "ct.framework.api.LogService"
-        },
-        {
           "name": "_replacer",
           "providing": "dn_replacer.Replacer"
         },
         {
           "name": "_metadataAnalyzer",
           "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "_coordinateTransformer",
-          "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
         },
         {
           "name": "_querygeometryTool",
@@ -243,6 +241,10 @@
         {
           "name": "_queryBuilderProperties",
           "providing": "dn_querybuilder.QueryBuilderProperties"
+        },
+        {
+          "name": "_queryController",
+          "providing": "dn_querybuilder.QueryController"
         }
       ]
     },

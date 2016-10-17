@@ -43,12 +43,11 @@ define([
             var mapState = this._mapState;
             var dataModel = this._dataModel;
             var replacer = this._replacer;
-            var logService = this._logService;
             var metadataAnalyzer = this._metadataAnalyzer;
             var querygeometryTool = this._querygeometryTool;
             var drawGeometryHandler = this._drawGeometryHandler;
-            var coordinateTransformer = this._coordinateTransformer;
             var queryBuilderProperties = this._queryBuilderProperties;
+            var queryController = this._queryController;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -58,12 +57,11 @@ define([
                 mapState: mapState,
                 dataModel: dataModel,
                 replacer: replacer,
-                logService: logService,
                 metadataAnalyzer: metadataAnalyzer,
                 querygeometryTool: querygeometryTool,
                 drawGeometryHandler: drawGeometryHandler,
-                coordinateTransformer: coordinateTransformer,
-                queryBuilderProperties: queryBuilderProperties
+                queryBuilderProperties: queryBuilderProperties,
+                queryController: queryController
             });
         },
         setDrawGeometryHandler: function (service) {

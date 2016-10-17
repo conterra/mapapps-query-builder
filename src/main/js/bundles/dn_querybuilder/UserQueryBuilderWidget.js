@@ -15,7 +15,6 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/_base/Deferred",
     "dojo/dom-construct",
     "dojo/_base/array",
     "dijit/_WidgetBase",
@@ -23,8 +22,6 @@ define([
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/UserQueryBuilderWidget.html",
     "./config/FieldWidget",
-    "dojo/_base/lang",
-    "dojo/json",
     "dojo/store/Memory",
     "dijit/registry",
     "dijit/form/TextBox",
@@ -37,11 +34,8 @@ define([
     "ct/async",
     "ct/_when",
     "ct/array",
-    "ct/store/Filter",
-    "ct/util/css",
-    "./MemorySelectionStore"
+    "ct/util/css"
 ], function (declare,
-             Deferred,
              domConstruct,
              d_array,
              _WidgetBase,
@@ -49,8 +43,6 @@ define([
              _WidgetsInTemplateMixin,
              templateStringContent,
              FieldWidget,
-             d_lang,
-             JSON,
              Memory,
              d_registry,
              TextBox,
@@ -63,9 +55,7 @@ define([
              ct_async,
              ct_when,
              ct_array,
-             Filter,
-             ct_css,
-             MemorySelectionStore) {
+             ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin, _Connect], {
         templateString: templateStringContent,
@@ -75,7 +65,6 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            // search stores
             var stores = this.stores;
             var storesInfo = this.storesInfo;
             var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
@@ -84,6 +73,9 @@ define([
                 this._init();
                 this._addField();
             }, this);
+        },
+        destroy: function () {
+            this.disconnect();
         },
         _init: function () {
             ct_css.switchHidden(this._geometryButton.domNode, true);
@@ -308,7 +300,7 @@ define([
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
-            this._query(store, customQuery, options);
+            this.queryController.query(store, customQuery, options, this.tool);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
@@ -372,48 +364,6 @@ define([
                     this._searchReplacer(value);
                 }
             }
-        },
-        _query: function (store, customQuery, options) {
-            options.fields = {geometry: 1};
-            ct_when(store.query(customQuery, options), function (result) {
-                var wkid = this.mapState.getSpatialReference().wkid;
-                var geometries = d_array.map(result, function (item) {
-                    return item.geometry;
-                });
-                ct_when(this.coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
-                    d_array.forEach(transformedGeometries, function (tg, index) {
-                        result[index].geometry = tg;
-                    });
-                    var memorySelectionStore = new MemorySelectionStore({
-                        masterStore: store,
-                        data: result,
-                        idProperty: store.idProperty
-                    });
-                    this.dataModel.setDatasource(memorySelectionStore);
-                    this._setProcessing(false);
-                }, this);
-            }, this);
-        },
-        _defaultQuery: function (store, customQuery, options) {
-            var filter = new Filter(store, customQuery, options);
-            ct_when(filter.query({}, {count: 0}).total, function (total) {
-                if (total) {
-                    this.dataModel.setDatasource(filter);
-                    this._setProcessing(false);
-                } else {
-                    this.logService.warn({
-                        id: 0,
-                        message: this.i18n.no_results_error
-                    });
-                    this._setProcessing(false);
-                }
-            }, function (e) {
-                this._setProcessing(false);
-                this.logService.warn({
-                    id: e.code,
-                    message: e
-                });
-            }, this);
         },
         saveInputGeometry: function (event) {
             this._geometry = event.getProperty("geometry");
