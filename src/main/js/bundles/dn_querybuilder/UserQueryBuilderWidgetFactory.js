@@ -39,7 +39,6 @@ define([
             var i18n = this._i18n.get();
             var tool = this._tool;
             var stores = this.stores;
-            var storesInfo = this.stores_info;
             var mapState = this._mapState;
             var dataModel = this._dataModel;
             var replacer = this._replacer;
@@ -48,12 +47,13 @@ define([
             var drawGeometryHandler = this._drawGeometryHandler;
             var queryBuilderProperties = this._queryBuilderProperties;
             var queryController = this._queryController;
+            var storeData = metadataAnalyzer.getStoreDataByIds(props.storeIds);
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
                 tool: tool,
                 stores: stores,
-                storesInfo: storesInfo,
+                storeData: storeData,
                 mapState: mapState,
                 dataModel: dataModel,
                 replacer: replacer,

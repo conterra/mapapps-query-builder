@@ -204,7 +204,8 @@
             "method": "saveInputGeometry"
           }
         ],
-        "widgetRole": "userQueryBuilderWidget"
+        "widgetRole": "userQueryBuilderWidget",
+        "storeIds": []
       },
       "propertiesConstructor": true,
       "instanceFactory": true,

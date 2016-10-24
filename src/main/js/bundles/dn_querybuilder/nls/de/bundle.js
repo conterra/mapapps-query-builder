@@ -17,6 +17,7 @@ define({
     bundleName: "Query Builder",
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte QueryTools zu erstellen",
     wizard: {
+        title: "Titel",
         userToolTitle: "Eigene Query erstellen",
         userToolToolTip: "Bauen Sie Ihre eigene Query",
         userStore: "Was suchen?",

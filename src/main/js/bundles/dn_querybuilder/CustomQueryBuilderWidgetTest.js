@@ -20,7 +20,11 @@ define([
              _Connect) {
     return declare([_Connect], {
         activate: function () {
-            this._customQueryBuilderWidget.setStores([this.store], [this.store_info]);
+            var store = this.store;
+            this._customQueryBuilderWidget.setStores([store], [{
+                name: "Stoerungen",
+                id: "stoerungen"
+            }]);
             this.connect(this._customQueryBuilderWidget, "_onQueryReady", function(customQuery) {
                 // do something
             });

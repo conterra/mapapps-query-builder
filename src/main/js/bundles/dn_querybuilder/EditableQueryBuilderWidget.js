@@ -61,18 +61,13 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            var stores = [this.store];
-            var storesInfo = [this.storesInfo];
-            var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
-            return ct_when(storeData, function (storeData) {
-                this.storeData = storeData;
-                if (storeData.length > 0) {
-                    this._init();
-                    ct_css.switchHidden(this._errorNode, true);
-                } else {
-                    ct_css.switchHidden(this._containerNode.domNode, true);
-                }
-            }, this);
+            var storeData = this.storeData;
+            if (storeData.length > 0) {
+                this._init();
+                ct_css.switchHidden(this._errorNode, true);
+            } else {
+                ct_css.switchHidden(this._containerNode.domNode, true);
+            }
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {

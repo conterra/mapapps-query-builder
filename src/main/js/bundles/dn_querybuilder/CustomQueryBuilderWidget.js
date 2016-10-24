@@ -68,7 +68,7 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            this.connect(this.tool, "onDeactivate", function() {
+            this.connect(this.tool, "onDeactivate", function () {
                 this._removeFields();
             });
         },
@@ -76,13 +76,11 @@ define([
             this._removeFields();
             this.disconnect();
         },
-        setStores: function (stores, storesInfo) {
-            var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
-            return ct_when(storeData, function (storeData) {
-                this.storeData = storeData;
-                this._init();
-                this._addField();
-            }, this);
+        setStores: function (stores, storeData) {
+            this.stores = stores;
+            this.storeData = storeData;
+            this._init();
+            this._addField();
         },
         _init: function () {
             ct_css.switchHidden(this._geometryButton.domNode, true);

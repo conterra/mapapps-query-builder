@@ -65,14 +65,9 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            var stores = this.stores;
-            var storesInfo = this.storesInfo;
-            var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
-            return ct_when(storeData, function (storeData) {
-                this.storeData = storeData;
-                this._init();
-                this._addField();
-            }, this);
+            //var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
+            this._init();
+            this._addField();
         },
         destroy: function () {
             this.disconnect();

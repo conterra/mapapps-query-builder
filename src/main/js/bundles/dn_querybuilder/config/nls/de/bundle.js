@@ -23,6 +23,15 @@ define({
         propertiesWidgetDescription: "Grundeinstellungen f\u00FCr das Query Builder Bundle",
         enableDistinctValues: "Distinct Values vorschlagen"
     },
+    userQueryBuilderWidgetStoreSelection: {
+        menuTitle: "UserQueryBuilderWidget",
+        description: "UserQueryBuilderWidget konfigurieren",
+        grid: {
+            "title": "Titel",
+            "description": "Beschreibung"
+        },
+        hint: "Bitte w\u00E4hlen Sie die Stores aus, die im UserQueryBuilderWidget zur Verf\u00FCgung stehen sollen"
+    },
     toolsBuilder: {
         toolsBuilderTitle: "Query Tools",
         toolsBuilderDescription: "Erstellen Sie hier Ihre eigenen Query Tools"

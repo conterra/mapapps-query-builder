@@ -18,6 +18,7 @@ define({
         bundleName: "Query Builder",
         bundleDescription: "Bundle to build custom query tools",
         wizard: {
+            title: "Title",
             userToolTitle: "Build Query",
             userToolToolTip: "Build your own Query",
             userStore: "What do you want to search?",

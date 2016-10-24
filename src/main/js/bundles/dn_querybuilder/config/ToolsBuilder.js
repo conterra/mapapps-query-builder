@@ -139,8 +139,7 @@ define([
                 }
                 // search stores
                 var stores = this._stores;
-                var storesInfo = this._stores_info;
-                var storeData = this._metadataAnalyzer.getStoreData(stores, storesInfo);
+                var storeData = this._metadataAnalyzer.getStoreData(stores);
                 var wizardI18n = this._i18n.get().widget.wizard;
                 return ct_when(storeData, function (storeData) {
                     return new ToolsBuilderWizard({

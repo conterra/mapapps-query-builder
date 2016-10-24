@@ -20,10 +20,16 @@ define([
     "dojo/_base/array",
     "ct/async",
     "ct/array",
-    "ct/_when"
-], function (d_lang, declare, Deferred, d_array, ct_async, ct_array, ct_when) {
+    "ct/_when",
+    "apprt/ServiceResolver"
+], function (d_lang, declare, Deferred, d_array, ct_async, ct_array, ct_when, ServiceResolver) {
 
     return declare([], {
+        activate: function (componentContext) {
+            var serviceResolver = this.serviceResolver = new ServiceResolver();
+            var bundleCtx = componentContext.getBundleContext();
+            serviceResolver.setBundleCtx(bundleCtx);
+        },
         constructor: function () {
         },
         getFields: function (store) {
@@ -62,33 +68,37 @@ define([
             }, this);
             return def;
         },
-        getStoreData: function (stores, storesInfo) {
-            return ct_async.join(d_array.map(stores, function (s) {
-                return s.getMetadata();
-            })).then(function (metadata) {
-                var result = [];
-                d_array.forEach(metadata, function (m, index) {
-                    if (m.fields && m.fields.length > 0) {
-                        var id = stores[index].id;
-                        var title;
-                        if (storesInfo) {
-                            var storeInfoTitle = ct_array.arraySearchFirst(storesInfo, {id: id}).title;
-                            title = storeInfoTitle || id;
-                        } else {
-                            title = m.title || id;
-                        }
-                        result.push({name: title, id: id});
-                    }
-                });
-                result.sort(function (a, b) {
-                    return a.name.localeCompare(b.name);
-                });
-                return result;
-            }, function (error) {
+        getStoreData: function (stores) {
+            var storeIds = [];
+            d_array.forEach(stores, function(store) {
+                storeIds.push(store.id);
             });
+            return this.getStoreDataByIds(storeIds);
         },
-        _getStoreInfoData: function (id) {
-            return ct_array.arraySearchFirst(this.storesInfo, {id: id});
+        getStoreDataByIds: function (storeIds) {
+            var storeData = [];
+            d_array.forEach(storeIds, function (storeId) {
+                var storeProperties = this.getStoreProperties(storeId);
+                if (storeProperties) {
+                    storeData.push(
+                        {
+                            name: storeProperties.title,
+                            id: storeId
+                        }
+                    );
+                }
+            }, this);
+            storeData.sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+            });
+            return storeData;
+        },
+        getStoreProperties: function (idOrStore) {
+            var resolver = this.serviceResolver;
+            if (typeof (idOrStore) === "string") {
+                return resolver.getServiceProperties("ct.api.Store", "(id=" + idOrStore + ")");
+            }
+            return resolver.getServiceProperties(idOrStore);
         }
     });
 });

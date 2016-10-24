@@ -24,6 +24,15 @@ define({
             propertiesWidgetDescription: "Basic settings for the Query Builder",
             enableDistinctValues: "Distinct Values"
         },
+        userQueryBuilderWidgetStoreSelection: {
+            menuTitle: "UserQueryBuilderWidget",
+            description: "Configure the UserQueryBuilderWidget",
+            grid: {
+                "title": "Title",
+                "description": "Description"
+            },
+            hint: "Please specify stores"
+        },
         toolsBuilder: {
             toolsBuilderTitle: "Query Tools",
             toolsBuilderDescription: "Create your own Query Tools"

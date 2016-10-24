@@ -43,8 +43,8 @@ define([
                 var props = event._properties;
                 var i18n = event._i18n.get();
                 var replacer = this._replacer;
-                var storesInfo = this._getStoreInfoData(store);
                 var metadataAnalyzer = this._metadataAnalyzer;
+                var storeData = metadataAnalyzer.getStoreDataByIds([store.id]);
                 var queryBuilderProperties = this._queryBuilderProperties;
                 var queryController = this._queryController;
                 var widget = this.widget = new EditableQueryBuilderWidget({
@@ -52,7 +52,7 @@ define([
                     i18n: i18n.wizard,
                     tool: tool,
                     store: store,
-                    storesInfo: storesInfo,
+                    storeData: storeData,
                     replacer: replacer,
                     metadataAnalyzer: metadataAnalyzer,
                     queryBuilderProperties: queryBuilderProperties,
@@ -95,9 +95,6 @@ define([
             if (tool) {
                 tool.set("processing", processing);
             }
-        },
-        _getStoreInfoData: function (store) {
-            return ct_array.arraySearchFirst(this.stores_info, {id: store.id});
         },
         _searchReplacer: function (o) {
             for (var i in o) {
