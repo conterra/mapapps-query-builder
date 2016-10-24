@@ -58,6 +58,9 @@ define([
              ct_css) {
     return declare([_WidgetBase, _TemplatedMixin,
         _WidgetsInTemplateMixin, _Connect], {
+        /**
+         * Widget to create complex queries without sending them to a store
+         */
         templateString: templateStringContent,
         baseClass: "userQueryBuilderWidget",
         postCreate: function () {
@@ -65,6 +68,9 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
+            this.connect(this.tool, "onDeactivate", function() {
+                this._removeFields();
+            });
         },
         destroy: function () {
             this._removeFields();
@@ -301,7 +307,8 @@ define([
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
-            this.queryController.query(store, customQuery, options, this.tool);
+            this._onQueryReady(customQuery);
+            this._setProcessing(false);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);

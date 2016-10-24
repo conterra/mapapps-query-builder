@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 define([
-    ".",
-    "./Query",
-    "./QueryController",
-    "./EditableQueryBuilderWidget",
-    "./UserQueryBuilderWidget",
-    "./UserQueryBuilderWidgetFactory",
-    "./CustomQueryBuilderWidget",
-    "./CustomQueryBuilderWidgetFactory",
-    "./CustomQueryBuilderWidgetTest",
-    "./QueryBuilderProperties",
-    "./MetadataAnalyzer",
-    "ct/tools/Tool",
-    "ct/store/Filter"
-], {});
+    "dojo/_base/declare",
+    "ct/_Connect"
+], function (declare,
+             _Connect) {
+    return declare([_Connect], {
+        activate: function () {
+            this._customQueryBuilderWidget.setStores([this.store], [this.store_info]);
+            this.connect(this._customQueryBuilderWidget, "_onQueryReady", function(customQuery) {
+                // do something
+            });
+        }
+    });
+});

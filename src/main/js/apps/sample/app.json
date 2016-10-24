@@ -970,6 +970,17 @@
                 }
               },
               {
+                "widgetRole": "customQueryBuilderWidget",
+                "window": {
+                  "marginBox": {
+                    "l": 20,
+                    "t": 100,
+                    "w": 632,
+                    "h": 300
+                  }
+                }
+              },
+              {
                 "widgetRole": "editableQueryBuilderWidget",
                 "window": {
                   "marginBox": {
@@ -1010,7 +1021,8 @@
             },
             "tools": [
               "fc_*",
-              "userQueryBuilderTool"
+              "userQueryBuilderTool"/*,
+              "customQueryBuilderTool"*/
             ]
           }
         ]

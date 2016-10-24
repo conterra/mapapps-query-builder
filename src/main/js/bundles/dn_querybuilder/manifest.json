@@ -48,6 +48,20 @@
       }
     },
     {
+      "role": "customQueryBuilderWidget",
+      "window": {
+        "title": "${wizard.customWindowTitle}",
+        "marginBox": {
+          "w": 632,
+          "h": 300
+        },
+        "dockTool": "customQueryBuilderTool",
+        "closable": true,
+        "minimizeOnClose": true,
+        "resizable": true
+      }
+    },
+    {
       "role": "editableQueryBuilderWidget",
       "window": {
         "title": "${wizard.editWindowTitle}",
@@ -249,7 +263,104 @@
       ]
     },
     {
-      "name": "newTool",
+      "name": "CustomQueryBuilderWidgetFactory",
+      "provides": [
+        "ct.framework.api.EventHandler",
+        "dijit.Widget"
+      ],
+      "properties": {
+        "Event-Topics": [
+          {
+            "topic": "ct/dn_querygeometry/GEOMETRY",
+            "method": "saveInputGeometry"
+          }
+        ],
+        "widgetRole": "customQueryBuilderWidget"
+      },
+      "propertiesConstructor": true,
+      "instanceFactory": true,
+      "immediate": true,
+      "references": [
+        {
+          "name": "eventService",
+          "providing": "ct.framework.api.EventService"
+        },
+        {
+          "name": "stores",
+          "providing": "ct.api.Store",
+          "cardinality": "1..n",
+          "filter": "(useIn=selection)"
+        },
+        {
+          "name": "_mapState",
+          "providing": "ct.mapping.map.MapState"
+        },
+        {
+          "name": "_tool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=customQueryBuilderTool)"
+        },
+        {
+          "name": "_dataModel",
+          "providing": "ct.resultcenter.DataModel"
+        },
+        {
+          "name": "_replacer",
+          "providing": "dn_replacer.Replacer"
+        },
+        {
+          "name": "_metadataAnalyzer",
+          "providing": "dn_querybuilder.MetadataAnalyzer"
+        },
+        {
+          "name": "_querygeometryTool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=querygeometryTool)",
+          "cardinality": "0..1"
+        },
+        {
+          "name": "_drawGeometryHandler",
+          "providing": "dn_querygeometry.DrawGeometryHandler",
+          "cardinality": "0..1"
+        },
+        {
+          "name": "_queryBuilderProperties",
+          "providing": "dn_querybuilder.QueryBuilderProperties"
+        },
+        {
+          "name": "_queryController",
+          "providing": "dn_querybuilder.QueryController"
+        }
+      ]
+    },
+    {
+      "name": "CustomQueryBuilderWidgetTest",
+      "provides": [
+        "ct.framework.api.EventHandler"
+      ],
+      "properties": {
+
+      },
+      "propertiesConstructor": true,
+      "references": [
+        {
+          "name": "eventService",
+          "providing": "ct.framework.api.EventService"
+        },
+        {
+          "name": "store",
+          "providing": "ct.api.Store",
+          "filter": "(id=stoerungen)"
+        },
+        {
+          "name": "_customQueryBuilderWidget",
+          "providing": "dijit.Widget",
+          "filter": "(widgetRole=customQueryBuilderWidget)"
+        }
+      ]
+    },
+    {
+      "name": "UserQueryBuilderTool",
       "impl": "ct/tools/Tool",
       "provides": [
         "ct.tools.Tool"
@@ -258,8 +369,24 @@
       "properties": {
         "id": "userQueryBuilderTool",
         "toolRole": "toolset",
-        "title": "${wizard.toolTitle}",
-        "tooltip": "${wizard.toolToolTip}",
+        "title": "${wizard.userToolTitle}",
+        "tooltip": "${wizard.userToolToolTip}",
+        "togglable": true,
+        "iconClass": "icon-custom-info-help"
+      }
+    },
+    {
+      "name": "CustomQueryBuilderTool",
+      "impl": "ct/tools/Tool",
+      "provides": [
+        "ct.tools.Tool"
+      ],
+      "propertiesConstructor": true,
+      "properties": {
+        "id": "customQueryBuilderTool",
+        "toolRole": "toolset",
+        "title": "${wizard.customToolTitle}",
+        "tooltip": "${wizard.customToolToolTip}",
         "togglable": true,
         "iconClass": "icon-custom-info-help"
       }

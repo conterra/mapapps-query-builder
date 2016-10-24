@@ -372,7 +372,8 @@ define([
                     store: this._getSelectedStoreObj(storeId),
                     storeData: storeData,
                     i18n: this.i18n.fields,
-                    type: "admin"
+                    type: "admin",
+                    queryBuilderProperties: this.queryBuilderProperties
                 });
                 domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
                 this._changeChildrenButtons();
