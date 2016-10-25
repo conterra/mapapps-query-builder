@@ -402,6 +402,7 @@ define([
             });
         },
         _createBuilderGUI: function (textAreaCustomQuery) {
+            var properties = this.queryBuilderProperties._properties;
             ct_css.switchHidden(this._spatialRelationDiv, true);
             var geometryStore = new Memory({
                 data: [
@@ -469,7 +470,7 @@ define([
                     maxHeight: this.maxComboBoxHeight
                 }, this._editableNode);
             }
-            var matchStore = this._matchStore = new Memory({
+            var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
                     {name: this.i18n.or, id: "$or"}]
@@ -477,7 +478,7 @@ define([
             if (!this._matchSelect) {
                 this._matchSelect = new FilteringSelect({
                     name: "match",
-                    value: "$and",
+                    value: properties.defaultMatchValue,
                     store: matchStore,
                     searchAttr: "name",
                     style: "width: 80px;",

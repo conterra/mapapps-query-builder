@@ -22,7 +22,8 @@ define({
         propertiesWidget: {
             propertiesWidgetTitle: "Base Config",
             propertiesWidgetDescription: "Basic settings for the Query Builder",
-            enableDistinctValues: "Distinct Values"
+            enableDistinctValues: "Use distinct values",
+            defaultMatchValue: "Default match value"
         },
         userQueryBuilderWidgetStoreSelection: {
             menuTitle: "UserQueryBuilderWidget",

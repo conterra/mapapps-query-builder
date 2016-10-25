@@ -22,7 +22,7 @@ define([
     "./UserQueryBuilderWidgetFactory",
     "./CustomQueryBuilderWidget",
     "./CustomQueryBuilderWidgetFactory",
-    "./CustomQueryBuilderWidgetTest",
+    "./CustomQueryBuilderWidgetSample",
     "./QueryBuilderProperties",
     "./MetadataAnalyzer",
     "ct/tools/Tool",

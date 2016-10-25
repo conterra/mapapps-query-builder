@@ -99,7 +99,8 @@
       ],
       "propertiesConstructor": true,
       "properties": {
-        "enableDistinctValues": true
+        "enableDistinctValues": true,
+        "defaultMatchValue": "$and"
       }
     },
     {
@@ -334,8 +335,8 @@
         }
       ]
     },
-    {
-      "name": "CustomQueryBuilderWidgetTest",
+    /*{
+      "name": "CustomQueryBuilderWidgetSample",
       "provides": [
         "ct.framework.api.EventHandler"
       ],
@@ -359,7 +360,7 @@
           "filter": "(widgetRole=customQueryBuilderWidget)"
         }
       ]
-    },
+    },*/
     {
       "name": "UserQueryBuilderTool",
       "impl": "ct/tools/Tool",

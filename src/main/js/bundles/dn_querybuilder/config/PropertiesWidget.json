@@ -12,6 +12,25 @@
             "type": "checkbox",
             "label": "${propertiesWidget.enableDistinctValues}",
             "field": "enableDistinctValues"
+        },
+        {
+            "type": "selectbox",
+            "field": "defaultMatchValue",
+            "label": "${propertiesWidget.defaultMatchValue}",
+            "searchAttribute": "name",
+            "labelAttribute": "${name}",
+            "values": [{
+                "name": "${widget.wizard.and}",
+                "value": "$and"
+            }, {
+                "name": "${widget.wizard.or}",
+                "value": "$or"
+            }
+            ],
+            "max": 2,
+            "size": {
+                "w": 150
+            }
         }
     ]
 }

@@ -21,7 +21,8 @@ define({
     propertiesWidget: {
         propertiesWidgetTitle: "Grundeinstellungen",
         propertiesWidgetDescription: "Grundeinstellungen f\u00FCr das Query Builder Bundle",
-        enableDistinctValues: "Distinct Values vorschlagen"
+        enableDistinctValues: "Distinct Values vorschlagen",
+        defaultMatchValue: "Standard-Vergleichsoperator"
     },
     userQueryBuilderWidgetStoreSelection: {
         menuTitle: "UserQueryBuilderWidget",

@@ -369,7 +369,8 @@
     },
     "dn_querybuilder": {
       "QueryBuilderProperties": {
-        "enableDistinctValues": true
+        "enableDistinctValues": true,
+        "defaultMatchValue": "$or"
       },
       "UserQueryBuilderWidgetFactory": {
         "storeIds": [

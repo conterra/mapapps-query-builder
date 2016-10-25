@@ -74,7 +74,8 @@
         "pid": "dn_querybuilder-QueryBuilderProperties",
         "id": "propertiesWidget",
         "defaultProperties": {
-          "enableDistinctValues": true
+          "enableDistinctValues": true,
+          "defaultMatchValue": "$and"
         },
         "description": "${propertiesWidget.propertiesWidgetDescription}"
       },

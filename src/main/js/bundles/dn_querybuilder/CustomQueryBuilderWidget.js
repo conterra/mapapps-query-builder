@@ -83,9 +83,12 @@ define([
             this._addField();
         },
         _init: function () {
+            var properties = this.queryBuilderProperties._properties;
             ct_css.switchHidden(this._geometryButton.domNode, true);
             ct_css.switchHidden(this._spatialRelationDiv, true);
             ct_css.switchHidden(this._useOnlyGeometryDiv, true);
+            if (this.storeData.length <= 1)
+                ct_css.switchHidden(this._filteringDiv, true);
             this.maxComboBoxHeight = 160;
             var store = new Memory({
                 data: this.storeData
@@ -169,7 +172,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: "$and",
+                value: properties.defaultMatchValue,
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 155px;",

@@ -141,6 +141,7 @@ define([
             }, this);
         },
         _createGUISettings: function () {
+            var properties = this.queryBuilderProperties._properties;
             var geometryStore = new Memory({
                 data: [
                     {name: this.i18n.userGeometryEverywhere, id: false},
@@ -166,7 +167,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: "$and",
+                value: properties.defaultMatchValue,
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 155px;",

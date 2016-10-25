@@ -65,7 +65,6 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            //var storeData = this.metadataAnalyzer.getStoreData(stores, storesInfo);
             this._init();
             this._addField();
         },
@@ -73,6 +72,7 @@ define([
             this.disconnect();
         },
         _init: function () {
+            var properties = this.queryBuilderProperties._properties;
             ct_css.switchHidden(this._geometryButton.domNode, true);
             ct_css.switchHidden(this._spatialRelationDiv, true);
             ct_css.switchHidden(this._useOnlyGeometryDiv, true);
@@ -159,7 +159,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: "$and",
+                value: properties.defaultMatchValue,
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 155px;",
