@@ -370,7 +370,7 @@
     "dn_querybuilder": {
       "QueryBuilderProperties": {
         "enableDistinctValues": true,
-        "defaultMatchValue": "$or"
+        "defaultMatchValue": "$and"
       },
       "UserQueryBuilderWidgetFactory": {
         "storeIds": [

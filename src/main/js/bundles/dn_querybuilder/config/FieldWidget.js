@@ -19,6 +19,7 @@ define([
     "dojo/_base/Deferred",
     "dojo/parser",
     "dojo/_base/array",
+    "dojo/number",
     "ct/_Connect",
     "ct/_when",
     "ct/util/css",
@@ -47,6 +48,7 @@ define([
              Deferred,
              parser,
              d_array,
+             d_number,
              _Connect,
              ct_when,
              ct_css,
@@ -188,7 +190,7 @@ define([
                 disabled: this.fieldSelectDisabled
             }, this._fieldNode);
             var i18n = this.i18n;
-            var notStore = this._notStore = new Memory({
+            var notStore = new Memory({
                 data: [
                     {id: false, name: i18n.shouldBeTrue},
                     {id: true, name: i18n.shouldBeFalse}
@@ -543,7 +545,13 @@ define([
                 if (result === undefined || result === null) {
                     result = this._valueField.displayedValue;
                 } else {
-                    result = Number(result);
+                    if (typeof(result) !== "number") {
+                        var resultOld = result;
+                        result = Number(result);
+                        if (!result) {
+                            result = d_number.parse(resultOld);
+                        }
+                    }
                 }
             }
             return result;
