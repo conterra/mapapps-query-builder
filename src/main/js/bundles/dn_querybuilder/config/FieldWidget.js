@@ -305,7 +305,11 @@ define([
                         result.sort();
                         var distinctValueData = [];
                         d_array.forEach(result, function (distinctValue) {
-                            distinctValueData.push({id: distinctValue});
+                            if (typeof(distinctValue) === "number") {
+                                distinctValueData.push({id: d_number.format(distinctValue)});
+                            } else {
+                                distinctValueData.push({id: distinctValue});
+                            }
                         });
                         var distinctValueStore = new Memory({
                             data: distinctValueData
@@ -544,14 +548,9 @@ define([
             } else if (fieldType === "number" || fieldType === "integer" || fieldType === "single" || fieldType === "double") {
                 if (result === undefined || result === null) {
                     result = this._valueField.displayedValue;
-                } else {
-                    if (typeof(result) !== "number") {
-                        var resultOld = result;
-                        result = Number(result);
-                        if (!result) {
-                            result = d_number.parse(resultOld);
-                        }
-                    }
+                }
+                else if (typeof(result) === "string") {
+                    result = d_number.parse(result);
                 }
             }
             return result;
