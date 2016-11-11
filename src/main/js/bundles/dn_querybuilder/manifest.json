@@ -189,6 +189,10 @@
         {
           "name": "_coordinateTransformer",
           "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
+        },
+        {
+          "name": "_logService",
+          "providing": "ct.framework.api.LogService"
         }
       ]
     },

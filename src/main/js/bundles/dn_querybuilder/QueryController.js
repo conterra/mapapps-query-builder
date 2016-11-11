@@ -27,25 +27,43 @@ define([
              Filter,
              MemorySelectionStore) {
     return declare([], {
+        activate: function () {
+            this.inherited(arguments);
+            this.i18n = this._i18n.get().wizard;
+        },
         query: function (store, customQuery, options, tool) {
             options.fields = {geometry: 1};
             ct_when(store.query(customQuery, options), function (result) {
-                var wkid = this._mapState.getSpatialReference().wkid;
-                var geometries = d_array.map(result, function (item) {
-                    return item.geometry;
-                });
-                ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
-                    d_array.forEach(transformedGeometries, function (tg, index) {
-                        result[index].geometry = tg;
+                if (result.total > 0) {
+                    var wkid = this._mapState.getSpatialReference().wkid;
+                    var geometries = d_array.map(result, function (item) {
+                        return item.geometry;
                     });
-                    var memorySelectionStore = new MemorySelectionStore({
-                        masterStore: store,
-                        data: result,
-                        idProperty: store.idProperty
+                    ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
+                        d_array.forEach(transformedGeometries, function (tg, index) {
+                            result[index].geometry = tg;
+                        });
+                        var memorySelectionStore = new MemorySelectionStore({
+                            masterStore: store,
+                            data: result,
+                            idProperty: store.idProperty
+                        });
+                        this._dataModel.setDatasource(memorySelectionStore);
+                        this._setProcessing(tool, false);
+                    }, this);
+                } else {
+                    this._logService.warn({
+                        id: 0,
+                        message: this.i18n.no_results_error
                     });
-                    this._dataModel.setDatasource(memorySelectionStore);
                     this._setProcessing(tool, false);
-                }, this);
+                }
+            }, function (e) {
+                this._logService.error({
+                    id: e.code,
+                    message: e
+                });
+                this._setProcessing(tool, false);
             }, this);
         },
         defaultQuery: function (store, customQuery, options, tool) {
@@ -63,7 +81,7 @@ define([
                 }
             }, function (e) {
                 this._setProcessing(tool, false);
-                this._logService.warn({
+                this._logService.error({
                     id: e.code,
                     message: e
                 });

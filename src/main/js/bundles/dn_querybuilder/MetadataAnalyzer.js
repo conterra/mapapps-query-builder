@@ -38,7 +38,7 @@ define([
                 var metadata = store.getMetadata();
             }
             catch (e) {
-                this._logService.warn({
+                this._logService.error({
                     id: 0,
                     message: e
                 });
