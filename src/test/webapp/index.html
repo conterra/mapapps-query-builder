@@ -42,6 +42,9 @@
         </script>
         <script type="text/javascript" src="@@client.config.initjs@@"></script>
         <script type="text/javascript">
+            $apprt.changeConfig({ct: {
+                amdPackages: ["apprt@^3.6.0"]
+            }});  
             $apprt.load(function(Launcher) {
                 new Launcher({configLocation: "localapps"}).launchAppFromParam({
                     param: "app",

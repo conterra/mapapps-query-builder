@@ -1,6 +1,7 @@
 {
   "properties": {
-    "title": "Query Builder / OpenWeatherMap Datastore - Sample"
+    "title": "Query Builder / OpenWeatherMap Datastore - Sample",
+    "amdPackages": "apprt@^3.6.0"
   },
   "load": {
     "bundleLocations": [
@@ -8,26 +9,26 @@
       "bundles"
     ],
     "allowedBundles": [
-      "wizard",
-      "contentviewer",
-      "coordinatetransformer",
-      "geometryservice",
-      "notifier",
-      "resultcenter",
-      "agssearch",
-      "console",
-      "system",
-      "splashscreen",
-      "map",
-      "themes",
-      "toolrules",
-      "templates",
-      "templatelayout",
-      "windowmanager",
-      "toolset",
-      "basemaptoggler",
+      "wizard@^3.6.0",
+      "contentviewer@^3.6.0",
+      "coordinatetransformer@^3.6.0",
+      "geometryservice@^3.6.0",
+      "notifier@^3.6.0",
+      "resultcenter@^3.6.0",
+      "agssearch@^3.6.0",
+      "console@^3.6.0",
+      "system@^3.6.0",
+      "splashscreen@^3.6.0",
+      "map@^3.6.0",
+      "themes@^3.6.0",
+      "toolrules@^3.6.0",
+      "templates@^3.6.0",
+      "templatelayout@^3.6.0",
+      "windowmanager@^3.6.0",
+      "toolset@^3.6.0",
+      "basemaptoggler@^3.6.0",
       "dn_querybuilder",
-      "banner",
+      "banner@^3.6.0",
       "dn_openweathermapdatastore"
     ]
   },
