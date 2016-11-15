@@ -15,13 +15,16 @@
       "policy": "optional"
     },
     {
-      "name": "resultcenter@^3.6.0"
+      "name": "resultcenter",
+      "version": "^3.6.0"
     },
     {
-      "name": "notifier@^3.6.0"
+      "name": "notifier",
+      "version": "^3.6.0"
     },
     {
-      "name": "agssearch@^3.6.0"
+      "name": "agssearch",
+      "version": "^3.6.0"
     }
   ],
   "CSS-Themes-Extension": [
