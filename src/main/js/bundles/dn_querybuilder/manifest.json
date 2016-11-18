@@ -16,15 +16,15 @@
     },
     {
       "name": "resultcenter",
-      "version": "^3.6.0"
+      "version": "^3.2.1"
     },
     {
       "name": "notifier",
-      "version": "^3.6.0"
+      "version": "^3.2.1"
     },
     {
       "name": "agssearch",
-      "version": "^3.6.0"
+      "version": "^3.2.1"
     }
   ],
   "CSS-Themes-Extension": [

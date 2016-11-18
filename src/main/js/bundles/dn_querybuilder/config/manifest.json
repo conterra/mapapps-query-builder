@@ -6,13 +6,16 @@
   "Bundle-Vendor": "con terra GmbH",
   "Require-Bundle": [
     {
-      "name": "dataform"
+      "name": "dataform",
+      "version": "^3.2.1"
     },
     {
-      "name": "wizard"
+      "name": "wizard",
+      "version": "^3.2.1"
     },
     {
-      "name": "agssearch"
+      "name": "agssearch",
+      "version": "^3.2.1"
     }
   ],
   "CSS-Themes-Extension": [
