@@ -413,7 +413,11 @@ define([
             var i18n = this.i18n;
             return new Memory({
                 data: [
-                    {id: "$eq", name: i18n.is}
+                    {id: "$eq", name: i18n.is},
+                    {id: "$gt", name: i18n.is_greater_than},
+                    {id: "$gte", name: i18n.is_greater_or_equal},
+                    {id: "$lt", name: i18n.is_less_than},
+                    {id: "$lte", name: i18n.is_less_or_equal}
                 ]
             });
         },
