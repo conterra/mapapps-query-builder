@@ -74,7 +74,43 @@
             "selection"
           ],
           "filterOptions": {
-            "suggestContains": true
+            "suggestContains": true,
+            "metadata": {
+              "fields": [
+                {
+                  "name": "OBJECTID",
+                  "title": "ID"
+                },
+                {
+                  "name": "aeroway",
+                  "title": "AEROWAY"
+                },
+                {
+                  "name": "OSMID",
+                  "title": "OSM ID"
+                },
+                {
+                  "name": "osm_name",
+                  "title": "NAME"
+                },
+                {
+                  "name": "osm_ref",
+                  "title": "REF"
+                },
+                {
+                  "name": "osm_type",
+                  "title": "TYPE"
+                },
+                {
+                  "name": "osm_operator",
+                  "title": "OPERATOR"
+                },
+                {
+                  "name": "osm_website",
+                  "title": "WEBSITE"
+                }
+              ]
+            }
           },
           "omniSearchTypingDelay": 500,
           "omniSearchPageSize": 20,
