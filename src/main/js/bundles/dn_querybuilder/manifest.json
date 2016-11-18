@@ -295,12 +295,6 @@
           "providing": "ct.framework.api.EventService"
         },
         {
-          "name": "stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        },
-        {
           "name": "_mapState",
           "providing": "ct.mapping.map.MapState"
         },
