@@ -15,8 +15,8 @@
         },
         {
             "type": "selectbox",
-            "field": "defaultMatchValue",
-            "label": "${propertiesWidget.defaultMatchValue}",
+            "field": "defaultRelationalOperator",
+            "label": "${propertiesWidget.defaultRelationalOperator}",
             "searchAttribute": "name",
             "labelAttribute": "${name}",
             "values": [{

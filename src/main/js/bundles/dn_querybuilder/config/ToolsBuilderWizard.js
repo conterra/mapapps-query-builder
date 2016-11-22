@@ -212,11 +212,11 @@ define([
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
                 var fieldId = widget.getSelectedField();
-                var compareId = widget.getSelectedCompare();
+                var relationalOperatorId = widget.getSelectedRelationalOperator();
                 var not = widget.getSelectedNot();
                 var value = widget.getValue();
                 var obj1 = {};
-                obj1[compareId] = value;
+                obj1[relationalOperatorId] = value;
                 var obj2 = {};
                 obj2[fieldId] = obj1;
                 if (not) {
@@ -317,7 +317,7 @@ define([
         },
         _addDataField: function (field, editOptions) {
             var fieldId;
-            var compareId;
+            var relationalOperatorId;
             var value;
             var not;
             if (field.$not) {
@@ -325,8 +325,8 @@ define([
                 for (var a in field.$not) {
                     fieldId = a;
                     for (var b in field.$not[fieldId]) {
-                        compareId = b;
-                        value = field.$not[fieldId][compareId];
+                        relationalOperatorId = b;
+                        value = field.$not[fieldId][relationalOperatorId];
                     }
                 }
             } else {
@@ -334,8 +334,8 @@ define([
                 for (var a in field) {
                     fieldId = a;
                     for (var b in field[fieldId]) {
-                        compareId = b;
-                        value = field[fieldId][compareId];
+                        relationalOperatorId = b;
+                        value = field[fieldId][relationalOperatorId];
                     }
                 }
             }
@@ -351,7 +351,7 @@ define([
                     storeData: storeData,
                     i18n: this.i18n.fields,
                     fieldId: fieldId,
-                    compareId: compareId,
+                    relationalOperatorId: relationalOperatorId,
                     value: value,
                     not: not,
                     editOptions: editOptions,
@@ -478,7 +478,7 @@ define([
             if (!this._matchSelect) {
                 this._matchSelect = new FilteringSelect({
                     name: "match",
-                    value: properties.defaultMatchValue,
+                    value: properties.defaultRelationalOperator,
                     store: matchStore,
                     searchAttr: "name",
                     style: "width: 80px;",

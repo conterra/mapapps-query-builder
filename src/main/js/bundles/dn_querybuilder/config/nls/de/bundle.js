@@ -22,7 +22,7 @@ define({
         propertiesWidgetTitle: "Grundeinstellungen",
         propertiesWidgetDescription: "Grundeinstellungen f\u00FCr das Query Builder Bundle",
         enableDistinctValues: "Distinct Values vorschlagen",
-        defaultMatchValue: "Standard-Vergleichsoperator"
+        defaultRelationalOperator: "Standard-Vergleichsoperator"
     },
     userQueryBuilderWidgetStoreSelection: {
         menuTitle: "UserQueryBuilderWidget",

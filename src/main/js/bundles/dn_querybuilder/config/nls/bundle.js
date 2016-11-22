@@ -23,7 +23,7 @@ define({
             propertiesWidgetTitle: "Base Config",
             propertiesWidgetDescription: "Basic settings for the Query Builder",
             enableDistinctValues: "Use distinct values",
-            defaultMatchValue: "Default match value"
+            defaultRelationalOperator: "Default relational operator"
         },
         userQueryBuilderWidgetStoreSelection: {
             menuTitle: "UserQueryBuilderWidget",

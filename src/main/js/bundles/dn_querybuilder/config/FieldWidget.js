@@ -84,31 +84,31 @@ define([
                 if (this.type === "user") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
-                    this._compareSelectWidth = "width: 120px;";
+                    this._relationalOperatorSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
                     this.notSelectDisabled = false;
                     this.fieldSelectDisabled = false;
-                    this.compareSelectDisabled = false;
+                    this.relationalOperatorSelectDisabled = false;
                     this.valueSelectDisabled = false;
                 } else if (this.type === "editing") {
                     this._fieldSelectWidth = "width: 140px;";
                     this._valueSelectWidth = "width: 120px;";
-                    this._compareSelectWidth = "width: 120px;";
+                    this._relationalOperatorSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
                     if (this.editOptions) {
                         this.notSelectDisabled = !this.editOptions.not;
                         this.fieldSelectDisabled = !this.editOptions.field;
-                        this.compareSelectDisabled = !this.editOptions.compare;
+                        this.relationalOperatorSelectDisabled = !this.editOptions.compare;
                         this.valueSelectDisabled = !this.editOptions.value;
                     }
                 } else {
                     this._fieldSelectWidth = "width: 180px;";
                     this._valueSelectWidth = "width: 200px;";
-                    this._compareSelectWidth = "width: 120px;";
+                    this._relationalOperatorSelectWidth = "width: 120px;";
                     this._notSelectWidth = "width: 100px;";
                     this.notSelectDisabled = false;
                     this.fieldSelectDisabled = false;
-                    this.compareSelectDisabled = false;
+                    this.relationalOperatorSelectDisabled = false;
                     this.valueSelectDisabled = false;
                 }
                 this.maxComboBoxHeight = 200;
@@ -224,15 +224,15 @@ define([
             while (this._valueNode.firstChild) {
                 this._valueNode.removeChild(this._valueNode.firstChild);
             }
-            var compareSelect = this._compareSelect;
-            var compareStore, valueSelect;
+            var relationalOperatorSelect = this._relationalOperatorSelect;
+            var relationalOperatorStore, valueSelect;
             if (codedValues.length > 0) {
-                compareStore = this._compareStore = this._createCodedValueStore();
-                if (this._compareSelect) {
-                    compareSelect.set("store", compareStore);
-                    compareSelect.set("value", this.compareId || "$eq");
+                relationalOperatorStore = this._createCodedValueRelationalOperatorStore();
+                if (this._relationalOperatorSelect) {
+                    relationalOperatorSelect.set("store", relationalOperatorStore);
+                    relationalOperatorSelect.set("value", this.relationalOperatorId || "$eq");
                 } else {
-                    this._createCompareSelect("$eq", compareStore);
+                    this._createRelationalOperatorSelect("$eq", relationalOperatorStore);
                 }
                 var codedValueData = [];
                 d_array.forEach(codedValues, function (codedValue) {
@@ -255,36 +255,36 @@ define([
                 valueSelect.startup();
             } else {
                 if (type === "string") {
-                    compareStore = this._createStringStore();
-                    if (this._compareSelect) {
-                        compareSelect.set("store", compareStore);
-                        compareSelect.set("value", this.compareId || "$eq");
+                    relationalOperatorStore = this._createStringRelationalOperatorStore();
+                    if (this._relationalOperatorSelect) {
+                        relationalOperatorSelect.set("store", relationalOperatorStore);
+                        relationalOperatorSelect.set("value", this.relationalOperatorId || "$eq");
                     } else {
-                        this._createCompareSelect("$eq", compareStore);
+                        this._createRelationalOperatorSelect("$eq", relationalOperatorStore);
                     }
                 } else if (type === "number" || type === "integer" || type === "single" || type === "double") {
-                    compareStore = this._createNumberStore();
-                    if (this._compareSelect) {
-                        compareSelect.set("store", compareStore);
-                        compareSelect.set("value", this.compareId || "$eq");
+                    relationalOperatorStore = this._createNumberRelationalOperatorStore();
+                    if (this._relationalOperatorSelect) {
+                        relationalOperatorSelect.set("store", relationalOperatorStore);
+                        relationalOperatorSelect.set("value", this.relationalOperatorId || "$eq");
                     } else {
-                        this._createCompareSelect("$eq", compareStore);
+                        this._createRelationalOperatorSelect("$eq", relationalOperatorStore);
                     }
                 } else if (type === "boolean") {
-                    compareStore = this._createBooleanStore();
-                    if (this._compareSelect) {
-                        compareSelect.set("store", compareStore);
-                        compareSelect.set("value", this.compareId || "$eq");
+                    relationalOperatorStore = this._createBooleanRelationalOperatorStore();
+                    if (this._relationalOperatorSelect) {
+                        relationalOperatorSelect.set("store", relationalOperatorStore);
+                        relationalOperatorSelect.set("value", this.relationalOperatorId || "$eq");
                     } else {
-                        this._createCompareSelect("$eq", compareStore);
+                        this._createRelationalOperatorSelect("$eq", relationalOperatorStore);
                     }
                 } else if (type === "date") {
-                    compareStore = this._createDateStore();
-                    if (this._compareSelect) {
-                        compareSelect.set("store", compareStore);
-                        compareSelect.set("value", this.compareId || "$lte");
+                    relationalOperatorStore = this._createDateRelationalOperatorStore();
+                    if (this._relationalOperatorSelect) {
+                        relationalOperatorSelect.set("store", relationalOperatorStore);
+                        relationalOperatorSelect.set("value", this.relationalOperatorId || "$lte");
                     } else {
-                        this._createCompareSelect("$lte", compareStore);
+                        this._createRelationalOperatorSelect("$lte", relationalOperatorStore);
                     }
                 }
                 if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
@@ -371,21 +371,21 @@ define([
                     domConstruct.place(valueSelect.domNode, this._valueNode);
                 }
             }
-            if (this.compareSelectDisabled)
-                this._compareSelect.set("disabled", this.compareSelectDisabled);
+            if (this.relationalOperatorSelectDisabled)
+                this._relationalOperatorSelect.set("disabled", this.relationalOperatorSelectDisabled);
             if (this.valueSelectDisabled)
                 this._valueField.set("disabled", this.valueSelectDisabled);
         },
-        _createCompareSelect: function (value, compareStore) {
-            var compareSelect = this._compareSelect = new FilteringSelect({
+        _createRelationalOperatorSelect: function (value, compareStore) {
+            var relationalOperatorSelect = this._relationalOperatorSelect = new FilteringSelect({
                 name: "compares",
-                value: this.compareId || value,
+                value: this.relationalOperatorId || value,
                 store: compareStore,
                 searchAttr: "name",
-                style: this._compareSelectWidth,
+                style: this._relationalOperatorSelectWidth,
                 maxHeight: this.maxComboBoxHeight
             }, this._compareNode);
-            compareSelect.startup();
+            relationalOperatorSelect.startup();
         },
         _getDistinctValues: function (selectedField) {
             if (!this.store.target) {
@@ -409,7 +409,7 @@ define([
                 return distinctValues;
             }, this);
         },
-        _createCodedValueStore: function () {
+        _createCodedValueRelationalOperatorStore: function () {
             var i18n = this.i18n;
             return new Memory({
                 data: [
@@ -421,7 +421,7 @@ define([
                 ]
             });
         },
-        _createBooleanStore: function () {
+        _createBooleanRelationalOperatorStore: function () {
             var i18n = this.i18n;
             return new Memory({
                 data: [
@@ -429,7 +429,7 @@ define([
                 ]
             });
         },
-        _createStringStore: function () {
+        _createStringRelationalOperatorStore: function () {
             var i18n = this.i18n;
             return new Memory({
                 data: [
@@ -439,7 +439,7 @@ define([
                 ]
             });
         },
-        _createNumberStore: function () {
+        _createNumberRelationalOperatorStore: function () {
             var i18n = this.i18n;
             return new Memory({
                 data: [
@@ -451,7 +451,7 @@ define([
                 ]
             });
         },
-        _createDateStore: function () {
+        _createDateRelationalOperatorStore: function () {
             var i18n = this.i18n;
             return new Memory({
                 data: [
@@ -518,8 +518,8 @@ define([
             }, this);
             return result;
         },
-        getSelectedCompare: function () {
-            return this._compareSelect.value;
+        getSelectedRelationalOperator: function () {
+            return this._relationalOperatorSelect.value;
         },
         getSelectedNot: function () {
             return this._notSelect.value;

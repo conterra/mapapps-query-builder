@@ -103,7 +103,7 @@
       "propertiesConstructor": true,
       "properties": {
         "enableDistinctValues": true,
-        "defaultMatchValue": "$and"
+        "defaultRelationalOperator": "$and"
       }
     },
     {

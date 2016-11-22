@@ -173,7 +173,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: properties.defaultMatchValue,
+                value: properties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 155px;",
@@ -348,11 +348,11 @@ define([
             d_array.forEach(children, function (child) {
                 var widget = d_registry.getEnclosingWidget(child);
                 var fieldId = widget.getSelectedField();
-                var compareId = widget.getSelectedCompare();
+                var relationalOperatorId = widget.getSelectedRelationalOperator();
                 var not = widget.getSelectedNot();
                 var value = widget.getValue();
                 var obj1 = {};
-                obj1[compareId] = value;
+                obj1[relationalOperatorId] = value;
                 var obj2 = {};
                 obj2[fieldId] = obj1;
                 if (not) {
