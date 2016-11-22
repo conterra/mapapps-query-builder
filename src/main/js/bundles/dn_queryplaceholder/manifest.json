@@ -9,7 +9,7 @@
     "Require-Bundle": [
         {
             "name": "authentication",
-            "version": "^3.6.0",
+            "version": "^3.2.1",
             "policy": "optional"
         }
     ],
