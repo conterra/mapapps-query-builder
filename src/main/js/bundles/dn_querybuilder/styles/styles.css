@@ -14,28 +14,76 @@
  * limitations under the License.
  */
 
-.userQueryBuilderWidget .inputContainer label,
-.editableQueryBuilderWidget .inputContainer label {
+.queryBuilderWidget .noPadding,
+.editableQueryBuilderWidget .noPadding {
+    padding: 0;
+}
+
+.userQueryBuilderWidget .centerContainer,
+.editableQueryBuilderWidget .centerContainer {
+    height: auto;
+    width: auto;
+}
+
+.userQueryBuilderWidget .settingsContainer,
+.editableQueryBuilderWidget .settingsContainer {
+    height: auto;
+    width: 180px;
+}
+
+.userQueryBuilderWidget .settingsContainer .settingsDiv,
+.editableQueryBuilderWidget .settingsContainer .settingsDiv {
+    margin-bottom: 5px;
+}
+
+.userQueryBuilderWidget .settingsContainer .settingsDiv .filterSelect,
+.editableQueryBuilderWidget .settingsContainer .settingsDiv .filterSelect {
+    width: 98%;
+}
+
+.userQueryBuilderWidget .settingsContainer .useOnlyGeometryDiv {
+    margin-bottom: 7px;
+}
+
+.userQueryBuilderWidget .settingsContainer .settingsDiv label {
     display: inline-block;
-    min-width: 160px;
-    max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    margin-bottom: 7px;
 }
 
-.userQueryBuilderWidget .inputContainer {
-    height: 110px;
+.editableQueryBuilderWidget .settingsContainer .settingsDiv label{
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    margin-bottom: 5px;
 }
 
-.userQueryBuilderWidget .inputContainer .settingsDiv {
-    margin-bottom: 2px;
+.userQueryBuilderWidget .settingsContainer .useOnlyGeometryDiv label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    margin-right: 5px;
 }
 
-.userQueryBuilderWidget .inputContainer .dijitButton {
-    margin-left: 5px;
+.userQueryBuilderWidget .settingsContainer .dijitButton,
+.editableQueryBuilderWidget .settingsContainer .dijitButton {
+    margin-left: 0;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.userQueryBuilderWidget .settingsContainer .dijitButtonNode,
+.editableQueryBuilderWidget .dijitButtonNode {
+    display: block;
+}
+
+.userQueryBuilderWidget .settingsContainer .geometryButton,
+.userQueryBuilderWidget .settingsContainer .doneButton,
+.editableQueryBuilderWidget .settingsContainer .doneButton {
+    display: block;
 }
 
 .userQueryBuilderWidget .inline,
@@ -54,11 +102,7 @@
     display: inline;
 }
 
-.editableQueryBuilderWidget .title {
-    margin-bottom: 5px;
-}
-
-.editableQueryBuilderWidget .inputContainer .noWidth {
+.editableQueryBuilderWidget .settingsContainer .noWidth {
     display: inline-block;
     min-width: 0px;
     max-width: 300px;

@@ -15,6 +15,7 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/_base/array",
     "dijit/_WidgetBase",
@@ -36,6 +37,7 @@ define([
     "ct/array",
     "ct/util/css"
 ], function (declare,
+             d_class,
              domConstruct,
              d_array,
              _WidgetBase,
@@ -98,9 +100,9 @@ define([
                 value: this.storeData[0].id,
                 store: store,
                 searchAttr: "name",
-                style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
+            d_class.add(filteringSelect.domNode, "filterSelect");
             var geometryStore;
             if (this.querygeometryTool) {
                 geometryStore = new Memory({
@@ -114,10 +116,9 @@ define([
                     value: false,
                     store: geometryStore,
                     searchAttr: "name",
-                    style: "width: 155px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometryNode);
+                }, this._geometrySelectNode);
                 this.connect(this._geometrySelect, "onChange", function (value) {
                     if (value === true) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);
@@ -142,11 +143,11 @@ define([
                     value: false,
                     store: geometryStore,
                     searchAttr: "name",
-                    style: "width: 155px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometryNode);
+                }, this._geometrySelectNode);
             }
+            d_class.add(this._geometrySelect.domNode, "filterSelect");
             var spatialRelationStore = new Memory({
                 data: [
                     {name: this.i18n.spatialRelations.contains, id: "contains"},
@@ -160,10 +161,10 @@ define([
                 value: "contains",
                 store: spatialRelationStore,
                 searchAttr: "name",
-                style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._spatialRelationNode);
+            d_class.add(this._spatialRelationSelect.domNode, "filterSelect");
             var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -175,10 +176,10 @@ define([
                 value: properties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
-                style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
+            d_class.add(this._matchSelect.domNode, "filterSelect");
             this._changeMatchVisibility();
             if (this.dataModel.filteredDatasource) {
                 this._filteringSelect.store.add({

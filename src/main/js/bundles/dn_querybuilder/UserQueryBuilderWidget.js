@@ -15,8 +15,10 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/_base/array",
+    "dojo/dom-style",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -36,8 +38,10 @@ define([
     "ct/array",
     "ct/util/css"
 ], function (declare,
+             d_class,
              domConstruct,
              d_array,
+             d_style,
              _WidgetBase,
              _TemplatedMixin,
              _WidgetsInTemplateMixin,
@@ -85,9 +89,9 @@ define([
                 value: this.storeData[0].id,
                 store: store,
                 searchAttr: "name",
-                style: "width: 155px;",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
+            d_class.add(filteringSelect.domNode, "filterSelect");
             var geometryStore;
             if (this.querygeometryTool) {
                 geometryStore = new Memory({
@@ -101,17 +105,15 @@ define([
                     value: false,
                     store: geometryStore,
                     searchAttr: "name",
-                    style: "width: 155px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometryNode);
+                }, this._geometrySelectNode);
                 this.connect(this._geometrySelect, "onChange", function (value) {
                     if (value === true) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);
                         ct_css.switchHidden(this._spatialRelationDiv, false);
                         ct_css.switchHidden(this._useOnlyGeometryDiv, false);
                     } else {
-                        this.drawGeometryHandler.clearGraphics();
                         ct_css.switchHidden(this._geometryButton.domNode, true);
                         ct_css.switchHidden(this._spatialRelationDiv, true);
                         ct_css.switchHidden(this._useOnlyGeometryDiv, true);
@@ -129,11 +131,11 @@ define([
                     value: false,
                     store: geometryStore,
                     searchAttr: "name",
-                    style: "width: 155px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometryNode);
+                }, this._geometrySelectNode);
             }
+            d_class.add(this._geometrySelect.domNode, "filterSelect");
             var spatialRelationStore = new Memory({
                 data: [
                     {name: this.i18n.spatialRelations.contains, id: "contains"},
@@ -147,10 +149,10 @@ define([
                 value: "contains",
                 store: spatialRelationStore,
                 searchAttr: "name",
-                style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._spatialRelationNode);
+            d_class.add(this._spatialRelationSelect.domNode, "filterSelect");
             var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -162,10 +164,10 @@ define([
                 value: properties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
-                style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
+            d_class.add(this._matchSelect.domNode, "filterSelect");
             this._changeMatchVisibility();
             if (this.dataModel.filteredDatasource) {
                 this._filteringSelect.store.add({
@@ -190,10 +192,6 @@ define([
                 }
             });
             this.connect(filteringSelect, "onChange", this._removeFields);
-            this.connect(this.tool, "onActivate", function () {
-                /*if (this._geometry)
-                 this.drawGeometryHandler.drawGeometry(this._geometry);*/
-            }, this);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {

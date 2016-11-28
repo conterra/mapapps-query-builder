@@ -41,11 +41,16 @@
       "window": {
         "title": "${wizard.userWindowTitle}",
         "marginBox": {
-          "w": 632,
-          "h": 300
+          "w": 796,
+          "h": 240
+        },
+        "minSize": {
+          "w": 796,
+          "h": 240
         },
         "dockTool": "userQueryBuilderTool",
         "closable": true,
+        "maximizable" : true,
         "minimizeOnClose": true,
         "resizable": true
       }
@@ -55,8 +60,12 @@
       "window": {
         "title": "${wizard.customWindowTitle}",
         "marginBox": {
-          "w": 632,
-          "h": 300
+          "w": 796,
+          "h": 240
+        },
+        "minSize": {
+          "w": 796,
+          "h": 240
         },
         "dockTool": "customQueryBuilderTool",
         "closable": true,
@@ -69,8 +78,12 @@
       "window": {
         "title": "${wizard.editWindowTitle}",
         "marginBox": {
-          "w": 550,
-          "h": 274
+          "w": 716,
+          "h": 220
+        },
+        "minSize": {
+          "w": 716,
+          "h": 220
         },
         "closable": true,
         "minimizeOnClose": true,

@@ -1,44 +1,58 @@
 <div>
     <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer"
          data-dojo-props="gutters: false, design: 'headline'">
-        <div data-dojo-attach-point="_topNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'"
-             class="inputContainer">
-            <div class="settingsDiv" data-dojo-attach-point="_filteringDiv">
-                <label>${i18n.userStore}</label>
-                <input data-dojo-attach-point="_filteringNode">
+        <div data-dojo-attach-point="_leftNode" data-dojo-type="dijit/layout/BorderContainer"
+             data-dojo-props="region: 'left'" class="settingsContainer noPadding">
+            <div data-dojo-attach-point="_settingsNode" data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region: 'center'" class="noPadding">
+                <div class="settingsDiv" data-dojo-attach-point="_filteringDiv">
+                    <label>${i18n.userStore}</label>
+                    <input data-dojo-attach-point="_filteringNode">
+                </div>
+                <div class="settingsDiv" data-dojo-attach-point="_geometryNode">
+                    <label>${i18n.userUseGeometry}</label>
+                    <input data-dojo-attach-point="_geometrySelectNode" class="bufferTextBox">
+                </div>
+                <div class="settingsDiv">
+                    <button data-dojo-attach-point="_geometryButton" class="geometryButton"
+                            data-dojo-type="dijit.form.Button" type="button"
+                            data-dojo-attach-event="onClick:_onChooseGeometry" data-dojo-props="iconClass:'icon-tool'">
+                        ${i18n.userChooseGeometry}
+                    </button>
+                </div>
+                <div class="settingsDiv" data-dojo-attach-point="_spatialRelationDiv">
+                    <label>${i18n.userSpatialRelation}</label>
+                    <input data-dojo-attach-point="_spatialRelationNode"/>
+                </div>
+                <div class="useOnlyGeometryDiv" data-dojo-attach-point="_useOnlyGeometryDiv">
+                    <label>${i18n.userUseOnlyGeometry}</label>
+                    <input data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_useOnlyGeometry" value="agreed"
+                           data-dojo-attach-event="onChange:_onUseOnlyGeometry">
+                </div>
+                <div class="settingsDiv" data-dojo-attach-point="_matchDiv">
+                    <label>${i18n.userMatch}</label>
+                    <input data-dojo-attach-point="_matchNode">
+                </div>
             </div>
-            <div class="settingsDiv">
-                <label>${i18n.userUseGeometry}</label>
-                <input data-dojo-attach-point="_geometryNode">
-                <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button" type="button"
-                        data-dojo-attach-event="onClick:_onChooseGeometry" data-dojo-props="iconClass:'icon-tool'">
-                    ${i18n.userChooseGeometry}
+            <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region: 'bottom'" class="noPadding">
+                <button data-dojo-type="dijit.form.Button" class="doneButton" type="button"
+                        data-dojo-attach-event="onClick:_onDone"
+                        data-dojo-props="iconClass:'icon-magnifier'">
+                    ${i18n.userDone}
                 </button>
             </div>
-            <div class="settingsDiv" data-dojo-attach-point="_spatialRelationDiv">
-                <label>${i18n.userSpatialRelation}</label>
-                <input data-dojo-attach-point="_spatialRelationNode"/>
-            </div>
-            <div class="settingsDiv" data-dojo-attach-point="_useOnlyGeometryDiv">
-                <label>${i18n.userUseOnlyGeometry}</label>
-                <input data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_useOnlyGeometry" value="agreed"
-                       data-dojo-attach-event="onChange:_onUseOnlyGeometry">
-            </div>
-            <div class="settingsDiv" data-dojo-attach-point="_matchDiv">
-                <label>${i18n.userMatch}</label>
-                <input data-dojo-attach-point="_matchNode">
-            </div>
         </div>
-        <div data-dojo-attach-point="_centerNode" data-dojo-type="dijit/layout/ContentPane"
-             data-dojo-props="region: 'center'">
-            <div data-dojo-attach-point="_queryNode"></div>
-        </div>
-        <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
-             data-dojo-props="region: 'bottom'">
-            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone"
-                    data-dojo-props="iconClass:'icon-magnifier'">
-                ${i18n.userDone}
-            </button>
+        <div data-dojo-attach-point="_centerNode" data-dojo-type="dijit/layout/BorderContainer"
+             data-dojo-props="region: 'center'" class="centerContainer noPadding">
+            <div data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region: 'top'" class="noPadding">
+                <label>${i18n.defineQuery}</label>
+            </div>
+            <div data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region: 'center'" class="noPadding">
+                <div data-dojo-attach-point="_queryNode"></div>
+            </div>
         </div>
     </div>
 </div>

@@ -15,6 +15,7 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/_base/array",
     "dijit/_WidgetBase",
@@ -34,6 +35,7 @@ define([
     "ct/_when",
     "ct/util/css"
 ], function (declare,
+             d_class,
              domConstruct,
              d_array,
              _WidgetBase,
@@ -80,13 +82,7 @@ define([
         _init: function () {
             this.maxComboBoxHeight = 160;
 
-            var store = new Memory({
-                data: this.storeData
-            });
-            d_html.set(this._titleNode, this.properties.title);
-            var storeId = this.store.id;
-            var storeTitle = store.get(storeId).name;
-            d_html.set(this._storeNode, storeTitle);
+            //d_html.set(this._titleNode, this.properties.title);
 
             this._createGUISettings();
             this._createGUIFields();
@@ -142,6 +138,18 @@ define([
         },
         _createGUISettings: function () {
             var properties = this.queryBuilderProperties._properties;
+            var store = new Memory({
+                data: this.storeData
+            });
+            var filteringSelect = this._filteringSelect = new FilteringSelect({
+                name: "stores",
+                value: this.store.id,
+                store: store,
+                searchAttr: "name",
+                maxHeight: this.maxComboBoxHeight,
+                disabled: true
+            }, this._filteringNode);
+            d_class.add(filteringSelect.domNode, "filterSelect");
             var geometryStore = new Memory({
                 data: [
                     {name: this.i18n.userGeometryEverywhere, id: false},
@@ -153,12 +161,11 @@ define([
                 value: false,
                 store: geometryStore,
                 searchAttr: "name",
-                style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
-            }, this._geometryNode);
-
+            }, this._geometrySelectNode);
+            d_class.add(this._geometrySelect.domNode, "filterSelect");
             var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -170,11 +177,11 @@ define([
                 value: properties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
-                style: "width: 155px;",
                 required: true,
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
             }, this._matchNode);
+            d_class.add(this._matchSelect.domNode, "filterSelect");
         },
         _createGUIFields: function () {
             var properties = this.properties;

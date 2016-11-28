@@ -161,7 +161,6 @@ define([
                         queryBuilderProperties: this._queryBuilderProperties
                     });
                 }, this);
-
             },
             _openWizardWindow: function (wizard, edit) {
                 var properties = wizard.get("properties");

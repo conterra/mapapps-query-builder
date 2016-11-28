@@ -44,10 +44,14 @@ define([
             var replacer = this._replacer;
             var metadataAnalyzer = this._metadataAnalyzer;
             var querygeometryTool = this._querygeometryTool;
-            var drawGeometryHandler = this._drawGeometryHandler;
             var queryBuilderProperties = this._queryBuilderProperties;
             var queryController = this._queryController;
-            var storeData = metadataAnalyzer.getStoreDataByIds(props.storeIds);
+            var storeData;
+            if (props.storeIds.length > 0) {
+                storeData = metadataAnalyzer.getStoreDataByIds(props.storeIds);
+            } else {
+                storeData = metadataAnalyzer.getStoreData(stores)
+            }
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -59,7 +63,6 @@ define([
                 replacer: replacer,
                 metadataAnalyzer: metadataAnalyzer,
                 querygeometryTool: querygeometryTool,
-                drawGeometryHandler: drawGeometryHandler,
                 queryBuilderProperties: queryBuilderProperties,
                 queryController: queryController
             });

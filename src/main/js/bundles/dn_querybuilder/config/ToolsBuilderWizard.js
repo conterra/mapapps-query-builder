@@ -433,7 +433,7 @@ define([
                     style: "width: 80px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometryNode);
+                }, this._geometrySelectNode);
             }
             if (this.querygeometryTool) {
                 this._geometryLabel.innerHTML = this.i18n.useGeometry;

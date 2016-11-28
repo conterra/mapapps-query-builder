@@ -26,10 +26,10 @@
                             ?
                         </button>
                     </div>
-                    <div class="settings">
-                        <div class="settingsDiv">
+                    <div class="settings" >
+                        <div class="settingsDiv" data-dojo-attach-point="_geometryNode">
                             <label data-dojo-attach-point="_geometryLabel">${i18n.useExtent}</label>
-                            <input data-dojo-attach-point="_geometryNode"/>
+                            <input data-dojo-attach-point="_geometrySelectNode"/>
                             <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button" type="button"
                                     data-dojo-attach-event="onClick:_onChooseGeometry">
                                 ${i18n.chooseGeometry}
