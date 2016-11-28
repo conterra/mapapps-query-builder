@@ -80,8 +80,7 @@ define([
             this.stores = stores;
             this.storeData = storeData;
             this._init();
-            if (this._queryNode.firstChild == null)
-                this._addField();
+            this._removeFields();
         },
         _init: function () {
             var properties = this.queryBuilderProperties._properties;
