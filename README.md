@@ -109,6 +109,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
     "_AGS_STORE_1443534824350"
   ]
 }
+```
 
 #####QueryTools:
 ```
