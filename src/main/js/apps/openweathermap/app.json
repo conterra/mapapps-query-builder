@@ -1098,6 +1098,49 @@
     "templates": {
       "TemplateSelector": {
         "componentEnabled": false
+      },
+      "TemplateModel": {
+        "_selectedTemplate": "seasons",
+        "_templates": [
+          {
+            "name": "seasons",
+            "widgets": [
+              {
+                "widgetRole": "userQueryBuilderWidget",
+                "window": {
+                  "marginBox": {
+                    "l": 20,
+                    "t": 100,
+                    "w": 780,
+                    "h": 250
+                  }
+                }
+              },
+              {
+                "widgetRole": "customQueryBuilderWidget",
+                "window": {
+                  "marginBox": {
+                    "l": 20,
+                    "t": 100,
+                    "w": 780,
+                    "h": 250
+                  }
+                }
+              },
+              {
+                "widgetRole": "editableQueryBuilderWidget",
+                "window": {
+                  "marginBox": {
+                    "l": 20,
+                    "t": 100,
+                    "w": 700,
+                    "h": 230
+                  }
+                }
+              }
+            ]
+          }
+        ]
       }
     },
     "themes": {
