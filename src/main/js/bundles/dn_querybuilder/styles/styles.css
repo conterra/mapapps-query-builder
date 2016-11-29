@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-.queryBuilderWidget .noPadding,
-.editableQueryBuilderWidget .noPadding {
-    padding: 0;
-}
-
 .userQueryBuilderWidget .centerContainer,
 .editableQueryBuilderWidget .centerContainer {
     height: auto;
@@ -28,21 +23,24 @@
 .userQueryBuilderWidget .settingsContainer,
 .editableQueryBuilderWidget .settingsContainer {
     height: auto;
-    width: 180px;
+    width: 20%;
 }
 
-.userQueryBuilderWidget .settingsContainer .settingsDiv,
+.userQueryBuilderWidget .settingsContainer .settingsDiv {
+    margin-bottom: 13px;
+}
+
 .editableQueryBuilderWidget .settingsContainer .settingsDiv {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 
-.userQueryBuilderWidget .settingsContainer .settingsDiv .filterSelect,
-.editableQueryBuilderWidget .settingsContainer .settingsDiv .filterSelect {
+.userQueryBuilderWidget .settingsContainer .settingsDiv .filteringSelect,
+.editableQueryBuilderWidget .settingsContainer .settingsDiv .filteringSelect {
     width: 98%;
 }
 
 .userQueryBuilderWidget .settingsContainer .useOnlyGeometryDiv {
-    margin-bottom: 7px;
+    margin-bottom: 5px;
 }
 
 .userQueryBuilderWidget .settingsContainer .settingsDiv label {
@@ -53,7 +51,7 @@
     margin-bottom: 7px;
 }
 
-.editableQueryBuilderWidget .settingsContainer .settingsDiv label{
+.editableQueryBuilderWidget .settingsContainer .settingsDiv label {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -96,15 +94,45 @@
     margin-bottom: 2px;
 }
 
-.userQueryBuilderWidget .fieldWidget .notNode,
-.editableQueryBuilderWidget .fieldWidget .notNode {
-    margin-right: 5px;
-    display: inline;
+.userQueryBuilderWidget .fieldWidget .fieldSelect {
+    width: 20%;
+}
+
+.userQueryBuilderWidget .fieldWidget .notSelect {
+    width: 20%;
+}
+
+.userQueryBuilderWidget .fieldWidget .valueField {
+    width: 20%;
+}
+
+.userQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
+    width: 20%;
+}
+
+.userQueryBuilderWidget .fieldWidget .buttonNode {
+    float: right;
+}
+
+.editableQueryBuilderWidget .fieldWidget .valueField {
+    width: 24%;
+}
+
+.editableQueryBuilderWidget .fieldWidget .notSelect {
+    width: 24%;
+}
+
+.editableQueryBuilderWidget .fieldWidget .fieldSelect {
+    width: 24%;
+}
+
+.editableQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
+    width: 24%;
 }
 
 .editableQueryBuilderWidget .settingsContainer .noWidth {
     display: inline-block;
-    min-width: 0px;
+    min-width: 0;
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;

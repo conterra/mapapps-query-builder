@@ -102,7 +102,7 @@ define([
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight
             }, this._filteringNode);
-            d_class.add(filteringSelect.domNode, "filterSelect");
+            d_class.add(filteringSelect.domNode, "filteringSelect");
             var geometryStore;
             if (this.querygeometryTool) {
                 geometryStore = new Memory({
@@ -147,7 +147,7 @@ define([
                     maxHeight: this.maxComboBoxHeight
                 }, this._geometrySelectNode);
             }
-            d_class.add(this._geometrySelect.domNode, "filterSelect");
+            d_class.add(this._geometrySelect.domNode, "filteringSelect");
             var spatialRelationStore = new Memory({
                 data: [
                     {name: this.i18n.spatialRelations.contains, id: "contains"},
@@ -164,7 +164,7 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._spatialRelationNode);
-            d_class.add(this._spatialRelationSelect.domNode, "filterSelect");
+            d_class.add(this._spatialRelationSelect.domNode, "filteringSelect");
             var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -179,7 +179,7 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight
             }, this._matchNode);
-            d_class.add(this._matchSelect.domNode, "filterSelect");
+            d_class.add(this._matchSelect.domNode, "filteringSelect");
             this._changeMatchVisibility();
             if (this.dataModel.filteredDatasource) {
                 this._filteringSelect.store.add({

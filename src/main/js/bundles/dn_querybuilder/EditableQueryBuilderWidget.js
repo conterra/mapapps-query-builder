@@ -149,7 +149,7 @@ define([
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
             }, this._filteringNode);
-            d_class.add(filteringSelect.domNode, "filterSelect");
+            d_class.add(filteringSelect.domNode, "filteringSelect");
             var geometryStore = new Memory({
                 data: [
                     {name: this.i18n.userGeometryEverywhere, id: false},
@@ -165,7 +165,7 @@ define([
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
             }, this._geometrySelectNode);
-            d_class.add(this._geometrySelect.domNode, "filterSelect");
+            d_class.add(this._geometrySelect.domNode, "filteringSelect");
             var matchStore = new Memory({
                 data: [
                     {name: this.i18n.and, id: "$and"},
@@ -181,7 +181,7 @@ define([
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
             }, this._matchNode);
-            d_class.add(this._matchSelect.domNode, "filterSelect");
+            d_class.add(this._matchSelect.domNode, "filteringSelect");
         },
         _createGUIFields: function () {
             var properties = this.properties;

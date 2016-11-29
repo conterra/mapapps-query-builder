@@ -15,6 +15,7 @@
  */
 define([
     "dojo/_base/lang",
+    "dojo/dom-class",
     "dojo/_base/declare",
     "dojo/_base/Deferred",
     "dojo/parser",
@@ -44,6 +45,7 @@ define([
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
 ], function (d_lang,
+             d_class,
              declare,
              Deferred,
              parser,
@@ -82,19 +84,11 @@ define([
                 this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
                 this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
                 if (this.type === "user") {
-                    this._fieldSelectWidth = "width: 140px;";
-                    this._valueSelectWidth = "width: 120px;";
-                    this._relationalOperatorSelectWidth = "width: 120px;";
-                    this._notSelectWidth = "width: 100px;";
                     this.notSelectDisabled = false;
                     this.fieldSelectDisabled = false;
                     this.relationalOperatorSelectDisabled = false;
                     this.valueSelectDisabled = false;
                 } else if (this.type === "editing") {
-                    this._fieldSelectWidth = "width: 140px;";
-                    this._valueSelectWidth = "width: 120px;";
-                    this._relationalOperatorSelectWidth = "width: 120px;";
-                    this._notSelectWidth = "width: 100px;";
                     if (this.editOptions) {
                         this.notSelectDisabled = !this.editOptions.not;
                         this.fieldSelectDisabled = !this.editOptions.field;
@@ -102,10 +96,6 @@ define([
                         this.valueSelectDisabled = !this.editOptions.value;
                     }
                 } else {
-                    this._fieldSelectWidth = "width: 180px;";
-                    this._valueSelectWidth = "width: 200px;";
-                    this._relationalOperatorSelectWidth = "width: 120px;";
-                    this._notSelectWidth = "width: 100px;";
                     this.notSelectDisabled = false;
                     this.fieldSelectDisabled = false;
                     this.relationalOperatorSelectDisabled = false;
@@ -184,11 +174,11 @@ define([
                 value: this.fieldId || fieldData[0].id,
                 store: fieldStore,
                 searchAttr: "title",
-                style: this._fieldSelectWidth,
                 maxHeight: this.maxComboBoxHeight,
                 readOnly: false,
                 disabled: this.fieldSelectDisabled
             }, this._fieldNode);
+            d_class.add(this._fieldSelect.domNode, "fieldSelect");
             var i18n = this.i18n;
             var notStore = new Memory({
                 data: [
@@ -205,10 +195,10 @@ define([
                 value: not,
                 store: notStore,
                 searchAttr: "name",
-                style: this._notSelectWidth,
                 maxHeight: this.maxComboBoxHeight,
                 disabled: this.notSelectDisabled
             });
+            d_class.add(notSelect.domNode, "notSelect");
             domConstruct.place(notSelect.domNode, this._notNode, "first");
             notSelect.startup();
             this._createCheckBoxes();
@@ -246,11 +236,11 @@ define([
                     value: this.value || codedValueData[0].id,
                     store: codedValueStore,
                     searchAttr: "name",
-                    style: this._valueSelectWidth,
                     maxHeight: this.maxComboBoxHeight,
                     queryExpr: "*${0}*",
                     autoComplete: false
                 });
+                d_class.add(valueSelect.domNode, "valueSelect");
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
             } else {
@@ -291,7 +281,6 @@ define([
                     var valueComboBox = this._valueField = new ComboBox({
                         name: "value",
                         searchAttr: "id",
-                        style: this._valueSelectWidth,
                         maxHeight: this.maxComboBoxHeight,
                         required: true,
                         queryExpr: "*${0}*",
@@ -333,7 +322,6 @@ define([
                         valueSelect = this._valueField = new DateTextBox({
                             name: "value",
                             value: value,
-                            style: this._valueSelectWidth,
                             validator: this._validator,
                             intermediateChanges: true
                         });
@@ -349,7 +337,6 @@ define([
                             name: "value",
                             value: value,
                             placeHolder: this.i18n.typeInValue,
-                            style: this._valueSelectWidth,
                             intermediateChanges: true,
                             required: true
                         });
@@ -363,13 +350,13 @@ define([
                             name: "value",
                             value: value,
                             placeHolder: this.i18n.typeInValue,
-                            style: this._valueSelectWidth,
                             intermediateChanges: true,
                             required: true
                         });
                     }
                     domConstruct.place(valueSelect.domNode, this._valueNode);
                 }
+                d_class.add(this._valueField.domNode, "valueField");
             }
             if (this.relationalOperatorSelectDisabled)
                 this._relationalOperatorSelect.set("disabled", this.relationalOperatorSelectDisabled);
@@ -382,9 +369,9 @@ define([
                 value: this.relationalOperatorId || value,
                 store: compareStore,
                 searchAttr: "name",
-                style: this._relationalOperatorSelectWidth,
                 maxHeight: this.maxComboBoxHeight
             }, this._compareNode);
+            d_class.add(relationalOperatorSelect.domNode, "relationalOperatorSelect");
             relationalOperatorSelect.startup();
         },
         _getDistinctValues: function (selectedField) {

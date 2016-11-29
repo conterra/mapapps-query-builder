@@ -41,12 +41,12 @@
       "window": {
         "title": "${wizard.userWindowTitle}",
         "marginBox": {
-          "w": 796,
-          "h": 240
+          "w": 780,
+          "h": 250
         },
         "minSize": {
-          "w": 796,
-          "h": 240
+          "w": 700,
+          "h": 250
         },
         "dockTool": "userQueryBuilderTool",
         "closable": true,
@@ -60,12 +60,12 @@
       "window": {
         "title": "${wizard.customWindowTitle}",
         "marginBox": {
-          "w": 796,
-          "h": 240
+          "w": 780,
+          "h": 250
         },
         "minSize": {
-          "w": 796,
-          "h": 240
+          "w": 700,
+          "h": 250
         },
         "dockTool": "customQueryBuilderTool",
         "closable": true,
@@ -78,12 +78,12 @@
       "window": {
         "title": "${wizard.editWindowTitle}",
         "marginBox": {
-          "w": 716,
-          "h": 220
+          "w": 700,
+          "h": 230
         },
         "minSize": {
-          "w": 716,
-          "h": 220
+          "w": 660,
+          "h": 230
         },
         "closable": true,
         "minimizeOnClose": true,

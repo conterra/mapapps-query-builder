@@ -70,9 +70,23 @@
     margin-bottom: 5px;
 }
 
-.queryBuilderWizard .fieldWidget .notNode {
-    margin-right: 5px;
-    display: inline;
+.queryBuilderWizard .fieldWidget .fieldSelect {
+    width: 19%;
+}
+
+.queryBuilderWizard .fieldWidget .notSelect {
+    width: 19%;
+}
+
+.queryBuilderWizard .fieldWidget .valueField {
+    width: 19%;
+}
+
+.queryBuilderWizard .fieldWidget .relationalOperatorSelect {
+    width: 19%;
+}
+
+.queryBuilderWizard .fieldWidget .buttonNode {
 }
 
 .queryBuilderWizard .fieldWidget .inline {
