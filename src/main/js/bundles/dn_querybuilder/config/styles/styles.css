@@ -70,31 +70,41 @@
     margin-bottom: 5px;
 }
 
-.queryBuilderWizard .fieldWidget .fieldSelect {
-    width: 19%;
-}
-
 .queryBuilderWizard .fieldWidget .notSelect {
-    width: 19%;
+    width: 16%;
 }
 
-.queryBuilderWizard .fieldWidget .valueField {
-    width: 19%;
+.queryBuilderWizard .fieldWidget .fieldSelect {
+    width: 22%;
 }
 
 .queryBuilderWizard .fieldWidget .relationalOperatorSelect {
-    width: 19%;
+    width: 16%;
 }
 
-.queryBuilderWizard .fieldWidget .buttonNode {
+.queryBuilderWizard .fieldWidget .valueField {
+    width: 22%;
+}
+
+.queryBuilderWizard .fieldWidget .buttonContainer {
+    width: 10%;
+    display: inline-block;
+    text-align: right;
+}
+
+.queryBuilderWizard .fieldWidget .buttonContainer .dijitButton:only-child {
+    margin-right: 26px;
+}
+
+.queryBuilderWizard .fieldWidget .buttonContainer .dijitButtonNode {
+    font-size: 15px;
+    padding: 0px 3px 3px !important;
+}
+
+.queryBuilderWizard .fieldWidget .buttonContainer .dijitIcon {
+    font-size: 14px !important;
 }
 
 .queryBuilderWizard .fieldWidget .inline {
     display: inline;
-}
-
-.queryBuilderWizard .fieldWidget .dijitButton {
-    margin-left: 2px;
-    margin-top: 0;
-    margin-bottom: 0;
 }

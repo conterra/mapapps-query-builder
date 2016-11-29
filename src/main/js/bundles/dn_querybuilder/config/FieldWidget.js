@@ -125,7 +125,8 @@ define([
             if (this.type !== "editing") {
                 if (first) {
                     var firstAddButton = new Button({
-                        label: "+",
+                        iconClass: "icon-plus",
+                        showLabel: false,
                         onClick: d_lang.hitch(this, function () {
                             this.source._addField();
                         })
@@ -134,7 +135,8 @@ define([
                     firstAddButton.startup();
                 } else if (last) {
                     var lastRemoveButton = new Button({
-                        label: "-",
+                        iconClass: "icon-minus",
+                        showLabel: false,
                         onClick: d_lang.hitch(this, function () {
                             this.source._removeLastField();
                         })
@@ -142,7 +144,8 @@ define([
                     domConstruct.place(lastRemoveButton.domNode, this._buttonNode, "last");
                     lastRemoveButton.startup();
                     var addButton = new Button({
-                        label: "+",
+                        iconClass: "icon-plus",
+                        showLabel: false,
                         onClick: d_lang.hitch(this, function () {
                             this.source._addField();
                         })
@@ -151,7 +154,8 @@ define([
                     addButton.startup();
                 } else {
                     var removeButton = new Button({
-                        label: "-",
+                        iconClass: "icon-minus",
+                        showLabel: false,
                         onClick: d_lang.hitch(this, function () {
                             removeButton.domNode.parentNode.parentNode.remove();
                             this.source._changeChildrenButtons();

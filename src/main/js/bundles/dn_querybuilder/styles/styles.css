@@ -94,40 +94,55 @@
     margin-bottom: 2px;
 }
 
-.userQueryBuilderWidget .fieldWidget .fieldSelect {
-    width: 20%;
-}
-
 .userQueryBuilderWidget .fieldWidget .notSelect {
-    width: 20%;
+    width: 18%;
 }
 
-.userQueryBuilderWidget .fieldWidget .valueField {
-    width: 20%;
+.userQueryBuilderWidget .fieldWidget .fieldSelect {
+    width: 24%;
 }
 
 .userQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
-    width: 20%;
+    width: 18%;
 }
 
-.userQueryBuilderWidget .fieldWidget .buttonNode {
-    float: right;
-}
-
-.editableQueryBuilderWidget .fieldWidget .valueField {
+.userQueryBuilderWidget .fieldWidget .valueField {
     width: 24%;
+}
+
+.userQueryBuilderWidget .fieldWidget .buttonContainer {
+    width: 10%;
+    display: inline-block;
+    text-align: right;
+}
+
+.userQueryBuilderWidget .fieldWidget .buttonContainer .dijitButton:only-child {
+    margin-right: 26px;
+}
+
+.userQueryBuilderWidget .fieldWidget .buttonContainer .dijitButtonNode {
+    font-size: 15px;
+    padding: 0px 3px 3px;
+}
+
+.userQueryBuilderWidget .fieldWidget .buttonContainer .dijitIcon {
+    font-size: 14px;
 }
 
 .editableQueryBuilderWidget .fieldWidget .notSelect {
-    width: 24%;
+    width: 20%;
 }
 
 .editableQueryBuilderWidget .fieldWidget .fieldSelect {
-    width: 24%;
+    width: 28%;
 }
 
 .editableQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
-    width: 24%;
+    width: 20%;
+}
+
+.editableQueryBuilderWidget .fieldWidget .valueField {
+    width: 28%;
 }
 
 .editableQueryBuilderWidget .settingsContainer .noWidth {
