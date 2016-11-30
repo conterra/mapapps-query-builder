@@ -23,6 +23,7 @@ define([
     return declare([_Connect], {
         constructor: function () {
             this.inherited(arguments);
+            this.stores = [];
         },
         activate: function () {
             this.inherited(arguments);
@@ -46,18 +47,11 @@ define([
             var querygeometryTool = this._querygeometryTool;
             var queryBuilderProperties = this._queryBuilderProperties;
             var queryController = this._queryController;
-            var storeData;
-            if (props.storeIds.length > 0) {
-                storeData = metadataAnalyzer.getStoreDataByIds(props.storeIds);
-            } else {
-                storeData = metadataAnalyzer.getStoreData(stores)
-            }
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
                 tool: tool,
                 stores: stores,
-                storeData: storeData,
                 mapState: mapState,
                 dataModel: dataModel,
                 replacer: replacer,
@@ -66,6 +60,18 @@ define([
                 queryBuilderProperties: queryBuilderProperties,
                 queryController: queryController
             });
+        },
+        addStores: function (store, serviceproperties) {
+            /*if (this.widget) {
+                var storeTitle = serviceproperties.title;
+                var storeId = serviceproperties.id;
+                this.widget._filteringSelect.addOption({
+                    label: storeTitle,
+                    value: storeId
+                });
+            } else {*/
+                this.stores.push(store);
+            //}
         },
         setDrawGeometryHandler: function (service) {
             if (this.widget)

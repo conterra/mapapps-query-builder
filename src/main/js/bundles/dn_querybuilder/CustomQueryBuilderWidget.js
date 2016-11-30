@@ -85,7 +85,7 @@ define([
             this._removeFields();
         },
         _init: function () {
-            var properties = this.queryBuilderProperties._properties;
+            var queryBuilderProperties = this.queryBuilderProperties._properties;
             ct_css.switchHidden(this._geometryButton.domNode, true);
             ct_css.switchHidden(this._spatialRelationDiv, true);
             ct_css.switchHidden(this._useOnlyGeometryDiv, true);
@@ -173,7 +173,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: properties.defaultRelationalOperator,
+                value: queryBuilderProperties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
                 required: true,

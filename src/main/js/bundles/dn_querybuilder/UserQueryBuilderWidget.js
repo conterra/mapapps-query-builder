@@ -76,17 +76,25 @@ define([
             this.disconnect();
         },
         _init: function () {
-            var properties = this.queryBuilderProperties._properties;
+            var queryBuilderProperties = this.queryBuilderProperties._properties;
             ct_css.switchHidden(this._geometryButton.domNode, true);
             ct_css.switchHidden(this._spatialRelationDiv, true);
             ct_css.switchHidden(this._useOnlyGeometryDiv, true);
             this.maxComboBoxHeight = 160;
+            var stores = this.stores;
+            var storeIds = this.properties.storeIds;
+            var storeData;
+            if (storeIds.length > 0) {
+                storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
+            } else {
+                storeData = this.metadataAnalyzer.getStoreData(stores)
+            }
             var store = new Memory({
-                data: this.storeData
+                data: storeData
             });
             var filteringSelect = this._filteringSelect = new FilteringSelect({
                 name: "stores",
-                value: this.storeData[0].id,
+                value: storeData[0].id,
                 store: store,
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight
@@ -161,7 +169,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: properties.defaultRelationalOperator,
+                value: queryBuilderProperties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
                 required: true,
