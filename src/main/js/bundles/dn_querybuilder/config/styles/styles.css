@@ -87,18 +87,13 @@
 }
 
 .queryBuilderWizard .fieldWidget .buttonContainer {
-    width: 10%;
+    width: 12%;
     display: inline-block;
-    text-align: right;
-}
-
-.queryBuilderWizard .fieldWidget .buttonContainer .dijitButton:only-child {
-    margin-right: 26px;
 }
 
 .queryBuilderWizard .fieldWidget .buttonContainer .dijitButtonNode {
     font-size: 15px;
-    padding: 0px 3px 3px !important;
+    padding: 0px 8px 3px !important;
 }
 
 .queryBuilderWizard .fieldWidget .buttonContainer .dijitIcon {

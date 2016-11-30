@@ -99,7 +99,7 @@
 }
 
 .userQueryBuilderWidget .fieldWidget .fieldSelect {
-    width: 24%;
+    width: 22%;
 }
 
 .userQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
@@ -111,18 +111,13 @@
 }
 
 .userQueryBuilderWidget .fieldWidget .buttonContainer {
-    width: 10%;
+    width: 14%;
     display: inline-block;
-    text-align: right;
-}
-
-.userQueryBuilderWidget .fieldWidget .buttonContainer .dijitButton:only-child {
-    margin-right: 26px;
 }
 
 .userQueryBuilderWidget .fieldWidget .buttonContainer .dijitButtonNode {
     font-size: 15px;
-    padding: 0px 3px 3px;
+    padding: 0px 8px 3px;
 }
 
 .userQueryBuilderWidget .fieldWidget .buttonContainer .dijitIcon {
