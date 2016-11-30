@@ -83,6 +83,52 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 }
 ```
 
+####Configurable Components of dn_querybuilder:
+
+#####QueryBuilderProperties:
+```
+"QueryBuilderProperties": {
+  "enableDistinctValues": true,
+  "defaultMatchValue": "$and"
+}
+```
+
+#####UserQueryBuilderWidgetFactory:
+```
+"UserQueryBuilderWidgetFactory": {
+  "storeIds": [
+    "stoerungen",
+    "_AGS_STORE_1469615663725",
+    "_AGS_STORE_1441195340629",
+    "_AGS_STORE_1441195356941",
+    "_AGS_STORE_1441195705828",
+    "_AGS_STORE_1442226070628",
+    "_AGS_STORE_1442227045951",
+    "_AGS_STORE_1442227058500",
+    "_AGS_STORE_1442299569090",
+    "_AGS_STORE_1443534824350"
+  ]
+}
+```
+
+#####QueryTools:
+```
+"QueryTools": [
+  // list of query tools
+]
+```
+
+####Configurable Components of dn_queryplaceholder:
+
+#####Replacer:
+```
+"Replacer": {
+  "placeholder": {
+    "user": "Müller"
+  }
+}
+```
+
 More information about how to place a widget:
 
 http://developernetwork.conterra.de/de/documentation/mapapps/developers-documentation/templates
