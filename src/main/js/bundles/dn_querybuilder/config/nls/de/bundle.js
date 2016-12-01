@@ -41,6 +41,7 @@ define({
         window: {
             title: "Name",
             removeTool: "Custom Query Tool entfernen",
+            removeToolMessage: "Custom Query Tool entfernen?",
             addTool: "Custom Query Tool hinzuf\u00fcgen",
             copyTool: "Custom Query Tool kopieren"
         },

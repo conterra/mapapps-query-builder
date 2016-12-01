@@ -35,7 +35,8 @@ define([
             createInstance: function () {
                 var configStore = this._getConfigStore();
                 var properties = this._properties || {};
-                var i18nGRID = this._i18n.get().widget.grid;
+                var i18n = this.i18n = this._i18n.get();
+                var i18nGRID = i18n.widget.grid;
                 var opts = d_lang.mixin({
                     configStore: configStore,
                     toolbar: this._toolbar,
@@ -136,7 +137,7 @@ define([
                     properties.customquery = {};
                     properties.options = {};
                 }
-                var wizardI18n = this._i18n.get().widget.wizard;
+                var wizardI18n = this.i18n.widget.wizard;
                 return new ToolsBuilderWizard({
                     widget: this._widget,
                     globalProperties: this._properties,
@@ -158,7 +159,7 @@ define([
             _openWizardWindow: function (wizard, edit) {
                 var properties = wizard.get("properties");
                 var windowManager = this._windowManager;
-                var i18n = this._i18n.get().widget.wizard;
+                var i18n = this.i18n.widget.wizard;
                 var title;
                 if (edit === true) {
                     title = i18n.windowtitleEdit;
@@ -216,7 +217,7 @@ define([
             _onRemoveQueryTool: function (event) {
                 var ids = event.ids || [];
                 ct_when(this._windowManager.createInfoDialogWindow({
-                    message: "DeleteQueryTool",
+                    message: this.i18n.widget.window.removeToolMessage,
                     attachToDom: this._appCtx.builderWindowRoot
                 }), function () {
                     var store = this._getConfigStore();
