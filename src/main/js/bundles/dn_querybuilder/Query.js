@@ -44,7 +44,6 @@ define([
                 var i18n = event._i18n.get();
                 var replacer = this._replacer;
                 var metadataAnalyzer = this._metadataAnalyzer;
-                var storeData = metadataAnalyzer.getStoreDataByIds([store.id]);
                 var queryBuilderProperties = this._queryBuilderProperties;
                 var queryController = this._queryController;
                 var widget = this.widget = new EditableQueryBuilderWidget({
@@ -52,7 +51,6 @@ define([
                     i18n: i18n.wizard,
                     tool: tool,
                     store: store,
-                    storeData: storeData,
                     replacer: replacer,
                     metadataAnalyzer: metadataAnalyzer,
                     queryBuilderProperties: queryBuilderProperties,

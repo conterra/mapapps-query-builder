@@ -23,7 +23,6 @@ define([
     return declare([_Connect], {
         constructor: function () {
             this.inherited(arguments);
-            this.stores = [];
         },
         activate: function () {
             this.inherited(arguments);
@@ -60,18 +59,6 @@ define([
                 queryBuilderProperties: queryBuilderProperties,
                 queryController: queryController
             });
-        },
-        addStores: function (store, serviceproperties) {
-            /*if (this.widget) {
-                var storeTitle = serviceproperties.title;
-                var storeId = serviceproperties.id;
-                this.widget._filteringSelect.addOption({
-                    label: storeTitle,
-                    value: storeId
-                });
-            } else {*/
-                this.stores.push(store);
-            //}
         },
         setDrawGeometryHandler: function (service) {
             if (this.widget)

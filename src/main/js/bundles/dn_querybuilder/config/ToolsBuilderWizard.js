@@ -57,8 +57,6 @@ define([
             instance.destroyRecursive();
         },
         destroy: function () {
-            /*if (this.drawGeometryHandler)
-             this.drawGeometryHandler.clearGraphics();*/
             this.disconnect();
             this.inherited(arguments);
         },
@@ -67,12 +65,13 @@ define([
             this.maxComboBoxHeight = 160;
             domStyle.set(this._titleTextBox.domNode, "width", "250px");
             domStyle.set(this._iconClassTextBox.domNode, "width", "209px");
+            var storeData = this.metadataAnalyzer.getStoreData(this.stores);
             var store = new Memory({
-                data: this.storeData
+                data: storeData
             });
             var storeSelect = this._storeSelect = new FilteringSelect({
                 name: "stores",
-                value: this.properties.storeId || this.storeData[0].id,
+                value: this.properties.storeId || storeData[0].id,
                 store: store,
                 searchAttr: "name",
                 style: "width: 250px;",

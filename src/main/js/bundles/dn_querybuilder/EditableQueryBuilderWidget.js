@@ -63,7 +63,7 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            var storeData = this.storeData;
+            var storeData = this.storeData = this.metadataAnalyzer.getStoreDataByIds([this.store.id]);
             if (storeData.length > 0) {
                 this._init();
                 ct_css.switchHidden(this._errorNode, true);
@@ -137,7 +137,7 @@ define([
             }, this);
         },
         _createGUISettings: function () {
-            var properties = this.queryBuilderProperties._properties;
+            var queryBuilderProperties = this.queryBuilderProperties._properties;
             var store = new Memory({
                 data: this.storeData
             });
@@ -174,7 +174,7 @@ define([
             });
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: properties.defaultRelationalOperator,
+                value: queryBuilderProperties.defaultRelationalOperator,
                 store: matchStore,
                 searchAttr: "name",
                 required: true,

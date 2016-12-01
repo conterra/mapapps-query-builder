@@ -65,7 +65,6 @@ define([
                         data: [],
                         idProperty: "pid",
                         metadata: {
-                            //Attribute der Tabellen im ToolsBuilderWidget
                             displayField: "name",
                             fields: [
                                 /*{
@@ -127,40 +126,34 @@ define([
                 delete properties.pid;
                 config.update(properties);
             },
-            _createWizard: function (config) {
+            _createWizard: function (properties) {
                 // time & default icon
                 var date = new Date();
-                if (config.id === undefined) {
-                    config.id = "fc_" + date.getTime();
-                    config.title = "";
-                    config.iconClass = "icon-custom-info";
-                    config.customquery = {};
-                    config.options = {};
+                if (properties.id === undefined) {
+                    properties.id = "fc_" + date.getTime();
+                    properties.title = "";
+                    properties.iconClass = "icon-custom-info";
+                    properties.customquery = {};
+                    properties.options = {};
                 }
-                // search stores
-                var stores = this._stores;
-                var storeData = this._metadataAnalyzer.getStoreData(stores);
                 var wizardI18n = this._i18n.get().widget.wizard;
-                return ct_when(storeData, function (storeData) {
-                    return new ToolsBuilderWizard({
-                        widget: this._widget,
-                        storeData: storeData,
-                        globalProperties: this._properties,
-                        properties: config,
-                        i18n: wizardI18n,
-                        windowManager: this._windowManager,
-                        appCtx: this._appCtx,
-                        stores: this._stores,
-                        mapState: this._mapState,
-                        mapModel: this._mapModel,
-                        coordinateTransformer: this._coordinateTransformer,
-                        replacer: this._replacer,
-                        metadataAnalyzer: this._metadataAnalyzer,
-                        querygeometryTool: this._querygeometryTool,
-                        drawGeometryHandler: this._drawGeometryHandler,
-                        queryBuilderProperties: this._queryBuilderProperties
-                    });
-                }, this);
+                return new ToolsBuilderWizard({
+                    widget: this._widget,
+                    globalProperties: this._properties,
+                    properties: properties,
+                    i18n: wizardI18n,
+                    windowManager: this._windowManager,
+                    appCtx: this._appCtx,
+                    stores: this._stores,
+                    mapState: this._mapState,
+                    mapModel: this._mapModel,
+                    coordinateTransformer: this._coordinateTransformer,
+                    replacer: this._replacer,
+                    metadataAnalyzer: this._metadataAnalyzer,
+                    querygeometryTool: this._querygeometryTool,
+                    drawGeometryHandler: this._drawGeometryHandler,
+                    queryBuilderProperties: this._queryBuilderProperties
+                });
             },
             _openWizardWindow: function (wizard, edit) {
                 var properties = wizard.get("properties");
@@ -218,9 +211,7 @@ define([
             },
             _onCreateQueryTool: function (event) {
                 var wizard = this._createWizard({});
-                ct_when(wizard, function (wizard) {
-                    this._openWizardWindow(wizard, false);
-                }, this);
+                this._openWizardWindow(wizard, false);
             },
             _onRemoveQueryTool: function (event) {
                 var ids = event.ids || [];
@@ -243,9 +234,7 @@ define([
                 var store = this._getConfigStore();
                 var config = store.get(event.id);
                 var wizard = this._createWizard(config);
-                ct_when(wizard, function (wizard) {
-                    this._openWizardWindow(wizard, true);
-                }, this);
+                this._openWizardWindow(wizard, true);
             },
             _onCopyQueryTool: function (event) {
                 var ids = event.ids || [];
