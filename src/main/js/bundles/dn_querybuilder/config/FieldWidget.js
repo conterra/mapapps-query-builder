@@ -244,7 +244,7 @@ define([
                     queryExpr: "*${0}*",
                     autoComplete: false
                 });
-                d_class.add(valueSelect.domNode, "valueSelect");
+                d_class.add(valueSelect.domNode, "valueField");
                 domConstruct.place(valueSelect.domNode, this._valueNode);
                 valueSelect.startup();
             } else {
