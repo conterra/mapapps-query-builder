@@ -466,7 +466,7 @@
         <!-- dojo custom build parameters -->
         <js.build.outputPath>${project.build.directory}/${project.artifactId}/js</js.build.outputPath>
         <!-- mapapps.version -->
-        <mapapps.version>3.6.0</mapapps.version>
+        <mapapps.version>3.7.0</mapapps.version>
         <!-- java lib versions -->
         <ct.jsregistry.version>1.0.25</ct.jsregistry.version>
         <ct.jsrt-test.version>1.0.8</ct.jsrt-test.version>
