@@ -309,8 +309,7 @@ define([
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
-            this._onQueryReady(customQuery);
-            this._setProcessing(false);
+            this.queryController.query(store, customQuery, options, this.tool);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
