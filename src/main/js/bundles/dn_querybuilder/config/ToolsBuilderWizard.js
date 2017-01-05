@@ -51,6 +51,7 @@ define([
         templateString: template,
         baseClass: "queryBuilderWizard",
         constructor: function (opts) {
+            this.inherited(arguments);
         },
         destroyInstance: function (instance) {
             this.disconnect();
@@ -76,7 +77,7 @@ define([
                 searchAttr: "name",
                 style: "width: 250px;",
                 maxHeight: this.maxComboBoxHeight
-            }, this._filteringNode);
+            }).placeAt(this._filteringNode, "replace");
             storeSelect.startup();
             this._titleTextBox.set("value", this.properties.title);
             this._iconClassTextBox.set("value", this.properties.iconClass);
@@ -401,7 +402,7 @@ define([
             });
         },
         _createBuilderGUI: function (textAreaCustomQuery) {
-            var properties = this.queryBuilderProperties._properties;
+            var queryBuilderProperties = this.queryBuilderProperties._properties;
             ct_css.switchHidden(this._spatialRelationDiv, true);
             var geometryStore = new Memory({
                 data: [
@@ -432,7 +433,7 @@ define([
                     style: "width: 80px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometrySelectNode);
+                }).placeAt(this._geometrySelectNode, "replace");
             }
             if (this.querygeometryTool) {
                 this._geometryLabel.innerHTML = this.i18n.useGeometry;
@@ -456,7 +457,7 @@ define([
                     style: "width: 80px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._spatialRelationNode);
+                }).placeAt(this._spatialRelationNode, "replace");
             }
             if (!this._editableSelect) {
                 this._editableSelect = new FilteringSelect({
@@ -467,7 +468,7 @@ define([
                     style: "width: 80px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._editableNode);
+                }).placeAt(this._editableNode, "replace");
             }
             var matchStore = new Memory({
                 data: [
@@ -477,13 +478,13 @@ define([
             if (!this._matchSelect) {
                 this._matchSelect = new FilteringSelect({
                     name: "match",
-                    value: properties.defaultRelationalOperator,
+                    value: queryBuilderProperties.defaultRelationalOperator,
                     store: matchStore,
                     searchAttr: "name",
                     style: "width: 80px;",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._matchNode);
+                }).placeAt(this._matchNode, "replace");
             }
             var properties = this.properties;
             var customQuery;

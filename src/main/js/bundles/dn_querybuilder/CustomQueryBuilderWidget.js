@@ -102,7 +102,7 @@ define([
                 store: store,
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight
-            }, this._filteringNode);
+            }).placeAt(this._filteringNode);
             d_class.add(filteringSelect.domNode, "filteringSelect");
             var geometryStore;
             if (this.querygeometryTool) {
@@ -119,7 +119,7 @@ define([
                     searchAttr: "name",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometrySelectNode);
+                }).placeAt(this._geometrySelectNode);
                 this.connect(this._geometrySelect, "onChange", function (value) {
                     if (value === true) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);
@@ -146,7 +146,7 @@ define([
                     searchAttr: "name",
                     required: true,
                     maxHeight: this.maxComboBoxHeight
-                }, this._geometrySelectNode);
+                }).placeAt(this._geometrySelectNode);
             }
             d_class.add(this._geometrySelect.domNode, "filteringSelect");
             var spatialRelationStore = new Memory({
@@ -164,7 +164,7 @@ define([
                 searchAttr: "name",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
-            }, this._spatialRelationNode);
+            }).placeAt(this._spatialRelationNode);
             d_class.add(this._spatialRelationSelect.domNode, "filteringSelect");
             var matchStore = new Memory({
                 data: [
@@ -172,6 +172,7 @@ define([
                     {name: this.i18n.or, id: "$or"}
                 ]
             });
+            //domConstruct.empty(this._matchNode);
             this._matchSelect = new FilteringSelect({
                 name: "match",
                 value: queryBuilderProperties.defaultRelationalOperator,
@@ -179,7 +180,7 @@ define([
                 searchAttr: "name",
                 required: true,
                 maxHeight: this.maxComboBoxHeight
-            }, this._matchNode);
+            }).placeAt(this._matchNode);
             d_class.add(this._matchSelect.domNode, "filteringSelect");
             this._changeMatchVisibility();
             if (this.dataModel.filteredDatasource) {

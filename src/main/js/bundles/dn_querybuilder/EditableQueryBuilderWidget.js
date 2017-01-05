@@ -148,7 +148,7 @@ define([
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
-            }, this._filteringNode);
+            }).placeAt(this._filteringNode);
             d_class.add(filteringSelect.domNode, "filteringSelect");
             var geometryStore = new Memory({
                 data: [
@@ -164,7 +164,7 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
-            }, this._geometrySelectNode);
+            }).placeAt(this._geometrySelectNode);
             d_class.add(this._geometrySelect.domNode, "filteringSelect");
             var matchStore = new Memory({
                 data: [
@@ -180,7 +180,7 @@ define([
                 required: true,
                 maxHeight: this.maxComboBoxHeight,
                 disabled: true
-            }, this._matchNode);
+            }).placeAt(this._matchNode);
             d_class.add(this._matchSelect.domNode, "filteringSelect");
         },
         _createGUIFields: function () {

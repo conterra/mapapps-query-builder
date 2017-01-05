@@ -1,51 +1,61 @@
 <div>
-    <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters: false, design: 'headline'">
-        <div data-dojo-attach-point="_topNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'" class="inputContainer">
+    <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer"
+         data-dojo-props="gutters: false, design: 'headline'">
+        <div data-dojo-attach-point="_topNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'"
+             class="inputContainer">
             <div class="settingsDiv">
                 <label>${i18n.title}</label>
-                <input type="text" name="title" value="" data-dojo-type="dijit/form/ValidationTextBox" required="true" placeHolder="${i18n.typeInTitle}" data-dojo-attach-point="_titleTextBox" data-dojo-props="intermediateChanges: 'true'"/>
+                <input type="text" name="title" value="" data-dojo-type="dijit/form/ValidationTextBox" required="true"
+                       placeHolder="${i18n.typeInTitle}" data-dojo-attach-point="_titleTextBox"
+                       data-dojo-props="intermediateChanges: 'true'"/>
             </div>
             <div class="settingsDiv">
                 <label>${i18n.iconClass}</label>
-                <input type="text" name="iconClass" data-dojo-type="dijit/form/ValidationTextBox" required="true" data-dojo-attach-point="_iconClassTextBox"  data-dojo-props="intermediateChanges: 'true'"/>
-                <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_iconClassHelp">
+                <div type="text" name="iconClass" data-dojo-type="dijit/form/ValidationTextBox" required="true"
+                     data-dojo-attach-point="_iconClassTextBox" data-dojo-props="intermediateChanges: 'true'"></div>
+                <button data-dojo-type="dijit.form.Button" type="button"
+                        data-dojo-attach-event="onClick:_iconClassHelp">
                     ?
                 </button>
             </div>
             <div class="settingsDiv" data-dojo-attach-point="_storeIdNode">
                 <label>${i18n.store}</label>
-                <input data-dojo-attach-point="_filteringNode">
+                <div data-dojo-attach-point="_filteringNode"></div>
             </div>
         </div>
-        <div data-dojo-attach-point="_tabContainerNode" data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region: 'center'">
-            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.builder}" data-dojo-props="selected:true" data-dojo-attach-point="_builderTab">
+        <div data-dojo-attach-point="_tabContainerNode" data-dojo-type="dijit/layout/TabContainer"
+             data-dojo-props="region: 'center'">
+            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.builder}" data-dojo-props="selected:true"
+                 data-dojo-attach-point="_builderTab">
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'">
                     <div class="head">
                         <label>${i18n.queryDefinition}</label>
-                        <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_customQueryHelp" class="button">
+                        <button data-dojo-type="dijit.form.Button" type="button"
+                                data-dojo-attach-event="onClick:_customQueryHelp" class="button">
                             ?
                         </button>
                     </div>
-                    <div class="settings" >
+                    <div class="settings">
                         <div class="settingsDiv" data-dojo-attach-point="_geometryNode">
                             <label data-dojo-attach-point="_geometryLabel">${i18n.useExtent}</label>
-                            <input data-dojo-attach-point="_geometrySelectNode"/>
-                            <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button" type="button"
+                            <div data-dojo-attach-point="_geometrySelectNode"></div>
+                            <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button"
+                                    type="button"
                                     data-dojo-attach-event="onClick:_onChooseGeometry">
                                 ${i18n.chooseGeometry}
                             </button>
                         </div>
                         <div class="settingsDiv" data-dojo-attach-point="_spatialRelationDiv">
                             <label>${i18n.spatialRelation}</label>
-                            <input data-dojo-attach-point="_spatialRelationNode"/>
+                            <div data-dojo-attach-point="_spatialRelationNode"></div>
                         </div>
                         <div class="settingsDiv">
                             <label>${i18n.editable}</label>
-                            <input data-dojo-attach-point="_editableNode"/>
+                            <div data-dojo-attach-point="_editableNode"></div>
                         </div>
                         <div class="settingsDiv">
                             <label>${i18n.match}</label>
-                            <input data-dojo-attach-point="_matchNode"/>
+                            <div data-dojo-attach-point="_matchNode"></div>
                         </div>
                     </div>
                 </div>
@@ -53,46 +63,56 @@
                     <div data-dojo-attach-point="_queryNode"></div>
                 </div>
             </div>
-            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.options}" data-dojo-attach-point="_optionsTab">
+            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.options}"
+                 data-dojo-attach-point="_optionsTab">
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'" class="settings">
                     <div class="settingsDiv">
                         <label>${i18n.count}</label>
-                        <input data-dojo-attach-point="_countNode"/>
+                        <div data-dojo-attach-point="_countNode"></div>
                     </div>
                     <div class="settingsDiv">
                         <label>${i18n.ignoreCase}</label>
-                        <input data-dojo-attach-point="_ignoreCaseNode"/>
+                        <div data-dojo-attach-point="_ignoreCaseNode"></div>
                     </div>
                     <div class="settingsDiv">
                         <label>${i18n.locale}</label>
-                        <input data-dojo-attach-point="_localeNode"/>
+                        <div data-dojo-attach-point="_localeNode"></div>
                     </div>
                 </div>
             </div>
-            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.manual}" data-dojo-attach-point="_manualTab">
+            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.manual}"
+                 data-dojo-attach-point="_manualTab">
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'">
                     <div data-dojo-attach-point="_customQueryLabelNode">
                         <label>${i18n.customQuery}</label>
-                        <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_customQueryHelp" class="button">
+                        <button data-dojo-type="dijit.form.Button" type="button"
+                                data-dojo-attach-event="onClick:_customQueryHelp" class="button">
                             ?
                         </button>
                     </div>
                 </div>
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'">
                     <div>
-                        <textarea name="textarea" data-dojo-type="dijit/form/SimpleTextarea" rows="16" cols="120" data-dojo-attach-point="_customQueryTextArea" data-dojo-props="intermediateChanges: 'true'"></textarea>
+                        <textarea name="textarea" data-dojo-type="dijit/form/SimpleTextarea" rows="16" cols="120"
+                                  data-dojo-attach-point="_customQueryTextArea"
+                                  data-dojo-props="intermediateChanges: 'true'"></textarea>
                     </div>
                 </div>
             </div>
-            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.placeholder}" data-dojo-attach-point="_placeholderTab">
-                <div data-dojo-attach-point="_placeholderNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'"></div>
+            <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.placeholder}"
+                 data-dojo-attach-point="_placeholderTab">
+                <div data-dojo-attach-point="_placeholderNode" data-dojo-type="dijit/layout/ContentPane"
+                     data-dojo-props="region: 'center'"></div>
             </div>
         </div>
-        <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'bottom'">
-            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onCancel" class="rightFloatingButton">
+        <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
+             data-dojo-props="region: 'bottom'">
+            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onCancel"
+                    class="rightFloatingButton">
                 ${i18n.cancel}
             </button>
-            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone" data-dojo-attach-point="_doneButton" data-dojo-props="disabled: 'true'" class="rightFloatingButton">
+            <button data-dojo-type="dijit.form.Button" type="button" data-dojo-attach-event="onClick:_onDone"
+                    data-dojo-attach-point="_doneButton" data-dojo-props="disabled: 'true'" class="rightFloatingButton">
                 ${i18n.done}
             </button>
         </div>
