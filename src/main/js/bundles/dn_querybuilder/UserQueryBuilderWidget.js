@@ -81,6 +81,7 @@ define([
         },
         destroy: function () {
             this.disconnect();
+            this.inherited(arguments);
         },
         _init: function () {
             var queryBuilderProperties = this.queryBuilderProperties._properties;

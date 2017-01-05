@@ -77,6 +77,7 @@ define([
         destroy: function () {
             this._removeFields();
             this.disconnect();
+            this.inherited(arguments);
         },
         setStores: function (stores, storeData) {
             this.stores = stores;
@@ -309,7 +310,8 @@ define([
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
-            this.queryController.query(store, customQuery, options, this.tool);
+            this._onQueryReady(customQuery);
+            this._setProcessing(false);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);

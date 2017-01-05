@@ -7,11 +7,11 @@
                  data-dojo-props="region: 'center'" class="noPadding">
                 <div class="settingsDiv" data-dojo-attach-point="_filteringDiv">
                     <label>${i18n.userStore}</label>
-                    <input data-dojo-attach-point="_filteringNode">
+                    <div data-dojo-attach-point="_filteringNode"></div>
                 </div>
                 <div class="settingsDiv" data-dojo-attach-point="_geometryNode">
                     <label>${i18n.userUseGeometry}</label>
-                    <input data-dojo-attach-point="_geometrySelectNode" class="bufferTextBox">
+                    <div data-dojo-attach-point="_geometrySelectNode" class="bufferTextBox"></div>
                 </div>
                 <div class="settingsDiv">
                     <button data-dojo-attach-point="_geometryButton" class="geometryButton"
@@ -22,16 +22,16 @@
                 </div>
                 <div class="settingsDiv" data-dojo-attach-point="_spatialRelationDiv">
                     <label>${i18n.userSpatialRelation}</label>
-                    <input data-dojo-attach-point="_spatialRelationNode"/>
+                    <div data-dojo-attach-point="_spatialRelationNode"></div>
                 </div>
                 <div class="useOnlyGeometryDiv" data-dojo-attach-point="_useOnlyGeometryDiv">
                     <label>${i18n.userUseOnlyGeometry}</label>
-                    <input data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_useOnlyGeometry" value="agreed"
-                           data-dojo-attach-event="onChange:_onUseOnlyGeometry">
+                    <div data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_useOnlyGeometry" value="agreed"
+                         data-dojo-attach-event="onChange:_onUseOnlyGeometry"></div>
                 </div>
                 <div class="settingsDiv" data-dojo-attach-point="_matchDiv">
                     <label>${i18n.userMatch}</label>
-                    <input data-dojo-attach-point="_matchNode">
+                    <div data-dojo-attach-point="_matchNode"></div>
                 </div>
             </div>
             <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
