@@ -96,7 +96,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1469615663725"
+          "id": "airtraffic"
         },
         {
           "title": "USA (Counties)",
@@ -117,7 +117,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1441195340629"
+          "id": "usa_counties"
         },
         {
           "title": "USA (Highways)",
@@ -138,7 +138,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1441195356941"
+          "id": "usa_highways"
         },
         {
           "title": "USA (States)",
@@ -159,7 +159,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1441195705828"
+          "id": "usa_states"
         },
         {
           "title": "Zensus 2011 Bundesländer",
@@ -180,7 +180,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442226070628"
+          "id": "zensus_2011_bundeslaender"
         },
         {
           "title": "Zensus 2011 Kreise",
@@ -201,7 +201,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442227045951"
+          "id": "zensus_2011_kreise"
         },
         {
           "title": "Zensus 2011 Gemeinden",
@@ -222,7 +222,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442227058500"
+          "id": "zensus_2011_gemeinden"
         },
         {
           "title": "USA (Cities)",
@@ -243,28 +243,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442299569090"
-        },
-        {
-          "title": "NOAA (Stations)",
-          "description": "The <a href=\"http://www.noaa.gov/\" target=\"_blank\">National Oceanic and Atmospheric Administration</a> (NOAA) provided <a href=\"http://www.ncdc.noaa.gov/oa/wdc/metar/\" target=\"_blank\">METARs</a> (The acronym roughly translates from French as Aviation Routine Weather Report) typically come from airports or permanent weather observation stations. Reports are generated once an hour or half an hour, but if conditions change significantly, a report known as a special (SPECI) may be issued. Some METARs are encoded by automated airport weather stations located at airports, military bases, and other sites. Some locations still use augmented observations, which are recorded by digital sensors, encoded via software, and then reviewed by certified weather observers or forecasters prior to being transmitted. Observations may also be taken by trained observers or forecasters who manually observe and encode their observations prior to transmission.\n<br><br>A typical METAR contains data for the temperature, dew point, wind speed and direction, precipitation, cloud cover and heights, visibility, and barometric pressure. A METAR may also contain information on precipitation amounts, lightning, and other information that would be of interest to pilots or meteorologists such as a pilot report or PIREP, color states and runway visual range (RVR).\n<br><br>In addition, a short period forecast called a TREND may be added at the end of the METAR covering likely changes in weather conditions in the two hours following the observation. These are in the same format as a <a href=\"http://www.ncdc.noaa.gov/oa/wdc/metar/\" target=\"_blank\">Terminal Aerodrome Forecast</a> (TAF).\n<br><br>The complement to METARs, reporting forecast weather rather than current weather, are TAFs. METARs and TAFs are used in VOLMET broadcasts.",
-          "omniSearchLabelAttr": "STATION_NAME",
-          "omniSearchSearchAttr": "STATION_NAME",
-          "idProperty": "OBJECTID",
-          "url": "http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/NOAA_METAR_current_wind_speed_direction/MapServer/0",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "_AGS_STORE_1443534824350"
+          "id": "usa_cities"
         }
       ],
       "enabled": true
@@ -412,15 +391,14 @@
       "UserQueryBuilderWidgetFactory": {
         "storeIds": [
           "stoerungen",
-          "_AGS_STORE_1469615663725",
-          "_AGS_STORE_1441195340629",
-          "_AGS_STORE_1441195356941",
-          "_AGS_STORE_1441195705828",
-          "_AGS_STORE_1442226070628",
-          "_AGS_STORE_1442227045951",
-          "_AGS_STORE_1442227058500",
-          "_AGS_STORE_1442299569090",
-          "_AGS_STORE_1443534824350"
+          "airtraffic",
+          "usa_counties",
+          "usa_highways",
+          "usa_states",
+          "zensus_2011_bundeslaender",
+          "zensus_2011_kreise",
+          "zensus_2011_gemeinden",
+          "usa_cities"
         ]
       },
       "QueryTools": [
@@ -510,7 +488,7 @@
               "country": "EN"
             }
           },
-          "storeId": "_AGS_STORE_1469615663725"
+          "storeId": "airtraffic"
         },
         {
           "id": "fc_1441982464561",
@@ -535,7 +513,7 @@
               "country": "EN"
             }
           },
-          "storeId": "_AGS_STORE_1441195340629"
+          "storeId": "usa_counties"
         },
         {
           "id": "fc_1441982585646",
@@ -560,7 +538,7 @@
               "country": "EN"
             }
           },
-          "storeId": "_AGS_STORE_1441195356941"
+          "storeId": "usa_highways"
         },
         {
           "id": "fc_1442299580413",
@@ -585,7 +563,7 @@
               "country": "EN"
             }
           },
-          "storeId": "_AGS_STORE_1442299569090"
+          "storeId": "usa_cities"
         }
       ],
       "enabled": true
@@ -891,7 +869,7 @@
           "iconClass": "icon-select-extend",
           "clickTolerance": 0,
           "id": "selectionTool_1441195340653",
-          "storeId": "_AGS_STORE_1441195340629",
+          "storeId": "usa_counties",
           "title": "USA (Counties)"
         },
         {
@@ -899,7 +877,7 @@
           "iconClass": "icon-select-extend",
           "clickTolerance": 0,
           "id": "selectionTool_1441195356968",
-          "storeId": "_AGS_STORE_1441195356941",
+          "storeId": "usa_highways",
           "title": "USA (Highways)"
         },
         {
@@ -907,7 +885,7 @@
           "iconClass": "icon-select-extend",
           "clickTolerance": 0,
           "id": "selectionTool_1442227045961",
-          "storeId": "_AGS_STORE_1442227045951",
+          "storeId": "zensus_2011_kreise",
           "title": "Zensus Deutschland 2011 (Zensus 2011 Kreise)"
         },
         {
@@ -915,7 +893,7 @@
           "iconClass": "icon-select-extend",
           "clickTolerance": 0,
           "id": "selectionTool_1442227058510",
-          "storeId": "_AGS_STORE_1442227058500",
+          "storeId": "zensus_2011_gemeinden",
           "title": "Zensus Deutschland 2011 (Zensus 2011 Gemeinden)"
         },
         {
@@ -923,7 +901,7 @@
           "iconClass": "icon-select-extend",
           "clickTolerance": 0,
           "id": "selectionTool_1441195705851",
-          "storeId": "_AGS_STORE_1441195705828",
+          "storeId": "usa_states",
           "title": "USA (States)"
         },
         {
@@ -995,7 +973,7 @@
           "iconClass": "icon-select-extend",
           "clickTolerance": 0,
           "id": "selectionTool_1442226070638",
-          "storeId": "_AGS_STORE_1442226070628",
+          "storeId": "zensus_2011_bundeslaender",
           "title": "Zensus Deutschland 2011 (Zensus 2011 Bundesländer)"
         }
       ]
