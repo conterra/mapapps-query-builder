@@ -70,7 +70,7 @@ define([
         },
         getStoreData: function (stores) {
             var storeIds = [];
-            d_array.forEach(stores, function(store) {
+            d_array.forEach(stores, function (store) {
                 storeIds.push(store.id);
             });
             return this.getStoreDataByIds(storeIds);
@@ -82,7 +82,7 @@ define([
                 if (storeProperties) {
                     storeData.push(
                         {
-                            name: storeProperties.title,
+                            name: storeProperties.title || storeProperties.id,
                             id: storeId
                         }
                     );
