@@ -50,7 +50,7 @@
         },
         "dockTool": "userQueryBuilderTool",
         "closable": true,
-        "maximizable" : true,
+        "maximizable": true,
         "minimizeOnClose": true,
         "resizable": true
       }
@@ -67,7 +67,6 @@
           "w": 700,
           "h": 250
         },
-        "dockTool": "customQueryBuilderTool",
         "closable": true,
         "minimizeOnClose": true,
         "resizable": true
@@ -285,36 +284,27 @@
       ]
     },
     {
-      "name": "CustomQueryBuilderWidgetFactory",
+      "name": "CustomQueryBuilderWidgetSample",
       "provides": [
-        "ct.framework.api.EventHandler",
-        "dijit.Widget"
+        "dn_querybuilder.CustomQueryBuilderWidgetSample",
+        "ct.framework.api.EventHandler"
       ],
       "properties": {
-        "Event-Topics": [
-          {
-            "topic": "ct/dn_querygeometry/GEOMETRY",
-            "method": "saveInputGeometry"
-          }
-        ],
-        "widgetRole": "customQueryBuilderWidget"
       },
       "propertiesConstructor": true,
-      "instanceFactory": true,
-      "immediate": true,
       "references": [
         {
           "name": "eventService",
           "providing": "ct.framework.api.EventService"
         },
         {
-          "name": "_mapState",
-          "providing": "ct.mapping.map.MapState"
+          "name": "store",
+          "providing": "ct.api.Store",
+          "filter": "(id=stoerungen)"
         },
         {
-          "name": "_tool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=customQueryBuilderTool)"
+          "name": "_mapState",
+          "providing": "ct.mapping.map.MapState"
         },
         {
           "name": "_dataModel",
@@ -349,32 +339,6 @@
         }
       ]
     },
-    /*{
-      "name": "CustomQueryBuilderWidgetSample",
-      "provides": [
-        "ct.framework.api.EventHandler"
-      ],
-      "properties": {
-
-      },
-      "propertiesConstructor": true,
-      "references": [
-        {
-          "name": "eventService",
-          "providing": "ct.framework.api.EventService"
-        },
-        {
-          "name": "store",
-          "providing": "ct.api.Store",
-          "filter": "(id=stoerungen)"
-        },
-        {
-          "name": "_customQueryBuilderWidget",
-          "providing": "dijit.Widget",
-          "filter": "(widgetRole=customQueryBuilderWidget)"
-        }
-      ]
-    },*/
     {
       "name": "UserQueryBuilderTool",
       "impl": "ct/tools/Tool",
@@ -403,9 +367,16 @@
         "toolRole": "toolset",
         "title": "${wizard.customToolTitle}",
         "tooltip": "${wizard.customToolToolTip}",
-        "togglable": true,
-        "iconClass": "icon-custom-info-help"
-      }
+        "togglable": false,
+        "iconClass": "icon-custom-info-help",
+        "clickHandler": "activateWindow"
+      },
+      "references":[
+        {
+          "name": "handlerScope",
+          "providing": "dn_querybuilder.CustomQueryBuilderWidgetSample"
+        }
+      ]
     }
   ]
 }

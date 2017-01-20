@@ -21,7 +21,6 @@ define([
     "./UserQueryBuilderWidget",
     "./UserQueryBuilderWidgetFactory",
     "./CustomQueryBuilderWidget",
-    "./CustomQueryBuilderWidgetFactory",
     "./CustomQueryBuilderWidgetSample",
     "./QueryBuilderProperties",
     "./MetadataAnalyzer",
