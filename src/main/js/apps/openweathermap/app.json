@@ -48,8 +48,11 @@
           "omniSearchLabelAttr": "osm_name",
           "omniSearchSearchAttr": "osm_name",
           "idProperty": "OBJECTID",
-          "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/0",
-          "useIn": "selection",
+          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+          "useIn": [
+            "omnisearch",
+            "selection"
+          ],
           "filterOptions": {
             "suggestContains": true,
             "metadata": {
@@ -115,7 +118,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1441195340629"
+          "id": "usa_counties"
         },
         {
           "title": "USA (Highways)",
@@ -136,7 +139,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1441195356941"
+          "id": "usa_highways"
         },
         {
           "title": "USA (States)",
@@ -157,10 +160,10 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1441195705828"
+          "id": "usa_states"
         },
         {
-          "title": "Zensus Deutschland 2011 (Zensus 2011 Bundesländer)",
+          "title": "Zensus 2011 Bundesländer",
           "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
           "omniSearchLabelAttr": "NAME",
           "omniSearchSearchAttr": "NAME",
@@ -178,10 +181,10 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442226070628"
+          "id": "zensus_2011_bundeslaender"
         },
         {
-          "title": "Zensus Deutschland 2011 (Zensus 2011 Kreise)",
+          "title": "Zensus 2011 Kreise",
           "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
           "omniSearchLabelAttr": "NAME",
           "omniSearchSearchAttr": "NAME",
@@ -199,10 +202,10 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442227045951"
+          "id": "zensus_2011_kreise"
         },
         {
-          "title": "Zensus Deutschland 2011 (Zensus 2011 Gemeinden)",
+          "title": "Zensus 2011 Gemeinden",
           "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
           "omniSearchLabelAttr": "NAME",
           "omniSearchSearchAttr": "NAME",
@@ -220,7 +223,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442227058500"
+          "id": "zensus_2011_gemeinden"
         },
         {
           "title": "USA (Cities)",
@@ -241,7 +244,7 @@
           "omniSearchDefaultLabel": "Suchbegriff eingeben...",
           "fetchIdProperty": true,
           "enablePagination": false,
-          "id": "_AGS_STORE_1442299569090"
+          "id": "usa_cities"
         }
       ],
       "enabled": true
@@ -259,21 +262,6 @@
         "contentRules": []
       },
       "enabled": true
-    },
-    "custominfo": {
-      "CustomInfoToggleTool": [
-        {
-          "id": "copyrightCustomInfoTool",
-          "title": "Copyright",
-          "tooltip": "Open copyright information",
-          "widgetSettings": {
-            "content": "Copyright 2013 con terra GmbH",
-            "window": {
-              "title": "Copyright"
-            }
-          }
-        }
-      ]
     },
     "dn_openweathermapdatastore": {
       "OpenWeatherMapStoreFactory": {
@@ -392,7 +380,22 @@
     },
     "dn_querybuilder": {
       "QueryBuilderProperties": {
-        "enableDistinctValues": true
+        "enableDistinctValues": true,
+        "defaultMatchValue": "$and"
+      },
+      "UserQueryBuilderWidgetFactory": {
+        "storeIds": [
+          "owm_datastore",
+          "stoerungen",
+          "airtraffic",
+          "usa_counties",
+          "usa_highways",
+          "usa_states",
+          "zensus_2011_bundeslaender",
+          "zensus_2011_kreise",
+          "zensus_2011_gemeinden",
+          "usa_cities"
+        ]
       },
       "QueryTools": [
         {
@@ -405,94 +408,6 @@
               {
                 "temp": {
                   "$gt": 25
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          }
-        },
-        {
-          "id": "fc_1441021732534",
-          "title": "Show reported street damages that are not yet fixed in Münster",
-          "iconClass": "icon-toolcase",
-          "storeId": "stoerungen",
-          "customquery": {
-            "$and": [
-              {
-                "art": {
-                  "$eq": 5
-                }
-              },
-              {
-                "status": {
-                  "$eq": 1
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          }
-        },
-        {
-          "id": "fc_1442569207538",
-          "title": "Date Test [editable]",
-          "iconClass": "icon-custom-info",
-          "customquery": {
-            "$and": [
-              {
-                "zeitpunkt": {
-                  "$lte": "${current_date}"
-                }
-              }
-            ]
-          },
-          "options": {
-            "mode": "builder",
-            "editable": true,
-            "editOptions": [
-              {
-                "not": false,
-                "field": false,
-                "compare": false,
-                "value": true
-              }
-            ],
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "stoerungen"
-        },
-        {
-          "id": "fc_1441023991013",
-          "title": "Where are Germany's airports?",
-          "iconClass": "icon-airport",
-          "storeId": "airtraffic",
-          "customquery": {
-            "$and": [
-              {
-                "OBJECTID": {
-                  "$gt": -1
                 }
               }
             ]
@@ -547,81 +462,6 @@
             }
           },
           "storeId": "owm_datastore"
-        },
-        {
-          "id": "fc_1441982464561",
-          "title": "US Counties with Population > 1000 per SQM",
-          "iconClass": "icon-zoom-world",
-          "customquery": {
-            "$and": [
-              {
-                "pop00_sqmi": {
-                  "$gte": 1000
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "_AGS_STORE_1441195340629"
-        },
-        {
-          "id": "fc_1441982585646",
-          "title": "All US-Interstates",
-          "iconClass": "icon-line",
-          "customquery": {
-            "$and": [
-              {
-                "admn_class": {
-                  "$eq": "Interstate"
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "_AGS_STORE_1441195356941"
-        },
-        {
-          "id": "fc_1442299580413",
-          "title": "Which are the capitals of the U.S. states?",
-          "iconClass": "icon-house",
-          "customquery": {
-            "$and": [
-              {
-                "capital": {
-                  "$eq": "Y"
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "_AGS_STORE_1442299569090"
         },
         {
           "id": "fc_1442315929545",
@@ -701,6 +541,169 @@
             ]
           },
           "storeId": "owm_datastore"
+        },
+        {
+          "id": "fc_1441021732534",
+          "title": "Show reported street damages that are not yet fixed in Münster",
+          "iconClass": "icon-toolcase",
+          "storeId": "stoerungen",
+          "customquery": {
+            "$and": [
+              {
+                "art": {
+                  "$eq": 5
+                }
+              },
+              {
+                "status": {
+                  "$eq": 1
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          }
+        },
+        {
+          "id": "fc_1442569207538",
+          "title": "Date Test [editable]",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "zeitpunkt": {
+                  "$lte": "${current_date}"
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": true,
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ],
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "stoerungen"
+        },
+        {
+          "id": "fc_1469615816195",
+          "title": "Where are Germany's airports?",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "OBJECTID": {
+                  "$gt": 0
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "airtraffic"
+        },
+        {
+          "id": "fc_1441982464561",
+          "title": "US Counties with Population > 1000 per SQM",
+          "iconClass": "icon-zoom-world",
+          "customquery": {
+            "$and": [
+              {
+                "pop00_sqmi": {
+                  "$gte": 1000
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "usa_counties"
+        },
+        {
+          "id": "fc_1441982585646",
+          "title": "All US-Interstates",
+          "iconClass": "icon-line",
+          "customquery": {
+            "$and": [
+              {
+                "admn_class": {
+                  "$eq": "Interstate"
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "usa_highways"
+        },
+        {
+          "id": "fc_1442299580413",
+          "title": "Which are the capitals of the U.S. states?",
+          "iconClass": "icon-house",
+          "customquery": {
+            "$and": [
+              {
+                "capital": {
+                  "$eq": "Y"
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "usa_cities"
         }
       ],
       "enabled": true
@@ -954,146 +957,6 @@
         }
       },
       "enabled": true
-    },
-    "selection": {
-      "SelectionTool": [
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1441024426716",
-          "storeId": "_AGS_STORE_1441024426700",
-          "title": "Infrastructure (Facility Type)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1441025566349",
-          "storeId": "_AGS_STORE_1441025566339",
-          "title": "Wind Turbines (TurbineInspections)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442225815386",
-          "storeId": "_AGS_STORE_1442225815376",
-          "title": "Kreise Bevölkerung (Kreise)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1441195340653",
-          "storeId": "_AGS_STORE_1441195340629",
-          "title": "USA (Counties)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1441195356968",
-          "storeId": "_AGS_STORE_1441195356941",
-          "title": "USA (Highways)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442227045961",
-          "storeId": "_AGS_STORE_1442227045951",
-          "title": "Zensus Deutschland 2011 (Zensus 2011 Kreise)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442227058510",
-          "storeId": "_AGS_STORE_1442227058500",
-          "title": "Zensus Deutschland 2011 (Zensus 2011 Gemeinden)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1441195705851",
-          "storeId": "_AGS_STORE_1441195705828",
-          "title": "USA (States)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442223158783",
-          "storeId": "_AGS_STORE_1442223158773",
-          "title": "WorldToCache (World Cities)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442223700365",
-          "storeId": "_AGS_STORE_1442223700355",
-          "title": "USGSTOPO (13: Airport Runway)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442226826600",
-          "storeId": "_AGS_STORE_1442226826579",
-          "title": "Zensus Deutschland (Bundesländer)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442225265092",
-          "storeId": "_AGS_STORE_1442225265082",
-          "title": "Bundeslaendergrenzen (Bundesländergrenzen 2013 (Statistik))"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442225305476",
-          "storeId": "_AGS_STORE_1442225305466",
-          "title": "Gemeindegrenzen (Gemeindegrenzen 2013 (Statistik))"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442226408905",
-          "storeId": "_AGS_STORE_1442226408890",
-          "title": "Zensus Deutschland (Gemeinden)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442225793021",
-          "storeId": "_AGS_STORE_1442225793011",
-          "title": "Kreisgrenzen (Kreisgrenzen 2013 (Statistik))"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442227261227",
-          "storeId": "_AGS_STORE_1442227261217",
-          "title": "Hurricane (Forecast Track)"
-        },
-        {
-          "geoType": "Extent",
-          "iconClass": "icon-select-extend",
-          "clickTolerance": 0,
-          "id": "selectionTool_1442226070638",
-          "storeId": "_AGS_STORE_1442226070628",
-          "title": "Zensus Deutschland 2011 (Zensus 2011 Bundesländer)"
-        }
-      ]
     },
     "templates": {
       "TemplateSelector": {
