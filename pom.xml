@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.conterra.devnet</groupId>
-    <artifactId>ct-mapapps-query-builder</artifactId>
+    <artifactId>mapapps-query-builder</artifactId>
     <version>3.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <!-- DISABLE repositories and pluginRepositories if inside the con terra! -->
@@ -172,7 +172,16 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-scm-plugin</artifactId>
-                    <version>1.10</version>
+                    <version>1.9.5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>de.jutzig</groupId>
+                    <artifactId>github-release-plugin</artifactId>
+                    <version>1.1.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -387,7 +396,7 @@
                         <configuration>
                             <templateName>${project.artifactId}</templateName>
                             <templateTitle>${project.artifactId}-${project.version}</templateTitle>
-                            <templateFile>${project.build.directory}/${project.artifactId}-${project.version}.zip</templateFile>
+                            <templateFile>${project.build.directory}/${project.artifactId}-sample-app.zip</templateFile>
                             <templateResources>
                                 <templateResource>
                                     <directory>${js.build.outputPath}/apps/sample</directory>
@@ -403,6 +412,26 @@
                     <skipDeploy>true</skipDeploy>
                     <createApp>false</createApp>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/config/assembly.xml</descriptor>
+                    </descriptors>
+                    <finalName>${project.artifactId}-bundle</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>                   
+                </configuration>
+                <executions> 
+                    <execution>
+                        <id>make-zip</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
@@ -436,29 +465,36 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.2</version>
+                <artifactId>maven-release-plugin</artifactId>                
                 <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
                     <preparationGoals>clean</preparationGoals>
-                    <releaseProfiles>release,compress,write-release-versions,commit-release-versions,rollout</releaseProfiles>
+                    <releaseProfiles>compress,github-release</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- for git release plugin-->
+                    <arguments>-Dusername=${scm.username} -Dpassword=${scm.password}</arguments>
+                    <username>${scm.username}</username>
+                    <password>${scm.password}</password>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <scm>
-        <developerConnection>scm:git:git@github.com:conterra/mapapps-query-builder.git</developerConnection>
+        <connection>scm:git:https://github.com/conterra/mapapps-query-builder.git</connection>
+        <developerConnection>scm:git:https://github.com/conterra/mapapps-query-builder.git</developerConnection>
+        <url>https://github.com/conterra/mapapps-query-builder</url>
+        <tag>1.0.5</tag>
     </scm>
     <distributionManagement>
         <repository>
             <id>ct-dist-releases-file</id>
             <name>repository for sdi.suite releases</name>
-            <url>file://///repository01.esri-de.com/maven/maven-repo/releases</url>
+            <url>${release.deployment.url}</url>
         </repository>
         <snapshotRepository>
             <id>ct-dist-snapshots-file</id>
             <name>repository for sdi.suite snapshots</name>
-            <url>file://///repository01.esri-de.com/maven/maven-repo/snapshots</url>
+            <url>${snapshot.deployment.url}</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
@@ -478,6 +514,11 @@
             http;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
+        
+        <!-- required for release build -->
+        <scm.push>false</scm.push>
+        <scm.username>${env.USER_NAME}</scm.username>
+        <scm.password>${env.USER_PW}</scm.password>
     </properties>
     <profiles>
         <profile>
@@ -516,6 +557,39 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>github-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>de.jutzig</groupId>
+                        <artifactId>github-release-plugin</artifactId>                        
+                        <executions>
+                            <execution>
+                                <id>github-upload</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>release</goal>
+                                </goals>                                
+                                <configuration>
+                                    <tag>${project.version}</tag>
+                                    <artifact>${project.build.directory}/${project.artifactId}-bundle.zip</artifact>
+                                    <fileSets>
+                                        <fileSet>
+                                            <directory>${project.build.directory}</directory>
+                                            <includes>
+                                                <include>${project.artifactId}*.tar.gz</include>
+                                                <include>${project.artifactId}*.zip</include>
+                                            </includes>
+                                        </fileSet>
+                                    </fileSets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>            
         </profile>
         <profile>
             <id>write-release-versions</id>
@@ -580,6 +654,9 @@
                                 <configuration>
                                     <message>[update-bundle-package-versions] from ${replace.source.version} to ${replace.target.version}</message>
                                     <basedir>${basedir}/src/main/js</basedir>
+                                    <pushChanges>${scm.push}</pushChanges>
+                                    <username>${scm.username}</username>
+                                    <password>${scm.password}</password>
                                 </configuration>
                             </execution>
                         </executions>
