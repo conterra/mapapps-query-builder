@@ -263,23 +263,23 @@
           "providing": "dn_querybuilder.MetadataAnalyzer"
         },
         {
-          "name": "_querygeometryTool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=querygeometryTool)",
-          "cardinality": "0..1"
-        },
-        {
-          "name": "_drawGeometryHandler",
-          "providing": "dn_querygeometry.DrawGeometryHandler",
-          "cardinality": "0..1"
-        },
-        {
           "name": "_queryBuilderProperties",
           "providing": "dn_querybuilder.QueryBuilderProperties"
         },
         {
           "name": "_queryController",
           "providing": "dn_querybuilder.QueryController"
+        },
+        {
+          "name": "querygeometryTool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=querygeometryTool)",
+          "cardinality": "0..1"
+        },
+        {
+          "name": "drawGeometryHandler",
+          "providing": "dn_querygeometry.DrawGeometryHandler",
+          "cardinality": "0..1"
         }
       ]
     },

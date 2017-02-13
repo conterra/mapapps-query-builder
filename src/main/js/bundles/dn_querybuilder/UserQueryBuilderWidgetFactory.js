@@ -43,9 +43,10 @@ define([
             var dataModel = this._dataModel;
             var replacer = this._replacer;
             var metadataAnalyzer = this._metadataAnalyzer;
-            var querygeometryTool = this._querygeometryTool;
             var queryBuilderProperties = this._queryBuilderProperties;
             var queryController = this._queryController;
+            var querygeometryTool = this.querygeometryTool;
+            var drawGeometryHandler = this.drawGeometryHandler;
             this.widget = new UserQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -55,17 +56,15 @@ define([
                 dataModel: dataModel,
                 replacer: replacer,
                 metadataAnalyzer: metadataAnalyzer,
-                querygeometryTool: querygeometryTool,
                 queryBuilderProperties: queryBuilderProperties,
-                queryController: queryController
+                queryController: queryController,
+                drawGeometryHandler: drawGeometryHandler,
+                querygeometryTool: querygeometryTool
             });
         },
         setDrawGeometryHandler: function (service) {
             if (this.widget)
                 this.widget.drawGeometryHandler = service;
-            this.connect(this._tool, "onDeactivate", function () {
-                service.clearGraphics();
-            }, this);
         },
         setQueryGeometryTool: function (service) {
             if (this.widget)

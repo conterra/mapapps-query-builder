@@ -122,6 +122,7 @@ define([
                         ct_css.switchHidden(this._spatialRelationDiv, false);
                         ct_css.switchHidden(this._useOnlyGeometryDiv, false);
                     } else {
+                        this.drawGeometryHandler.clearGraphics();
                         ct_css.switchHidden(this._geometryButton.domNode, true);
                         ct_css.switchHidden(this._spatialRelationDiv, true);
                         ct_css.switchHidden(this._useOnlyGeometryDiv, true);
@@ -200,6 +201,14 @@ define([
                 }
             });
             this.connect(filteringSelect, "onChange", this._removeFields);
+            this.connect(this.tool, "onActivate", function () {
+                if (this._geometry && this.drawGeometryHandler)
+                    this.drawGeometryHandler.drawGeometry(this._geometry);
+            }, this);
+            this.connect(this.tool, "onDeactivate", function () {
+                if (this.drawGeometryHandler)
+                    this.drawGeometryHandler.clearGraphics();
+            }, this);
         },
         resize: function (dim) {
             if (dim && dim.h > 0) {

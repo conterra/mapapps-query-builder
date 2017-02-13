@@ -134,8 +134,8 @@ define([
             this._createWindow(url, "Complex Query Documentation");
         },
         _onDone: function () {
-            /*if (this.drawGeometryHandler)
-             this.drawGeometryHandler.clearGraphics();*/
+            if (this.drawGeometryHandler)
+                this.drawGeometryHandler.clearGraphics();
             ct_when(this._saveProperties(), this._onReady);
         },
         _onReady: function () {
@@ -309,8 +309,8 @@ define([
             return result;
         },
         _onCancel: function () {
-            /*if (this.drawGeometryHandler)
-             this.drawGeometryHandler.clearGraphics();*/
+            if (this.drawGeometryHandler)
+                this.drawGeometryHandler.clearGraphics();
         },
         _getSelectedStoreObj: function (id) {
             return ct_array.arraySearchFirst(this.stores, {id: id});
@@ -442,7 +442,7 @@ define([
                         ct_css.switchHidden(this._geometryButton.domNode, false);
                         ct_css.switchHidden(this._spatialRelationDiv, false);
                     } else {
-                        //this.drawGeometryHandler.clearGraphics();
+                        this.drawGeometryHandler.clearGraphics();
                         ct_css.switchHidden(this._geometryButton.domNode, true);
                         ct_css.switchHidden(this._spatialRelationDiv, true);
                     }
@@ -504,12 +504,12 @@ define([
                     var spatialRelation = Object.keys(customQuery.geometry)[0];
                     var geom = customQuery.geometry[spatialRelation];
                     this.widget._geometry = geom;
-                    /*if (!textAreaCustomQuery)
-                     this.drawGeometryHandler.drawGeometry(geom);*/
-                    /*try {
-                     this.mapState.setExtent(geom.getExtent());
-                     } catch (e) {
-                     }*/
+                    if (!textAreaCustomQuery)
+                        this.drawGeometryHandler.drawGeometry(geom);
+                    try {
+                        this.mapState.setExtent(geom.getExtent());
+                    } catch (e) {
+                    }
                     spatialRelation = spatialRelation.substr(1, spatialRelation.length - 1);
                     this._spatialRelationSelect.set("value", spatialRelation);
                 }
