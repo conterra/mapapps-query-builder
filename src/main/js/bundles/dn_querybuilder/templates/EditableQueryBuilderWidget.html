@@ -22,14 +22,6 @@
                     <div data-dojo-attach-point="_matchNode"></div>
                 </div>
             </div>
-            <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
-                 data-dojo-props="region: 'bottom'" class="noPadding">
-                <button data-dojo-type="dijit.form.Button" class="doneButton" type="button"
-                        data-dojo-attach-event="onClick:_onDone"
-                        data-dojo-props="iconClass:'icon-magnifier'">
-                    ${i18n.userDone}
-                </button>
-            </div>
         </div>
         <div data-dojo-attach-point="_centerNode" data-dojo-type="dijit/layout/BorderContainer"
              data-dojo-props="region: 'center'" class="centerContainer">
@@ -41,6 +33,14 @@
                  data-dojo-props="region: 'center'" class="noPadding">
                 <div data-dojo-attach-point="_queryNode"></div>
             </div>
+        </div>
+        <div data-dojo-attach-point="_bottomNode" data-dojo-type="dijit/layout/ContentPane"
+             data-dojo-props="region: 'bottom'" class="noPadding">
+            <button data-dojo-type="dijit.form.Button" class="input-large input-block input-success" type="button"
+                    data-dojo-attach-event="onClick:_onDone"
+                    data-dojo-props="iconClass:'icon-magnifier'">
+                ${i18n.userDone}
+            </button>
         </div>
     </div>
     <div data-dojo-attach-point="_errorNode">${i18n.serviceUnavailable}</div>

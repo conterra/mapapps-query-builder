@@ -42,11 +42,11 @@
         "title": "${wizard.userWindowTitle}",
         "marginBox": {
           "w": 780,
-          "h": 250
+          "h": 285
         },
         "minSize": {
           "w": 700,
-          "h": 250
+          "h": 285
         },
         "dockTool": "userQueryBuilderTool",
         "closable": true,
@@ -61,11 +61,11 @@
         "title": "${wizard.customWindowTitle}",
         "marginBox": {
           "w": 780,
-          "h": 250
+          "h": 285
         },
         "minSize": {
           "w": 700,
-          "h": 250
+          "h": 285
         },
         "closable": true,
         "minimizeOnClose": true,
@@ -78,11 +78,11 @@
         "title": "${wizard.editWindowTitle}",
         "marginBox": {
           "w": 700,
-          "h": 230
+          "h": 250
         },
         "minSize": {
           "w": 660,
-          "h": 230
+          "h": 250
         },
         "closable": true,
         "minimizeOnClose": true,

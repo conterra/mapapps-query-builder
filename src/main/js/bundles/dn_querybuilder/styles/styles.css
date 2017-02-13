@@ -78,9 +78,7 @@
     display: block;
 }
 
-.userQueryBuilderWidget .settingsContainer .geometryButton,
-.userQueryBuilderWidget .settingsContainer .doneButton,
-.editableQueryBuilderWidget .settingsContainer .doneButton {
+.userQueryBuilderWidget .settingsContainer .geometryButton {
     display: block;
 }
 
