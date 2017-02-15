@@ -173,7 +173,7 @@ define([
             var fieldStore = this._fieldStore = new Memory({
                 data: fieldData
             });
-            this._fieldSelect = new FilteringSelect({
+            var fieldSelect = this._fieldSelect = new FilteringSelect({
                 name: "fields",
                 value: this.fieldId || fieldData[0].id,
                 store: fieldStore,
@@ -181,7 +181,8 @@ define([
                 maxHeight: this.maxComboBoxHeight,
                 readOnly: false,
                 disabled: this.fieldSelectDisabled
-            }, this._fieldNode);
+            });
+            domConstruct.place(fieldSelect.domNode, this._fieldNode);
             d_class.add(this._fieldSelect.domNode, "fieldSelect");
             var i18n = this.i18n;
             var notStore = new Memory({
@@ -191,7 +192,7 @@ define([
                 ]
             });
             var not = false;
-            if (this.not !== undefined) {
+            if (this.not) {
                 not = this.not;
             }
             var notSelect = this._notSelect = new FilteringSelect({
@@ -203,7 +204,7 @@ define([
                 disabled: this.notSelectDisabled
             });
             d_class.add(notSelect.domNode, "notSelect");
-            domConstruct.place(notSelect.domNode, this._notNode, "first");
+            domConstruct.place(notSelect.domNode, this._notNode);
             notSelect.startup();
             this._createCheckBoxes();
             if (this.type === "admin") {
@@ -374,7 +375,8 @@ define([
                 store: compareStore,
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight
-            }, this._compareNode);
+            });
+            domConstruct.place(relationalOperatorSelect.domNode, this._compareNode);
             d_class.add(relationalOperatorSelect.domNode, "relationalOperatorSelect");
             relationalOperatorSelect.startup();
         },

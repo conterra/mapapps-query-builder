@@ -41,7 +41,7 @@
       "window": {
         "title": "${wizard.userWindowTitle}",
         "marginBox": {
-          "w": 780,
+          "w": 700,
           "h": 285
         },
         "minSize": {
@@ -60,12 +60,12 @@
       "window": {
         "title": "${wizard.customWindowTitle}",
         "marginBox": {
-          "w": 780,
-          "h": 285
+          "w": 700,
+          "h": 250
         },
         "minSize": {
           "w": 700,
-          "h": 285
+          "h": 250
         },
         "closable": true,
         "minimizeOnClose": true,
@@ -77,12 +77,12 @@
       "window": {
         "title": "${wizard.editWindowTitle}",
         "marginBox": {
-          "w": 700,
-          "h": 250
+          "w": 660,
+          "h": 290
         },
         "minSize": {
           "w": 660,
-          "h": 250
+          "h": 290
         },
         "closable": true,
         "minimizeOnClose": true,

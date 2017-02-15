@@ -23,27 +23,36 @@
 .userQueryBuilderWidget .settingsContainer,
 .editableQueryBuilderWidget .settingsContainer {
     height: auto;
-    width: 25%;
+    width: 180px;
 }
 
-.userQueryBuilderWidget .settingsContainer .settingsDiv {
-    margin-bottom: 13px;
+.userQueryBuilderWidget .settingsNode,
+.editableQueryBuilderWidget .settingsNode {
+    overflow-x: hidden;
+    padding-right: 5px;
 }
 
-.editableQueryBuilderWidget .settingsContainer .settingsDiv {
+.userQueryBuilderWidget .settingsContainer .selectDiv {
     margin-bottom: 7px;
 }
 
-.userQueryBuilderWidget .settingsContainer .settingsDiv .filteringSelect,
-.editableQueryBuilderWidget .settingsContainer .settingsDiv .filteringSelect {
-    width: 98%;
+.editableQueryBuilderWidget .settingsContainer .selectDiv {
+    margin-bottom: 7px;
+}
+
+.userQueryBuilderWidget .settingsContainer .radioDiv {
+    margin-bottom: 5px;
+}
+
+.editableQueryBuilderWidget .settingsContainer .radioDiv {
+    margin-bottom: 5px;
 }
 
 .userQueryBuilderWidget .settingsContainer .useOnlyGeometryDiv {
     margin-bottom: 5px;
 }
 
-.userQueryBuilderWidget .settingsContainer .settingsDiv label {
+.userQueryBuilderWidget .settingsContainer label {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -51,12 +60,21 @@
     margin-bottom: 7px;
 }
 
-.editableQueryBuilderWidget .settingsContainer .settingsDiv label {
+.editableQueryBuilderWidget .settingsContainer label {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
     margin-bottom: 5px;
+}
+
+.userQueryBuilderWidget .settingsContainer .radioDiv .radioButtonLabel,
+.editableQueryBuilderWidget .settingsContainer .radioDiv .radioButtonLabel {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    margin-bottom: 3px;
 }
 
 .userQueryBuilderWidget .settingsContainer .useOnlyGeometryDiv label {
@@ -71,15 +89,6 @@
     margin-left: 0;
     margin-top: 0;
     margin-bottom: 0;
-}
-
-.userQueryBuilderWidget .settingsContainer .dijitButtonNode,
-.editableQueryBuilderWidget .dijitButtonNode {
-    display: block;
-}
-
-.userQueryBuilderWidget .settingsContainer .geometryButton {
-    display: block;
 }
 
 .userQueryBuilderWidget .inline,
@@ -109,7 +118,7 @@
 }
 
 .userQueryBuilderWidget .fieldWidget .buttonContainer {
-    width: 14%;
+    width: 70px;
     display: inline-block;
 }
 
@@ -146,4 +155,4 @@
     text-overflow: ellipsis;
 }
 
-
+/*background-color: #6d6d72*/

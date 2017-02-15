@@ -35,7 +35,7 @@ define({
         customToolTitle: "CustomQueryTool",
         customToolToolTip: "CustomQueryTool",
         customWindowTitle: "Query erstellen",
-        editWindowTitle: "Edit Query Tool",
+        editWindowTitle: "Editierbare Abfrage",
         defineQuery: "Suche definieren:",
         builder: "Bauen",
         options: "Optionen",

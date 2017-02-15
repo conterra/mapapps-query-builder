@@ -77,7 +77,7 @@ define([
                 searchAttr: "name",
                 style: "width: 250px;",
                 maxHeight: this.maxComboBoxHeight
-            }).placeAt(this._filteringNode, "replace");
+            }).placeAt(this._storeNode, "replace");
             storeSelect.startup();
             this._titleTextBox.set("value", this.properties.title);
             this._iconClassTextBox.set("value", this.properties.iconClass);

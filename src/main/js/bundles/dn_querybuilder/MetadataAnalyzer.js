@@ -93,6 +93,24 @@ define([
             });
             return storeData;
         },
+        getStoreDataByIds2: function (storeIds) {
+            var storeData = [];
+            d_array.forEach(storeIds, function (storeId) {
+                var storeProperties = this.getStoreProperties(storeId);
+                if (storeProperties) {
+                    storeData.push(
+                        {
+                            label: storeProperties.title || storeProperties.id,
+                            value: storeId
+                        }
+                    );
+                }
+            }, this);
+            storeData.sort(function (a, b) {
+                return a.label.localeCompare(b.label);
+            });
+            return storeData;
+        },
         getStoreProperties: function (idOrStore) {
             var resolver = this.serviceResolver;
             if (typeof (idOrStore) === "string") {

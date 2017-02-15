@@ -17,6 +17,7 @@ define([
     "dojo/_base/declare",
     "dojo/dom-class",
     "dojo/dom-construct",
+    "dojo/dom-prop",
     "dojo/_base/array",
     "dojo/dom-style",
     "dijit/_WidgetBase",
@@ -28,6 +29,8 @@ define([
     "dijit/registry",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
+    "dijit/form/RadioButton",
+    "dijit/form/Select",
     "dijit/form/FilteringSelect",
     "dijit/form/Button",
     "dijit/layout/ContentPane",
@@ -40,6 +43,7 @@ define([
 ], function (declare,
              d_class,
              domConstruct,
+             domProp,
              d_array,
              d_style,
              _WidgetBase,
@@ -51,6 +55,8 @@ define([
              d_registry,
              TextBox,
              ValidationTextBox,
+             RadioButton,
+             Select,
              FilteringSelect,
              Button,
              ContentPane,
@@ -92,35 +98,28 @@ define([
             var store = new Memory({
                 data: this.storeData
             });
-            var filteringSelect = this._filteringSelect = new FilteringSelect({
+            var storeSelect = this._storeSelect = new FilteringSelect({
                 name: "stores",
                 value: this.storeData[0].id,
                 store: store,
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight
-            }).placeAt(this._filteringNode);
-            d_class.add(filteringSelect.domNode, "filteringSelect");
-            var geometryStore;
+            }).placeAt(this._storeNode);
+            d_class.add(storeSelect.domNode, "input-block");
+            if (queryBuilderProperties.defaultRelationalOperator == "$and") {
+                this._matchRadioButtonAnd.set("checked", true);
+            } else {
+                this._matchRadioButtonOr.set("checked", true);
+            }
+            ct_css.switchHidden(this._geometryLabel3, true);
             if (this.querygeometryTool) {
-                geometryStore = new Memory({
-                    data: [
-                        {name: this.i18n.userGeometryEverywhere, id: false},
-                        {name: this.i18n.userGeometryEnhanced, id: true}
-                    ]
-                });
-                this._geometrySelect = new FilteringSelect({
-                    name: "geometry",
-                    value: false,
-                    store: geometryStore,
-                    searchAttr: "name",
-                    required: true,
-                    maxHeight: this.maxComboBoxHeight
-                }).placeAt(this._geometrySelectNode);
-                this.connect(this._geometrySelect, "onChange", function (value) {
-                    if (value === true) {
+                ct_css.switchHidden(this._geometryLabel2, true);
+                ct_css.switchHidden(this._geometryLabel3, false);
+                this.connect(this._geometryRadioButton1, "onChange", function (value) {
+                    if (value === false) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);
                         ct_css.switchHidden(this._spatialRelationDiv, false);
-                        ct_css.switchHidden(this._useOnlyGeometryDiv, false);
+                        //ct_css.switchHidden(this._useOnlyGeometryDiv, false);
                     } else {
                         this.drawGeometryHandler.clearGraphics();
                         ct_css.switchHidden(this._geometryButton.domNode, true);
@@ -128,79 +127,42 @@ define([
                         ct_css.switchHidden(this._useOnlyGeometryDiv, true);
                     }
                 });
-            } else {
-                geometryStore = new Memory({
-                    data: [
-                        {name: this.i18n.userGeometryEverywhere, id: false},
-                        {name: this.i18n.userGeometryExtent, id: true}
-                    ]
-                });
-                this._geometrySelect = new FilteringSelect({
-                    name: "geometry",
-                    value: false,
-                    store: geometryStore,
-                    searchAttr: "name",
-                    required: true,
-                    maxHeight: this.maxComboBoxHeight
-                }).placeAt(this._geometrySelectNode);
             }
-            d_class.add(this._geometrySelect.domNode, "filteringSelect");
-            var spatialRelationStore = new Memory({
-                data: [
-                    {name: this.i18n.spatialRelations.contains, id: "contains"},
-                    {name: this.i18n.spatialRelations.within, id: "within"},
-                    {name: this.i18n.spatialRelations.intersects, id: "intersects"},
-                    {name: this.i18n.spatialRelations.crosses, id: "crosses"}
-                ]
-            });
-            this._spatialRelationSelect = new FilteringSelect({
+            this._spatialRelationSelect = new Select({
                 name: "spatialRelation",
                 value: "contains",
-                store: spatialRelationStore,
-                searchAttr: "name",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }).placeAt(this._spatialRelationNode);
-            d_class.add(this._spatialRelationSelect.domNode, "filteringSelect");
-            var matchStore = new Memory({
-                data: [
-                    {name: this.i18n.and, id: "$and"},
-                    {name: this.i18n.or, id: "$or"}
+                options: [
+                    {label: this.i18n.spatialRelations.contains, value: "contains"},
+                    {label: this.i18n.spatialRelations.within, value: "within"},
+                    {label: this.i18n.spatialRelations.intersects, value: "intersects"},
+                    {label: this.i18n.spatialRelations.crosses, value: "crosses"}
                 ]
-            });
-            this._matchSelect = new FilteringSelect({
-                name: "match",
-                value: queryBuilderProperties.defaultRelationalOperator,
-                store: matchStore,
-                searchAttr: "name",
-                required: true,
-                maxHeight: this.maxComboBoxHeight
-            }).placeAt(this._matchNode);
-            d_class.add(this._matchSelect.domNode, "filteringSelect");
+            }).placeAt(this._spatialRelationNode);
+            d_class.add(this._spatialRelationSelect.domNode, "input-block");
             this._changeMatchVisibility();
             if (this.dataModel.filteredDatasource) {
-                this._filteringSelect.store.add({
+                this._storeSelect.store.add({
                     id: "resultcenterDatasource",
                     name: this.i18n.userSelectedFeatures
                 });
             }
             this.connect(this.dataModel, "onDatasourceChanged", function (args) {
                 var datasource = args.filteredDatasource;
-                var index = ct_array.arrayFirstIndexOf(this._filteringSelect.store.data, {id: "resultcenterDatasource"});
+                var index = ct_array.arrayFirstIndexOf(this._storeSelect.store.data, {id: "resultcenterDatasource"});
                 if (datasource) {
                     if (index === -1) {
-                        this._filteringSelect.store.add({
+                        this._storeSelect.store.add({
                             id: "resultcenterDatasource",
                             name: this.i18n.userSelectedFeatures
                         });
                     }
                 } else {
                     if (index > -1)
-                        this._filteringSelect.store.remove("resultcenterDatasource");
-                    this._filteringSelect.set("value", this._filteringSelect.store.data[0].id);
+                        this._storeSelect.store.remove("resultcenterDatasource");
+                    this._storeSelect.set("value", this._storeSelect.store.data[0].id);
                 }
             });
-            this.connect(filteringSelect, "onChange", this._removeFields);
+            this.connect(storeSelect, "onChange", this._removeFields);
             this.connect(this.tool, "onActivate", function () {
                 if (this._geometry && this.drawGeometryHandler)
                     this.drawGeometryHandler.drawGeometry(this._geometry);
@@ -232,7 +194,7 @@ define([
             }
         },
         _addField: function () {
-            var storeId = this._filteringSelect.get("value");
+            var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
             var fieldData = this.metadataAnalyzer.getFields(store);
             ct_when(fieldData, function (storeData) {
@@ -306,7 +268,7 @@ define([
 
             this._searchReplacer(customQuery);
 
-            var storeId = this._filteringSelect.get("value");
+            var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
@@ -323,9 +285,9 @@ define([
             }
         },
         _getComplexQuery: function () {
-            var match = this._matchSelect.value;
+            var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
             var customQuery = {};
-            if (this._geometrySelect.value === true) {
+            if (this._geometryRadioButton1.checked === false) {
                 if (this.querygeometryTool) {
                     var geometry = this._geometry;
                     if (geometry) {

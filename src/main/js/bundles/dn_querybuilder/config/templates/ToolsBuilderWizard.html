@@ -11,8 +11,8 @@
             </div>
             <div class="settingsDiv">
                 <label>${i18n.iconClass}</label>
-                <div type="text" name="iconClass" data-dojo-type="dijit/form/ValidationTextBox" required="true"
-                     data-dojo-attach-point="_iconClassTextBox" data-dojo-props="intermediateChanges: 'true'"></div>
+                <input type="text" name="iconClass" data-dojo-type="dijit/form/ValidationTextBox" required="true"
+                       data-dojo-attach-point="_iconClassTextBox" data-dojo-props="intermediateChanges: 'true'"/>
                 <button data-dojo-type="dijit.form.Button" type="button"
                         data-dojo-attach-event="onClick:_iconClassHelp">
                     ?
@@ -20,7 +20,7 @@
             </div>
             <div class="settingsDiv" data-dojo-attach-point="_storeIdNode">
                 <label>${i18n.store}</label>
-                <div data-dojo-attach-point="_filteringNode"></div>
+                <div data-dojo-attach-point="_storeNode"></div>
             </div>
         </div>
         <div data-dojo-attach-point="_tabContainerNode" data-dojo-type="dijit/layout/TabContainer"

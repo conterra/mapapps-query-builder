@@ -4,22 +4,47 @@
         <div data-dojo-attach-point="_leftNode" data-dojo-type="dijit/layout/BorderContainer"
              data-dojo-props="region: 'left'" class="settingsContainer">
             <div data-dojo-attach-point="_settingsNode" data-dojo-type="dijit/layout/ContentPane"
-                 data-dojo-props="region: 'top'" class="noPadding">
-                <!--<div class="settingsDiv">
+                 data-dojo-props="region: 'top'" class="noPadding settingsNode">
+                <!--<div class="selectDiv">
                     <label>${i18n.title}</label>
                     <label class="noWidth" data-dojo-attach-point="_titleNode"></label>
                 </div>-->
-                <div class="settingsDiv">
+                <div class="selectDiv">
                     <label>${i18n.userStore}</label>
-                    <div data-dojo-attach-point="_filteringNode"></div>
+                    <div data-dojo-attach-point="_storeNode"></div>
                 </div>
-                <div class="settingsDiv">
-                    <label>${i18n.userUseGeometry}</label>
-                    <div data-dojo-attach-point="_geometrySelectNode"></div>
-                </div>
-                <div class="settingsDiv" data-dojo-attach-point="_matchDiv">
+                <div class="radioDiv" data-dojo-attach-point="_matchDiv">
                     <label>${i18n.userMatch}</label>
-                    <div data-dojo-attach-point="_matchNode"></div>
+                    <form>
+                        <label class="radioButtonLabel" data-dojo-attach-point="_matchLabelAnd">
+                            <input type="radio"
+                                   data-dojo-type="dijit/form/RadioButton"
+                                   data-dojo-attach-point="_matchRadioButtonAnd"
+                                   checked/>${i18n.and}</label>
+                        <label class="radioButtonLabel" data-dojo-attach-point="_matchLabelOr">
+                            <input type="radio"
+                                   data-dojo-type="dijit/form/RadioButton"
+                                   data-dojo-attach-point="_matchRadioButtonOr"/>${i18n.or}</label>
+                    </form>
+                </div>
+                <div class="radioDiv">
+                    <label>${i18n.userUseGeometry}</label>
+                    <form>
+                        <label class="radioButtonLabel" data-dojo-attach-point="_geometryLabel1">
+                            <input type="radio"
+                                   data-dojo-type="dijit/form/RadioButton"
+                                   data-dojo-attach-point="_geometryRadioButton1"
+                                   checked/>
+                            ${i18n.userGeometryEverywhere}</label>
+                        <label class="radioButtonLabel" data-dojo-attach-point="_geometryLabel2">
+                            <input type="radio"
+                                   data-dojo-type="dijit/form/RadioButton"
+                                   data-dojo-attach-point="_geometryRadioButton2"/>${i18n.userGeometryExtent}</label>
+                        <label class="radioButtonLabel" data-dojo-attach-point="_geometryLabel3">
+                            <input type="radio"
+                                   data-dojo-type="dijit/form/RadioButton"
+                                   data-dojo-attach-point="_geometryRadioButton3"/>${i18n.userGeometryEnhanced}</label>
+                    </form>
                 </div>
             </div>
         </div>
@@ -30,7 +55,7 @@
                 <label>${i18n.defineQuery}</label>
             </div>
             <div data-dojo-type="dijit/layout/ContentPane"
-                 data-dojo-props="region: 'center'" class="noPadding">
+                 data-dojo-props="region: 'center'" class="queryContainer noPadding">
                 <div data-dojo-attach-point="_queryNode"></div>
             </div>
         </div>

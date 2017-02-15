@@ -24,10 +24,10 @@ define([
     "dojo/text!./templates/EditableQueryBuilderWidget.html",
     "./config/FieldWidget",
     "dojo/html",
-    "dojo/store/Memory",
     "dijit/registry",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
+    "dijit/form/Select",
     "dijit/form/FilteringSelect",
     "dijit/form/Button",
     "dijit/layout/ContentPane",
@@ -44,10 +44,10 @@ define([
              templateStringContent,
              FieldWidget,
              d_html,
-             Memory,
              d_registry,
              TextBox,
              ValidationTextBox,
+             Select,
              FilteringSelect,
              Button,
              ContentPane,
@@ -63,7 +63,7 @@ define([
         },
         startup: function () {
             this.inherited(arguments);
-            var storeData = this.storeData = this.metadataAnalyzer.getStoreDataByIds([this.store.id]);
+            var storeData = this.storeData = this.metadataAnalyzer.getStoreDataByIds2([this.store.id]);
             if (storeData.length > 0) {
                 this._init();
                 ct_css.switchHidden(this._errorNode, true);
@@ -137,66 +137,39 @@ define([
             }, this);
         },
         _createGUISettings: function () {
+            var properties = this.properties;
+            var customQuery = properties.customquery;
             var queryBuilderProperties = this.queryBuilderProperties._properties;
-            var store = new Memory({
-                data: this.storeData
-            });
-            var filteringSelect = this._filteringSelect = new FilteringSelect({
+            var storeSelect = this._storeSelect = new Select({
                 name: "stores",
                 value: this.store.id,
-                store: store,
-                searchAttr: "name",
-                maxHeight: this.maxComboBoxHeight,
+                options: this.storeData,
                 disabled: true
-            }).placeAt(this._filteringNode);
-            d_class.add(filteringSelect.domNode, "filteringSelect");
-            var geometryStore = new Memory({
-                data: [
-                    {name: this.i18n.userGeometryEverywhere, id: false},
-                    {name: this.i18n.userGeometryEnhanced, id: true}
-                ]
-            });
-            this._geometrySelect = new FilteringSelect({
-                name: "geometry",
-                value: false,
-                store: geometryStore,
-                searchAttr: "name",
-                required: true,
-                maxHeight: this.maxComboBoxHeight,
-                disabled: true
-            }).placeAt(this._geometrySelectNode);
-            d_class.add(this._geometrySelect.domNode, "filteringSelect");
-            var matchStore = new Memory({
-                data: [
-                    {name: this.i18n.and, id: "$and"},
-                    {name: this.i18n.or, id: "$or"}
-                ]
-            });
-            this._matchSelect = new FilteringSelect({
-                name: "match",
-                value: queryBuilderProperties.defaultRelationalOperator,
-                store: matchStore,
-                searchAttr: "name",
-                required: true,
-                maxHeight: this.maxComboBoxHeight,
-                disabled: true
-            }).placeAt(this._matchNode);
-            d_class.add(this._matchSelect.domNode, "filteringSelect");
+            }).placeAt(this._storeNode);
+            d_class.add(storeSelect.domNode, "input-block");
+
+            this._matchRadioButtonAnd.set("disabled", true);
+            this._matchRadioButtonOr.set("disabled", true);
+
+            this._geometryRadioButton1.set("disabled", true);
+            this._geometryRadioButton2.set("disabled", true);
+            this._geometryRadioButton3.set("disabled", true);
+            ct_css.switchHidden(this._geometryLabel2, true);
         },
         _createGUIFields: function () {
             var properties = this.properties;
             var customQuery = properties.customquery;
             var match;
             if (customQuery.geometry) {
-                this._geometrySelect.set("value", true);
+                this._geometryRadioButton3.set("checked", true);
             } else {
-                this._geometrySelect.set("value", false);
+                this._geometryRadioButton3.set("checked", false);
             }
             if (customQuery.$and) {
-                this._matchSelect.set("value", "$and");
+                this._matchRadioButtonAnd.set("checked", true);
                 match = "$and";
             } else if (customQuery.$or) {
-                this._matchSelect.set("value", "$or");
+                this._matchRadioButtonOr.set("checked", true);
                 match = "$or";
             }
             var fields = customQuery[match];
@@ -226,9 +199,9 @@ define([
             this.queryController.query(store, customQuery, options, this.tool);
         },
         _getComplexQuery: function () {
-            var match = this._matchSelect.value;
+            var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
             var customQuery = {};
-            if (this._geometrySelect.value === true) {
+            if (this._geometryRadioButton1.checked === false) {
                 var properties = this.properties;
                 customQuery.geometry = properties.customquery.geometry
             }
