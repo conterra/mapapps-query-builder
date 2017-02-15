@@ -30,7 +30,8 @@
       "banner@^3.2.1",
       "dn_querybuilder",
       "dn_openweathermapdatastore"
-    ]
+    ],
+    "skipBundles": []
   },
   "bundles": {
     "agssearch": {

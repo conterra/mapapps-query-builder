@@ -29,7 +29,8 @@
       "basemaptoggler@^3.2.1",
       "banner@^3.2.1",
       "dn_querybuilder"
-    ]
+    ],
+    "skipBundles": []
   },
   "bundles": {
     "agssearch": {
