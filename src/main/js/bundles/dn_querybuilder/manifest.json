@@ -131,11 +131,10 @@
         "title": "Query a Store",
         "toolRole": "toolset",
         "iconClass": "icon-info",
-        "activateHandler": "onQueryToolActivated",
-        "deactivateHandler": "onQueryToolDeactivated",
+        "clickHandler": "onQueryToolActivated",
         "customquery": {},
         "storeId": "*",
-        "togglable": true
+        "togglable": false
       },
       "references": [
         {

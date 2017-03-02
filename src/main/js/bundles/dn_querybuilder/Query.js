@@ -27,6 +27,17 @@ define([
         activate: function (componentContext) {
             this._bundleContext = componentContext.getBundleContext();
         },
+        deactivate: function () {
+            var registration = this._serviceregistration;
+
+            // clear the reference
+            this._serviceregistration = null;
+
+            if (registration) {
+                // call unregister
+                registration.unregister();
+            }
+        },
         // Surrounds a store with a Filter and fires a selection end event
         // If the result center is part of the app the store would be shown there
         // TODO: better integrate the filter code inside the SearchStoreTool of the result center?
@@ -76,17 +87,6 @@ define([
                  store: customquery ? Filter(store, customquery, options) : store
                  });*/
                 this._queryController.query(store, customquery, options, tool);
-            }
-        },
-        onQueryToolDeactivated: function () {
-            var registration = this._serviceregistration;
-
-            // clear the reference
-            this._serviceregistration = null;
-
-            if (registration) {
-                // call unregister
-                registration.unregister();
             }
         },
         _setProcessing: function (tool, processing) {
