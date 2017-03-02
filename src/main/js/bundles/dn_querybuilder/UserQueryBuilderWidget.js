@@ -77,11 +77,9 @@ define([
             this.inherited(arguments);
             var stores = this.stores;
             var storeIds = this.properties.storeIds;
-            if (storeIds.length > 0) {
-                this.storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
-            } else {
+            this.storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
+            if (this.storeData.length === 0)
                 this.storeData = this.metadataAnalyzer.getStoreData(stores)
-            }
             this._init();
             this._addField();
         },
@@ -273,17 +271,20 @@ define([
             var options = {}/*{ignoreCase: true}*/;
 
             this.queryController.query(store, customQuery, options, this.tool);
-        },
+        }
+        ,
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
-        },
+        }
+        ,
         _onUseOnlyGeometry: function (value) {
             if (value) {
                 ct_css.switchHidden(this._centerNode.domNode, true);
             } else {
                 ct_css.switchHidden(this._centerNode.domNode, false);
             }
-        },
+        }
+        ,
         _getComplexQuery: function () {
             var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
             var customQuery = {};
@@ -342,4 +343,5 @@ define([
             this.querygeometryTool.set("active", false);
         }
     });
-});
+})
+;

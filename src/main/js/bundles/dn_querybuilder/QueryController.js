@@ -44,7 +44,9 @@ define([
                             result[index].geometry = tg;
                         });
                         var memorySelectionStore = new MemorySelectionStore({
+                            id: "memory_" + store.id,
                             masterStore: store,
+                            metadata: store.getMetadata,
                             data: result,
                             idProperty: store.idProperty
                         });
