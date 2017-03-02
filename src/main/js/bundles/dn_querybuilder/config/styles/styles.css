@@ -72,27 +72,6 @@
     margin-bottom: 5px;
 }
 
-.queryBuilderWizard .fieldWidget .notSelect {
-    width: 16%;
-}
-
-.queryBuilderWizard .fieldWidget .fieldSelect {
-    width: 22%;
-}
-
-.queryBuilderWizard .fieldWidget .relationalOperatorSelect {
-    width: 16%;
-}
-
-.queryBuilderWizard .fieldWidget .valueField {
-    width: 22%;
-}
-
-.queryBuilderWizard .fieldWidget .buttonContainer {
-    width: 12%;
-    display: inline-block;
-}
-
 .queryBuilderWizard .fieldWidget .buttonContainer .dijitButtonNode {
     font-size: 15px;
     padding: 0px 8px 3px !important;
@@ -102,6 +81,54 @@
     font-size: 14px !important;
 }
 
-.queryBuilderWizard .fieldWidget .inline {
-    display: inline;
+.queryBuilderWizard .fieldWidget {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.queryBuilderWizard .fieldWidget .fieldWidgetItem {
+    flex: 1 1 auto;
+    padding: 0 2px
+}
+
+.queryBuilderWizard .fieldWidget .fieldWidgetItem:first-child {
+    padding-left: 0;
+}
+
+.queryBuilderWizard .fieldWidget .buttonContainer {
+    flex: 0 0 70px;
+    display: inline-block;
+}
+
+.queryBuilderWizard .fieldWidget .dijitTextBox {
+    width: 100%;
+}
+
+.ctEnv_IE_8 .queryBuilderWizard .fieldWidget .notSelect,
+.ctEnv_IE_9 .queryBuilderWizard .fieldWidget .notSelect {
+    width: 16%;
+}
+
+.ctEnv_IE_8 .queryBuilderWizard .fieldWidget .fieldSelect,
+.ctEnv_IE_9 .queryBuilderWizard .fieldWidget .fieldSelect {
+    width: 22%;
+}
+
+.ctEnv_IE_8 .queryBuilderWizard .fieldWidget .relationalOperatorSelect,
+.ctEnv_IE_9 .queryBuilderWizard .fieldWidget .relationalOperatorSelect {
+    width: 16%;
+}
+
+.ctEnv_IE_8 .queryBuilderWizard .fieldWidget .valueField,
+.ctEnv_IE_9 .queryBuilderWizard .fieldWidget .valueField {
+    width: 22%;
+}
+
+.ctEnv_IE_8 .queryBuilderWizard .fieldWidget .buttonContainer,
+.ctEnv_IE_9 .queryBuilderWizard .fieldWidget .buttonContainer {
+    width: 70px;
 }

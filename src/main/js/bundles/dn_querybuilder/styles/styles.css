@@ -32,18 +32,12 @@
     padding-right: 5px;
 }
 
-.userQueryBuilderWidget .settingsContainer .selectDiv {
-    margin-bottom: 7px;
-}
-
+.userQueryBuilderWidget .settingsContainer .selectDiv,
 .editableQueryBuilderWidget .settingsContainer .selectDiv {
     margin-bottom: 7px;
 }
 
-.userQueryBuilderWidget .settingsContainer .radioDiv {
-    margin-bottom: 5px;
-}
-
+.userQueryBuilderWidget .settingsContainer .radioDiv,
 .editableQueryBuilderWidget .settingsContainer .radioDiv {
     margin-bottom: 5px;
 }
@@ -91,35 +85,9 @@
     margin-bottom: 0;
 }
 
-.userQueryBuilderWidget .inline,
-.editableQueryBuilderWidget .inline {
-    display: inline;
-}
-
 .userQueryBuilderWidget .fieldWidget,
 .editableQueryBuilderWidget .fieldWidget {
     margin-bottom: 2px;
-}
-
-.userQueryBuilderWidget .fieldWidget .notSelect {
-    width: 18%;
-}
-
-.userQueryBuilderWidget .fieldWidget .fieldSelect {
-    width: 22%;
-}
-
-.userQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
-    width: 18%;
-}
-
-.userQueryBuilderWidget .fieldWidget .valueField {
-    width: 24%;
-}
-
-.userQueryBuilderWidget .fieldWidget .buttonContainer {
-    width: 70px;
-    display: inline-block;
 }
 
 .userQueryBuilderWidget .fieldWidget .buttonContainer .dijitButtonNode {
@@ -131,28 +99,78 @@
     font-size: 14px;
 }
 
-.editableQueryBuilderWidget .fieldWidget .notSelect {
-    width: 20%;
+.userQueryBuilderWidget .fieldWidget,
+.editableQueryBuilderWidget .fieldWidget {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
-.editableQueryBuilderWidget .fieldWidget .fieldSelect {
-    width: 28%;
+.userQueryBuilderWidget .fieldWidget .fieldWidgetItem,
+.editableQueryBuilderWidget .fieldWidget .fieldWidgetItem {
+    flex: 1 1 auto;
+    padding: 0 2px
 }
 
-.editableQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
-    width: 20%;
+.userQueryBuilderWidget .fieldWidget .fieldWidgetItem:first-child,
+.editableQueryBuilderWidget .fieldWidget .fieldWidgetItem:first-child {
+    padding-left: 0;
 }
 
-.editableQueryBuilderWidget .fieldWidget .valueField {
-    width: 28%;
-}
-
-.editableQueryBuilderWidget .settingsContainer .noWidth {
+.userQueryBuilderWidget .fieldWidget .buttonContainer {
+    flex: 0 0 70px;
     display: inline-block;
-    min-width: 0;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/*background-color: #6d6d72*/
+.userQueryBuilderWidget .fieldWidget .dijitTextBox,
+.editableQueryBuilderWidget .fieldWidget .dijitTextBox {
+    width: 100%;
+}
+
+.ctEnv_IE_8 .userQueryBuilderWidget .fieldWidget .notSelect,
+.ctEnv_IE_9 .userQueryBuilderWidget .fieldWidget .notSelect {
+    width: 18%;
+}
+
+.ctEnv_IE_8 .userQueryBuilderWidget .fieldWidget .fieldSelect,
+.ctEnv_IE_9 .userQueryBuilderWidget .fieldWidget .fieldSelect {
+    width: 22%;
+}
+
+.ctEnv_IE_8 .userQueryBuilderWidget .fieldWidget .relationalOperatorSelect,
+.ctEnv_IE_9 .userQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
+    width: 18%;
+}
+
+.ctEnv_IE_8 .userQueryBuilderWidget .fieldWidget .valueField,
+.ctEnv_IE_9 .userQueryBuilderWidget .fieldWidget .valueField {
+    width: 24%;
+}
+
+.ctEnv_IE_8 .userQueryBuilderWidget .fieldWidget .buttonContainer,
+.ctEnv_IE_9 .userQueryBuilderWidget .fieldWidget .buttonContainer {
+    width: 70px;
+}
+
+.ctEnv_IE_8 .editableQueryBuilderWidget .fieldWidget .notSelect,
+.ctEnv_IE_9 .editableQueryBuilderWidget .fieldWidget .notSelect {
+    width: 20%;
+}
+
+.ctEnv_IE_8 .editableQueryBuilderWidget .fieldWidget .fieldSelect,
+.ctEnv_IE_9 .editableQueryBuilderWidget .fieldWidget .fieldSelect {
+    width: 28%;
+}
+
+.ctEnv_IE_8 .editableQueryBuilderWidget .fieldWidget .relationalOperatorSelect,
+.ctEnv_IE_9 .editableQueryBuilderWidget .fieldWidget .relationalOperatorSelect {
+    width: 20%;
+}
+
+.ctEnv_IE_8 .editableQueryBuilderWidget .fieldWidget .valueField,
+.ctEnv_IE_9 .editableQueryBuilderWidget .fieldWidget .valueField {
+    width: 28%;
+}
