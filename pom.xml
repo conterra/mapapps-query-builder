@@ -596,7 +596,7 @@
         <profile>
             <id>write-release-versions</id>
             <properties>
-                <replace.source.version>1.0.0-SNAPSHOT</replace.source.version>
+                <replace.source.version>${project.version}</replace.source.version>
                 <replace.target.version>${project.version}</replace.target.version>
             </properties>
             <build>
