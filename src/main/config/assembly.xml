@@ -16,22 +16,22 @@
 
 -->
 <assembly>
-<id>makeZip</id>
-<includeBaseDirectory>false</includeBaseDirectory>
-<formats>
-    <format>zip</format>
-</formats>
-<fileSets>
-    <fileSet>
-        <directory>src/main/js</directory>
-        <includes>
-            <include>**/*</include>
-        </includes>
-		<excludes>
-            <exclude>apps/**</exclude>
-            <exclude>**/tests/**</exclude>
-        </excludes>
-        <outputDirectory>.</outputDirectory>
-    </fileSet>
-</fileSets>
+    <id>makeZip</id>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>${js.build.outputPath}</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>apps/**</exclude>
+                <exclude>**/tests/**</exclude>
+            </excludes>
+            <outputDirectory>.</outputDirectory>
+        </fileSet>
+    </fileSets>
 </assembly>
