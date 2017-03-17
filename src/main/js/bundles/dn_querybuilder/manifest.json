@@ -1,6 +1,6 @@
 {
   "Bundle-SymbolicName": "dn_querybuilder",
-  "Bundle-Version": "3.2.2",
+  "Bundle-Version": "3.2.2-SNAPSHOT",
   "Bundle-Name": "${bundleName}",
   "Bundle-Description": "${bundleDescription}",
   "Bundle-Vendor": "con terra GmbH",
