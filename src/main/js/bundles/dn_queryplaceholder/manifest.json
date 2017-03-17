@@ -1,59 +1,61 @@
 {
-    "Bundle-SymbolicName": "dn_queryplaceholder",
-    "Bundle-Version": "1.0.2",
-    "Bundle-Name": "Query Builder Placeholder",
-    "Bundle-Description": "Replaces placeholder in the Query Builder bundle",
-    "Bundle-Vendor": "con terra GmbH",
-    "Bundle-Category": [],
-    "Product-Name": "con terra Developer Network",
-    "Require-Bundle": [
-        {
-            "name": "authentication",
-            "version": "^3.2.1",
-            "policy": "optional"
+  "Bundle-SymbolicName": "dn_queryplaceholder",
+  "Bundle-Version": "1.0.2",
+  "Bundle-Name": "Query Builder Placeholder",
+  "Bundle-Description": "Replaces placeholder in the Query Builder bundle",
+  "Bundle-Vendor": "con terra GmbH",
+  "Bundle-Category": [],
+  "Product-Name": "devnet-mapapps-query-builder",
+  "Require-Bundle": [
+    {
+      "name": "authentication",
+      "version": "^3.2.1",
+      "policy": "optional"
+    }
+  ],
+  "Bundle-Localization": [],
+  "Components": [
+    {
+      "name": "Replacer",
+      "provides": [
+        "dn_replacer.Replacer"
+      ],
+      "propertiesConstructor": true,
+      "properties": {
+        "placeholder": {
         }
-    ],
-    "Bundle-Localization": [],
-    "Components": [
+      },
+      "references": [
         {
-            "name": "Replacer",
-            "provides": ["dn_replacer.Replacer"],
-            "propertiesConstructor": true,
-            "properties": {
-                "placeholder": {
-                }
-            },
-            "references": [
-                {
-                    "name": "placeholderProvider",
-                    "providing": "dn_replacer.PlaceholderProvider",
-                    "cardinality": "1..n"
-                }
-            ]
-        },
-        {
-            "name": "AuthenticationPlaceholderProvider",
-            "provides": "dn_replacer.PlaceholderProvider",
-            "references": [
-                {
-                    "name": "_userAdminService",
-                    "providing": "ct.framework.api.UserAdmin"
-                }
-            ]
-        },
-        {
-            "name": "DatePlaceholderProvider",
-            "provides": "dn_replacer.PlaceholderProvider"
-        },
-        {
-            "name": "AppNamePlaceholderProvider",
-            "provides": "dn_replacer.PlaceholderProvider",
-            "references": [
-                {
-                    "name": "_appCtx",
-                    "providing": "ct.framework.api.ApplicationContext"
-                }
-            ]
+          "name": "placeholderProvider",
+          "providing": "dn_replacer.PlaceholderProvider",
+          "cardinality": "1..n"
         }
-    ]
+      ]
+    },
+    {
+      "name": "AuthenticationPlaceholderProvider",
+      "provides": "dn_replacer.PlaceholderProvider",
+      "references": [
+        {
+          "name": "_userAdminService",
+          "providing": "ct.framework.api.UserAdmin"
+        }
+      ]
+    },
+    {
+      "name": "DatePlaceholderProvider",
+      "provides": "dn_replacer.PlaceholderProvider"
+    },
+    {
+      "name": "AppNamePlaceholderProvider",
+      "provides": "dn_replacer.PlaceholderProvider",
+      "references": [
+        {
+          "name": "_appCtx",
+          "providing": "ct.framework.api.ApplicationContext"
+        }
+      ]
+    }
+  ]
 }

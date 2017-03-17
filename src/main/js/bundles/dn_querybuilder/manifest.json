@@ -4,6 +4,7 @@
   "Bundle-Name": "${bundleName}",
   "Bundle-Description": "${bundleDescription}",
   "Bundle-Vendor": "con terra GmbH",
+  "Bundle-Category": [],
   "Product-Name": "devnet-mapapps-query-builder",
   "Config-Bundle-Location": "/config",
   "Require-Bundle": [
@@ -370,7 +371,7 @@
         "iconClass": "icon-custom-info-help",
         "clickHandler": "activateWindow"
       },
-      "references":[
+      "references": [
         {
           "name": "handlerScope",
           "providing": "dn_querybuilder.CustomQueryBuilderWidgetSample"
