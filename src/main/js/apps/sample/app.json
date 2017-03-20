@@ -245,6 +245,27 @@
           "fetchIdProperty": true,
           "enablePagination": false,
           "id": "usa_cities"
+        },
+        {
+          "title": "Baumkataster",
+          "description": "",
+          "omniSearchLabelAttr": "anlage",
+          "omniSearchSearchAttr": "anlage",
+          "idProperty": "objectid",
+          "url": "http://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
+          "useIn": [
+            "omnisearch",
+            "selection"
+          ],
+          "filterOptions": {
+            "suggestContains": true
+          },
+          "omniSearchTypingDelay": 500,
+          "omniSearchPageSize": 20,
+          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+          "fetchIdProperty": true,
+          "enablePagination": false,
+          "id": "baumkataster"
         }
       ],
       "enabled": true
@@ -381,10 +402,11 @@
           "usa_counties",
           "usa_highways",
           "usa_states",
+          "usa_cities",
           "zensus_2011_bundeslaender",
           "zensus_2011_kreise",
           "zensus_2011_gemeinden",
-          "usa_cities"
+          "baumkataster"
         ]
       },
       "QueryTools": [
@@ -815,6 +837,20 @@
                   "id": "1",
                   "title": "Buoys",
                   "enabled": true
+                }
+              ],
+              "options": {}
+            },
+            {
+              "id": "baumkataster_zustand",
+              "url": "http://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer",
+              "type": "AGS_FEATURE",
+              "title": "Baumkataster Zustand",
+              "description": "",
+              "layers": [
+                {
+                  "id": "0",
+                  "title": "Baumkataster"
                 }
               ],
               "options": {}
