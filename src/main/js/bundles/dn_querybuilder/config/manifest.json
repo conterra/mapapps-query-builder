@@ -150,7 +150,7 @@
           "id": "toolsBuilderWidget",
           "description": "${toolsBuilder.toolsBuilderDescription}"
         },
-        "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/themes/latest/themes/webFontsGallery.html",
+        "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/font-mapapps/latest/index.html",
         "complexQueryDocUrl": "http://developernetwork.conterra.de/en/documentation/mapapps/developers-documentation/complex-query-dojostore"
       },
       "references": [
