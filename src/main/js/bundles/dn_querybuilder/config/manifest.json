@@ -1,6 +1,6 @@
 {
   "Bundle-SymbolicName": "querybuilder-config",
-  "Bundle-Version": "3.2.3",
+  "Bundle-Version": "3.2.4-SNAPSHOT",
   "Bundle-Name": "${bundleName}",
   "Bundle-Description": "${bundleDescription}",
   "Bundle-Vendor": "con terra GmbH",
