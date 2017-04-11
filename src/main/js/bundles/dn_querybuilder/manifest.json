@@ -20,10 +20,6 @@
       "version": "^3.2.1"
     },
     {
-      "name": "notifier",
-      "version": "^3.2.1"
-    },
-    {
       "name": "agssearch",
       "version": "^3.2.1"
     }
