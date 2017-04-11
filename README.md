@@ -83,9 +83,9 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 }
 ```
 
-####Configurable Components of dn_querybuilder:
+#### Configurable Components of dn_querybuilder:
 
-#####QueryBuilderProperties:
+##### QueryBuilderProperties:
 ```
 "QueryBuilderProperties": {
   "enableDistinctValues": true,
@@ -93,7 +93,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 }
 ```
 
-#####UserQueryBuilderWidgetFactory:
+##### UserQueryBuilderWidgetFactory:
 ```
 "UserQueryBuilderWidgetFactory": {
   "storeIds": [
@@ -111,16 +111,16 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 }
 ```
 
-#####QueryTools:
+##### QueryTools:
 ```
 "QueryTools": [
   // list of query tools
 ]
 ```
 
-####Configurable Components of dn_queryplaceholder:
+#### Configurable Components of dn_queryplaceholder:
 
-#####Replacer:
+##### Replacer:
 ```
 "Replacer": {
   "placeholder": {
