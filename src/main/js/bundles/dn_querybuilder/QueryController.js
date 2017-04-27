@@ -21,11 +21,11 @@ define([
     "ct/store/Filter",
     "./MemorySelectionStore"
 ], function (declare,
-             d_array,
-             d_lang,
-             ct_when,
-             Filter,
-             MemorySelectionStore) {
+        d_array,
+        d_lang,
+        ct_when,
+        Filter,
+        MemorySelectionStore) {
     return declare([], {
         activate: function () {
             this.inherited(arguments);
@@ -39,20 +39,25 @@ define([
                     var geometries = d_array.map(result, function (item) {
                         return item.geometry;
                     });
-                    ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
-                        d_array.forEach(transformedGeometries, function (tg, index) {
-                            result[index].geometry = tg;
-                        });
-                        var memorySelectionStore = new MemorySelectionStore({
-                            id: "querybuilder_" + store.id,
-                            masterStore: store,
-                            metadata: store.getMetadata,
-                            data: result,
-                            idProperty: store.idProperty
-                        });
-                        this._dataModel.setDatasource(memorySelectionStore);
-                        this._setProcessing(tool, false);
-                    }, this);
+
+                    if (geometries[0]) {
+                        ct_when(this._coordinateTransformer.transform(geometries, wkid), function (transformedGeometries) {
+                            d_array.forEach(transformedGeometries, function (tg, index) {
+                                result[index].geometry = tg;
+                            });
+                        }, this);
+                    }
+
+                    var memorySelectionStore = new MemorySelectionStore({
+                        id: "querybuilder_" + store.id,
+                        masterStore: store,
+                        metadata: store.getMetadata,
+                        data: result,
+                        idProperty: store.idProperty
+                    });
+                    this._dataModel.setDatasource(memorySelectionStore);
+                    this._setProcessing(tool, false);
+
                 } else {
                     this._logService.warn({
                         id: 0,
