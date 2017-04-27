@@ -264,27 +264,24 @@ define([
                 }
             }
 
-            this._searchReplacer(customQuery);
+            this.queryController._searchReplacer(customQuery);
 
             var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
             this.queryController.query(store, customQuery, options, this.tool);
-        }
-        ,
+        },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);
-        }
-        ,
+        },
         _onUseOnlyGeometry: function (value) {
             if (value) {
                 ct_css.switchHidden(this._centerNode.domNode, true);
             } else {
                 ct_css.switchHidden(this._centerNode.domNode, false);
             }
-        }
-        ,
+        },
         _getComplexQuery: function () {
             var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
             var customQuery = {};
@@ -326,17 +323,6 @@ define([
                 }
             }, this);
             return customQuery;
-        },
-        _searchReplacer: function (o) {
-            for (var i in o) {
-                var value = o[i];
-                if (typeof(value) === "string")
-                    if (value.substring(0, 1) === "$")
-                        o[i] = this.replacer.replace(value);
-                if (value !== null && typeof(value) == "object") {
-                    this._searchReplacer(value);
-                }
-            }
         },
         saveInputGeometry: function (event) {
             this._geometry = event.getProperty("geometry");

@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/lang",
     "dojo/_base/declare",
     "dojo/_base/Deferred",
     "dojo/_base/array",
-    "ct/async",
-    "ct/array",
     "ct/_when",
     "apprt/ServiceResolver"
-], function (d_lang, declare, Deferred, d_array, ct_async, ct_array, ct_when, ServiceResolver) {
+], function (declare, Deferred, d_array, ct_when, ServiceResolver) {
 
     return declare([], {
         activate: function (componentContext) {

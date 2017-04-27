@@ -239,7 +239,7 @@ define([
                 };
             }
 
-            this._searchReplacer(customQuery);
+            this.queryController.searchReplacer(customQuery);
 
             var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
@@ -289,17 +289,6 @@ define([
                 }
             }, this);
             return customQuery;
-        },
-        _searchReplacer: function (o) {
-            for (var i in o) {
-                var value = o[i];
-                if (typeof(value) === "string")
-                    if (value.substring(0, 1) === "$")
-                        o[i] = this.replacer.replace(value);
-                if (value !== null && typeof(value) == "object") {
-                    this._searchReplacer(value);
-                }
-            }
         }
     });
 });

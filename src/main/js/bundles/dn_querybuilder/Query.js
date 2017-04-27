@@ -15,14 +15,8 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/json",
-    "dojo/_base/array",
-    "ct/store/Filter",
-    "ct/_when",
-    "ct/array",
-    "./EditableQueryBuilderWidget",
-    "./MemorySelectionStore"
-], function (declare, JSON, d_array, Filter, ct_when, ct_array, EditableQueryBuilderWidget, MemorySelectionStore) {
+    "./EditableQueryBuilderWidget"
+], function (declare, EditableQueryBuilderWidget) {
     return declare([], {
         activate: function (componentContext) {
             this._bundleContext = componentContext.getBundleContext();
@@ -38,9 +32,6 @@ define([
                 registration.unregister();
             }
         },
-        // Surrounds a store with a Filter and fires a selection end event
-        // If the result center is part of the app the store would be shown there
-        // TODO: better integrate the filter code inside the SearchStoreTool of the result center?
         onQueryToolActivated: function (event) {
             var store = event.store;
             if (!store) {
@@ -48,7 +39,6 @@ define([
                 return;
             }
             var customquery = event.customquery;
-            var topic = "ct/selection/SELECTION_END";
             var tool = this.tool = event.tool;
             if (event.options.editable === true) {
                 var props = event._properties;
@@ -74,7 +64,7 @@ define([
                 this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
             } else {
                 this._setProcessing(tool, true);
-                this._searchReplacer(customquery);
+                this._queryController.searchReplacer(customquery);
                 var options = {};
                 var count = event.options.count;
                 if (count >= 0) {
@@ -82,10 +72,6 @@ define([
                 }
                 options.ignoreCase = event.options.ignoreCase;
                 options.locale = event.options.locale;
-                /*this._eventService.postEvent(topic, {
-                 source: this,
-                 store: customquery ? Filter(store, customquery, options) : store
-                 });*/
                 this._queryController.query(store, customquery, options, tool);
             }
         },
@@ -94,16 +80,5 @@ define([
                 tool.set("processing", processing);
             }
         },
-        _searchReplacer: function (o) {
-            for (var i in o) {
-                var value = o[i];
-                if (typeof(value) === "string") {
-                    o[i] = this._replacer.replace(value);
-                }
-                if (value !== null && typeof(value) == "object") {
-                    this._searchReplacer(value);
-                }
-            }
-        }
     });
 });

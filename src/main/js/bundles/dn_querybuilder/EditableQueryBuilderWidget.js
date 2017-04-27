@@ -185,7 +185,7 @@ define([
             this._setProcessing(true);
             var customQuery = this._getComplexQuery();
 
-            this._searchReplacer(customQuery);
+            this.queryController.searchReplacer(customQuery);
 
             var store = this.store;
             var options = {};
@@ -227,17 +227,6 @@ define([
                 }
             }, this);
             return customQuery;
-        },
-        _searchReplacer: function (o) {
-            for (var i in o) {
-                var value = o[i];
-                if (typeof(value) === "string") {
-                    o[i] = this.replacer.replace(value);
-                }
-                if (value !== null && typeof(value) == "object") {
-                    this._searchReplacer(value);
-                }
-            }
         },
         deactivateTool: function () {
             this.tool.set("active", false);

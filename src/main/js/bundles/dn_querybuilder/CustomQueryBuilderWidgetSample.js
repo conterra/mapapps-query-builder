@@ -24,7 +24,7 @@ define([
         activate: function (componentContext) {
             this._bundleContext = componentContext.getBundleContext();
         },
-        activateWindow: function() {
+        activateWindow: function () {
             var store = this.store;
             var props = this._properties;
             var i18n = this._i18n.get();
@@ -36,6 +36,7 @@ define([
             var querygeometryTool = this._querygeometryTool;
             var drawGeometryHandler = this._drawGeometryHandler;
             var queryBuilderProperties = this._queryBuilderProperties;
+            var queryController = this._queryController;
             var customQueryBuilderWidget = new CustomQueryBuilderWidget({
                 properties: props,
                 i18n: i18n.wizard,
@@ -44,6 +45,7 @@ define([
                 dataModel: dataModel,
                 replacer: replacer,
                 metadataAnalyzer: metadataAnalyzer,
+                queryController: queryController,
                 querygeometryTool: querygeometryTool,
                 drawGeometryHandler: drawGeometryHandler,
                 queryBuilderProperties: queryBuilderProperties
@@ -57,7 +59,7 @@ define([
                 name: "Stoerungen",
                 id: "stoerungen"
             }]);
-            this.connect(customQueryBuilderWidget, "_onQueryReady", function(customQuery) {
+            this.connect(customQueryBuilderWidget, "_onQueryReady", function (customQuery) {
                 // do something
             });
         }

@@ -16,11 +16,10 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
-    "./UserQueryBuilderWidget",
-    "ct/_Connect"
+    "./UserQueryBuilderWidget"
 ], function (declare, d_array,
-             UserQueryBuilderWidget, _Connect) {
-    return declare([_Connect], {
+             UserQueryBuilderWidget) {
+    return declare([], {
         constructor: function () {
             this.inherited(arguments);
         },

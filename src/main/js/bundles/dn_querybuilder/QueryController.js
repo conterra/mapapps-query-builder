@@ -16,16 +16,14 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
-    "dojo/_base/lang",
     "ct/_when",
     "ct/store/Filter",
     "./MemorySelectionStore"
 ], function (declare,
-        d_array,
-        d_lang,
-        ct_when,
-        Filter,
-        MemorySelectionStore) {
+             d_array,
+             ct_when,
+             Filter,
+             MemorySelectionStore) {
     return declare([], {
         activate: function () {
             this.inherited(arguments);
@@ -93,6 +91,17 @@ define([
                     message: e
                 });
             }, this);
+        },
+        searchReplacer: function (o) {
+            for (var i in o) {
+                var value = o[i];
+                if (typeof(value) === "string") {
+                    o[i] = this._replacer.replace(value);
+                }
+                if (value !== null && typeof(value) === "object") {
+                    this.searchReplacer(value);
+                }
+            }
         },
         _setProcessing: function (tool, processing) {
             if (tool) {
