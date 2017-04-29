@@ -29,11 +29,203 @@
       "basemaptoggler@^3.2.1",
       "banner@^3.2.1",
       "notifier@^3.2.1",
+      "custominfo@^3.2.1",
       "dn_querybuilder"
     ],
     "skipBundles": []
   },
   "bundles": {
+    "dn_querybuilder": {
+      "QueryBuilderProperties": {
+        "enableDistinctValues": true,
+        "defaultMatchValue": "$and"
+      },
+      "UserQueryBuilderWidgetFactory": {
+        "storeIds": [
+          "stoerungen",
+          "airtraffic",
+          "usa_counties",
+          "usa_highways",
+          "usa_states",
+          "usa_cities",
+          "zensus_2011_bundeslaender",
+          "zensus_2011_kreise",
+          "zensus_2011_gemeinden",
+          "baumkataster"
+        ]
+      },
+      "QueryTools": [
+        {
+          "id": "fc_1441021732534",
+          "title": "Show reported street damages that are not yet fixed in Münster",
+          "iconClass": "icon-toolcase",
+          "storeId": "stoerungen",
+          "customquery": {
+            "$and": [
+              {
+                "art": {
+                  "$eq": 5
+                }
+              },
+              {
+                "status": {
+                  "$eq": 1
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          }
+        },
+        {
+          "id": "fc_1442569207538",
+          "title": "Date Test [editable]",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "zeitpunkt": {
+                  "$lte": "${current_date}"
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": true,
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ],
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "stoerungen"
+        },
+        {
+          "id": "fc_1469615816195",
+          "title": "Where are Germany's airports?",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "OBJECTID": {
+                  "$gt": 0
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "airtraffic"
+        },
+        {
+          "id": "fc_1441982464561",
+          "title": "US Counties with Population > 1000 per SQM",
+          "iconClass": "icon-zoom-world",
+          "customquery": {
+            "$and": [
+              {
+                "pop00_sqmi": {
+                  "$gte": 1000
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "usa_counties"
+        },
+        {
+          "id": "fc_1441982585646",
+          "title": "All US-Interstates",
+          "iconClass": "icon-line",
+          "customquery": {
+            "$and": [
+              {
+                "admn_class": {
+                  "$eq": "Interstate"
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "usa_highways"
+        },
+        {
+          "id": "fc_1442299580413",
+          "title": "Which are the capitals of the U.S. states?",
+          "iconClass": "icon-house",
+          "customquery": {
+            "$and": [
+              {
+                "capital": {
+                  "$eq": "Y"
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "usa_cities"
+        }
+      ]
+    },
+    "dn_queryplaceholder": {
+      "Replacer": {
+        "placeholder": {
+        }
+      }
+    },
     "agssearch": {
       "AGSStore": [
         {
@@ -268,8 +460,7 @@
           "enablePagination": false,
           "id": "baumkataster"
         }
-      ],
-      "enabled": true
+      ]
     },
     "banner": {
       "BannerWidget": {
@@ -279,11 +470,35 @@
         "link": "http://developernetwork.conterra.de"
       }
     },
-    "contentviewer": {
-      "ContentRegistration": {
-        "contentRules": []
-      },
-      "enabled": true
+    "custominfo": {
+      "CustomInfoToggleTool": [
+        {
+          "id": "customInfoTool",
+          "activateOnStartup": true,
+          "title": "Information",
+          "tooltip": "Information",
+          "iconClass": "icon-custom-info-info",
+          "toolClass": "ctInfo",
+          "togglable": true,
+          "widgetSettings": {
+            "content": "This app shows the functionality of the Query Builder Bundle which allows you to create your own Query Tools, that perform custom complex queries to a stores",
+            "window": {
+              "title": "Information",
+              "marginBox": {
+                "w": 300,
+                "h": 100,
+                "l": 25,
+                "b": 70
+              },
+              "draggable": true,
+              "closable": true,
+              "modal": false,
+              "maximizable": false,
+              "resizable": false
+            }
+          }
+        }
+      ]
     },
     "resultcenter": {
       "DataView": {
@@ -388,198 +603,6 @@
               }
             }
           }
-        }
-      }
-    },
-    "dn_querybuilder": {
-      "QueryBuilderProperties": {
-        "enableDistinctValues": true,
-        "defaultMatchValue": "$and"
-      },
-      "UserQueryBuilderWidgetFactory": {
-        "storeIds": [
-          "stoerungen",
-          "airtraffic",
-          "usa_counties",
-          "usa_highways",
-          "usa_states",
-          "usa_cities",
-          "zensus_2011_bundeslaender",
-          "zensus_2011_kreise",
-          "zensus_2011_gemeinden",
-          "baumkataster"
-        ]
-      },
-      "QueryTools": [
-        {
-          "id": "fc_1441021732534",
-          "title": "Show reported street damages that are not yet fixed in Münster",
-          "iconClass": "icon-toolcase",
-          "storeId": "stoerungen",
-          "customquery": {
-            "$and": [
-              {
-                "art": {
-                  "$eq": 5
-                }
-              },
-              {
-                "status": {
-                  "$eq": 1
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          }
-        },
-        {
-          "id": "fc_1442569207538",
-          "title": "Date Test [editable]",
-          "iconClass": "icon-custom-info",
-          "customquery": {
-            "$and": [
-              {
-                "zeitpunkt": {
-                  "$lte": "${current_date}"
-                }
-              }
-            ]
-          },
-          "options": {
-            "mode": "builder",
-            "editable": true,
-            "editOptions": [
-              {
-                "not": false,
-                "field": false,
-                "compare": false,
-                "value": true
-              }
-            ],
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "stoerungen"
-        },
-        {
-          "id": "fc_1469615816195",
-          "title": "Where are Germany's airports?",
-          "iconClass": "icon-custom-info",
-          "customquery": {
-            "$and": [
-              {
-                "OBJECTID": {
-                  "$gt": 0
-                }
-              }
-            ]
-          },
-          "options": {
-            "mode": "builder",
-            "editable": false,
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "airtraffic"
-        },
-        {
-          "id": "fc_1441982464561",
-          "title": "US Counties with Population > 1000 per SQM",
-          "iconClass": "icon-zoom-world",
-          "customquery": {
-            "$and": [
-              {
-                "pop00_sqmi": {
-                  "$gte": 1000
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "usa_counties"
-        },
-        {
-          "id": "fc_1441982585646",
-          "title": "All US-Interstates",
-          "iconClass": "icon-line",
-          "customquery": {
-            "$and": [
-              {
-                "admn_class": {
-                  "$eq": "Interstate"
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "usa_highways"
-        },
-        {
-          "id": "fc_1442299580413",
-          "title": "Which are the capitals of the U.S. states?",
-          "iconClass": "icon-house",
-          "customquery": {
-            "$and": [
-              {
-                "capital": {
-                  "$eq": "Y"
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "usa_cities"
-        }
-      ],
-      "enabled": true
-    },
-    "dn_queryplaceholder": {
-      "Replacer": {
-        "placeholder": {
         }
       }
     },
@@ -934,13 +957,13 @@
             },
             "tools": [
               "fc_*",
-              "userQueryBuilderTool"/*,
+              "userQueryBuilderTool"
+              /*,
               "customQueryBuilderTool"*/
             ]
           }
         ]
-      },
-      "enabled": true
+      }
     }
   }
 }
