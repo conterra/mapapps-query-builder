@@ -337,10 +337,6 @@
           "name": "_queryController",
           "providing": "dn_querybuilder.QueryController"
         }
-        {
-          "name": "_queryController",
-          "providing": "dn_querybuilder.QueryController"
-        }
       ]
     },
     {
