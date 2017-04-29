@@ -264,7 +264,7 @@ define([
                 }
             }
 
-            this.queryController._searchReplacer(customQuery);
+            this.queryController.searchReplacer(customQuery);
 
             var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
