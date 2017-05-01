@@ -16,31 +16,19 @@
 define([
     "dojo/_base/declare",
     "dojo/dom-class",
-    "dojo/dom-construct",
-    "dojo/dom-prop",
-    "dojo/_base/array",
     "dojo/store/Memory",
 
-    "./QueryBuilderWidget",
-    "./config/FieldWidget",
-
-    "dijit/registry",
-    "dijit/form/TextBox",
-    "dijit/form/ValidationTextBox",
-    "dijit/form/Select",
-    "dijit/form/FilteringSelect",
-    "dijit/form/Button",
-    "dijit/layout/ContentPane",
-    "dijit/layout/BorderContainer",
-
-    "ct/async",
-    "ct/_when",
+    "ct/util/css",
     "ct/array",
-    "ct/util/css"
-], function (declare, d_class, domConstruct, domProp, d_array, Memory,
-             QueryBuilderWidget, FieldWidget,
-             d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
-             ct_async, ct_when, ct_array, ct_css) {
+
+    "./QueryBuilderWidget",
+
+    "dijit/form/Select",
+    "dijit/form/FilteringSelect"
+], function (declare, d_class, Memory,
+             ct_css, ct_array,
+             QueryBuilderWidget,
+             Select, FilteringSelect) {
     return declare([QueryBuilderWidget], {
         /**
          * Widget to create complex queries without sending them to a store
@@ -104,7 +92,6 @@ define([
                 ]
             }).placeAt(this._spatialRelationNode);
             d_class.add(this._spatialRelationSelect.domNode, "input-block");
-            //domConstruct.empty(this._matchNode);
             this._changeMatchVisibility();
             if (this.dataModel.filteredDatasource) {
                 this._storeSelect.store.add({
@@ -137,63 +124,6 @@ define([
                 if (this.drawGeometryHandler)
                     this.drawGeometryHandler.clearGraphics();
             }, this);
-        },
-        _changeMatchVisibility: function () {
-            if (this._queryNode.children.length > 1) {
-                ct_css.switchHidden(this._matchDiv, false);
-            } else {
-                ct_css.switchHidden(this._matchDiv, true);
-            }
-        },
-        _addField: function () {
-            var storeId = this._storeSelect.get("value");
-            var store = this._getSelectedStoreObj(storeId);
-            var fieldData = this.metadataAnalyzer.getFields(store);
-            ct_when(fieldData, function (storeData) {
-                var fieldWidget = new FieldWidget({
-                    source: this,
-                    store: this._getSelectedStoreObj(storeId),
-                    storeData: storeData,
-                    i18n: this.i18n.fields,
-                    type: "user",
-                    queryBuilderProperties: this.queryBuilderProperties
-                });
-                domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-                this._changeMatchVisibility();
-                this._changeChildrenButtons();
-            }, this);
-        },
-        _removeLastField: function () {
-            this._queryNode.removeChild(this._queryNode.lastChild);
-            this._changeChildrenButtons();
-            this._changeMatchVisibility();
-        },
-        _removeFields: function () {
-            while (this._queryNode.firstChild) {
-                this._queryNode.removeChild(this._queryNode.firstChild);
-                this._changeMatchVisibility();
-            }
-            this._addField();
-        },
-        _changeChildrenButtons: function () {
-            var children = this._queryNode.children;
-            d_array.forEach(children, function (child, i) {
-                var widget = d_registry.getEnclosingWidget(child);
-                if (i === 0 && children.length === 1) {
-                    widget._changeButtons(true, false);
-                } else if (i === children.length - 1 && children.length !== 1) {
-                    widget._changeButtons(false, true);
-                } else {
-                    widget._changeButtons(false, false);
-                }
-            });
-        },
-        _getSelectedStoreObj: function (id) {
-            var store = ct_array.arraySearchFirst(this.stores, {id: id});
-            if (!store) {
-                store = this.dataModel.filteredDatasource;
-            }
-            return store;
         },
         _onDone: function () {
             var customQuery = {};

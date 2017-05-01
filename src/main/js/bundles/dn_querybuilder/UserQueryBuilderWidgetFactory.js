@@ -15,9 +15,8 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/_base/array",
     "./UserQueryBuilderWidget"
-], function (declare, d_array,
+], function (declare,
              UserQueryBuilderWidget) {
     return declare([], {
         constructor: function () {

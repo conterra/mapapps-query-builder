@@ -16,27 +16,17 @@
 define([
     "dojo/_base/declare",
     "dojo/dom-class",
-    "dojo/dom-construct",
     "dojo/_base/array",
 
+    "ct/util/css",
+
     "./QueryBuilderWidget",
-    "./config/FieldWidget",
 
-    "dijit/registry",
-    "dijit/form/TextBox",
-    "dijit/form/ValidationTextBox",
-    "dijit/form/Select",
-    "dijit/form/FilteringSelect",
-    "dijit/form/Button",
-    "dijit/layout/ContentPane",
-    "dijit/layout/BorderContainer",
-
-    "ct/_when",
-    "ct/util/css"
-], function (declare, d_class, domConstruct, d_array,
-             QueryBuilderWidget, FieldWidget,
-             d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
-             ct_when, ct_css) {
+    "dijit/form/Select"
+], function (declare, d_class, d_array,
+             ct_css,
+             QueryBuilderWidget,
+             Select) {
     return declare([QueryBuilderWidget], {
         baseClass: "editableQueryBuilderWidget",
         startup: function () {
@@ -60,49 +50,6 @@ define([
             if (tool) {
                 tool.set("processing", processing);
             }
-        },
-        _addDataField: function (field, editOptions) {
-            var fieldId;
-            var relationalOperatorId;
-            var value;
-            var not;
-            if (field.$not) {
-                not = true;
-                for (var a in field.$not) {
-                    fieldId = a;
-                    for (var b in field.$not[fieldId]) {
-                        relationalOperatorId = b;
-                        value = field.$not[fieldId][relationalOperatorId];
-                    }
-                }
-            } else {
-                not = false;
-                for (var a in field) {
-                    fieldId = a;
-                    for (var b in field[fieldId]) {
-                        relationalOperatorId = b;
-                        value = field[fieldId][relationalOperatorId];
-                    }
-                }
-            }
-            var store = this.store;
-            var fieldData = this.metadataAnalyzer.getFields(store);
-            ct_when(fieldData, function (storeData) {
-                var fieldWidget = new FieldWidget({
-                    source: this,
-                    store: this.store,
-                    storeData: storeData,
-                    i18n: this.i18n.fields,
-                    fieldId: fieldId,
-                    relationalOperatorId: relationalOperatorId,
-                    value: value,
-                    not: not,
-                    editOptions: editOptions,
-                    type: "editing",
-                    queryBuilderProperties: this.queryBuilderProperties
-                });
-                domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
-            }, this);
         },
         _createGUISettings: function () {
             var properties = this.properties;
