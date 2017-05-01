@@ -38,12 +38,6 @@ define([
                 });
             }
         },
-        setProcessing: function (value) {
-            var tool = this.tool;
-            if (tool) {
-                tool.set("processing", value);
-            }
-        },
         getComplexQuery: function () {
             var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
             var customQuery = {};

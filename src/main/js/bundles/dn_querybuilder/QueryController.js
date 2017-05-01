@@ -30,6 +30,7 @@ define([
             this.i18n = this._i18n.get().wizard;
         },
         query: function (store, customQuery, options, tool) {
+            this._setProcessing(tool, true);
             options.fields = {geometry: 1};
             ct_when(store.query(customQuery, options), function (result) {
                 if (result.total > 0) {
@@ -72,6 +73,7 @@ define([
             }, this);
         },
         defaultQuery: function (store, customQuery, options, tool) {
+            this._setProcessing(tool, true);
             var filter = new Filter(store, customQuery, options);
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {

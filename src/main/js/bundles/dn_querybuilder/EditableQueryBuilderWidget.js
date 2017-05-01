@@ -152,7 +152,6 @@ define([
             }
         },
         _onDone: function () {
-            this._setProcessing(true);
             var customQuery = this.getComplexQuery();
 
             this.queryController.searchReplacer(customQuery);

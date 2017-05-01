@@ -63,7 +63,6 @@ define([
                 var interfaces = ["dijit.Widget"];
                 this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
             } else {
-                this._setProcessing(tool, true);
                 this._queryController.searchReplacer(customquery);
                 var options = {};
                 var count = event.options.count;
@@ -74,11 +73,6 @@ define([
                 options.locale = event.options.locale;
                 this._queryController.query(store, customquery, options, tool);
             }
-        },
-        _setProcessing: function (tool, processing) {
-            if (tool) {
-                tool.set("processing", processing);
-            }
-        },
+        }
     });
 });

@@ -189,7 +189,6 @@ define([
             return store;
         },
         _onDone: function () {
-            this.setProcessing(true);
             var customQuery = {};
             var checkBox = this._useOnlyGeometry;
             if (!checkBox.checked) {
@@ -205,10 +204,8 @@ define([
 
             var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
-            var options = {}/*{ignoreCase: true}*/;
 
             this._onQueryReady(customQuery);
-            this.setProcessing(false);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);

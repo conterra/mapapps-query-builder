@@ -202,7 +202,6 @@ define([
             return store;
         },
         _onDone: function () {
-            this.setProcessing(true);
             var customQuery = {};
             var checkBox = this._useOnlyGeometry;
             if (!checkBox.checked) {
