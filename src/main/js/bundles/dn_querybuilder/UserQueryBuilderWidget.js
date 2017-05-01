@@ -22,7 +22,6 @@ define([
     "dojo/dom-style",
     "dojo/store/Memory",
 
-    "dojo/text!./templates/UserQueryBuilderWidget.html",
     "./QueryBuilderWidget",
     "./config/FieldWidget",
 
@@ -41,11 +40,10 @@ define([
     "ct/array",
     "ct/util/css"
 ], function (declare, d_class, domConstruct, domProp, d_array, d_style, Memory,
-             templateStringContent, QueryBuilderWidget, FieldWidget,
+             QueryBuilderWidget, FieldWidget,
              d_registry, TextBox, ValidationTextBox, RadioButton, Select, FilteringSelect, Button, ContentPane, BorderContainer,
              ct_async, ct_when, ct_array, ct_css) {
     return declare([QueryBuilderWidget], {
-        templateString: templateStringContent,
         baseClass: "userQueryBuilderWidget",
         startup: function () {
             this.inherited(arguments);
@@ -54,6 +52,7 @@ define([
             this.storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
             if (this.storeData.length === 0)
                 this.storeData = this.metadataAnalyzer.getStoreData(stores);
+            ct_css.switchHidden(this._errorNode, true);
             this._init();
             this._addField();
         },
@@ -230,20 +229,6 @@ define([
             var options = {}/*{ignoreCase: true}*/;
 
             this.queryController.query(store, customQuery, options, this.tool);
-        },
-        _onChooseGeometry: function () {
-            this.querygeometryTool.set("active", true);
-        },
-        _onUseOnlyGeometry: function (value) {
-            if (value) {
-                ct_css.switchHidden(this._centerNode.domNode, true);
-            } else {
-                ct_css.switchHidden(this._centerNode.domNode, false);
-            }
-        },
-        saveInputGeometry: function (event) {
-            this._geometry = event.getProperty("geometry");
-            this.querygeometryTool.set("active", false);
         }
     });
 });

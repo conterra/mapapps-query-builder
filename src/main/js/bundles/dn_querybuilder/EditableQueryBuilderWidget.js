@@ -19,7 +19,6 @@ define([
     "dojo/dom-construct",
     "dojo/_base/array",
 
-    "dojo/text!./templates/EditableQueryBuilderWidget.html",
     "./QueryBuilderWidget",
     "./config/FieldWidget",
 
@@ -35,11 +34,10 @@ define([
     "ct/_when",
     "ct/util/css"
 ], function (declare, d_class, domConstruct, d_array,
-             templateStringContent, QueryBuilderWidget, FieldWidget,
+             QueryBuilderWidget, FieldWidget,
              d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
              ct_when, ct_css) {
     return declare([QueryBuilderWidget], {
-        templateString: templateStringContent,
         baseClass: "editableQueryBuilderWidget",
         startup: function () {
             this.inherited(arguments);
@@ -110,6 +108,9 @@ define([
             var properties = this.properties;
             var customQuery = properties.customquery;
             var queryBuilderProperties = this.queryBuilderProperties._properties;
+            ct_css.switchHidden(this._geometryButton.domNode, true);
+            ct_css.switchHidden(this._spatialRelationDiv, true);
+            ct_css.switchHidden(this._useOnlyGeometryDiv, true);
             var storeSelect = this._storeSelect = new Select({
                 name: "stores",
                 value: this.store.id,

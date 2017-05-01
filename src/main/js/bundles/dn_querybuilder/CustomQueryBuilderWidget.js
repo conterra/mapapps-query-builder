@@ -21,7 +21,6 @@ define([
     "dojo/_base/array",
     "dojo/store/Memory",
 
-    "dojo/text!./templates/UserQueryBuilderWidget.html",
     "./QueryBuilderWidget",
     "./config/FieldWidget",
 
@@ -39,14 +38,13 @@ define([
     "ct/array",
     "ct/util/css"
 ], function (declare, d_class, domConstruct, domProp, d_array, Memory,
-             templateStringContent, QueryBuilderWidget, FieldWidget,
+             QueryBuilderWidget, FieldWidget,
              d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
              ct_async, ct_when, ct_array, ct_css) {
     return declare([QueryBuilderWidget], {
         /**
          * Widget to create complex queries without sending them to a store
          */
-        templateString: templateStringContent,
         baseClass: "userQueryBuilderWidget",
         startup: function () {
             this.inherited(arguments);
@@ -62,7 +60,12 @@ define([
         setStores: function (stores, storeData) {
             this.stores = stores;
             this.storeData = storeData;
-            this._init();
+            if (storeData.length > 0) {
+                ct_css.switchHidden(this._errorNode, true);
+                this._init();
+            } else {
+                ct_css.switchHidden(this._containerNode.domNode, true);
+            }
             this._removeFields();
         },
         _init: function () {
@@ -127,8 +130,12 @@ define([
             });
             this.connect(storeSelect, "onChange", this._removeFields);
             this.connect(this.tool, "onActivate", function () {
-                /*if (this._geometry)
-                 this.drawGeometryHandler.drawGeometry(this._geometry);*/
+                if (this._geometry && this.drawGeometryHandler)
+                    this.drawGeometryHandler.drawGeometry(this._geometry);
+            }, this);
+            this.connect(this.tool, "onDeactivate", function () {
+                if (this.drawGeometryHandler)
+                    this.drawGeometryHandler.clearGraphics();
             }, this);
         },
         _changeMatchVisibility: function () {
@@ -206,16 +213,6 @@ define([
             var store = this._getSelectedStoreObj(storeId);
 
             this._onQueryReady(customQuery);
-        },
-        _onChooseGeometry: function () {
-            this.querygeometryTool.set("active", true);
-        },
-        _onUseOnlyGeometry: function (value) {
-            if (value) {
-                ct_css.switchHidden(this._centerNode.domNode, true);
-            } else {
-                ct_css.switchHidden(this._centerNode.domNode, false);
-            }
         }
     });
 });

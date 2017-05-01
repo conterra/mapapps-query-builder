@@ -2,10 +2,10 @@
     <div data-dojo-attach-point="_containerNode" data-dojo-type="dijit/layout/BorderContainer"
          data-dojo-props="gutters: false, design: 'headline'">
         <div data-dojo-attach-point="_leftNode" data-dojo-type="dijit/layout/BorderContainer"
-             data-dojo-props="region: 'left'" class="settingsContainer">
+             data-dojo-props="region: 'left'" class="settingsContainer noPadding">
             <div data-dojo-attach-point="_settingsNode" data-dojo-type="dijit/layout/ContentPane"
-                 data-dojo-props="region: 'top'" class="noPadding settingsNode">
-                <div class="selectDiv">
+                 data-dojo-props="region: 'center'" class="noPadding settingsNode">
+                <div class="selectDiv" data-dojo-attach-point="_storeDiv">
                     <label>${i18n.userStore}</label>
                     <div data-dojo-attach-point="_storeNode"></div>
                 </div>
@@ -23,7 +23,7 @@
                                    data-dojo-attach-point="_matchRadioButtonOr"/>${i18n.or}</label>
                     </form>
                 </div>
-                <div class="radioDiv">
+                <div class="radioDiv" data-dojo-attach-point="_geometryNode">
                     <label>${i18n.userUseGeometry}</label>
                     <form>
                         <label class="radioButtonLabel" data-dojo-attach-point="_geometryLabel1">
@@ -42,10 +42,26 @@
                                    data-dojo-attach-point="_geometryRadioButton3"/>${i18n.userGeometryEnhanced}</label>
                     </form>
                 </div>
+                <div class="selectDiv">
+                    <button data-dojo-attach-point="_geometryButton" class="input-block"
+                            data-dojo-type="dijit.form.Button" type="button"
+                            data-dojo-attach-event="onClick:_onChooseGeometry" data-dojo-props="iconClass:'icon-tool'">
+                        ${i18n.userChooseGeometry}
+                    </button>
+                </div>
+                <div class="selectDiv" data-dojo-attach-point="_spatialRelationDiv">
+                    <label>${i18n.userSpatialRelation}</label>
+                    <div data-dojo-attach-point="_spatialRelationNode"></div>
+                </div>
+                <div class="useOnlyGeometryDiv" data-dojo-attach-point="_useOnlyGeometryDiv">
+                    <label>${i18n.userUseOnlyGeometry}</label>
+                    <div data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_useOnlyGeometry"
+                         data-dojo-attach-event="onChange:_onUseOnlyGeometry"></div>
+                </div>
             </div>
         </div>
         <div data-dojo-attach-point="_centerNode" data-dojo-type="dijit/layout/BorderContainer"
-             data-dojo-props="region: 'center'" class="centerContainer">
+             data-dojo-props="region: 'center'" class="centerContainer noPadding">
             <div data-dojo-type="dijit/layout/ContentPane"
                  data-dojo-props="region: 'top'" class="noPadding">
                 <label>${i18n.defineQuery}</label>

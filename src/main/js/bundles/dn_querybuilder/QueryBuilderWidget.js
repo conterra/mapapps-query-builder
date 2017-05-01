@@ -17,6 +17,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
 
+    "dojo/text!./templates/QueryBuilderWidget.html",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -24,9 +25,10 @@ define([
 
     "ct/_Connect"
 ], function (declare, d_array,
-             _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, d_registry,
+             templateStringContent, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, d_registry,
              _Connect) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
+        templateString: templateStringContent,
         postCreate: function () {
             this.inherited(arguments);
         },
@@ -84,7 +86,20 @@ define([
                 }
             }, this);
             return customQuery;
+        },
+        _onChooseGeometry: function () {
+            this.querygeometryTool.set("active", true);
+        },
+        _onUseOnlyGeometry: function (value) {
+            if (value) {
+                ct_css.switchHidden(this._centerNode.domNode, true);
+            } else {
+                ct_css.switchHidden(this._centerNode.domNode, false);
+            }
+        },
+        saveInputGeometry: function (event) {
+            this._geometry = event.getProperty("geometry");
+            this.querygeometryTool.set("active", false);
         }
     });
-})
-;
+});
