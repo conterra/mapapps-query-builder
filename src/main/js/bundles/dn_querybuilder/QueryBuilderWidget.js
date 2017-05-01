@@ -15,14 +15,18 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/_base/array",
+
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin"
-], function (declare,
-             _WidgetBase,
-             _TemplatedMixin,
-             _WidgetsInTemplateMixin) {
-    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    "dijit/_WidgetsInTemplateMixin",
+    "dijit/registry",
+
+    "ct/_Connect"
+], function (declare, d_array,
+             _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, d_registry,
+             _Connect) {
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
         postCreate: function () {
             this.inherited(arguments);
         },
@@ -39,6 +43,53 @@ define([
             if (tool) {
                 tool.set("processing", value);
             }
+        },
+        getComplexQuery: function () {
+            var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
+            var customQuery = {};
+            if (this._geometryRadioButton1.checked === false) {
+                var properties = this.properties;
+                if (properties.customquery && properties.customquery.geometry) {
+                    customQuery.geometry = properties.customquery.geometry;
+                } else {
+                    if (this.querygeometryTool) {
+                        var geometry = this._geometry;
+                        if (geometry) {
+                            var spatialRelation = this._spatialRelationSelect.value;
+                            var operator = "$" + spatialRelation;
+                            customQuery.geometry = {};
+                            customQuery.geometry[operator] = geometry;
+                        }
+                    } else {
+                        var extent = this.mapState.getExtent();
+                        customQuery.geometry = {
+                            $contains: extent
+                        };
+                    }
+                }
+            }
+            var children = this._queryNode.children;
+            if (children.length > 0) {
+                customQuery[match] = [];
+            }
+            d_array.forEach(children, function (child) {
+                var widget = d_registry.getEnclosingWidget(child);
+                var fieldId = widget.getSelectedField();
+                var relationalOperatorId = widget.getSelectedRelationalOperator();
+                var not = widget.getSelectedNot();
+                var value = widget.getValue();
+                var obj1 = {};
+                obj1[relationalOperatorId] = value;
+                var obj2 = {};
+                obj2[fieldId] = obj1;
+                if (not) {
+                    var object = {$not: obj2};
+                    customQuery[match].push(object);
+                } else {
+                    customQuery[match].push(obj2);
+                }
+            }, this);
+            return customQuery;
         }
     });
 })

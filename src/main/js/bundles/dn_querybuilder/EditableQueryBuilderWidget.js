@@ -153,7 +153,7 @@ define([
         },
         _onDone: function () {
             this._setProcessing(true);
-            var customQuery = this._getComplexQuery();
+            var customQuery = this.getComplexQuery();
 
             this.queryController.searchReplacer(customQuery);
 
@@ -167,36 +167,6 @@ define([
             options.locale = this.properties.options.locale;
 
             this.queryController.query(store, customQuery, options, this.tool);
-        },
-        _getComplexQuery: function () {
-            var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
-            var customQuery = {};
-            if (this._geometryRadioButton1.checked === false) {
-                var properties = this.properties;
-                customQuery.geometry = properties.customquery.geometry
-            }
-            var children = this._queryNode.children;
-            if (children.length > 0) {
-                customQuery[match] = [];
-            }
-            d_array.forEach(children, function (child) {
-                var widget = d_registry.getEnclosingWidget(child);
-                var fieldId = widget.getSelectedField();
-                var relationalOperatorId = widget.getSelectedRelationalOperator();
-                var not = widget.getSelectedNot();
-                var value = widget.getValue();
-                var obj1 = {};
-                obj1[relationalOperatorId] = value;
-                var obj2 = {};
-                obj2[fieldId] = obj1;
-                if (not) {
-                    var object = {$not: obj2};
-                    customQuery[match].push(object);
-                } else {
-                    customQuery[match].push(obj2);
-                }
-            }, this);
-            return customQuery;
         },
         deactivateTool: function () {
             this.tool.set("active", false);

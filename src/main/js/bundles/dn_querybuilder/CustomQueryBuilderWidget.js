@@ -34,7 +34,6 @@ define([
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer",
 
-    "ct/_Connect",
     "ct/async",
     "ct/_when",
     "ct/array",
@@ -42,8 +41,8 @@ define([
 ], function (declare, d_class, domConstruct, domProp, d_array, Memory,
              templateStringContent, QueryBuilderWidget, FieldWidget,
              d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
-             _Connect, ct_async, ct_when, ct_array, ct_css) {
-    return declare([QueryBuilderWidget, _Connect], {
+             ct_async, ct_when, ct_array, ct_css) {
+    return declare([QueryBuilderWidget], {
         /**
          * Widget to create complex queries without sending them to a store
          */
@@ -194,7 +193,7 @@ define([
             var customQuery = {};
             var checkBox = this._useOnlyGeometry;
             if (!checkBox.checked) {
-                customQuery = this._getComplexQuery()
+                customQuery = this.getComplexQuery()
             } else {
                 var extent = this.mapState.getExtent();
                 customQuery.geometry = {
@@ -220,38 +219,6 @@ define([
             } else {
                 ct_css.switchHidden(this._centerNode.domNode, false);
             }
-        },
-        _getComplexQuery: function () {
-            var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
-            var customQuery = {};
-            if (this._geometryRadioButton1.checked === false) {
-                var extent = this.mapState.getExtent();
-                customQuery.geometry = {
-                    $contains: extent
-                };
-            }
-            var children = this._queryNode.children;
-            if (children.length > 0) {
-                customQuery[match] = [];
-            }
-            d_array.forEach(children, function (child) {
-                var widget = d_registry.getEnclosingWidget(child);
-                var fieldId = widget.getSelectedField();
-                var relationalOperatorId = widget.getSelectedRelationalOperator();
-                var not = widget.getSelectedNot();
-                var value = widget.getValue();
-                var obj1 = {};
-                obj1[relationalOperatorId] = value;
-                var obj2 = {};
-                obj2[fieldId] = obj1;
-                if (not) {
-                    var object = {$not: obj2};
-                    customQuery[match].push(object);
-                } else {
-                    customQuery[match].push(obj2);
-                }
-            }, this);
-            return customQuery;
         }
     });
 });
