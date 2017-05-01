@@ -19,12 +19,12 @@ define([
     "dojo/dom-construct",
     "dojo/dom-prop",
     "dojo/_base/array",
-    "dijit/_WidgetBase",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/UserQueryBuilderWidget.html",
-    "./config/FieldWidget",
     "dojo/store/Memory",
+
+    "dojo/text!./templates/UserQueryBuilderWidget.html",
+    "./QueryBuilderWidget",
+    "./config/FieldWidget",
+
     "dijit/registry",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
@@ -33,45 +33,22 @@ define([
     "dijit/form/Button",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer",
+
     "ct/_Connect",
     "ct/async",
     "ct/_when",
     "ct/array",
     "ct/util/css"
-], function (declare,
-             d_class,
-             domConstruct,
-             domProp,
-             d_array,
-             _WidgetBase,
-             _TemplatedMixin,
-             _WidgetsInTemplateMixin,
-             templateStringContent,
-             FieldWidget,
-             Memory,
-             d_registry,
-             TextBox,
-             ValidationTextBox,
-             Select,
-             FilteringSelect,
-             Button,
-             ContentPane,
-             BorderContainer,
-             _Connect,
-             ct_async,
-             ct_when,
-             ct_array,
-             ct_css) {
-    return declare([_WidgetBase, _TemplatedMixin,
-        _WidgetsInTemplateMixin, _Connect], {
+], function (declare, d_class, domConstruct, domProp, d_array, Memory,
+             templateStringContent, QueryBuilderWidget, FieldWidget,
+             d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
+             _Connect, ct_async, ct_when, ct_array, ct_css) {
+    return declare([QueryBuilderWidget, _Connect], {
         /**
          * Widget to create complex queries without sending them to a store
          */
         templateString: templateStringContent,
         baseClass: "userQueryBuilderWidget",
-        postCreate: function () {
-            this.inherited(arguments);
-        },
         startup: function () {
             this.inherited(arguments);
             this.connect(this.tool, "onDeactivate", function () {
@@ -107,7 +84,7 @@ define([
                 searchAttr: "name",
                 maxHeight: this.maxComboBoxHeight
             }).placeAt(this._storeNode);
-            if (queryBuilderProperties.defaultRelationalOperator == "$and") {
+            if (queryBuilderProperties.defaultRelationalOperator === "$and") {
                 this._matchRadioButtonAnd.set("checked", true);
             } else {
                 this._matchRadioButtonOr.set("checked", true);
@@ -154,20 +131,6 @@ define([
                 /*if (this._geometry)
                  this.drawGeometryHandler.drawGeometry(this._geometry);*/
             }, this);
-        },
-        resize: function (dim) {
-            if (dim && dim.h > 0) {
-                this._containerNode.resize({
-                    w: dim.w,
-                    h: dim.h
-                });
-            }
-        },
-        _setProcessing: function (processing) {
-            var tool = this.tool;
-            if (tool) {
-                tool.set("processing", processing);
-            }
         },
         _changeMatchVisibility: function () {
             if (this._queryNode.children.length > 1) {
@@ -227,7 +190,7 @@ define([
             return store;
         },
         _onDone: function () {
-            this._setProcessing(true);
+            this.setProcessing(true);
             var customQuery = {};
             var checkBox = this._useOnlyGeometry;
             if (!checkBox.checked) {
@@ -246,7 +209,7 @@ define([
             var options = {}/*{ignoreCase: true}*/;
 
             this._onQueryReady(customQuery);
-            this._setProcessing(false);
+            this.setProcessing(false);
         },
         _onChooseGeometry: function () {
             this.querygeometryTool.set("active", true);

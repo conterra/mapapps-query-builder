@@ -20,12 +20,12 @@ define([
     "dojo/dom-prop",
     "dojo/_base/array",
     "dojo/dom-style",
-    "dijit/_WidgetBase",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/UserQueryBuilderWidget.html",
-    "./config/FieldWidget",
     "dojo/store/Memory",
+
+    "dojo/text!./templates/UserQueryBuilderWidget.html",
+    "./QueryBuilderWidget",
+    "./config/FieldWidget",
+
     "dijit/registry",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
@@ -35,51 +35,26 @@ define([
     "dijit/form/Button",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer",
+
     "ct/_Connect",
     "ct/async",
     "ct/_when",
     "ct/array",
     "ct/util/css"
-], function (declare,
-             d_class,
-             domConstruct,
-             domProp,
-             d_array,
-             d_style,
-             _WidgetBase,
-             _TemplatedMixin,
-             _WidgetsInTemplateMixin,
-             templateStringContent,
-             FieldWidget,
-             Memory,
-             d_registry,
-             TextBox,
-             ValidationTextBox,
-             RadioButton,
-             Select,
-             FilteringSelect,
-             Button,
-             ContentPane,
-             BorderContainer,
-             _Connect,
-             ct_async,
-             ct_when,
-             ct_array,
-             ct_css) {
-    return declare([_WidgetBase, _TemplatedMixin,
-        _WidgetsInTemplateMixin, _Connect], {
+], function (declare, d_class, domConstruct, domProp, d_array, d_style, Memory,
+             templateStringContent, QueryBuilderWidget, FieldWidget,
+             d_registry, TextBox, ValidationTextBox, RadioButton, Select, FilteringSelect, Button, ContentPane, BorderContainer,
+             _Connect, ct_async, ct_when, ct_array, ct_css) {
+    return declare([QueryBuilderWidget, _Connect], {
         templateString: templateStringContent,
         baseClass: "userQueryBuilderWidget",
-        postCreate: function () {
-            this.inherited(arguments);
-        },
         startup: function () {
             this.inherited(arguments);
             var stores = this.stores;
             var storeIds = this.properties.storeIds;
             this.storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
             if (this.storeData.length === 0)
-                this.storeData = this.metadataAnalyzer.getStoreData(stores)
+                this.storeData = this.metadataAnalyzer.getStoreData(stores);
             this._init();
             this._addField();
         },
@@ -104,7 +79,7 @@ define([
                 maxHeight: this.maxComboBoxHeight
             }).placeAt(this._storeNode);
             d_class.add(storeSelect.domNode, "input-block");
-            if (queryBuilderProperties.defaultRelationalOperator == "$and") {
+            if (queryBuilderProperties.defaultRelationalOperator === "$and") {
                 this._matchRadioButtonAnd.set("checked", true);
             } else {
                 this._matchRadioButtonOr.set("checked", true);
@@ -170,20 +145,6 @@ define([
                     this.drawGeometryHandler.clearGraphics();
             }, this);
         },
-        resize: function (dim) {
-            if (dim && dim.h > 0) {
-                this._containerNode.resize({
-                    w: dim.w,
-                    h: dim.h
-                });
-            }
-        },
-        _setProcessing: function (processing) {
-            var tool = this.tool;
-            if (tool) {
-                tool.set("processing", processing);
-            }
-        },
         _changeMatchVisibility: function () {
             if (this._queryNode.children.length > 1) {
                 ct_css.switchHidden(this._matchDiv, false);
@@ -242,7 +203,7 @@ define([
             return store;
         },
         _onDone: function () {
-            this._setProcessing(true);
+            this.setProcessing(true);
             var customQuery = {};
             var checkBox = this._useOnlyGeometry;
             if (!checkBox.checked) {

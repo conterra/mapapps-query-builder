@@ -18,12 +18,11 @@ define([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/_base/array",
-    "dijit/_WidgetBase",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
+
     "dojo/text!./templates/EditableQueryBuilderWidget.html",
+    "./QueryBuilderWidget",
     "./config/FieldWidget",
-    "dojo/html",
+
     "dijit/registry",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
@@ -32,35 +31,16 @@ define([
     "dijit/form/Button",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer",
+
     "ct/_when",
     "ct/util/css"
-], function (declare,
-             d_class,
-             domConstruct,
-             d_array,
-             _WidgetBase,
-             _TemplatedMixin,
-             _WidgetsInTemplateMixin,
-             templateStringContent,
-             FieldWidget,
-             d_html,
-             d_registry,
-             TextBox,
-             ValidationTextBox,
-             Select,
-             FilteringSelect,
-             Button,
-             ContentPane,
-             BorderContainer,
-             ct_when,
-             ct_css) {
-    return declare([_WidgetBase, _TemplatedMixin,
-        _WidgetsInTemplateMixin], {
+], function (declare, d_class, domConstruct, d_array,
+             templateStringContent, QueryBuilderWidget, FieldWidget,
+             d_registry, TextBox, ValidationTextBox, Select, FilteringSelect, Button, ContentPane, BorderContainer,
+             ct_when, ct_css) {
+    return declare([QueryBuilderWidget], {
         templateString: templateStringContent,
         baseClass: "editableQueryBuilderWidget",
-        postCreate: function () {
-            this.inherited(arguments);
-        },
         startup: function () {
             this.inherited(arguments);
             var storeData = this.storeData = this.metadataAnalyzer.getStoreDataByIds2([this.store.id]);
@@ -71,18 +51,8 @@ define([
                 ct_css.switchHidden(this._containerNode.domNode, true);
             }
         },
-        resize: function (dim) {
-            if (dim && dim.h > 0) {
-                this._containerNode.resize({
-                    w: dim.w,
-                    h: dim.h
-                });
-            }
-        },
         _init: function () {
             this.maxComboBoxHeight = 160;
-
-            //d_html.set(this._titleNode, this.properties.title);
 
             this._createGUISettings();
             this._createGUIFields();
