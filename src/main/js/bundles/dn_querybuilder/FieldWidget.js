@@ -260,7 +260,7 @@ define([
                     }
                 }
                 if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
-                    var valueComboBox;
+                    var valueComboBox, value;
                     if (type === "string") {
                         var field = fieldSelect.getValue();
                         var store = new MapServerLayerStore({
@@ -284,6 +284,10 @@ define([
                             queryExpr: "*${0}*",
                             autoComplete: false
                         });
+                        if (this.fieldId === this.getSelectedField() && this.value !== undefined) {
+                            value = this.value;
+                            valueComboBox.set("value", value);
+                        }
                     } else {
                         valueComboBox = this._valueField = new ComboBox({
                             name: "value",
@@ -311,7 +315,7 @@ define([
                                 data: distinctValueData
                             });
                             valueComboBox.set("store", distinctValueStore);
-                            var value = distinctValueData[0] && distinctValueData[0].id;
+                            value = distinctValueData[0] && distinctValueData[0].id;
                             if (this.fieldId === this.getSelectedField() && this.value !== undefined)
                                 value = this.value;
                             valueComboBox.set("value", value);
