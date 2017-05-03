@@ -50,10 +50,10 @@ define([
 ], function (declare, d_lang, d_class, d_array, d_number, domConstruct, d_locale, Memory,
              _Connect, ct_when, ct_css, SuggestQueryStore, Filter, MapServerLayerStore,
              Query, QueryTask,
-             _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
+             _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templateStringContent,
              TextBox, NumberTextBox, ComboBox, FilteringSelect, Button, DateTextBox, CheckBox) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
-        templateString: template,
+        templateString: templateStringContent,
         baseClass: "fieldWidget",
         postCreate: function () {
             this.inherited(arguments);
