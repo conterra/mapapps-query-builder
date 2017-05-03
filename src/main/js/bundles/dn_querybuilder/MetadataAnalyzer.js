@@ -17,9 +17,11 @@ define([
     "dojo/_base/declare",
     "dojo/_base/Deferred",
     "dojo/_base/array",
+
     "ct/_when",
     "apprt/ServiceResolver"
-], function (declare, Deferred, d_array, ct_when, ServiceResolver) {
+], function (declare, Deferred, d_array,
+             ct_when, ServiceResolver) {
 
     return declare([], {
         activate: function (componentContext) {

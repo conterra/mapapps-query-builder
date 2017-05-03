@@ -16,13 +16,13 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
+
     "ct/_when",
     "ct/store/Filter",
+
     "./MemorySelectionStore"
-], function (declare,
-             d_array,
-             ct_when,
-             Filter,
+], function (declare, d_array,
+             ct_when, Filter,
              MemorySelectionStore) {
     return declare([], {
         activate: function () {
