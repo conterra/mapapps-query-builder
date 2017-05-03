@@ -26,6 +26,9 @@ define([
     "ct/util/css",
     "esri/tasks/query",
     "esri/tasks/QueryTask",
+    "ct/store/SuggestQueryStore",
+    "ct/store/Filter",
+    "ct/mapping/store/MapServerLayerStore",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -56,6 +59,9 @@ define([
              ct_css,
              Query,
              QueryTask,
+             SuggestQueryStore,
+             Filter,
+             MapServerLayerStore,
              _WidgetBase,
              _TemplatedMixin,
              _WidgetsInTemplateMixin,
@@ -283,39 +289,67 @@ define([
                     }
                 }
                 if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
-                    var valueComboBox = this._valueField = new ComboBox({
-                        name: "value",
-                        searchAttr: "id",
-                        maxHeight: this.maxComboBoxHeight,
-                        required: true,
-                        queryExpr: "*${0}*",
-                        autoComplete: false
-                    });
-                    if (!this.valueSelectDisabled)
-                        valueComboBox.set('disabled', true);
+                    var valueComboBox;
+                    if (type === "string") {
+                        var field = fieldSelect.getValue();
+                        var store = new MapServerLayerStore({
+                            target: this.store.target,
+                            idProperty: field,
+                            fetchIdProperty: false,
+                            disableIdQueries: true
+                        });
+                        store = Filter(store, {}, {
+                            returnDistinctValues: true
+                        });
+                        store = SuggestQueryStore(store);
+                        valueComboBox = this._valueField = new ComboBox({
+                            name: "value",
+                            searchAttr: field,
+                            labelAttr: field,
+                            maxHeight: this.maxComboBoxHeight,
+                            required: true,
+                            store: store,
+                            searchDelay: 200,
+                            queryExpr: "*${0}*",
+                            autoComplete: false
+                        });
+                    } else {
+                        valueComboBox = this._valueField = new ComboBox({
+                            name: "value",
+                            searchAttr: "id",
+                            maxHeight: this.maxComboBoxHeight,
+                            required: true,
+                            queryExpr: "*${0}*",
+                            autoComplete: false
+                        });
+                        if (!this.valueSelectDisabled)
+                            valueComboBox.set('disabled', true);
+                        domConstruct.place(valueComboBox.domNode, this._valueNode);
+                        valueComboBox.startup();
+                        ct_when(this._getDistinctValues(selectedField), function (result) {
+                            result.sort();
+                            var distinctValueData = [];
+                            d_array.forEach(result, function (distinctValue) {
+                                if (typeof(distinctValue) === "number") {
+                                    distinctValueData.push({id: d_number.format(distinctValue)});
+                                } else {
+                                    distinctValueData.push({id: distinctValue});
+                                }
+                            });
+                            var distinctValueStore = new Memory({
+                                data: distinctValueData
+                            });
+                            valueComboBox.set("store", distinctValueStore);
+                            var value = distinctValueData[0] && distinctValueData[0].id;
+                            if (this.fieldId === this.getSelectedField() && this.value !== undefined)
+                                value = this.value;
+                            valueComboBox.set("value", value);
+                            if (!this.valueSelectDisabled)
+                                valueComboBox.set('disabled', false);
+                        }, this);
+                    }
                     domConstruct.place(valueComboBox.domNode, this._valueNode);
                     valueComboBox.startup();
-                    ct_when(this._getDistinctValues(selectedField), function (result) {
-                        result.sort();
-                        var distinctValueData = [];
-                        d_array.forEach(result, function (distinctValue) {
-                            if (typeof(distinctValue) === "number") {
-                                distinctValueData.push({id: d_number.format(distinctValue)});
-                            } else {
-                                distinctValueData.push({id: distinctValue});
-                            }
-                        });
-                        var distinctValueStore = new Memory({
-                            data: distinctValueData
-                        });
-                        valueComboBox.set("store", distinctValueStore);
-                        var value = distinctValueData[0] && distinctValueData[0].id;
-                        if (this.fieldId === this.getSelectedField() && this.value !== undefined)
-                            value = this.value;
-                        valueComboBox.set("value", value);
-                        if (!this.valueSelectDisabled)
-                            valueComboBox.set('disabled', false);
-                    }, this);
                 } else {
                     if (type === "date") {
                         var value;
@@ -548,6 +582,9 @@ define([
                 }
                 else if (typeof(result) === "string") {
                     result = d_number.parse(result);
+                    if (isNaN(result)) {
+                        result = undefined;
+                    }
                 }
             }
             return result;

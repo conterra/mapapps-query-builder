@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 define([
-    ".",
-    "./Query",
-    "./QueryController",
-    "./FieldWidget",
-    "./MapServerStoreExtension",
-    "./EditableQueryBuilderWidget",
-    "./UserQueryBuilderWidget",
-    "./UserQueryBuilderWidgetFactory",
-    "./CustomQueryBuilderWidget",
-    "./CustomQueryBuilderWidgetSample",
-    "./QueryBuilderProperties",
-    "./MetadataAnalyzer",
-    "ct/tools/Tool",
-    "ct/store/Filter"
-], {});
+        "dojo/_base/declare",
+        "dojo/aspect",
+        "ct/mapping/store/MapServerLayerStore"
+    ],
+    function (declare, d_aspect, MapServerLayerStore) {
+        d_aspect.after(MapServerLayerStore.prototype, "_toTaskQuery", function (taskquery, args) {
+            var opts = args.length > 1 && args[1];
+            if (opts.returnDistinctValues) {
+                taskquery.returnDistinctValues = true;
+            }
+            return taskquery;
+        });
+    }
+);
