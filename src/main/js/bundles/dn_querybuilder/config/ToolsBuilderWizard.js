@@ -30,7 +30,7 @@ define([
     "ct/ui/controls/dataview/DataViewModel",
     "ct/ui/controls/dataview/DataView",
     "wizard/_BuilderWidget",
-    "./FieldWidget",
+    "dn_querybuilder/FieldWidget",
     "dijit/registry",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",

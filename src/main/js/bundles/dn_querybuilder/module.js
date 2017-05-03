@@ -17,6 +17,7 @@ define([
     ".",
     "./Query",
     "./QueryController",
+    "./FieldWidget",
     "./EditableQueryBuilderWidget",
     "./UserQueryBuilderWidget",
     "./UserQueryBuilderWidgetFactory",

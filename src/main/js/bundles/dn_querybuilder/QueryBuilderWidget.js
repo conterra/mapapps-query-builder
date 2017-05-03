@@ -23,7 +23,7 @@ define([
         "dojo/store/Memory",
 
         "dojo/text!./templates/QueryBuilderWidget.html",
-        "./config/FieldWidget",
+        "./FieldWidget",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dijit/_WidgetsInTemplateMixin",
