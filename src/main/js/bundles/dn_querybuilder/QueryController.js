@@ -20,14 +20,68 @@ define([
     "ct/_when",
     "ct/store/Filter",
 
-    "./MemorySelectionStore"
+    "./MemorySelectionStore",
+    "./EditableQueryBuilderWidget"
 ], function (declare, d_array,
              ct_when, Filter,
-             MemorySelectionStore) {
+             MemorySelectionStore, EditableQueryBuilderWidget) {
     return declare([], {
-        activate: function () {
+        activate: function (componentContext) {
             this.inherited(arguments);
+            this._bundleContext = componentContext.getBundleContext();
             this.i18n = this._i18n.get().wizard;
+        },
+        deactivate: function () {
+            var registration = this._serviceregistration;
+
+            // clear the reference
+            this._serviceregistration = null;
+
+            if (registration) {
+                // call unregister
+                registration.unregister();
+            }
+        },
+        onQueryToolActivated: function (event) {
+            var store = event.store;
+            if (!store) {
+                // ignore
+                return;
+            }
+            var customquery = event.customquery;
+            var tool = this.tool = event.tool;
+            if (event.options.editable === true) {
+                var props = event._properties;
+                var i18n = event._i18n.get();
+                var replacer = this._replacer;
+                var metadataAnalyzer = this._metadataAnalyzer;
+                var queryBuilderProperties = this._queryBuilderProperties;
+                var widget = this.widget = new EditableQueryBuilderWidget({
+                    properties: props,
+                    i18n: i18n.wizard,
+                    tool: tool,
+                    store: store,
+                    replacer: replacer,
+                    metadataAnalyzer: metadataAnalyzer,
+                    queryBuilderProperties: queryBuilderProperties,
+                    queryController: this
+                });
+                var serviceProperties = {
+                    "widgetRole": "editableQueryBuilderWidget"
+                };
+                var interfaces = ["dijit.Widget"];
+                this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
+            } else {
+                this.searchReplacer(customquery);
+                var options = {};
+                var count = event.options.count;
+                if (count >= 0) {
+                    options.count = count;
+                }
+                options.ignoreCase = event.options.ignoreCase;
+                options.locale = event.options.locale;
+                this.query(store, customquery, options, tool);
+            }
         },
         query: function (store, customQuery, options, tool) {
             this._setProcessing(tool, true);

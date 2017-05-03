@@ -136,46 +136,12 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "dn_querybuilder.Query"
+          "providing": "dn_querybuilder.QueryController"
         },
         {
           "name": "store",
           "providing": "ct.api.Store",
           "filter": "(id={storeId})"
-        }
-      ]
-    },
-    {
-      "name": "Query",
-      "provides": [
-        "dn_querybuilder.Query"
-      ],
-      "references": [
-        {
-          "name": "_eventService",
-          "providing": "ct.framework.api.EventService"
-        },
-        {
-          "name": "_replacer",
-          "providing": "dn_replacer.Replacer"
-        },
-        {
-          "name": "stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        },
-        {
-          "name": "_metadataAnalyzer",
-          "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_queryController",
-          "providing": "dn_querybuilder.QueryController"
         }
       ]
     },
@@ -204,6 +170,14 @@
         {
           "name": "_replacer",
           "providing": "dn_replacer.Replacer"
+        },
+        {
+          "name": "_metadataAnalyzer",
+          "providing": "dn_querybuilder.MetadataAnalyzer"
+        },
+        {
+          "name": "_queryBuilderProperties",
+          "providing": "dn_querybuilder.QueryBuilderProperties"
         },
         {
           "name": "_logService",
