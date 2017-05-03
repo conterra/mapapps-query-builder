@@ -22,12 +22,18 @@ define([
         "dojo/dom-style",
         "dojo/store/Memory",
 
-        "dojo/text!./templates/QueryBuilderWidget.html",
+        "ct/_Connect",
+        "ct/_when",
+        "ct/array",
+        "ct/util/css",
+
         "./FieldWidget",
+
+        "dijit/registry",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dijit/_WidgetsInTemplateMixin",
-        "dijit/registry",
+        "dojo/text!./templates/QueryBuilderWidget.html",
         "dijit/form/Select",
         "dijit/form/FilteringSelect",
         "dijit/form/TextBox",
@@ -35,15 +41,11 @@ define([
         "dijit/form/RadioButton",
         "dijit/form/Button",
         "dijit/layout/ContentPane",
-        "dijit/layout/BorderContainer",
-
-        "ct/_Connect",
-        "ct/_when",
-        "ct/array",
-        "ct/util/css"
+        "dijit/layout/BorderContainer"
     ], function (declare, d_class, domConstruct, domProp, d_array, d_style, Memory,
-                 templateStringContent, FieldWidget, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, d_registry, Select, FilteringSelect, TextBox, ValidationTextBox, RadioButton, Button, ContentPane, BorderContainer,
-                 _Connect, ct_when, ct_array, ct_css) {
+                 _Connect, ct_when, ct_array, ct_css,
+                 FieldWidget,
+                 d_registry, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templateStringContent) {
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
             templateString: templateStringContent,
             postCreate: function () {

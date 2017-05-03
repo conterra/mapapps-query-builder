@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(["dojo/_base/declare",
+define([
+    "dojo/_base/declare",
+
     "ct/_Connect",
+    "ct/ui/controls/dataview/DataViewModel",
+    "ct/ui/controls/dataview/DataView",
+
     "wizard/_BuilderWidget",
+
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dijit/_CssStateMixin",
     "dojo/text!./templates/ToolsBuilderWidget.html",
-    "ct/ui/controls/dataview/DataViewModel",
-    "ct/ui/controls/dataview/DataView",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (declare, _Connect, _BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, DataViewModel, DataView) {
-
+], function (declare,
+             _Connect, DataViewModel, DataView,
+             _BuilderWidget,
+             _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, templateStringContent) {
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin], {
         baseClass: "ctToolsBuilderWidget",
-        templateString: template,
+        templateString: templateStringContent,
         constructor: function (opts) {
             this._listeners = new _Connect();
         },

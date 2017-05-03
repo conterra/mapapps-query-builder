@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/lang",
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/_base/array",
-    "ct/_lang",
+
+    "dijit/registry",
+
     "ct/_Connect",
     "ct/array",
-    "ct/Exception",
-    "ct/_string",
-    "./ToolsBuilderWidget",
-    "./ToolsBuilderWizard",
-    "ct/store/ComplexMemory",
     "ct/_when",
-    "ct/Hash",
-    "ct/async",
-    "dijit/registry"
-], function (d_lang, declare, d_array, ct_lang, _Connect, ct_array, Exception, ct_string, ToolsBuilderWidget, ToolsBuilderWizard, ComplexMemoryStore, ct_when, Hash, ct_async, d_registry) {
+    "ct/store/ComplexMemory",
+
+    "./ToolsBuilderWidget",
+    "./ToolsBuilderWizard"
+], function (declare, d_lang, d_array,
+             d_registry,
+             _Connect, ct_array, ct_when, ComplexMemoryStore,
+             ToolsBuilderWidget, ToolsBuilderWizard) {
     return declare([_Connect],
         {
             createInstance: function () {

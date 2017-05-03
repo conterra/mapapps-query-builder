@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 define([
-    "dojo/_base/lang",
     "dojo/_base/declare",
     "dojo/_base/Deferred",
-    "dojo/parser",
     "dojo/_base/array",
     "dojo/json",
     "dojo/dom-style",
+    "dojo/dom-construct",
+    "dojo/store/Memory",
+
     "ct/_Connect",
     "ct/_when",
     "ct/array",
@@ -29,26 +30,29 @@ define([
     "ct/store/ComplexMemory",
     "ct/ui/controls/dataview/DataViewModel",
     "ct/ui/controls/dataview/DataView",
+
     "wizard/_BuilderWidget",
     "dn_querybuilder/FieldWidget",
+
     "dijit/registry",
+    "dijit/form/NumberTextBox",
+    "dijit/form/FilteringSelect",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dijit/_CssStateMixin",
     "dojo/text!./templates/ToolsBuilderWizard.html",
+    "dijit/form/Button",
     "dijit/form/TextBox",
     "dijit/form/ValidationTextBox",
-    "dijit/form/NumberTextBox",
-    "dijit/form/FilteringSelect",
-    "dijit/form/Button",
-    "dojo/store/Memory",
-    "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer"
-], function (d_lang, declare, Deferred, parser, d_array, JSON, domStyle, _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView, _BuilderWidget, FieldWidget, d_registry, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, template, TextBox, ValidationTextBox, NumberTextBox, FilteringSelect, Button, Memory, domConstruct, ContentPane) {
+], function (declare, Deferred, d_array, JSON, domStyle, domConstruct, Memory,
+             _Connect, ct_when, ct_array, ct_css, ct_request, ComplexMemoryStore, DataViewModel, DataView,
+             _BuilderWidget, FieldWidget,
+             d_registry, NumberTextBox, FilteringSelect, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, templateStringContent) {
 
     return declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
-        templateString: template,
+        templateString: templateStringContent,
         baseClass: "queryBuilderWizard",
         constructor: function (opts) {
             this.inherited(arguments);
