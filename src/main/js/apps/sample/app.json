@@ -232,7 +232,7 @@
           "title": "Stoerungen",
           "useIn": "selection",
           "idProperty": "OBJECTID",
-          "url": "http://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0"
+          "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0"
         },
         {
           "title": "Airtraffic",
@@ -444,7 +444,7 @@
           "omniSearchLabelAttr": "anlage",
           "omniSearchSearchAttr": "anlage",
           "idProperty": "objectid",
-          "url": "http://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
+          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
           "useIn": [
             "omnisearch",
             "selection"
@@ -695,7 +695,7 @@
             },
             {
               "id": "stoerungen",
-              "url": "http://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer",
+              "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer",
               "type": "AGS_DYNAMIC",
               "title": "Stoerungen",
               "description": "Karte mit fiktiven Störungsmeldungen für map.apps Trainings.",
@@ -745,7 +745,7 @@
             },
             {
               "id": "service_44082",
-              "url": "http://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer",
+              "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer",
               "type": "AGS_DYNAMIC",
               "title": "Airtraffic",
               "description": "",
@@ -866,7 +866,7 @@
             },
             {
               "id": "baumkataster_zustand",
-              "url": "http://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer",
+              "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer",
               "type": "AGS_FEATURE",
               "title": "Baumkataster Zustand",
               "description": "",
