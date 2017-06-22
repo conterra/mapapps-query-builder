@@ -80,6 +80,8 @@ define([
                 }
                 options.ignoreCase = event.options.ignoreCase;
                 options.locale = event.options.locale;
+                options.sort = event.options.sort || [];
+
                 this.query(store, customquery, options, tool);
             }
         },

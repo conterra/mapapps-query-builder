@@ -81,7 +81,13 @@
             "locale": {
               "language": "en",
               "country": "EN"
-            }
+            },
+            "sort": [
+              {
+                "attribute": "objectid",
+                "descending": true
+              }
+            ]
           }
         },
         {
