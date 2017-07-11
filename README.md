@@ -79,7 +79,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 ```
 "QueryBuilderProperties": {
   "enableDistinctValues": true,
-  "defaultMatchValue": "$and"
+  "defaultRelationalOperator": "$and"
 }
 ```
 

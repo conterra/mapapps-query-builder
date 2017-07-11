@@ -23,8 +23,8 @@ define([
     "./UserQueryBuilderWidgetFactory",
     "./CustomQueryBuilderWidget",
     "./CustomQueryBuilderWidgetSample",
-    "./QueryBuilderProperties",
     "./MetadataAnalyzer",
     "ct/tools/Tool",
-    "ct/store/Filter"
+    "ct/store/Filter",
+    "ct/Stateful"
 ], {});

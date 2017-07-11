@@ -38,7 +38,7 @@
     "dn_querybuilder": {
       "QueryBuilderProperties": {
         "enableDistinctValues": true,
-        "defaultMatchValue": "$and"
+        "defaultRelationalOperator": "$and"
       },
       "UserQueryBuilderWidgetFactory": {
         "storeIds": [

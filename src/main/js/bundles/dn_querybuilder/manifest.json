@@ -106,6 +106,7 @@
     },
     {
       "name": "QueryBuilderProperties",
+      "impl": "ct/Stateful",
       "provides": [
         "dn_querybuilder.QueryBuilderProperties"
       ],
