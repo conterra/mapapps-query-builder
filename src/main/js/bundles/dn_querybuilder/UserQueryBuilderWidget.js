@@ -68,10 +68,17 @@ define([
             } else {
                 this._matchRadioButtonOr.set("checked", true);
             }
+            if (!queryBuilderProperties.searchEverywhereAsDefault) {
+                this._geometryRadioButtonExtent.set("checked", true);
+            }
             ct_css.switchHidden(this._geometryLabelEnhanced, true);
             if (this.querygeometryTool) {
                 ct_css.switchHidden(this._geometryLabelExtent, true);
                 ct_css.switchHidden(this._geometryLabelEnhanced, false);
+                if (!queryBuilderProperties.searchEverywhereAsDefault) {
+                    this._geometryRadioButtonEnhanced.set("checked", true);
+                    this._geometryRadioButtonExtent.set("checked", false);
+                }
                 this.connect(this._geometryRadioButtonEverywhere, "onChange", function (value) {
                     if (value === false) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);

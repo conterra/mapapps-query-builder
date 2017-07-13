@@ -113,7 +113,8 @@
       "propertiesConstructor": true,
       "properties": {
         "enableDistinctValues": true,
-        "defaultRelationalOperator": "$and"
+        "defaultRelationalOperator": "$and",
+        "searchEverywhereAsDefault": true
       }
     },
     {

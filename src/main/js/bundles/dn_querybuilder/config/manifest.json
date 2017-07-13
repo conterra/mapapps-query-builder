@@ -78,7 +78,8 @@
         "id": "propertiesWidget",
         "defaultProperties": {
           "enableDistinctValues": true,
-          "defaultRelationalOperator": "$and"
+          "defaultRelationalOperator": "$and",
+          "searchEverywhereAsDefault": true
         },
         "description": "${propertiesWidget.propertiesWidgetDescription}"
       },
