@@ -68,11 +68,11 @@ define([
             } else {
                 this._matchRadioButtonOr.set("checked", true);
             }
-            ct_css.switchHidden(this._geometryLabel3, true);
+            ct_css.switchHidden(this._geometryLabelEnhanced, true);
             if (this.querygeometryTool) {
-                ct_css.switchHidden(this._geometryLabel2, true);
-                ct_css.switchHidden(this._geometryLabel3, false);
-                this.connect(this._geometryRadioButton1, "onChange", function (value) {
+                ct_css.switchHidden(this._geometryLabelExtent, true);
+                ct_css.switchHidden(this._geometryLabelEnhanced, false);
+                this.connect(this._geometryRadioButtonEverywhere, "onChange", function (value) {
                     if (value === false) {
                         ct_css.switchHidden(this._geometryButton.domNode, false);
                         ct_css.switchHidden(this._spatialRelationDiv, false);

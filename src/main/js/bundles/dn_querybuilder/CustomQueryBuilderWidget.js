@@ -80,7 +80,7 @@ define([
                 this._matchRadioButtonOr.set("checked", true);
             }
             d_class.add(storeSelect.domNode, "input-block");
-            ct_css.switchHidden(this._geometryLabel3, true);
+            ct_css.switchHidden(this._geometryLabelEnhanced, true);
             this._spatialRelationSelect = new Select({
                 name: "spatialRelation",
                 value: "contains",

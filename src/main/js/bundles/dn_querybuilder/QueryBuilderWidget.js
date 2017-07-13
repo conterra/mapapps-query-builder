@@ -62,7 +62,7 @@ define([
             getComplexQuery: function () {
                 var match = this._matchRadioButtonAnd.checked ? "$and" : "$or";
                 var customQuery = {};
-                if (this._geometryRadioButton1.checked === false) {
+                if (this._geometryRadioButtonEverywhere.checked === false) {
                     var properties = this.properties;
                     if (properties.customquery && properties.customquery.geometry) {
                         customQuery.geometry = properties.customquery.geometry;

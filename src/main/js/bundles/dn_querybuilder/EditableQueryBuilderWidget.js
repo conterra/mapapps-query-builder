@@ -69,19 +69,19 @@ define([
             this._matchRadioButtonAnd.set("disabled", true);
             this._matchRadioButtonOr.set("disabled", true);
 
-            this._geometryRadioButton1.set("disabled", true);
-            this._geometryRadioButton2.set("disabled", true);
-            this._geometryRadioButton3.set("disabled", true);
-            ct_css.switchHidden(this._geometryLabel2, true);
+            this._geometryRadioButtonEverywhere.set("disabled", true);
+            this._geometryRadioButtonExtent.set("disabled", true);
+            this._geometryRadioButtonEnhanced.set("disabled", true);
+            ct_css.switchHidden(this._geometryLabelExtent, true);
         },
         _createGUIFields: function () {
             var properties = this.properties;
             var customQuery = properties.customquery;
             var match;
             if (customQuery.geometry) {
-                this._geometryRadioButton3.set("checked", true);
+                this._geometryRadioButtonEnhanced.set("checked", true);
             } else {
-                this._geometryRadioButton3.set("checked", false);
+                this._geometryRadioButtonEnhanced.set("checked", false);
             }
             if (customQuery.$and) {
                 this._matchRadioButtonAnd.set("checked", true);
