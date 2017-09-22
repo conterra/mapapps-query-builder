@@ -3,7 +3,7 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 
 Sample App
 ------------------
-http://www.mapapps.de/mapapps/resources/apps/downloads_query_builder/index.html
+https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder/index.html
 
 Video Tutorial
 ------------------
