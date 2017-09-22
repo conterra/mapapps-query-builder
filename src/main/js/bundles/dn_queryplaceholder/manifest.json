@@ -1,6 +1,6 @@
 {
   "Bundle-SymbolicName": "dn_queryplaceholder",
-  "Bundle-Version": "3.2.5-SNAPSHOT",
+  "Bundle-Version": "3.2.5",
   "Bundle-Name": "Query Builder Placeholder",
   "Bundle-Description": "Replaces placeholder in the Query Builder bundle",
   "Bundle-Vendor": "con terra GmbH",
