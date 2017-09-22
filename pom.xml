@@ -43,7 +43,7 @@
                 <!-- import dependencies management from mapapps -->
                 <groupId>de.conterra.mapapps</groupId>
                 <artifactId>ct-mapapps</artifactId>
-                <version>${mapapps.version}</version>
+                <version>${mapapps4.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -73,7 +73,7 @@
             <artifactId>ct-jsregistry-embedded</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- use intern-geezer as test lib -->
+        <!-- use intern as test lib -->
         <dependency>
             <groupId>de.conterra.jsrt</groupId>
             <artifactId>ct-jsrt-test-intern</artifactId>
@@ -86,7 +86,7 @@
                 <plugin>
                     <groupId>de.conterra.mapapps</groupId>
                     <artifactId>mapapps-maven-plugin</artifactId>
-                    <version>${mapapps.version}</version>
+                    <version>${mapapps4.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>de.conterra.jsregistry</groupId>
@@ -275,6 +275,7 @@
             <plugin>
                 <groupId>de.conterra.maven</groupId>
                 <artifactId>setproperties-maven-plugin</artifactId>
+                <version>1.0.2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -286,7 +287,7 @@
                     <!-- add here properties which are used in plugin configuration resolution -->
                     <properties>
                         <!-- deployment of map.apps installation -->
-                        <mapapps.remote.base />
+                        <mapapps.remote.base/>
                     </properties>
                 </configuration>
             </plugin>
@@ -311,7 +312,9 @@
                                     <version>${mapapps.version}</version>
                                     <classifier>src</classifier>
                                     <outputDirectory>${project.build.directory}/unpacked</outputDirectory>
-                                    <includes>bundles/base/themes/themes/winter/**,bundles/base/themes/themes/common/**,bundles/base/templates/templates/common/**</includes>
+                                    <includes>
+                                        bundles/base/themes/themes/winter/**,bundles/base/themes/themes/common/**,bundles/base/templates/templates/common/**
+                                    </includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -382,8 +385,9 @@
                             <replacements>
                                 <replacement>
                                     <!-- remove bundleLocations from app.json -->
-                                    <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*</token>
-                                    <value />
+                                    <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
+                                    </token>
+                                    <value></value>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -454,7 +458,9 @@
                     <webAppConfig>
                         <contextPath>/</contextPath>
                         <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                            <resourcesAsCSV>${basedir}/src/main,${basedir}/src/test/webapp,${project.build.directory}/${project.artifactId}</resourcesAsCSV>
+                            <resourcesAsCSV>
+                                ${basedir}/src/main,${basedir}/src/test/webapp,${project.build.directory}/${project.artifactId}
+                            </resourcesAsCSV>
                         </baseResource>
                         <!-- include ct-jsregistry-embedded-<version>.jar as web-fragment provider -->
                         <webInfIncludeJarPattern>.*/ct-jsregistry-embedded-[^/]*\.jar$</webInfIncludeJarPattern>
@@ -505,15 +511,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- dojo custom build parameters -->
         <js.build.outputPath>${project.build.directory}/${project.artifactId}/js</js.build.outputPath>
-        <!-- mapapps.version -->
-        <mapapps.version>3.7.0</mapapps.version>
+        <netbeans.hint.jdkPlatform>JDK_1.7</netbeans.hint.jdkPlatform>
+
+        <!-- JS lib versions -->
+        <mapapps.version>3.9.0</mapapps.version>
+        <mapapps4.version>4.2.0</mapapps4.version>
+
+        <!-- Defines runtime version for the sample project. Defaults to map.apps 3.x -->
+        <!-- To develope mapapps 4.x apps, change this property -->
+        <apprt.version>${mapapps.version}</apprt.version>
+
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.0.25</ct.jsregistry.version>
-        <ct.jsrt-test.version>1.0.8</ct.jsrt-test.version>
+        <ct.jsregistry.version>1.1.2</ct.jsregistry.version>
+        <ct.jsrt-test.version>1.1.1</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
-        <client.config.initjs>$\{mapapps.remote.base\}/resources/jsregistry/root/ct/${mapapps.version}/dojo-init.js</client.config.initjs>
+        <client.config.initjs>
+            $\{mapapps.remote.base\}/resources/jsregistry/root/apprt-boot/${mapapps4.version}/boot.js
+        </client.config.initjs>
+
         <!-- don't do this in production configuration! This allows to go any http traffic over the /proxy endpoint -->
         <proxy.allowedServerUrls>http,*;</proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
@@ -593,7 +610,9 @@
                             <initialDelay>2000</initialDelay>
                             <timeout>60000</timeout>
                             <tests>
-                                <test>http://localhost:${jetty.server.port}/resources/jsregistry/root/intern/latest/runner.html?boot=/js/tests/test-init.js&amp;test=sample_helloworld/tests/all</test>
+                                <test>
+                                    http://localhost:${jetty.server.port}/resources/jsregistry/root/intern/latest/runner.html?boot=/js/tests/test-init.js&amp;test=sample_helloworld/tests/all
+                                </test>
                             </tests>
                         </configuration>
                     </plugin>
@@ -653,7 +672,8 @@
                                 </goals>
                                 <configuration>
                                     <tag>${project.version}</tag>
-                                    <artifact>${project.build.directory}/${project.artifactId}-${project.version}.jar</artifact>
+                                    <artifact>${project.build.directory}/${project.artifactId}-${project.version}.jar
+                                    </artifact>
                                     <fileSets>
                                         <fileSet>
                                             <directory>${project.build.directory}</directory>
@@ -732,7 +752,9 @@
                                     <goal>checkin</goal>
                                 </goals>
                                 <configuration>
-                                    <message>[update-bundle-package-versions] from ${replace.source.version} to ${replace.target.version}</message>
+                                    <message>[update-bundle-package-versions] from ${replace.source.version} to
+                                        ${replace.target.version}
+                                    </message>
                                     <basedir>${basedir}/src/main/js</basedir>
                                     <pushChanges>${scm.push}</pushChanges>
                                     <username>${scm.username}</username>
@@ -778,7 +800,7 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>optimize css</id>
+                                <id>optimize CSS</id>
                                 <goals>
                                     <goal>optimizeCSS</goal>
                                 </goals>
