@@ -121,7 +121,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 ```
 
 More information about how to place a widget:
-https://developernetwork.conterra.de/de/documentation/mapapps/developers-documentation/templates
+https://developernetwork.conterra.de/en/documentation/mapapps/39/developers-documentation/templates
 
 Development Guide
 ------------------
