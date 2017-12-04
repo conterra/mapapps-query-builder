@@ -22,6 +22,10 @@
     {
       "name": "agssearch",
       "version": "^3.2.1"
+    },
+    {
+      "name": "coordinatetransformer",
+      "version": "^3.2.1"
     }
   ],
   "CSS-Themes-Extension": [
@@ -114,7 +118,8 @@
       "properties": {
         "enableDistinctValues": true,
         "defaultRelationalOperator": "$and",
-        "searchEverywhereAsDefault": true
+        "searchEverywhereAsDefault": true,
+        "useMemorySelectionStore": true
       }
     },
     {
@@ -153,10 +158,6 @@
         "dn_querybuilder.QueryController"
       ],
       "references": [
-        {
-          "name": "_eventService",
-          "providing": "ct.framework.api.EventService"
-        },
         {
           "name": "_mapState",
           "providing": "ct.mapping.map.MapState"
