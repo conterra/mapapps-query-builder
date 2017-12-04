@@ -85,8 +85,15 @@ define([
                 this.query(store, customquery, options, tool);
             }
         },
-        query: function (store, customQuery, options, tool) {
+        query: function (store, customquery, options, tool) {
             var queryBuilderProperties = this._queryBuilderProperties;
+            if (queryBuilderProperties.useMemorySelectionStore) {
+                this.memorySelectionQuery(store, customquery, options, tool);
+            } else {
+                this.defaultQuery(store, customquery, options, tool);
+            }
+        },
+        memorySelectionQuery: function (store, customQuery, options, tool) {
             this._setProcessing(tool, true);
             options.fields = {geometry: 1};
             ct_when(store.query(customQuery, options), function (result) {
@@ -112,11 +119,7 @@ define([
                         idProperty: store.idProperty
                     });
 
-                    if(queryBuilderProperties.useMemorySelectionStore) {
-                        this._dataModel.setDatasource(memorySelectionStore);
-                    } else {
-                        this._dataModel.setDatasource(store);
-                    }
+                    this._dataModel.setDatasource(memorySelectionStore);
                     this._setProcessing(tool, false);
 
                 } else {
