@@ -38,7 +38,8 @@
       "QueryBuilderProperties": {
         "enableDistinctValues": true,
         "defaultRelationalOperator": "$or",
-        "searchEverywhereAsDefault": true
+        "searchEverywhereAsDefault": true,
+        "useMemorySelectionStore": true
       },
       "UserQueryBuilderWidgetFactory": {
         "storeIds": [

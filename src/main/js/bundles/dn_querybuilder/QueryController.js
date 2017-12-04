@@ -86,6 +86,7 @@ define([
             }
         },
         query: function (store, customQuery, options, tool) {
+            var queryBuilderProperties = this._queryBuilderProperties;
             this._setProcessing(tool, true);
             options.fields = {geometry: 1};
             ct_when(store.query(customQuery, options), function (result) {
@@ -110,7 +111,12 @@ define([
                         data: result,
                         idProperty: store.idProperty
                     });
-                    this._dataModel.setDatasource(memorySelectionStore);
+
+                    if(queryBuilderProperties.useMemorySelectionStore) {
+                        this._dataModel.setDatasource(memorySelectionStore);
+                    } else {
+                        this._dataModel.setDatasource(store);
+                    }
                     this._setProcessing(tool, false);
 
                 } else {
