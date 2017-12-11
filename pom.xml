@@ -514,16 +514,16 @@
         <netbeans.hint.jdkPlatform>JDK_1.7</netbeans.hint.jdkPlatform>
 
         <!-- JS lib versions -->
-        <mapapps.version>3.9.0</mapapps.version>
-        <mapapps4.version>4.2.0</mapapps4.version>
+        <mapapps.version>3.9.1</mapapps.version>
+        <mapapps4.version>4.2.1</mapapps4.version>
 
         <!-- Defines runtime version for the sample project. Defaults to map.apps 3.x -->
         <!-- To develope mapapps 4.x apps, change this property -->
         <apprt.version>${mapapps.version}</apprt.version>
 
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.1.2</ct.jsregistry.version>
-        <ct.jsrt-test.version>1.1.1</ct.jsrt-test.version>
+        <ct.jsregistry.version>1.1.5</ct.jsregistry.version>
+        <ct.jsrt-test.version>1.1.2</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
