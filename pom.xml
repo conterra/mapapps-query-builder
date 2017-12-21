@@ -254,7 +254,7 @@
                     <properties>
                         <owner>con terra GmbH</owner>
                         <email>info@conterra.de</email>
-                        <project.inceptionYear>2015</project.inceptionYear>
+                        <project.inceptionYear>2017</project.inceptionYear>
                     </properties>
                     <excludes>
                         <exclude>**/README*</exclude>
