@@ -1,24 +1,20 @@
 {
-  "Bundle-SymbolicName": "dn_queryplaceholder",
-  "Bundle-Version": "3.2.6-SNAPSHOT",
-  "Bundle-Name": "Query Builder Placeholder",
-  "Bundle-Description": "Replaces placeholder in the Query Builder bundle",
-  "Bundle-Vendor": "con terra GmbH",
-  "Bundle-Category": [],
-  "Product-Name": "devnet-mapapps-query-builder",
-  "Require-Bundle": [
-    {
-      "name": "authentication",
-      "version": "^3.2.1",
-      "policy": "optional"
-    }
-  ],
+  "name": "dn_queryplaceholder",
+  "version": "4.0.0-SNAPSHOT",
+  "title": "Query Builder Placeholder",
+  "description": "Replaces placeholder in the Query Builder bundle",
+  "vendor": "con terra GmbH",
+  "productName": "devnet-mapapps-query-builder",
+  "main": "",
+  "dependencies": {
+    "authentication": "^4.2.0"
+  },
   "Bundle-Localization": [],
-  "Components": [
+  "components": [
     {
       "name": "Replacer",
       "provides": [
-        "dn_replacer.Replacer"
+        "dn_queryplaceholder.Replacer"
       ],
       "propertiesConstructor": true,
       "properties": {
@@ -28,14 +24,14 @@
       "references": [
         {
           "name": "placeholderProvider",
-          "providing": "dn_replacer.PlaceholderProvider",
+          "providing": "dn_queryplaceholder.PlaceholderProvider",
           "cardinality": "1..n"
         }
       ]
     },
     {
       "name": "AuthenticationPlaceholderProvider",
-      "provides": "dn_replacer.PlaceholderProvider",
+      "provides": "dn_queryplaceholder.PlaceholderProvider",
       "references": [
         {
           "name": "_userAdminService",
@@ -45,11 +41,11 @@
     },
     {
       "name": "DatePlaceholderProvider",
-      "provides": "dn_replacer.PlaceholderProvider"
+      "provides": "dn_queryplaceholder.PlaceholderProvider"
     },
     {
       "name": "AppNamePlaceholderProvider",
-      "provides": "dn_replacer.PlaceholderProvider",
+      "provides": "dn_queryplaceholder.PlaceholderProvider",
       "references": [
         {
           "name": "_appCtx",

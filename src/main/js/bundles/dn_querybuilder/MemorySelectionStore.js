@@ -13,19 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(["dojo/_base/declare",
-        "ct/store/ComplexMemory",
-        "ct/store/SpatialQuery"],
-    function (declare, ComplexMemoryStore) {
-        return declare([ComplexMemoryStore],
-            {
-                masterStore: null,
-                initialQuery: null,
-                getMetadata: function (object) {
-                    return this.masterStore.getMetadata(object);
-                },
-                getInitialQuery: function () {
-                    return this.initialQuery;
-                }
-            });
-    });
+import declare from "dojo/_base/declare";
+import ComplexMemoryStore from "ct/store/ComplexMemory";
+
+let MemorySelectionStore = declare([ComplexMemoryStore], {
+    masterStore: null,
+    initialQuery: null,
+    getMetadata: function (object) {
+        return this.masterStore.getMetadata(object);
+    },
+    getInitialQuery: function () {
+        return this.initialQuery;
+    }
+});
+
+module.exports = MemorySelectionStore;

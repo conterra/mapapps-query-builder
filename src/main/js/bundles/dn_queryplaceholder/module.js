@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-    ".",
-    "./Replacer",
-    "./AuthenticationPlaceholderProvider",
-    "./DatePlaceholderProvider",
-    "./AppNamePlaceholderProvider"
-], {});
+import ".";
+import "./Replacer";
+import "./AuthenticationPlaceholderProvider";
+import "./DatePlaceholderProvider";
+import "./AppNamePlaceholderProvider";

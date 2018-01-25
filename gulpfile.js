@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 con terra GmbH (info@conterra.de)
+ * Copyright (C) 2015 con terra GmbH (info@conterra.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class AuthenticationPlaceholderProvider {
+const gulp = require("gulp");
+const run_sequence = require('run-sequence');
+const mapapps = require('ct-mapapps-gulp-js');
 
-    getPlaceholder() {
-        let placeholder = {};
-        let userAdminService = this._userAdminService;
-        let authentication = userAdminService.getAuthentication();
-        if (authentication.getUser()) {
-            placeholder["current_user_name"] = authentication.getUser().name;
-        }
-        return placeholder;
-    }
-}
+mapapps.registerTasks({
+    themes: [],
+    hasBaseThemes: true,
+    forceTranspile: true
+});
 
-module.exports = AuthenticationPlaceholderProvider;
+gulp.task("default", function(callback) {
+    run_sequence(
+            "copy-resources",
+            "themes-copy",
+            ["js-transpile", "themes-compile"],
+            callback);
+});

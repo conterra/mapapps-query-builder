@@ -13,17 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class AuthenticationPlaceholderProvider {
-
-    getPlaceholder() {
-        let placeholder = {};
-        let userAdminService = this._userAdminService;
-        let authentication = userAdminService.getAuthentication();
-        if (authentication.getUser()) {
-            placeholder["current_user_name"] = authentication.getUser().name;
-        }
-        return placeholder;
-    }
-}
-
-module.exports = AuthenticationPlaceholderProvider;
+import i18n from "dojo/i18n!./nls/bundle";

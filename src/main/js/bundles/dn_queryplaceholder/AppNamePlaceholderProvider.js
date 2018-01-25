@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-    "dojo/_base/declare"
-], function (
-        declare
-        ) {
-    return declare([], {
-        getPlaceholder: function () {
-            var placeholder = {};
-            var appName = this._appCtx.getApplicationName();
-            var appTitle = this._appCtx.getApplicationProperties().title;
-            placeholder["current_app_name"] = appName;
-            placeholder["current_app_title"] = appTitle;
-            return placeholder;
-        }
-    });
-});
+class AppNamePlaceholderProvider {
+
+    getPlaceholder() {
+        let placeholder = {};
+        let appName = this._appCtx.getApplicationName();
+        let appTitle = this._appCtx.getApplicationProperties().title;
+        placeholder["current_app_name"] = appName;
+        placeholder["current_app_title"] = appTitle;
+        return placeholder;
+    }
+}
+
+module.exports = AppNamePlaceholderProvider;

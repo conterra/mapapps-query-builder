@@ -31,31 +31,22 @@
                     <div class="head">
                         <label>${i18n.queryDefinition}</label>
                         <button data-dojo-type="dijit.form.Button" type="button"
-                                data-dojo-attach-event="onClick:_customQueryHelp" class="button">
+                                data-dojo-attach-event="onClick:_complexQueryHelp" class="button">
                             ?
                         </button>
                     </div>
                     <div class="settings">
-                        <div class="settingsDiv" data-dojo-attach-point="_geometryNode">
-                            <label data-dojo-attach-point="_geometryLabel">${i18n.useExtent}</label>
-                            <div data-dojo-attach-point="_geometrySelectNode"></div>
-                            <button data-dojo-attach-point="_geometryButton" data-dojo-type="dijit.form.Button"
-                                    type="button"
-                                    data-dojo-attach-event="onClick:_onChooseGeometry">
-                                ${i18n.chooseGeometry}
-                            </button>
-                        </div>
-                        <div class="settingsDiv" data-dojo-attach-point="_spatialRelationDiv">
+                        <div class="settingsDiv">
                             <label>${i18n.spatialRelation}</label>
                             <div data-dojo-attach-point="_spatialRelationNode"></div>
                         </div>
                         <div class="settingsDiv">
-                            <label>${i18n.editable}</label>
-                            <div data-dojo-attach-point="_editableNode"></div>
+                            <label>${i18n.match}</label>
+                            <div data-dojo-attach-point="_linkOperatorNode"></div>
                         </div>
                         <div class="settingsDiv">
-                            <label>${i18n.match}</label>
-                            <div data-dojo-attach-point="_matchNode"></div>
+                            <label>${i18n.editable}</label>
+                            <div data-dojo-attach-point="_editableNode"></div>
                         </div>
                     </div>
                 </div>
@@ -83,10 +74,10 @@
             <div data-dojo-type="dijit/layout/BorderContainer" title="${i18n.manual}"
                  data-dojo-attach-point="_manualTab">
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'">
-                    <div data-dojo-attach-point="_customQueryLabelNode">
-                        <label>${i18n.customQuery}</label>
+                    <div data-dojo-attach-point="_complexQueryLabelNode">
+                        <label>${i18n.complexQuery}</label>
                         <button data-dojo-type="dijit.form.Button" type="button"
-                                data-dojo-attach-event="onClick:_customQueryHelp" class="button">
+                                data-dojo-attach-event="onClick:_complexQueryHelp" class="button">
                             ?
                         </button>
                     </div>
@@ -94,7 +85,7 @@
                 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'">
                     <div>
                         <textarea name="textarea" data-dojo-type="dijit/form/SimpleTextarea" rows="16" cols="120"
-                                  data-dojo-attach-point="_customQueryTextArea"
+                                  data-dojo-attach-point="_complexQueryTextArea"
                                   data-dojo-props="intermediateChanges: 'true'"></textarea>
                     </div>
                 </div>

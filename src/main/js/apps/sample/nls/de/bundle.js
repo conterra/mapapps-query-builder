@@ -13,4 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([], {});
+module.exports = {
+    apptitle: "Query Builder 4 Sample",
+    map: {
+        esrisites: {
+            title: "Standorte der Esri Deutschland Gruppe",
+            popup: {
+                address: "Adresse",
+                contact: "Kontakt",
+                tel: "Telefon:",
+                mail: "Email:",
+                link: "Internet:"
+            }
+        }
+    }
+};

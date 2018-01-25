@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-    ".",
-    "wizard/DataFormBuilderWidgetFactory",
-    "wizard/_BuilderWidget",
-    "./ToolsBuilderWidget",
-    "./ToolsBuilder",
-    "./UserQueryBuilderWidgetStoreSelection",
-    "./UserQueryBuilderWidgetStoreSelectionWidget"
-    ], {});
+import ".";
+import "./QueryBuilderWidgetStoreSelection";
+import "./QueryToolsBuilderWidget";
+import "./QueryToolsBuilder";
+import "wizard/DataFormBuilderWidgetFactory";
+import "wizard/_BuilderWidget";
+import "ct/tools/Tool";

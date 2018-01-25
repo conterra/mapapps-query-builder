@@ -1,0 +1,35 @@
+.ctAppRoot .querybuilder-window .vue-base,
+.ctAppRoot .querybuilder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ctAppRoot .querybuilder {
+    overflow: hidden;
+}
+
+.ctAppRoot .querybuilder .top .radio-group .input-group__details {
+    min-height: 0;
+}
+
+.ctAppRoot .querybuilder .center {
+    overflow: auto;
+    flex: 1 1 auto;
+}
+
+.ctAppRoot .querybuilder .center .chip .chip__content {
+    height: 26px;
+}
+
+.ctAppRoot .querybuilder .center .chip .chip__content .icon {
+    font-size: 18px;
+}
+
+.ctAppRoot .querybuilder .bottom {
+    flex: 0 0 auto;
+}
+
+.ctAppRoot .querybuilder .querybuilder__bottom-nav .btn .btn__content {
+    flex-direction: column;
+}

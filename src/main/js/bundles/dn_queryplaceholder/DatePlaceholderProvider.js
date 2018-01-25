@@ -13,27 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-    "dojo/_base/declare",
-    "dojo/date/locale"
-], function (
-        declare,
-        d_locale
-        ) {
-    return declare([], {
-        getPlaceholder: function () {
-            var dateObj = new Date();
-            var dateString = d_locale.format(dateObj, {datePattern: "yyyy-MM-dd", selector: 'date'});
-            var date = new Date();
-            var timeString = d_locale.format(dateObj, {datePattern: "HH:mm:ss", selector: 'date'});
-            var placeholder = {};
-            placeholder["current_date"] = date;
-            placeholder["current_date_string"] = dateString;
-            placeholder["current_time_string"] = timeString;
-            return placeholder;
-        },
-        reEvaluate: function () {
-            return this.getPlaceholder();
-        }
-    });
-});
+
+import d_locale from "dojo/date/locale";
+
+class DatePlaceholderProvider {
+
+    getPlaceholder() {
+        let dateObj = new Date();
+        let dateString = d_locale.format(dateObj, {datePattern: "yyyy-MM-dd", selector: 'date'});
+        let date = new Date();
+        let timeString = d_locale.format(dateObj, {datePattern: "HH:mm:ss", selector: 'date'});
+        let placeholder = {};
+        placeholder["current_date"] = date;
+        placeholder["current_date_string"] = dateString;
+        placeholder["current_time_string"] = timeString;
+        return placeholder;
+    }
+
+    reEvaluate() {
+        return this.getPlaceholder();
+    }
+}
+
+module.exports = DatePlaceholderProvider;

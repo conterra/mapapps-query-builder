@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-        "dojo/_base/declare",
-        "dojo/aspect",
-        "ct/mapping/store/MapServerLayerStore"
-    ],
-    function (declare, d_aspect, MapServerLayerStore) {
-        d_aspect.after(MapServerLayerStore.prototype, "_toTaskQuery", function (taskquery, args) {
-            var opts = args.length > 1 && args[1];
-            if (opts.returnDistinctValues) {
-                taskquery.returnDistinctValues = true;
+module.exports = {
+    root: {
+        apptitle: "Query Builder 4 Sample",
+        map: {
+            esrisites: {
+                title: "Esri Germany Group Sites",
+                popup: {
+                    address: "Address",
+                    contact: "Contact",
+                    tel: "Telephone:",
+                    mail: "Email:",
+                    link: "Internet:"
+                }
             }
-            return taskquery;
-        });
-    }
-);
+        }
+    },
+    "de": true
+};

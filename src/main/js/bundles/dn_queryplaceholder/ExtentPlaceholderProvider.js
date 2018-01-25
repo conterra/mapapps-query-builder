@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-    "dojo/_base/declare"
-], function (
-        declare
-        ) {
-    return declare([], {
-        getPlaceholder: function () {
-            var placeholder = {};
-            var extent = JSON.stringify(this._mapState.getExtent(), "", "\t");
-            placeholder["current_extent"] = extent;
-            return placeholder;
-        },
-        reEvaluate: function () {
-            return this.getPlaceholder();
-        }
-    });
-});
+class ExtentPlaceholderProvider {
+
+    getPlaceholder() {
+        let placeholder = {};
+        placeholder["current_extent"] = JSON.stringify(this._mapState.getExtent(), "", "\t");
+        return placeholder;
+    }
+
+    reEvaluate() {
+        return this.getPlaceholder();
+    }
+}
+
+module.exports = ExtentPlaceholderProvider;

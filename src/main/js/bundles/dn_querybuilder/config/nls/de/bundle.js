@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define({
+module.exports = {
     bundleName: "Query Builder Konfiguration",
     bundleDescription: "Konfigurations-Bundle f\u00fcr den Query Builder",
     title: "Query Builder Konfiguration",
@@ -25,14 +25,14 @@ define({
         defaultRelationalOperator: "Standard-Vergleichsoperator",
         searchEverywhereAsDefault: "Als Standardeinstellung \u00FCberall suchen"
     },
-    userQueryBuilderWidgetStoreSelection: {
-        menuTitle: "UserQueryBuilderWidget",
-        description: "UserQueryBuilderWidget konfigurieren",
+    queryBuilderWidgetStoreSelection: {
+        menuTitle: "QueryBuilderWidget",
+        description: "QueryBuilderWidget konfigurieren",
         grid: {
-            "title": "Titel",
-            "description": "Beschreibung"
+            title: "Titel",
+            description: "Beschreibung"
         },
-        hint: "Bitte w\u00E4hlen Sie die Stores aus, die im UserQueryBuilderWidget zur Verf\u00FCgung stehen sollen"
+        hint: "Bitte w\u00E4hlen Sie die Stores aus, die im QueryBuilderWidget zur Verf\u00FCgung stehen sollen"
     },
     toolsBuilder: {
         toolsBuilderTitle: "Query Tools",
@@ -41,15 +41,15 @@ define({
     widget: {
         window: {
             title: "Name",
-            removeTool: "Custom Query Tool entfernen",
-            removeToolMessage: "Custom Query Tool entfernen?",
-            addTool: "Custom Query Tool hinzuf\u00fcgen",
-            copyTool: "Custom Query Tool kopieren"
+            removeTool: "Query Tool entfernen",
+            removeToolMessage: "Query Tool entfernen?",
+            addTool: "Query Tool hinzuf\u00fcgen",
+            copyTool: "Query Tool kopieren"
         },
         wizard: {
-            windowtitle: "Custom Query Tool",
-            windowtitleAdd: "Custom Query Tool hinzuf\u00fcgen",
-            windowtitleEdit: "Custom Query Tool editieren",
+            windowtitle: "Query Tool",
+            windowtitleAdd: "Query Tool hinzuf\u00fcgen",
+            windowtitleEdit: "Query Tool editieren",
             title: "Titel",
             builder: "Bauen",
             options: "Optionen",
@@ -60,33 +60,26 @@ define({
             iconClass: "Icon Klasse",
             iconClassHelp: "Hilfe zur Icon Class",
             complexQueryHelp: "Hilfe zur Complex Query",
-            customQuery: "Custom Query",
+            complexQuery: "Complex Query",
             queryDefinition: "Query Definiton",
-            useGeometry: "Suchgeometrie verwenden",
-            useExtent: "Nur aktueller Kartenausschnitt",
-            chooseGeometry: "Geometrie festlegen",
             count: "Anzahl der Ergebnisse",
             ignoreCase: "Groß-/Kleinschreibung unterscheiden",
             locale: "Sprache",
-            spatialRelation: "R\u00e4umliche Relation",
             editable: "Editierbar",
             addField: "Feld hinzuf\u00fcgen",
             store: "Datenquelle",
             cancel: "Abbrechen",
             done: "Fertig",
             typeInTitle: "Titel eingeben",
-            match: "Felder verkn\u00fcpfen mit",
+            spatialRelation: "Wo suchen?",
+            match: "Wie verkn\u00fcpfen?",
             changeToManual: "Sind Sie sicher? Die Query wird nur noch manuell zu \u00e4ndern sein!",
             and: "und",
             or: "oder",
             yes: "ja",
             no: "nein",
-            spatialRelations: {
-                intersects: "ber\u00fchrt",
-                contains: "enthalten in",
-                crosses: "schneidet",
-                within: "enth\u00e4lt"
-            },
+            extent: "Aktueller Kartenausschnitt",
+            everywhere: "\u00FCberall",
             fields: {
                 typeInValue: "Wert eingeben",
                 is: "ist gleich",
@@ -110,17 +103,17 @@ define({
             }
         },
         grid: {
-            removeTool: "Custom Query Tool entfernen",
-            addTool: "Custom Query Tool hinzuf\u00fcgen",
+            removeTool: "Query Tool entfernen",
+            addTool: "Query Tool hinzuf\u00fcgen",
             title: "Titel",
             dataView: {
                 DGRID: {
-                    noDataMessage: "Kein(e) Custom Query Tool(s) vorhanden..."
+                    noDataMessage: "Kein(e) Query Tool(s) vorhanden..."
                 },
                 pager: {
-                    pageSizeLabelText: "Custom Query Tools ${pageStartItemNumber}-${pageEndItemNumber} of ${itemCount}"
+                    pageSizeLabelText: "Query Tools ${pageStartItemNumber}-${pageEndItemNumber} of ${itemCount}"
                 }
             }
         }
     }
-});
+};

@@ -1,0 +1,166 @@
+<template>
+    <v-card raised class="mb-2">
+        <div class="ml-1">
+            <v-chip label v-if="fieldQuery.not" color="red">
+                <v-icon left>warning</v-icon>
+                {{i18n.negated}}
+            </v-chip>
+        </div>
+        <v-layout class="ml-1" row wrap align-center>
+            <v-flex md1 v-if="allowNegation">
+                <v-switch
+                        v-model="fieldQuery.not"
+                        v-bind:value="fieldQuery.not"
+                        v-bind:disabled="fieldQuery.disableNot"
+                        color="red"
+                        hide-details
+                ></v-switch>
+            </v-flex>
+            <v-flex md3 v-bind:class="{ md4: !allowNegation }">
+                <v-select v-bind:items="fieldQuery.fields"
+                          v-model="fieldQuery.selectedFieldId"
+                          v-bind:disabled="fieldQuery.disableField"
+                          @change="$root.fieldChanged($event, fieldQuery)"
+                          item-value="id"
+                          class="pa-0"
+                          single-line
+                          hide-details
+                ></v-select>
+            </v-flex>
+            <v-flex md3>
+                <v-select
+                        v-bind:items="$root.getRelationalOperators($root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId))"
+                        v-bind:disabled="fieldQuery.disableRelationalOperator"
+                        v-model="fieldQuery.relationalOperator"
+                        class="pa-0"
+                        single-line
+                        hide-details
+                ></v-select>
+            </v-flex>
+            <v-flex md3 v-bind:class="{ md5: $root.editable }">
+                <v-menu
+                        ref="menu"
+                        v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date'"
+                        lazy
+                        v-bind:close-on-content-click="false"
+                        v-model="menu"
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        max-width="290px"
+                        min-width="290px">
+                    <v-text-field
+                            slot="activator"
+                            v-bind:disabled="fieldQuery.disableValue"
+                            v-model="fieldQuery.value"
+                            v-bind:rules="[rules.required]"
+                            readonly
+                    ></v-text-field>
+                    <v-date-picker v-model="fieldQuery.value" no-title scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                        <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                    </v-date-picker>
+                </v-menu>
+                <v-select
+                        v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'boolean'"
+                        v-bind:items="$root.getBooleanItems"
+                        v-bind:disabled="fieldQuery.disableValue"
+                        v-model="fieldQuery.value"
+                        class="pa-0"
+                        single-line
+                        hide-details
+                ></v-select>
+                <v-select
+                        v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues.length > 0"
+                        v-bind:items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues"
+                        v-bind:disabled="fieldQuery.disableValue"
+                        v-model="fieldQuery.value"
+                        key="select"
+                        item-value="code"
+                        item-text="name"
+                        class="pa-0"
+                        single-line
+                        hide-details
+                ></v-select>
+                <v-select
+                        v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
+                        v-bind:items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
+                        v-bind:disabled="fieldQuery.disableValue"
+                        v-model="fieldQuery.value"
+                        v-bind:rules="[rules.required, rules.number]"
+                        key="combobox"
+                        class="pa-0"
+                        combobox
+                        single-line
+                        hide-details
+                ></v-select>
+                <v-select
+                        v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
+                        v-bind:items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
+                        v-bind:disabled="fieldQuery.disableValue"
+                        v-model="fieldQuery.value"
+                        v-bind:rules="[rules.required]"
+                        key="combobox"
+                        class="pa-0"
+                        combobox
+                        single-line
+                        hide-details
+                ></v-select>
+                <v-text-field
+                        v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
+                        v-model="fieldQuery.value"
+                        v-bind:disabled="!fieldQuery.disableValue"
+                        v-bind:rules="[rules.required, rules.number]"
+                        class="pa-0"
+                        hide-details
+                ></v-text-field>
+                <v-text-field v-else
+                              v-model="fieldQuery.value"
+                              v-bind:disabled="!fieldQuery.disableValue"
+                              v-bind:rules="[rules.required]"
+                              class="pa-0"
+                              hide-details
+                ></v-text-field>
+            </v-flex>
+            <v-flex md1 v-if="!$root.editable">
+                <v-btn v-if="$root.fieldQueries.length > 1" icon
+                       v-bind:disabled="$root.editable"
+                       @click="$root.$emit('remove', fieldQuery)">
+                    <v-icon>delete</v-icon>
+                </v-btn>
+            </v-flex>
+            <v-flex md1 v-if="!$root.editable">
+                <v-btn v-if="$root.fieldQueries.length === index + 1" icon
+                       v-bind:disabled="$root.editable"
+                       @click="$root.$emit('add', {})">
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </v-flex>
+        </v-layout>
+    </v-card>
+</template>
+
+<script>
+    export default {
+        props: [
+            "i18n",
+            "fieldQuery",
+            "index",
+            "allowNegation"
+        ],
+        data() {
+            return {
+                rules: {
+                    required: (value) => !!value || "Required",
+                    number: (value) => {
+                        return (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || "Required";
+                    },
+                    string: (value) => {
+                        return typeof value === "string" || "Required";
+                    }
+                }
+            }
+        }
+    }
+</script>

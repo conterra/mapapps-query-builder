@@ -13,63 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define({
+module.exports = {
     bundleName: "Query Builder",
-    bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte QueryTools zu erstellen",
-    wizard: {
-        title: "Titel",
-        userToolTitle: "Eigene Query erstellen",
-        userToolToolTip: "Bauen Sie Ihre eigene Query",
-        userStore: "Was suchen?",
-        userUseGeometry: "Wo suchen?",
-        userDone: "Los gehts",
-        userMatch: "Suche verkn\u00fcpfen mit...",
-        userGeometryEverywhere: "\u00fcberall",
-        userGeometryEnhanced: "Geometrie",
-        userGeometryExtent: "Aktueller Kartenausschnitt",
-        userUseOnlyGeometry: "Rein geometrische Abfrage",
-        userChooseGeometry: "Geometrie festlegen",
-        userWindowTitle: "Eigene Abfrage erstellen",
-        userSpatialRelation: "R\u00e4umliche Verkn\u00fcpfung",
-        userSelectedFeatures: "Selektierte Objekte",
-        customToolTitle: "CustomQueryTool",
-        customToolToolTip: "CustomQueryTool",
-        customWindowTitle: "Query erstellen",
-        editWindowTitle: "Editierbare Abfrage",
-        defineQuery: "Suche definieren:",
-        builder: "Bauen",
-        options: "Optionen",
-        manual: "Manuell",
-        iconClass: "Icon Klasse",
-        iconClassHelp: "Hilfe zur Icon Class",
-        complexQueryHelp: "Hilfe zur Complex Query",
-        customQuery: "Custom Query",
-        queryDefinition: "Query Definiton",
-        useExtent: "Auswahl auf aktuellen\nKartenausschnitt begrenzen",
-        count: "Anzahl der Ergebnisse",
-        ignoreCase: "Groß-/Kleinschreibung unterscheiden",
-        locale: "Sprache",
-        addField: "Feld hinzuf\u00fcgen",
-        store: "Datenquelle",
-        cancel: "Abbrechen",
-        done: "Suchen",
-        typeInTitle: "Titel eingeben",
-        match: "Felder verkn\u00fcpfen mit",
-        changeToManual: "Sind Sie sicher? Die Query wird nur noch manuell zu \u00e4ndern sein!",
-        and: "und",
-        or: "oder",
+    bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
+    windowTitle: "Eigene Query bauen",
+    editableWindowTitle: "Eigene Query bauen",
+    tool: {
+        title: "Eigene Query erstellen",
+        tooltip: "Bauen Sie Ihre eigene Query",
+    },
+    ui: {
+        selectStore: "Was suchen?",
+        spatialRelation: "Wo suchen?",
+        linkOperator: "Wie verknüpfen?",
+        everywhere: "\u00fcberall",
+        currentExtent: "Aktueller Kartenausschnitt",
+        delete: "Löschen",
+        search: "Suche starten",
+        searchParameter: "Suchparameter",
+        negated: "negiert",
+        typeInValue: "Wert eingeben",
         yes: "ja",
         no: "nein",
-        no_results_error: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!",
-        serviceUnavailable: "Service nicht erreichbar!",
-        spatialRelations: {
-            intersects: "ber\u00fchrt",
-            contains: "enthalten in",
-            crosses: "schneidet",
-            within: "enth\u00e4lt"
-        },
-        fields: {
-            typeInValue: "Wert eingeben",
+        and: "und",
+        or: "oder",
+        relationalOperators: {
             is: "ist gleich",
             eqw: "ist gleich (wildcard)",
             suggest: "\u00e4hnelt",
@@ -82,11 +50,10 @@ define({
             is_less_than: "ist kleiner",
             is_less_or_equal: "ist kleiner / gleich",
             before: "vor",
-            after: "nach",
-            yes: "ja",
-            no: "nein",
-            shouldBeTrue: "Soll zutreffen",
-            shouldBeFalse: "Soll nicht zutreffen"
+            after: "nach"
+        },
+        errors: {
+            noResultsError: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!"
         }
     }
-});
+};

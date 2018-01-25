@@ -13,64 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define({
-    root: {
+module.exports = {
+    root: ({
         bundleName: "Query Builder",
         bundleDescription: "Bundle to build custom query tools",
-        wizard: {
-            title: "Title",
-            userToolTitle: "Build Query",
-            userToolToolTip: "Build your own Query",
-            userStore: "What do you want to search?",
-            userUseGeometry: "Where do you want to search?",
-            userDone: "Go",
-            userMatch: "Combine fields with...",
-            userGeometryEverywhere: "everywhere",
-            userGeometryEnhanced: "geometry",
-            userGeometryExtent: "current extent",
-            userUseOnlyGeometry: "Purely geometrical query",
-            userChooseGeometry: "Choose geometry",
-            userWindowTitle: "Build your own Query",
-            userSpatialRelation: "Spatial Relation",
-            userSelectedFeatures: "Selected Features",
-            customToolTitle: "CustomQueryTool",
-            customToolToolTip: "CustomQueryTool",
-            customWindowTitle: "Create Query",
-            editWindowTitle: "Editable Query",
-            defineQuery: "Define query:",
-            builder: "Builder",
-            options: "Options",
-            manual: "Manual",
-            iconClass: "Icon Class",
-            iconClassHelp: "Icon Class Help",
-            complexQueryHelp: "Complex Query Help",
-            customQuery: "Custom Query",
-            queryDefinition: "Query definiton",
-            useExtent: "Use current extent",
-            count: "Result Count",
-            ignoreCase: "Case Sensitive",
-            locale: "Language",
-            addField: "Add Field",
-            store: "Store",
-            cancel: "Cancel",
-            done: "Search",
-            typeInTitle: "type in title",
-            match: "Combine fields with",
-            changeToManual: "Are you sure? The query edit-mode will be switched to manual!",
-            and: "and",
-            or: "or",
+        windowTitle: "Build your own Query",
+        editableWindowTitle: "Build your own Query",
+        tool: {
+            title: "Build Query",
+            tooltip: "Build your own Query"
+        },
+        ui: {
+            selectStore: "What do you want to search?",
+            spatialRelation: "Where do you want to search?",
+            linkOperator: "How to link?",
+            everywhere: "everywhere",
+            currentExtent: "current extent",
+            delete: "Delete",
+            search: "Search",
+            searchParameter: "Search parameter",
+            negated: "negated",
+            typeInValue: "type in value",
             yes: "yes",
             no: "no",
-            no_results_error: "No results found for your query!",
-            serviceUnavailable: "Service unavailable!",
-            spatialRelations: {
-                intersects: "intersects",
-                contains: "contains",
-                crosses: "crosses",
-                within: "within"
-            },
-            fields: {
-                typeInValue: "type in value",
+            and: "and",
+            or: "or",
+            relationalOperators: {
                 is: "is",
                 eqw: "is (wildcard)",
                 suggest: "suggest",
@@ -84,12 +52,11 @@ define({
                 is_less_or_equal: "is less or equal",
                 before: "before",
                 after: "after",
-                yes: "yes",
-                no: "no",
-                shouldBeTrue: "Should be true",
-                shouldBeFalse: "Should be false"
+            },
+            errors: {
+                noResultsError: "No results found for your query!"
             }
         }
-    },
-    de: true
-});
+    }),
+    "de": true
+};

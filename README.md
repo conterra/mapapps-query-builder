@@ -5,15 +5,11 @@ Sample App
 ------------------
 https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder/index.html
 
-Video Tutorial
-------------------
-https://youtu.be/yP2quHAXXPI
-
 Installation Guide
 ------------------
-**Requirement: map.apps 3.2.1**
+**Requirement: map.apps 4.3.0**
 
-1. First, you need to add the bundles "agssearch", "resultcenter" and "dn_querybuilder" to your app.
+1. First, you need to add the bundles "agssearch" and "dn_querybuilder" to your app.
 2. After that, add a service to your app (Content -> Services Management).
 3. Now you can add the new service to the Search&Selection bundle. Don't forget to enable the selection checkbox. (Search&Selection -> ArcGIS for Server Search&Selection)
 4. Finally you can create a new Query Tool. (Tools -> Query Builder Config)
@@ -38,7 +34,7 @@ To add a toolset to your app that contains the Query Tools, copy the following c
         "rel_l": 20,
         "rel_t": 20
       },
-      "tools": ["fc_*"]
+      "tools": ["querybuilder_*"]
     }]
   },
   "enabled": true
@@ -66,7 +62,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
         "rel_l": 20,
         "rel_t": 20
       },
-      "tools": ["fc_*", "userQueryBuilderTool"]
+      "tools": ["querybuilder_*", "userQueryBuilderTool"]
     }]
   },
   "enabled": true
@@ -78,15 +74,17 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
 ##### QueryBuilderProperties:
 ```
 "QueryBuilderProperties": {
-  "enableDistinctValues": true,
-  "defaultRelationalOperator": "$and",
-  "searchEverywhereAsDefault": true
+    "enableDistinctValues": true,
+    "defaultLinkOperator": "$or",
+    "defaultSpatialRelation": "everywhere",
+    "useMemorySelectionStore": true,
+    "allowNegation": false
 }
 ```
 
 ##### UserQueryBuilderWidgetFactory:
 ```
-"UserQueryBuilderWidgetFactory": {
+"QueryBuilderWidgetFactory": {
   "storeIds": [
     "stoerungen",
     "_AGS_STORE_1469615663725",

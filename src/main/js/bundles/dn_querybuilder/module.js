@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define([
-    ".",
-    "./QueryController",
-    "./FieldWidget",
-    "./MapServerStoreExtension",
-    "./EditableQueryBuilderWidget",
-    "./UserQueryBuilderWidget",
-    "./UserQueryBuilderWidgetFactory",
-    "./CustomQueryBuilderWidget",
-    "./CustomQueryBuilderWidgetSample",
-    "./MetadataAnalyzer",
-    "ct/tools/Tool",
-    "ct/store/Filter",
-    "ct/Stateful"
-], {});
+import ".";
+import "./QueryController";
+import "./QueryBuilderWidgetFactory";
+import "./EditableQueryBuilderWidgetFactory";
+import "./MetadataAnalyzer";
+import "ct/tools/Tool";

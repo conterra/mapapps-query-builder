@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define({
+module.exports = {
     root: {
         bundleName: "Query Builder Config",
         bundleDescription: "Configuration bundle for Query Builder",
@@ -26,12 +26,12 @@ define({
             defaultRelationalOperator: "Default relational operator",
             searchEverywhereAsDefault: "Search everywhere as default setting"
         },
-        userQueryBuilderWidgetStoreSelection: {
-            menuTitle: "UserQueryBuilderWidget",
-            description: "Configure the UserQueryBuilderWidget",
+        queryBuilderWidgetStoreSelection: {
+            menuTitle: "QueryBuilderWidget",
+            description: "Configure the QueryBuilderWidget",
             grid: {
-                "title": "Title",
-                "description": "Description"
+                title: "Title",
+                description: "Description"
             },
             hint: "Please specify stores"
         },
@@ -42,15 +42,15 @@ define({
         widget: {
             window: {
                 title: "Name",
-                removeTool: "Remove custom query tool",
-                removeToolMessage: "Remove custom query tool?",
-                addTool: "Add new custom query tool",
-                copyTool: "Copy custom query tool"
+                removeTool: "Remove query tool",
+                removeToolMessage: "Remove query tool?",
+                addTool: "Add new query tool",
+                copyTool: "Copy query tool"
             },
             wizard: {
-                windowtitle: "Custom Query Tool",
-                windowtitleAdd: "Add Custom Query Tool",
-                windowtitleEdit: "Edit Custom Query Tool",
+                windowtitle: "Query Tool",
+                windowtitleAdd: "Add Query Tool",
+                windowtitleEdit: "Edit Query Tool",
                 title: "Title",
                 builder: "Builder",
                 options: "Options",
@@ -61,33 +61,26 @@ define({
                 iconClass: "Icon Class",
                 iconClassHelp: "Icon Class Help",
                 complexQueryHelp: "Complex Query Help",
-                customQuery: "Custom Query",
+                complexQuery: "Complex Query",
                 queryDefinition: "Query definiton",
-                useGeometry: "Use search geometry",
-                useExtent: "Use Current extent",
-                chooseGeometry: "Choose geometry",
                 count: "Result Count",
                 ignoreCase: "Case Sensitive",
                 locale: "Language",
-                spatialRelation: "Spatial Relation",
                 editable: "Editable",
                 addField: "Add Field",
                 store: "Store",
                 cancel: "Cancel",
                 done: "Done",
                 typeInTitle: "type in title",
+                spatialRelation: "Where do you want to search?",
                 match: "Combine fields with",
                 changeToManual: "Are you sure? The query edit-mode will be switched to manual!",
                 and: "and",
                 or: "or",
                 yes: "yes",
                 no: "no",
-                spatialRelations: {
-                    intersects: "intersects",
-                    contains: "contains",
-                    crosses: "crosses",
-                    within: "within"
-                },
+                extent: "current extent",
+                everywhere: "everywhere",
                 fields: {
                     typeInValue: "type in value",
                     is: "is",
@@ -111,19 +104,19 @@ define({
                 }
             },
             grid: {
-                removeTool: "Remove custom query tool",
-                addTool: "Add new custom query tool",
+                removeTool: "Remove query tool",
+                addTool: "Add new query tool",
                 title: "Title",
                 dataView: {
                     DGRID: {
-                        noDataMessage: "No custom query tool(s) found..."
+                        noDataMessage: "No query tool(s) found..."
                     },
                     pager: {
-                        pageSizeLabelText: "Custom query tools ${pageStartItemNumber}-${pageEndItemNumber} of ${itemCount}"
+                        pageSizeLabelText: "Query tools ${pageStartItemNumber}-${pageEndItemNumber} of ${itemCount}"
                     }
                 }
             }
         }
     },
     de: true
-});
+};

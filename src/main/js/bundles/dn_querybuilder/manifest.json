@@ -1,110 +1,141 @@
 {
-  "Bundle-SymbolicName": "dn_querybuilder",
-  "Bundle-Version": "3.2.6-SNAPSHOT",
-  "Bundle-Name": "${bundleName}",
-  "Bundle-Description": "${bundleDescription}",
-  "Bundle-Vendor": "con terra GmbH",
-  "Bundle-Category": [],
-  "Product-Name": "devnet-mapapps-query-builder",
+  "name": "dn_querybuilder",
+  "version": "4.0.0-SNAPSHOT",
+  "title": "${bundleName}",
+  "description": "${bundleDescription}",
+  "vendor": "con terra GmbH",
+  "productName": "devnet-mapapps-query-builder",
   "Config-Bundle-Location": "/config",
-  "Require-Bundle": [
-    {
-      "name": "dn_queryplaceholder"
-    },
-    {
-      "name": "dn_querygeometry",
-      "policy": "optional"
-    },
-    {
-      "name": "resultcenter",
-      "version": "^3.2.1"
-    },
-    {
-      "name": "agssearch",
-      "version": "^3.2.1"
-    },
-    {
-      "name": "coordinatetransformer",
-      "version": "^3.2.1"
-    }
-  ],
+  "layer": "module",
+  "dependencies": {
+    "apprt-vue": "^4.2.0",
+    "apprt-binding": "^4.2.0",
+    "apprt-vuetify": "^4.2.0",
+    "resultcenter": "^4.2.0",
+    "agssearch": "^4.2.0",
+    "coordinatetransformer": "^4.2.0",
+    "dn_queryplaceholder": "^4.0.0"
+  },
   "CSS-Themes-Extension": [
     {
       "name": "*",
       "files": [
-        "./styles/styles.css"
+        "./css/styles.css"
       ]
     }
   ],
   "layout-widgets": [
     {
-      "role": "userQueryBuilderWidget",
+      "widgetRole": "queryBuilderWidget",
+      "template": "seasons",
+      "sublayout": [
+        "desktop",
+        "tablet_landscape",
+        "tablet_portrait"
+      ],
       "window": {
-        "title": "${wizard.userWindowTitle}",
-        "marginBox": {
-          "w": 700,
-          "h": 285
-        },
-        "minSize": {
-          "w": 700,
-          "h": 285
-        },
-        "dockTool": "userQueryBuilderTool",
+        "title": "${windowTitle}",
+        "dockTool": "queryBuilderToggleTool",
         "closable": true,
         "maximizable": true,
         "minimizeOnClose": true,
-        "resizable": true
+        "resizable": true,
+        "marginBox": {
+          "w": 800,
+          "h": 400
+        },
+        "minSize": {
+          "w": 600,
+          "h": 300
+        },
+        "windowClass": "noPadding querybuilder-window"
       }
     },
     {
-      "role": "customQueryBuilderWidget",
+      "widgetRole": "editableQueryBuilderWidget",
+      "template": "seasons",
+      "sublayout": [
+        "desktop",
+        "tablet_landscape",
+        "tablet_portrait"
+      ],
       "window": {
-        "title": "${wizard.customWindowTitle}",
+        "title": "${editableWindowTitle}",
+        "closable": true,
+        "maximizable": true,
+        "minimizeOnClose": true,
+        "resizable": true,
         "marginBox": {
-          "w": 700,
-          "h": 250
+          "w": 800,
+          "h": 400
         },
         "minSize": {
-          "w": 700,
-          "h": 250
+          "w": 600,
+          "h": 300
         },
-        "closable": true,
-        "minimizeOnClose": true,
-        "resizable": true
-      }
-    },
-    {
-      "role": "editableQueryBuilderWidget",
-      "window": {
-        "title": "${wizard.editWindowTitle}",
-        "marginBox": {
-          "w": 660,
-          "h": 290
-        },
-        "minSize": {
-          "w": 660,
-          "h": 290
-        },
-        "closable": true,
-        "minimizeOnClose": true,
-        "resizable": true
-      },
-      "windowevents": {
-        "onHide": "deactivateTool"
+        "windowClass": "noPadding querybuilder-window"
       }
     }
   ],
-  "Components": [
+  "components": [
     {
-      "name": "MetadataAnalyzer",
-      "immediate": true,
-      "provides": [
-        "dn_querybuilder.MetadataAnalyzer"
-      ],
+      "name": "QueryBuilderWidgetFactory",
+      "provides": "dijit.Widget",
+      "instanceFactory": true,
+      "properties": {
+        "widgetRole": "queryBuilderWidget",
+        "storeIds": []
+      },
       "references": [
         {
-          "name": "_logService",
-          "providing": "ct.framework.api.LogService"
+          "name": "_queryController",
+          "providing": "dn_querybuilder.QueryController"
+        },
+        {
+          "name": "_queryBuilderProperties",
+          "providing": "dn_querybuilder.QueryBuilderProperties"
+        },
+        {
+          "name": "_mapWidgetModel",
+          "providing": "map-widget.MapWidgetModel"
+        },
+        {
+          "name": "_basemapModel",
+          "providing": "map-basemaps-api.BasemapsModel"
+        },
+        {
+          "name": "_tool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=queryBuilderToggleTool)"
+        },
+        {
+          "name": "_stores",
+          "providing": "ct.api.Store",
+          "cardinality": "1..n",
+          "filter": "(useIn=selection)"
+        },
+        {
+          "name": "_metadataAnalyzer",
+          "providing": "dn_querybuilder.MetadataAnalyzer"
+        }
+      ]
+    },
+    {
+      "name": "EditableQueryBuilderWidgetFactory",
+      "provides": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
+      "properties": {},
+      "references": [
+        {
+          "name": "_mapWidgetModel",
+          "providing": "map-widget.MapWidgetModel"
+        },
+        {
+          "name": "_basemapModel",
+          "providing": "map-basemaps-api.BasemapsModel"
+        },
+        {
+          "name": "_metadataAnalyzer",
+          "providing": "dn_querybuilder.MetadataAnalyzer"
         }
       ]
     },
@@ -117,26 +148,25 @@
       "propertiesConstructor": true,
       "properties": {
         "enableDistinctValues": true,
-        "defaultRelationalOperator": "$and",
-        "searchEverywhereAsDefault": true,
-        "useMemorySelectionStore": true
+        "defaultLinkOperator": "$or",
+        "defaultSpatialRelation": "everywhere",
+        "useMemorySelectionStore": true,
+        "allowNegation": false
       }
     },
     {
       "name": "QueryTools",
-      "impl": "ct.tools.Tool",
-      "provides": [
-        "ct.tools.Tool"
-      ],
+      "impl": "ct/tools/Tool",
+      "provides": "ct.tools.Tool",
       "propertiesConstructor": true,
       "componentFactory": true,
       "properties": {
         "id": "querytool",
-        "title": "Query a Store",
+        "title": "Query a store",
         "toolRole": "toolset",
         "iconClass": "icon-info",
         "clickHandler": "onQueryToolActivated",
-        "customquery": {},
+        "complexQuery": {},
         "storeId": "*",
         "togglable": false
       },
@@ -159,25 +189,46 @@
       ],
       "references": [
         {
-          "name": "_mapState",
-          "providing": "ct.mapping.map.MapState"
+          "name": "_mapWidgetModel",
+          "providing": "map-widget.MapWidgetModel"
         },
         {
           "name": "_dataModel",
-          "providing": "ct.resultcenter.DataModel"
+          "providing": "resultcenter.DataModel"
         },
         {
           "name": "_coordinateTransformer",
           "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
         },
         {
-          "name": "_replacer",
-          "providing": "dn_replacer.Replacer"
-        },
-        {
           "name": "_metadataAnalyzer",
           "providing": "dn_querybuilder.MetadataAnalyzer"
         },
+        {
+          "name": "_queryBuilderProperties",
+          "providing": "dn_querybuilder.QueryBuilderProperties"
+        },
+        {
+          "name": "_editableQueryBuilderWidgetFactory",
+          "providing": "dn_querybuilder.EditableQueryBuilderWidgetFactory"
+        },
+        {
+          "name": "_replacer",
+          "providing": "dn_queryplaceholder.Replacer"
+        },
+        {
+          "name": "_logService",
+          "providing": "ct.framework.api.LogService"
+        }
+      ]
+    },
+    {
+      "name": "MetadataAnalyzer",
+      "immediate": true,
+      "provides": [
+        "dn_querybuilder.MetadataAnalyzer"
+      ],
+      "references": [
         {
           "name": "_queryBuilderProperties",
           "providing": "dn_querybuilder.QueryBuilderProperties"
@@ -189,185 +240,23 @@
       ]
     },
     {
-      "name": "UserQueryBuilderWidgetFactory",
-      "provides": [
-        "ct.framework.api.EventHandler",
-        "dijit.Widget"
-      ],
-      "properties": {
-        "Event-Topics": [
-          {
-            "topic": "ct/dn_querygeometry/GEOMETRY",
-            "method": "saveInputGeometry"
-          }
-        ],
-        "widgetRole": "userQueryBuilderWidget",
-        "storeIds": []
-      },
-      "propertiesConstructor": true,
-      "instanceFactory": true,
-      "immediate": true,
-      "references": [
-        {
-          "name": "eventService",
-          "providing": "ct.framework.api.EventService"
-        },
-        {
-          "name": "stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        },
-        {
-          "name": "_mapState",
-          "providing": "ct.mapping.map.MapState"
-        },
-        {
-          "name": "_tool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=userQueryBuilderTool)"
-        },
-        {
-          "name": "_dataModel",
-          "providing": "ct.resultcenter.DataModel"
-        },
-        {
-          "name": "_replacer",
-          "providing": "dn_replacer.Replacer"
-        },
-        {
-          "name": "_metadataAnalyzer",
-          "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_queryController",
-          "providing": "dn_querybuilder.QueryController"
-        },
-        {
-          "name": "querygeometryTool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=querygeometryTool)",
-          "cardinality": "0..1"
-        },
-        {
-          "name": "drawGeometryHandler",
-          "providing": "dn_querygeometry.DrawGeometryHandler",
-          "cardinality": "0..1"
-        }
-      ]
-    },
-    {
-      "name": "CustomQueryBuilderWidgetSample",
-      "provides": [
-        "dn_querybuilder.CustomQueryBuilderWidgetSample",
-        "ct.framework.api.EventHandler"
-      ],
-      "properties": {
-      },
-      "propertiesConstructor": true,
-      "references": [
-        {
-          "name": "eventService",
-          "providing": "ct.framework.api.EventService"
-        },
-        {
-          "name": "store",
-          "providing": "ct.api.Store",
-          "filter": "(id=stoerungen)"
-        },
-        {
-          "name": "_mapState",
-          "providing": "ct.mapping.map.MapState"
-        },
-        {
-          "name": "_dataModel",
-          "providing": "ct.resultcenter.DataModel"
-        },
-        {
-          "name": "_replacer",
-          "providing": "dn_replacer.Replacer"
-        },
-        {
-          "name": "_metadataAnalyzer",
-          "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "_querygeometryTool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=querygeometryTool)",
-          "cardinality": "0..1"
-        },
-        {
-          "name": "_drawGeometryHandler",
-          "providing": "dn_querygeometry.DrawGeometryHandler",
-          "cardinality": "0..1"
-        },
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_queryController",
-          "providing": "dn_querybuilder.QueryController"
-        }
-      ]
-    },
-    {
-      "name": "UserQueryBuilderTool",
+      "name": "QueryBuilderToggleTool",
       "impl": "ct/tools/Tool",
       "provides": [
         "ct.tools.Tool"
       ],
       "propertiesConstructor": true,
       "properties": {
-        "id": "userQueryBuilderTool",
-        "toolRole": "toolset",
-        "title": "${wizard.userToolTitle}",
-        "tooltip": "${wizard.userToolToolTip}",
-        "togglable": true,
-        "iconClass": "icon-custom-info-help"
-      },
-      "references": [
-        {
-          "name": "stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        }
-      ]
-    },
-    {
-      "name": "CustomQueryBuilderTool",
-      "impl": "ct/tools/Tool",
-      "provides": [
-        "ct.tools.Tool"
-      ],
-      "propertiesConstructor": true,
-      "properties": {
-        "id": "customQueryBuilderTool",
-        "toolRole": "toolset",
-        "title": "${wizard.customToolTitle}",
-        "tooltip": "${wizard.customToolToolTip}",
-        "togglable": false,
+        "id": "queryBuilderToggleTool",
+        "title": "${tool.title}",
+        "tooltip": "${tool.tooltip}",
         "iconClass": "icon-custom-info-help",
-        "clickHandler": "activateWindow"
-      },
-      "references": [
-        {
-          "name": "handlerScope",
-          "providing": "dn_querybuilder.CustomQueryBuilderWidgetSample"
-        },
-        {
-          "name": "stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
+        "toolRole": "toolset",
+        "togglable": true,
+        "rules": {
+          "noGroup": true
         }
-      ]
+      }
     }
   ]
 }
