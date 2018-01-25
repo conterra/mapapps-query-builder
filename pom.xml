@@ -254,14 +254,11 @@
                     <properties>
                         <owner>con terra GmbH</owner>
                         <email>info@conterra.de</email>
-                        <project.inceptionYear>2017</project.inceptionYear>
+                        <project.inceptionYear>2018</project.inceptionYear>
                     </properties>
-                    <excludes>
-                        <exclude>**/README*</exclude>
-                        <exclude>**/*.html</exclude>
-                        <exclude>**/*.json</exclude>
-                        <exclude>src/test/**</exclude>
-                    </excludes>
+                    <includes>
+                        <include>src/main/js/**/*.js</include>
+                    </includes>
                 </configuration>
                 <executions>
                     <execution>
