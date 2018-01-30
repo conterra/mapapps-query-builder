@@ -164,18 +164,6 @@
                     <version>1.5.3</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.lesscss</groupId>
-                    <artifactId>lesscss-maven-plugin</artifactId>
-                    <version>1.7.0.1.1</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.lesscss</groupId>
-                            <artifactId>lesscss</artifactId>
-                            <version>2.7.1-v8</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>1.10</version>
@@ -297,7 +285,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <!-- this unpacks the org css/less files for own bundles -->
                 <executions>
                     <execution>
                         <id>unpack-themes-src</id>
@@ -346,25 +333,6 @@
                 <configuration>
                     <sourceDirectory>${js.build.outputPath}</sourceDirectory>
                     <outputDirectory>${js.build.outputPath}</outputDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.lesscss</groupId>
-                <artifactId>lesscss-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <sourceDirectory>${js.build.outputPath}</sourceDirectory>
-                    <outputDirectory>${js.build.outputPath}</outputDirectory>
-                    <includes>
-                        <include>bundles/**/*.less</include>
-                    </includes>
                 </configuration>
             </plugin>
             <plugin>
@@ -959,83 +927,6 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>less-v8-x32</id>
-            <activation>
-                <property>
-                    <name>sun.arch.data.model</name>
-                    <value>32</value>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.lesscss</groupId>
-                            <artifactId>lesscss-maven-plugin</artifactId>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>lu.flier.script</groupId>
-                                    <artifactId>jav8-win32</artifactId>
-                                    <version>0.4</version>
-                                </dependency>
-                            </dependencies>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        <profile>
-            <id>less-v8-x64</id>
-            <activation>
-                <property>
-                    <name>sun.arch.data.model</name>
-                    <value>64</value>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.lesscss</groupId>
-                            <artifactId>lesscss-maven-plugin</artifactId>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>lu.flier.script</groupId>
-                                    <artifactId>jav8-win64</artifactId>
-                                    <version>0.6</version>
-                                </dependency>
-                            </dependencies>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        <profile>
-            <id>less-v8-x64-mac</id>
-            <activation>
-                <os>
-                    <family>mac</family>
-                </os>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.lesscss</groupId>
-                            <artifactId>lesscss-maven-plugin</artifactId>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>lu.flier.script</groupId>
-                                    <artifactId>jav8-macosx86_64</artifactId>
-                                    <version>0.6</version>
-                                </dependency>
-                            </dependencies>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
             </build>
         </profile>
     </profiles>
