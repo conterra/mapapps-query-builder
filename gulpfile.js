@@ -18,9 +18,15 @@ const run_sequence = require('run-sequence');
 const mapapps = require('ct-mapapps-gulp-js');
 
 mapapps.registerTasks({
-    themes: [],
+    themes: [/*sample_theme*/],
+    hasVuetify: true,
     hasBaseThemes: true,
-    forceTranspile: true
+    forceTranspile: true/*,
+    themeChangeTargets:{
+        "vuetify":[
+            "sample_theme"
+        ]
+    }*/
 });
 
 gulp.task("default", function(callback) {
