@@ -29,7 +29,7 @@ class QueryBuilderWidgetFactory {
     }
 
     _initComponent() {
-        const vm = this.vm = this.queryBuilderWidget = new Vue(QueryBuilderWidget);
+        const vm = this.queryBuilderWidget = new Vue(QueryBuilderWidget);
         let model = this._queryBuilderWidgetModel;
         vm.i18n = this._i18n.get().ui;
         vm.storeData = model.storeData;

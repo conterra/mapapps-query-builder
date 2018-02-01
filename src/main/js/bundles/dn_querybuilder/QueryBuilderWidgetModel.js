@@ -51,14 +51,10 @@ const QueryBuilderWidgetModel = declare({
         this.addFieldQuery();
     },
 
-    search() {
-        let selectedStoreId = this.selectedStoreId;
-        let selectedStore = this.getSelectedStoreObj(selectedStoreId);
-        let linkOperator = this.linkOperator;
-        let spatialRelation = this.spatialRelation;
-        let fieldQueries = this.fieldQueries;
-        let complexQuery = this.getComplexQuery(linkOperator, spatialRelation, fieldQueries);
-        this._queryController.query(selectedStore, complexQuery, {}, this._tool);
+    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
+        let selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
+        let complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
+        this._queryController.query(selectedStore, complexQuery, {}, tool || this._tool);
     },
 
     addFieldQuery(selectedStoreId) {
@@ -75,6 +71,49 @@ const QueryBuilderWidgetModel = declare({
                 value: (fields[0].codedValues[0] && fields[0].codedValues[0].code) || fields[0].distinctValues[0] || ""
             });
             this.loading = false;
+        }, this);
+    },
+
+    addFieldQueries(fieldQueries, fields, editFields, selectedStoreId) {
+        fields.forEach((field, i) => {
+            let editOptions = editFields && editFields[i];
+            let store = this.getSelectedStoreObj(selectedStoreId);
+            let fieldId, not, relationalOperator, value;
+            if (field.$not) {
+                not = true;
+                for (let a in field.$not) {
+                    fieldId = a;
+                    for (let b in field.$not[fieldId]) {
+                        relationalOperator = b;
+                        value = field.$not[fieldId][relationalOperator];
+                    }
+                }
+            } else {
+                not = false;
+                for (let a in field) {
+                    fieldId = a;
+                    for (let b in field[fieldId]) {
+                        relationalOperator = b;
+                        value = field[fieldId][relationalOperator];
+                    }
+                }
+            }
+            this.loading = true;
+            let fieldData = this._metadataAnalyzer.getFields(store);
+            ct_when(fieldData, (fields) => {
+                fieldQueries.push({
+                    fields: fields,
+                    not: not,
+                    selectedFieldId: fieldId,
+                    relationalOperator: relationalOperator,
+                    value: value || "",
+                    disableNot: !editOptions.not,
+                    disableField: !editOptions.field,
+                    disableRelationalOperator: !editOptions.relationalOperator,
+                    disableValue: !editOptions.value
+                });
+                this.loading = false;
+            }, this);
         }, this);
     },
 
