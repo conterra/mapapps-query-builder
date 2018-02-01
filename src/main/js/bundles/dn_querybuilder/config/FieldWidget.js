@@ -154,7 +154,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
             name: "fields",
             value: this.fieldId || fieldData[0].id,
             store: fieldStore,
-            searchAttr: "title",
+            searchAttr: "text",
             maxHeight: this.maxComboBoxHeight,
             readOnly: false,
             disabled: this.fieldSelectDisabled
