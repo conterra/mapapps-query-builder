@@ -45,7 +45,8 @@ class MetadataAnalyzer {
                                 id: field.name,
                                 text: field.title + " (" + field.type + ") " + codedValueString,
                                 type: field.type,
-                                codedValues: codedValues
+                                codedValues: codedValues,
+                                distinctValues: []
                             });
                         }
                     });
