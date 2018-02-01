@@ -110,14 +110,14 @@
                 <v-text-field
                         v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
                         v-model="fieldQuery.value"
-                        v-bind:disabled="!fieldQuery.disableValue"
+                        v-bind:disabled="fieldQuery.disableValue"
                         v-bind:rules="[rules.required, rules.number]"
                         class="pa-0"
                         hide-details
                 ></v-text-field>
                 <v-text-field v-else
                               v-model="fieldQuery.value"
-                              v-bind:disabled="!fieldQuery.disableValue"
+                              v-bind:disabled="fieldQuery.disableValue"
                               v-bind:rules="[rules.required]"
                               class="pa-0"
                               hide-details
