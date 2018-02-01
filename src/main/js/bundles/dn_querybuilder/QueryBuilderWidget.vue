@@ -2,38 +2,48 @@
     <div class="querybuilder">
         <div class="top">
             <v-container grid-list-md fluid>
-                <v-layout row wrap justify-center>
-                    <v-flex md4 v-bind:class="{ md6: fieldQueries.length <= 1 }">
-                        <div>{{i18n.selectStore}}</div>
-                        <v-select
-                                v-bind:items="storeData"
-                                v-bind:disabled="editable"
-                                v-bind:loading="loading"
-                                v-model="selectedStoreId"
-                                item-value="id"
-                                @change="$emit('storeChanged', $event)"
-                        ></v-select>
+                <v-layout row wrap justify-space-between>
+                    <v-flex md4>
+                        <div>
+                            <div>{{i18n.selectStore}}</div>
+                            <v-select
+                                    v-bind:items="storeData"
+                                    v-bind:disabled="editable"
+                                    v-bind:loading="loading"
+                                    v-model="selectedStoreId"
+                                    item-value="id"
+                                    @change="$emit('storeChanged', $event)"
+                            ></v-select>
+                        </div>
                     </v-flex>
-                    <v-flex md4 v-bind:class="{ md6: fieldQueries.length <= 1 }">
-                        <div>{{i18n.spatialRelation}}</div>
-                        <v-radio-group
-                                class="pt-0" v-model="spatialRelation">
-                            <v-radio hide-details v-bind:label="i18n.everywhere"
-                                     v-bind:disabled="disableSpatialRelationRadio"
-                                     value="everywhere"></v-radio>
-                            <v-radio hide-details v-bind:label="i18n.currentExtent"
-                                     v-bind:disabled="disableSpatialRelationRadio"
-                                     value="current_extent"></v-radio>
-                        </v-radio-group>
+                    <v-flex md4>
+                        <div>
+                            <div>{{i18n.spatialRelation}}</div>
+                            <v-radio-group
+                                    class="pt-0" v-model="spatialRelation">
+                                <v-radio hide-details v-bind:label="i18n.everywhere"
+                                         v-bind:disabled="disableSpatialRelationRadio"
+                                         value="everywhere"></v-radio>
+                                <v-radio hide-details v-bind:label="i18n.currentExtent"
+                                         v-bind:disabled="disableSpatialRelationRadio"
+                                         value="current_extent"></v-radio>
+                            </v-radio-group>
+                        </div>
                     </v-flex>
-                    <v-flex md4 v-if="fieldQueries.length > 1">
-                        <div>{{i18n.linkOperator}}</div>
-                        <v-radio-group class="pt-0" v-model="linkOperator">
-                            <v-radio hide-details v-bind:label="i18n.and" v-bind:disabled="disableLinkOperatorRadio"
-                                     value="$and"></v-radio>
-                            <v-radio hide-details v-bind:label="i18n.or" v-bind:disabled="disableLinkOperatorRadio"
-                                     value="$or"></v-radio>
-                        </v-radio-group>
+                    <v-flex md4>
+                        <v-slide-x-transition>
+                            <div v-if="fieldQueries.length > 1">
+                                <div>{{i18n.linkOperator}}</div>
+                                <v-radio-group class="pt-0" v-model="linkOperator">
+                                    <v-radio hide-details v-bind:label="i18n.and"
+                                             v-bind:disabled="disableLinkOperatorRadio"
+                                             value="$and"></v-radio>
+                                    <v-radio hide-details v-bind:label="i18n.or"
+                                             v-bind:disabled="disableLinkOperatorRadio"
+                                             value="$or"></v-radio>
+                                </v-radio-group>
+                            </div>
+                        </v-slide-x-transition>
                     </v-flex>
                     <v-flex md12>
                         <div>{{i18n.searchParameter}}</div>
@@ -42,7 +52,7 @@
             </v-container>
         </div>
         <div class="center">
-            <v-container grid-list-md fluid>
+            <v-container grid-list-md fluid class="pt-0">
                 <field-widget v-for="(fieldQuery, index) in fieldQueries"
                               v-bind:key="index" v-bind:fieldQuery="fieldQuery" v-bind:index="index"
                               v-bind:allowNegation="enableNegation"
