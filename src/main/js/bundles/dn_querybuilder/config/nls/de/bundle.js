@@ -22,8 +22,11 @@ module.exports = {
         propertiesWidgetTitle: "Grundeinstellungen",
         propertiesWidgetDescription: "Grundeinstellungen f\u00FCr das Query Builder Bundle",
         enableDistinctValues: "Distinct Values vorschlagen",
-        defaultRelationalOperator: "Standard-Vergleichsoperator",
-        searchEverywhereAsDefault: "Als Standardeinstellung \u00FCberall suchen"
+        defaultLinkOperator: "Standard-Vergleichsoperator",
+        defaultSpatialRelation: "Standard-Räumlicher-Vergleichsoperator",
+        useMemorySelectionStore: "Memory Selection Store verwenden",
+        useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle eines voreingestellten",
+        allowNegation: "Negation eines Feldes erlauben"
     },
     queryBuilderWidgetStoreSelection: {
         menuTitle: "QueryBuilderWidget",

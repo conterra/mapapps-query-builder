@@ -23,8 +23,11 @@ module.exports = {
             propertiesWidgetTitle: "Base Config",
             propertiesWidgetDescription: "Basic settings for the Query Builder",
             enableDistinctValues: "Use distinct values",
-            defaultRelationalOperator: "Default relational operator",
-            searchEverywhereAsDefault: "Search everywhere as default setting"
+            defaultLinkOperator: "Default relational operator",
+            defaultSpatialRelation: "Default spatial relation",
+            useMemorySelectionStore: "Use Memory Selection Store",
+            useUserExtent: "Use user's current map extent instead of a preset one",
+            allowNegation: "Allow user to negate fields"
         },
         queryBuilderWidgetStoreSelection: {
             menuTitle: "QueryBuilderWidget",

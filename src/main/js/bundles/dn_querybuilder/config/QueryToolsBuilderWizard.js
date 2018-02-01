@@ -185,7 +185,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
     _getComplexQuery() {
         let match = this._matchSelect.value;
         let complexQuery = {};
-        let extent = this.mapWidgetModel.get("extent");
+        let extent = this.mapWidgetModel.get("extent").toJSON();
         if (this._spatialRelationSelect.value === "current_extent") {
             complexQuery.geometry = {
                 $contains: extent
@@ -297,8 +297,9 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         return result;
     },
     _onCancel() {
-        if (this.drawGeometryHandler)
+        if (this.drawGeometryHandler) {
             this.drawGeometryHandler.clearGraphics();
+        }
     },
     _getSelectedStoreObj(id) {
         return ct_array.arraySearchFirst(this.stores, {id: id});

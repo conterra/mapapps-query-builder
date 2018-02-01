@@ -49,6 +49,12 @@ class QueryToolController {
             let interfaces = ["dijit.Widget"];
             this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
         } else {
+            if (complexQuery.geometry && this._queryBuilderProperties.useUserExtent) {
+                let extent = this._mapWidgetModel.get("extent");
+                complexQuery.geometry = {
+                    $contains: extent
+                };
+            }
             let options = {};
             let count = event.options.count;
             if (count >= 0) {

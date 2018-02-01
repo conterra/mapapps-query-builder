@@ -74,8 +74,11 @@
         "id": "propertiesWidget",
         "defaultProperties": {
           "enableDistinctValues": true,
-          "defaultRelationalOperator": "$and",
-          "searchEverywhereAsDefault": true
+          "defaultLinkOperator": "$or",
+          "defaultSpatialRelation": "everywhere",
+          "useMemorySelectionStore": true,
+          "useUserExtent": true,
+          "allowNegation": false
         },
         "description": "${propertiesWidget.propertiesWidgetDescription}"
       },

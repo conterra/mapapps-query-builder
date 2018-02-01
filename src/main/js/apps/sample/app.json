@@ -39,7 +39,7 @@
         "useMemorySelectionStore": true,
         "allowNegation": false
       },
-      "QueryBuilderWidgetFactory": {
+      "QueryBuilderWidgetModel": {
         "storeIds": [
           "esri",
           "countries",
@@ -65,10 +65,21 @@
                   "$eq": 1
                 }
               }
-            ]
+            ],
+            "geometry": {
+              "$contains": {
+                "xmin": -1454749.7653909875,
+                "ymin": 4027109.2609186354,
+                "xmax": 4454749.7653909875,
+                "ymax": 8972890.739081364,
+                "spatialReference": {
+                  "wkid": 3857
+                }
+              }
+            }
           },
           "options": {
-            "editable": true,
+            "editable": false,
             "editOptions": {
               "spatialRelation": false,
               "linkOperator": true,
@@ -120,7 +131,7 @@
             "editable": true,
             "editOptions": {
               "spatialRelation": false,
-              "linkOperator": true,
+              "linkOperator": false,
               "editFields": [
                 {
                   "not": false,

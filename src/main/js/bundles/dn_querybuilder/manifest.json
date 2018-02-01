@@ -153,6 +153,7 @@
         "defaultLinkOperator": "$or",
         "defaultSpatialRelation": "everywhere",
         "useMemorySelectionStore": true,
+        "useUserExtent": true,
         "allowNegation": false
       }
     },
@@ -227,8 +228,16 @@
       ],
       "references": [
         {
+          "name": "_queryBuilderProperties",
+          "providing": "dn_querybuilder.QueryBuilderProperties"
+        },
+        {
           "name": "_queryController",
           "providing": "dn_querybuilder.QueryController"
+        },
+        {
+          "name": "_mapWidgetModel",
+          "providing": "map-widget.MapWidgetModel"
         },
         {
           "name": "_editableQueryBuilderWidgetFactory",
