@@ -136,7 +136,8 @@
       "references": [
         {
           "name": "_queryBuilderWidgetModel",
-          "providing": "dn_querybuilder.QueryBuilderWidgetModel"
+          "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+          "cardinality": "0..1"
         }
       ]
     },
@@ -174,7 +175,7 @@
       "references": [
         {
           "name": "handlerScope",
-          "providing": "dn_querybuilder.QueryController"
+          "providing": "dn_querybuilder.QueryToolController"
         },
         {
           "name": "store",
@@ -210,17 +211,29 @@
           "providing": "dn_querybuilder.QueryBuilderProperties"
         },
         {
-          "name": "_editableQueryBuilderWidgetFactory",
-          "providing": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
-          "cardinality": "0..1"
-        },
-        {
           "name": "_replacer",
           "providing": "dn_queryplaceholder.Replacer"
         },
         {
           "name": "_logService",
           "providing": "ct.framework.api.LogService"
+        }
+      ]
+    },
+    {
+      "name": "QueryToolController",
+      "provides": [
+        "dn_querybuilder.QueryToolController"
+      ],
+      "references": [
+        {
+          "name": "_queryController",
+          "providing": "dn_querybuilder.QueryController"
+        },
+        {
+          "name": "_editableQueryBuilderWidgetFactory",
+          "providing": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
+          "cardinality": "0..1"
         }
       ]
     },

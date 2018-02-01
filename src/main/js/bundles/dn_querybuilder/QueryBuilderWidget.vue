@@ -54,13 +54,13 @@
                 <v-layout row wrap justify-center>
                     <v-flex md12>
                         <v-card class="elevation-6">
-                            <v-tooltip top>
+                            <!--<v-tooltip top>-->
                                 <v-btn block ripple color="primary" slot="activator" @click="$emit('search', {})">
                                     <v-icon left>search</v-icon>
                                     {{i18n.search}}
                                 </v-btn>
-                                <span>{{i18n.search}}</span>
-                            </v-tooltip>
+                                <!--<span>{{i18n.search}}</span>
+                            </v-tooltip>-->
                         </v-card>
                     </v-flex>
                 </v-layout>

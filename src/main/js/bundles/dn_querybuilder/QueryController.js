@@ -19,50 +19,7 @@ import MemorySelectionStore from "./MemorySelectionStore";
 
 class QueryController {
     activate(componentContext) {
-        this._bundleContext = componentContext.getBundleContext();
         this.i18n = this._i18n.get().ui;
-    }
-
-    deactivate() {
-        let registration = this._serviceregistration;
-
-        // clear the reference
-        this._serviceregistration = null;
-
-        if (registration) {
-            // call unregister
-            registration.unregister();
-        }
-    }
-
-    onQueryToolActivated(event) {
-        let store = event.store;
-        if (!store) {
-            // ignore
-            return;
-        }
-        let complexQuery = event.complexQuery;
-        let tool = this.tool = event.tool;
-
-        if (event.options.editable === true) {
-            let widget = this._editableQueryBuilderWidgetFactory.getWidget(event._properties, this, tool);
-            let serviceProperties = {
-                "widgetRole": "editableQueryBuilderWidget"
-            };
-            let interfaces = ["dijit.Widget"];
-            this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
-        } else {
-            let options = {};
-            let count = event.options.count;
-            if (count >= 0) {
-                options.count = count;
-            }
-            options.ignoreCase = event.options.ignoreCase;
-            options.locale = event.options.locale;
-            options.sort = event.options.sort || [];
-
-            this.query(store, complexQuery, options, tool);
-        }
     }
 
     query(store, complexQuery, options, tool) {
