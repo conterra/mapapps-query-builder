@@ -151,7 +151,7 @@ class QueryController {
             if (typeof(value) === "string") {
                 o[i] = this._replacer.replace(value);
             }
-            if (value !== null && typeof(value) === "object") {
+            if (value !== null && typeof(value) === "object" && !value.extent) {
                 this.searchReplacer(value);
             }
         }

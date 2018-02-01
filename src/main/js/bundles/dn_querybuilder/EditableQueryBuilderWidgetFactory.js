@@ -148,7 +148,7 @@ class EditableQueryBuilderWidgetFactory {
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
         let complexQuery = {};
         if (spatialRelation === "current_extent") {
-            let extent = this.mapState.getExtent();
+            let extent = this._mapWidgetModel.get("extent");
             complexQuery.geometry = {
                 $contains: extent
             };

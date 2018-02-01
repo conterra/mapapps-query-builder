@@ -15,6 +15,7 @@
  */
 import ".";
 import "./QueryController";
+import "./QueryBuilderWidgetModel";
 import "./QueryBuilderWidgetFactory";
 import "./EditableQueryBuilderWidgetFactory";
 import "./MetadataAnalyzer";

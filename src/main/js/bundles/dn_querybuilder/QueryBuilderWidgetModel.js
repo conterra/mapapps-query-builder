@@ -1,0 +1,129 @@
+/*
+ * Copyright (C) 2018 con terra GmbH (info@conterra.de)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import {declare} from "apprt-core/Mutable";
+import ct_array from "ct/array";
+import ct_when from "ct/_when";
+import ServiceResolver from "apprt/ServiceResolver";
+
+const QueryBuilderWidgetModel = declare({
+
+    storeData: [],
+    selectedStoreId: null,
+    linkOperator: null,
+    spatialRelation: null,
+    enableNegation: null,
+    fieldQueries: [],
+    loading: false,
+
+    activate(componentContext) {
+        let serviceResolver = this.serviceResolver = new ServiceResolver();
+        let bundleCtx = componentContext.getBundleContext();
+        serviceResolver.setBundleCtx(bundleCtx);
+
+        let stores = this._stores;
+        let storeIds = this._properties.storeIds;
+        let storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
+        if (storeData.length === 0) {
+            storeData = this._metadataAnalyzer.getStoreData(stores);
+        }
+
+        let queryBuilderProperties = this._queryBuilderProperties;
+        this.storeData = storeData;
+        this.selectedStoreId = stores[0].id;
+        this.linkOperator = queryBuilderProperties.defaultLinkOperator;
+        this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
+        this.enableNegation = queryBuilderProperties.allowNegation;
+        this.fieldQueries = [];
+
+        this.addFieldQuery();
+    },
+
+    search() {
+        let selectedStoreId = this.selectedStoreId;
+        let selectedStore = this.getSelectedStoreObj(selectedStoreId);
+        let linkOperator = this.linkOperator;
+        let spatialRelation = this.spatialRelation;
+        let fieldQueries = this.fieldQueries;
+        let complexQuery = this.getComplexQuery(linkOperator, spatialRelation, fieldQueries);
+        this._queryController.query(selectedStore, complexQuery, {}, this._tool);
+    },
+
+    addFieldQuery(selectedStoreId) {
+        let storeId = selectedStoreId || this.selectedStoreId;
+        let store = this.getSelectedStoreObj(storeId);
+        this.loading = true;
+        let fieldData = this._metadataAnalyzer.getFields(store);
+        ct_when(fieldData, (fields) => {
+            this.fieldQueries.push({
+                fields: fields,
+                not: false,
+                selectedFieldId: fields[0].id,
+                relationalOperator: "$eq",
+                value: (fields[0].codedValues[0] && fields[0].codedValues[0].code) || fields[0].distinctValues[0] || ""
+            });
+            this.loading = false;
+        }, this);
+    },
+
+    getSelectedStoreObj(id) {
+        return this.serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
+    },
+
+    getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
+        let complexQuery = {};
+        if (spatialRelation === "current_extent") {
+            let extent = this._mapWidgetModel.get("extent");
+            complexQuery.geometry = {
+                $contains: extent
+            };
+        }
+        complexQuery[linkOperator] = [];
+        fieldQueries.forEach((fieldQuery) => {
+            let fieldId = fieldQuery.selectedFieldId;
+            let relationalOperator = fieldQuery.relationalOperator;
+            let not = fieldQuery.not;
+            let value = fieldQuery.value;
+            if (value === "") {
+                return;
+            }
+            let obj1 = {};
+            obj1[relationalOperator] = value;
+            let obj2 = {};
+            obj2[fieldId] = obj1;
+            if (not) {
+                let object = {$not: obj2};
+                complexQuery[linkOperator].push(object);
+            } else {
+                complexQuery[linkOperator].push(obj2);
+            }
+        }, this);
+        return complexQuery;
+    },
+
+    removeFieldQuery(fieldQuery) {
+        ct_array.arrayRemove(this.fieldQueries, fieldQuery);
+    },
+
+    removeFieldQueries() {
+        while (this.fieldQueries.length > 0) {
+            this.fieldQueries.pop();
+        }
+    },
+
+
+});
+
+module.exports = QueryBuilderWidgetModel;

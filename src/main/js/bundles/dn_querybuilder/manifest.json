@@ -79,11 +79,10 @@
   ],
   "components": [
     {
-      "name": "QueryBuilderWidgetFactory",
-      "provides": "dijit.Widget",
-      "instanceFactory": true,
+      "name": "QueryBuilderWidgetModel",
+      "provides": "dn_querybuilder.QueryBuilderWidgetModel",
+      "propertiesConstructor": true,
       "properties": {
-        "widgetRole": "queryBuilderWidget",
         "storeIds": []
       },
       "references": [
@@ -100,15 +99,6 @@
           "providing": "map-widget.MapWidgetModel"
         },
         {
-          "name": "_basemapModel",
-          "providing": "map-basemaps-api.BasemapsModel"
-        },
-        {
-          "name": "_tool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=queryBuilderToggleTool)"
-        },
-        {
           "name": "_stores",
           "providing": "ct.api.Store",
           "cardinality": "1..n",
@@ -117,6 +107,25 @@
         {
           "name": "_metadataAnalyzer",
           "providing": "dn_querybuilder.MetadataAnalyzer"
+        }
+      ]
+    },
+    {
+      "name": "QueryBuilderWidgetFactory",
+      "provides": "dijit.Widget",
+      "instanceFactory": true,
+      "properties": {
+        "widgetRole": "queryBuilderWidget"
+      },
+      "references": [
+        {
+          "name": "_queryBuilderWidgetModel",
+          "providing": "dn_querybuilder.QueryBuilderWidgetModel"
+        },
+        {
+          "name": "_tool",
+          "providing": "ct.tools.Tool",
+          "filter": "(id=queryBuilderToggleTool)"
         }
       ]
     },
