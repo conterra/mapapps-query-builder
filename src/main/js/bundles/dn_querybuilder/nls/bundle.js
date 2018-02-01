@@ -53,6 +53,11 @@ module.exports = {
                 before: "before",
                 after: "after",
             },
+            rules: {
+                required: "required",
+                number: "value must be type of number",
+                string: "value must be type of string"
+            },
             errors: {
                 noResultsError: "No results found for your query!"
             }

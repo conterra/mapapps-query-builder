@@ -114,6 +114,7 @@
                         v-bind:rules="[rules.required, rules.number]"
                         class="pa-0"
                         hide-details
+                        clearable
                 ></v-text-field>
                 <v-text-field v-else
                               v-model="fieldQuery.value"
@@ -121,6 +122,7 @@
                               v-bind:rules="[rules.required]"
                               class="pa-0"
                               hide-details
+                              clearable
                 ></v-text-field>
             </v-flex>
             <v-flex md1 v-if="!$root.editable">
@@ -152,12 +154,12 @@
         data() {
             return {
                 rules: {
-                    required: (value) => !!value || "Required",
+                    required: (value) => !!value || this.i18n.rules.required,
                     number: (value) => {
-                        return (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || "Required";
+                        return (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number;
                     },
                     string: (value) => {
-                        return typeof value === "string" || "Required";
+                        return typeof value === "string" || this.i18n.rules.string;
                     }
                 }
             }

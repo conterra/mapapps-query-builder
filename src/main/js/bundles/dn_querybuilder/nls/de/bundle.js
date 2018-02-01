@@ -52,6 +52,11 @@ module.exports = {
             before: "vor",
             after: "nach"
         },
+        rules: {
+            required: "Wert wird ben\u00f6tigt",
+            number: "Wert muss vom Typ number sein",
+            string: "Wert muss vom Typ string sein"
+        },
         errors: {
             noResultsError: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!"
         }
