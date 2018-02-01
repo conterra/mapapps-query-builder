@@ -39,11 +39,8 @@
             </v-flex>
             <v-flex md3 v-bind:class="{ md5: $root.editable }">
                 <v-menu
-                        ref="menu"
                         v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date'"
-                        lazy
                         v-bind:close-on-content-click="false"
-                        v-model="menu"
                         transition="scale-transition"
                         offset-y
                         full-width
@@ -53,7 +50,8 @@
                             slot="activator"
                             v-bind:disabled="fieldQuery.disableValue"
                             v-model="fieldQuery.value"
-                            v-bind:rules="[rules.required]"
+                            class="pa-0"
+                            hide-details
                             readonly
                     ></v-text-field>
                     <v-date-picker v-model="fieldQuery.value" no-title scrollable>
@@ -89,11 +87,13 @@
                         v-bind:disabled="fieldQuery.disableValue"
                         v-model="fieldQuery.value"
                         v-bind:rules="[rules.required, rules.number]"
+                        required
                         key="combobox"
                         class="pa-0"
                         combobox
                         single-line
                         hide-details
+                        clearable
                 ></v-select>
                 <v-select
                         v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
@@ -101,17 +101,20 @@
                         v-bind:disabled="fieldQuery.disableValue"
                         v-model="fieldQuery.value"
                         v-bind:rules="[rules.required]"
+                        required
                         key="combobox"
                         class="pa-0"
                         combobox
                         single-line
                         hide-details
+                        clearable
                 ></v-select>
                 <v-text-field
                         v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
                         v-model="fieldQuery.value"
                         v-bind:disabled="fieldQuery.disableValue"
                         v-bind:rules="[rules.required, rules.number]"
+                        required
                         class="pa-0"
                         hide-details
                         clearable
@@ -119,6 +122,7 @@
                 <v-text-field v-else
                               v-model="fieldQuery.value"
                               v-bind:disabled="fieldQuery.disableValue"
+                              required
                               v-bind:rules="[rules.required]"
                               class="pa-0"
                               hide-details
