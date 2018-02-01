@@ -3,7 +3,7 @@
         <div class="top">
             <v-container grid-list-md fluid>
                 <v-layout row wrap justify-center>
-                    <v-flex md4>
+                    <v-flex md4 v-bind:class="{ md6: fieldQueries.length <= 1 }">
                         <div>{{i18n.selectStore}}</div>
                         <v-select
                                 v-bind:items="storeData"
@@ -14,21 +14,21 @@
                                 @change="$emit('storeChanged', $event)"
                         ></v-select>
                     </v-flex>
-                    <v-flex md4>
+                    <v-flex md4 v-bind:class="{ md6: fieldQueries.length <= 1 }">
                         <div>{{i18n.spatialRelation}}</div>
                         <v-radio-group
                                 class="pt-0" v-model="spatialRelation">
                             <v-radio hide-details v-bind:label="i18n.everywhere"
-                                     v-bind:disabled="disableSpatialRelationRadio" value="everywhere"></v-radio>
+                                     v-bind:disabled="disableSpatialRelationRadio"
+                                     value="everywhere"></v-radio>
                             <v-radio hide-details v-bind:label="i18n.currentExtent"
                                      v-bind:disabled="disableSpatialRelationRadio"
                                      value="current_extent"></v-radio>
                         </v-radio-group>
                     </v-flex>
-                    <v-flex md4>
+                    <v-flex md4 v-if="fieldQueries.length > 1">
                         <div>{{i18n.linkOperator}}</div>
-                        <v-radio-group
-                                class="pt-0" v-model="linkOperator">
+                        <v-radio-group class="pt-0" v-model="linkOperator">
                             <v-radio hide-details v-bind:label="i18n.and" v-bind:disabled="disableLinkOperatorRadio"
                                      value="$and"></v-radio>
                             <v-radio hide-details v-bind:label="i18n.or" v-bind:disabled="disableLinkOperatorRadio"
@@ -54,13 +54,13 @@
                 <v-layout row wrap justify-center>
                     <v-flex md12>
                         <v-card class="elevation-6">
-                            <!--<v-tooltip top>-->
+                            <v-tooltip top>
                                 <v-btn block ripple color="primary" slot="activator" @click="$emit('search', {})">
                                     <v-icon left>search</v-icon>
                                     {{i18n.search}}
                                 </v-btn>
-                                <!--<span>{{i18n.search}}</span>
-                            </v-tooltip>-->
+                                <span>{{i18n.search}}</span>
+                            </v-tooltip>
                         </v-card>
                     </v-flex>
                 </v-layout>
