@@ -100,7 +100,7 @@
       "properties": {
         "widgetProperties": {
           "bid": "dn_querybuilder",
-          "pid": "dn_querybuilder-QueryBuilderWidgetFactory",
+          "pid": "dn_querybuilder-QueryBuilderWidgetModel",
           "id": "queryBuilderWidgetStoreSelectionWidget"
         },
         "defaultProperties": {
