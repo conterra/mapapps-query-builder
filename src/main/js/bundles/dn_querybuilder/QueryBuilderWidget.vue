@@ -106,6 +106,7 @@
                             no: "no",
                             and: "and",
                             or: "or",
+                            enterValue: "enter value",
                             relationalOperators: {
                                 is: "is",
                                 eqw: "is (wildcard)",

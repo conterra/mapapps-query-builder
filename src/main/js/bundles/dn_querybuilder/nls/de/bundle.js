@@ -37,6 +37,7 @@ module.exports = {
         no: "nein",
         and: "und",
         or: "oder",
+        enterValue: "Wert eingeben",
         relationalOperators: {
             is: "ist gleich",
             eqw: "ist gleich (wildcard)",

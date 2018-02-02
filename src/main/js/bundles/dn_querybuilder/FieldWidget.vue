@@ -37,7 +37,6 @@
                                 class="pa-0"
                                 single-line
                                 hide-details
-                                placeholder="Add value"
                         ></v-select>
                     </v-flex>
                     <v-flex xs8 md3 v-bind:class="{ xs12: $root.editable, md5: $root.editable }">
@@ -57,7 +56,7 @@
                                     class="pa-0"
                                     hide-details
                                     readonly
-                                    placeholder="Add value"
+                                    v-bind:placeholder="i18n.enterValue"
                             ></v-text-field>
                             <v-date-picker v-model="fieldQuery.value" no-title scrollable>
                                 <v-spacer></v-spacer>
@@ -99,7 +98,7 @@
                                 single-line
                                 hide-details
                                 clearable
-                                placeholder="Add value"
+                                v-bind:placeholder="i18n.enterValue"
                         ></v-select>
                         <v-select
                                 v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
@@ -114,7 +113,7 @@
                                 single-line
                                 hide-details
                                 clearable
-                                placeholder="Add value"
+                                v-bind:placeholder="i18n.enterValue"
                         ></v-select>
                         <v-text-field
                                 v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
@@ -125,7 +124,7 @@
                                 class="pa-0"
                                 hide-details
                                 clearable
-                                placeholder="Add value"
+                                v-bind:placeholder="i18n.enterValue"
                         ></v-text-field>
                         <v-text-field v-else
                                       v-model="fieldQuery.value"
@@ -135,7 +134,7 @@
                                       class="pa-0"
                                       hide-details
                                       clearable
-                                      placeholder="Add value"
+                                      v-bind:placeholder="i18n.enterValue"
                         ></v-text-field>
                     </v-flex>
                     <v-flex xs2 md1 v-if="!$root.editable">
