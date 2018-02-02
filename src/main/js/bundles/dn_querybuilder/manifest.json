@@ -52,6 +52,29 @@
       }
     },
     {
+      "widgetRole": "queryBuilderWidget",
+      "template": "seasons",
+      "sublayout": [
+        "mobile_landscape",
+        "mobile_portrait"
+      ],
+      "window": {
+        "title": "${windowTitle}",
+        "dockTool": "queryBuilderToggleTool",
+        "dockable": true,
+        "dockingBar": "${id}-dockingBarBottomLeft",
+        "closable": true,
+        "maximizable": true,
+        "minimizeOnClose": true,
+        "resizable": true,
+        "marginBox": {
+          "w": "100%",
+          "h": "100%"
+        },
+        "windowClass": "noPadding querybuilder-window"
+      }
+    },
+    {
       "widgetRole": "editableQueryBuilderWidget",
       "template": "seasons",
       "sublayout": [
@@ -72,6 +95,26 @@
         "minSize": {
           "w": 600,
           "h": 300
+        },
+        "windowClass": "noPadding querybuilder-window"
+      }
+    },
+    {
+      "widgetRole": "editableQueryBuilderWidget",
+      "template": "seasons",
+      "sublayout": [
+        "mobile_landscape",
+        "mobile_portrait"
+      ],
+      "window": {
+        "title": "${editableWindowTitle}",
+        "closable": true,
+        "maximizable": true,
+        "minimizeOnClose": true,
+        "resizable": true,
+        "marginBox": {
+          "w": "100%",
+          "h": "100%"
         },
         "windowClass": "noPadding querybuilder-window"
       }

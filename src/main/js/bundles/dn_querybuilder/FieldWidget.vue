@@ -9,7 +9,7 @@
             </v-container>
             <v-container fluid grid-list-md>
                 <v-layout row wrap align-center>
-                    <v-flex md1 v-if="allowNegation">
+                    <v-flex xs2 md1 v-if="allowNegation">
                         <v-switch
                                 v-model="fieldQuery.not"
                                 v-bind:value="fieldQuery.not"
@@ -18,7 +18,7 @@
                                 hide-details
                         ></v-switch>
                     </v-flex>
-                    <v-flex md3 v-bind:class="{ md4: !allowNegation }">
+                    <v-flex xs5 md3 v-bind:class="{ xs7: !allowNegation, md4: !allowNegation }">
                         <v-select v-bind:items="fieldQuery.fields"
                                   v-model="fieldQuery.selectedFieldId"
                                   v-bind:disabled="fieldQuery.disableField"
@@ -29,7 +29,7 @@
                                   hide-details
                         ></v-select>
                     </v-flex>
-                    <v-flex md3>
+                    <v-flex xs5 md3>
                         <v-select
                                 v-bind:items="$root.getRelationalOperators($root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId))"
                                 v-bind:disabled="fieldQuery.disableRelationalOperator"
@@ -40,7 +40,7 @@
                                 placeholder="Add value"
                         ></v-select>
                     </v-flex>
-                    <v-flex md3 v-bind:class="{ md5: $root.editable }">
+                    <v-flex xs8 md3 v-bind:class="{ xs12: $root.editable, md5: $root.editable }">
                         <v-menu
                                 v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date'"
                                 v-bind:close-on-content-click="false"
@@ -138,7 +138,7 @@
                                       placeholder="Add value"
                         ></v-text-field>
                     </v-flex>
-                    <v-flex md1 v-if="!$root.editable">
+                    <v-flex xs2 md1 v-if="!$root.editable">
                         <v-fab-transition>
                             <v-btn v-if="$root.fieldQueries.length > 1" icon
                                    v-bind:disabled="$root.editable"
@@ -147,7 +147,7 @@
                             </v-btn>
                         </v-fab-transition>
                     </v-flex>
-                    <v-flex md1 v-if="!$root.editable">
+                    <v-flex xs2 md1 v-if="!$root.editable">
                         <v-fab-transition>
                             <v-btn v-if="$root.fieldQueries.length === index + 1" icon
                                    v-bind:disabled="$root.editable"

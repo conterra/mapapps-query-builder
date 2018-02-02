@@ -3,7 +3,7 @@
         <div class="top">
             <v-container grid-list-md fluid>
                 <v-layout row wrap justify-space-between>
-                    <v-flex md4>
+                    <v-flex xs4 md4>
                         <div>
                             <div>{{i18n.selectStore}}</div>
                             <v-select
@@ -16,7 +16,7 @@
                             ></v-select>
                         </div>
                     </v-flex>
-                    <v-flex md4>
+                    <v-flex xs4 md4>
                         <div>
                             <div>{{i18n.spatialRelation}}</div>
                             <v-radio-group
@@ -30,7 +30,7 @@
                             </v-radio-group>
                         </div>
                     </v-flex>
-                    <v-flex md4>
+                    <v-flex xs4 md4>
                         <v-slide-x-transition>
                             <div v-if="fieldQueries.length > 1">
                                 <div>{{i18n.linkOperator}}</div>
@@ -45,7 +45,7 @@
                             </div>
                         </v-slide-x-transition>
                     </v-flex>
-                    <v-flex md12>
+                    <v-flex xs12 md12>
                         <div>{{i18n.searchParameter}}</div>
                     </v-flex>
                 </v-layout>
