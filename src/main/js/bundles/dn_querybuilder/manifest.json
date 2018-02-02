@@ -29,9 +29,7 @@
       "widgetRole": "queryBuilderWidget",
       "template": "seasons",
       "sublayout": [
-        "desktop",
-        "tablet_landscape",
-        "tablet_portrait"
+        "desktop"
       ],
       "window": {
         "title": "${windowTitle}",
@@ -55,6 +53,28 @@
       "widgetRole": "queryBuilderWidget",
       "template": "seasons",
       "sublayout": [
+        "tablet_landscape",
+        "tablet_portrait"
+      ],
+      "window": {
+        "title": "${windowTitle}",
+        "dockTool": "queryBuilderToggleTool",
+        "closable": true,
+        "maximizable": true,
+        "minimizeOnClose": true,
+        "resizable": false,
+        "marginBox": {
+          "w": "100%",
+          "h": "50%",
+          "t": 0
+        },
+        "windowClass": "noPadding querybuilder-window"
+      }
+    },
+    {
+      "widgetRole": "queryBuilderWidget",
+      "template": "seasons",
+      "sublayout": [
         "mobile_landscape",
         "mobile_portrait"
       ],
@@ -66,7 +86,7 @@
         "closable": true,
         "maximizable": true,
         "minimizeOnClose": true,
-        "resizable": true,
+        "resizable": false,
         "marginBox": {
           "w": "100%",
           "h": "100%"
@@ -78,9 +98,7 @@
       "widgetRole": "editableQueryBuilderWidget",
       "template": "seasons",
       "sublayout": [
-        "desktop",
-        "tablet_landscape",
-        "tablet_portrait"
+        "desktop"
       ],
       "window": {
         "title": "${editableWindowTitle}",
@@ -103,6 +121,27 @@
       "widgetRole": "editableQueryBuilderWidget",
       "template": "seasons",
       "sublayout": [
+        "tablet_landscape",
+        "tablet_portrait"
+      ],
+      "window": {
+        "title": "${editableWindowTitle}",
+        "closable": true,
+        "maximizable": true,
+        "minimizeOnClose": true,
+        "resizable": false,
+        "marginBox": {
+          "w": "100%",
+          "h": "50%",
+          "t": 0
+        },
+        "windowClass": "noPadding querybuilder-window"
+      }
+    },
+    {
+      "widgetRole": "editableQueryBuilderWidget",
+      "template": "seasons",
+      "sublayout": [
         "mobile_landscape",
         "mobile_portrait"
       ],
@@ -111,7 +150,7 @@
         "closable": true,
         "maximizable": true,
         "minimizeOnClose": true,
-        "resizable": true,
+        "resizable": false,
         "marginBox": {
           "w": "100%",
           "h": "100%"
