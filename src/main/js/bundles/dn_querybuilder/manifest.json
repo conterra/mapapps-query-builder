@@ -9,7 +9,8 @@
   "Config-Bundle-Location": "/config",
   "Require-Bundle": [
     {
-      "name": "dn_queryplaceholder"
+      "name": "dn_queryplaceholder",
+      "version": "^3.x"
     },
     {
       "name": "dn_querygeometry",

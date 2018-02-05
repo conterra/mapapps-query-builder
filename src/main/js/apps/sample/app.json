@@ -29,7 +29,7 @@
       "basemaptoggler@^3.2.1",
       "banner@^3.2.1",
       "custominfo@^3.2.1",
-      "dn_querybuilder"
+      "dn_querybuilder@3.x"
     ],
     "skipBundles": []
   },
