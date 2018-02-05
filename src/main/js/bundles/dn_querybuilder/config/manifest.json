@@ -77,7 +77,7 @@
           "defaultLinkOperator": "$or",
           "defaultSpatialRelation": "everywhere",
           "useMemorySelectionStore": true,
-          "useUserExtent": true,
+          "useUserExtent": false,
           "allowNegation": false
         },
         "description": "${propertiesWidget.propertiesWidgetDescription}"

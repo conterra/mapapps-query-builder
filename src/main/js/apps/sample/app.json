@@ -37,6 +37,7 @@
         "defaultLinkOperator": "$or",
         "defaultSpatialRelation": "everywhere",
         "useMemorySelectionStore": true,
+        "useUserExtent": false,
         "allowNegation": false
       },
       "QueryBuilderWidgetModel": {
