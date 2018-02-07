@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import Extent from "esri/geometry/Extent";
+
 class QueryToolController {
     activate(componentContext) {
         this._bundleContext = componentContext.getBundleContext();
@@ -49,11 +51,19 @@ class QueryToolController {
             let interfaces = ["dijit.Widget"];
             this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
         } else {
-            if (complexQuery.geometry && this._queryBuilderProperties.useUserExtent) {
-                let extent = this._mapWidgetModel.get("extent");
-                complexQuery.geometry = {
-                    $contains: extent
-                };
+            if (complexQuery.geometry) {
+                let extent;
+                if (this._queryBuilderProperties.useUserExtent) {
+                    extent = this._mapWidgetModel.get("extent");
+                    complexQuery.geometry = {
+                        $contains: extent
+                    };
+                } else if (!complexQuery.geometry.$contains.type) {
+                    extent = new Extent(complexQuery.geometry.$contains);
+                    complexQuery.geometry = {
+                        $contains: extent
+                    };
+                }
             }
             let options = {};
             let count = event.options.count;
