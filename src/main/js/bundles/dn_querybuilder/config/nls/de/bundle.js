@@ -25,7 +25,7 @@ module.exports = {
         defaultLinkOperator: "Standard-Vergleichsoperator",
         defaultSpatialRelation: "Standard-Räumlicher-Vergleichsoperator",
         useMemorySelectionStore: "Memory Selection Store verwenden",
-        useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle eines voreingestellten",
+        useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
         allowNegation: "Negation eines Feldes erlauben"
     },
     queryBuilderWidgetStoreSelection: {

@@ -100,7 +100,7 @@
 }
 
 .queryBuilderWizard .fieldWidget .buttonContainer {
-    flex: 0 0 70px;
+    flex: 0 0 100px;
     display: inline-block;
 }
 
@@ -130,5 +130,5 @@
 
 .ctEnv_IE_8 .queryBuilderWizard .fieldWidget .buttonContainer,
 .ctEnv_IE_9 .queryBuilderWizard .fieldWidget .buttonContainer {
-    width: 70px;
+    width: 100px;
 }

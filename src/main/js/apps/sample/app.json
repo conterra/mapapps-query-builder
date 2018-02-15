@@ -17,11 +17,12 @@
       "map-init",
       "map-preload-2D",
       "map-preload-3D",
-      "console",
+      "mapnavigation",
       "notifier",
       "agssearch",
       "banner",
       "wizard",
+      "viewmodeswitcher",
       "dn_querybuilder"
     ],
     "require": [
@@ -44,9 +45,13 @@
       "QueryBuilderWidgetModel": {
         "storeIds": [
           "esri",
+          "airtraffic",
           "countries",
           "baumkataster",
-          "stoerungen"
+          "stoerungen",
+          "zensus_2011_bundeslaender",
+          "zensus_2011_kreise",
+          "zensus_2011_gemeinden"
         ]
       },
       "QueryTools": [
@@ -56,6 +61,17 @@
           "iconClass": "icon-toolcase",
           "storeId": "stoerungen",
           "complexQuery": {
+            "geometry": {
+              "$contains": {
+                "xmin": -1454749.7653909875,
+                "ymin": 4027109.2609186354,
+                "xmax": 4454749.7653909875,
+                "ymax": 8972890.739081364,
+                "spatialReference": {
+                  "wkid": 3857
+                }
+              }
+            },
             "$and": [
               {
                 "art": {
@@ -67,18 +83,7 @@
                   "$eq": 1
                 }
               }
-            ],
-            "geometry": {
-              "$contains": {
-                "xmin": -1454749.7653909875,
-                "ymin": 4027109.2609186354,
-                "xmax": 4454749.7653909875,
-                "ymax": 8972890.739081364,
-                "spatialReference": {
-                  "wkid": 3857
-                }
-              }
-            }
+            ]
           },
           "options": {
             "editable": false,
@@ -164,9 +169,9 @@
     },
     "resultcenter": {
       "ActionController": {
-        "zoomToFeatures": false,
+        "zoomToFeatures": true,
         "zoomToSelected": false,
-        "centerSelected": false,
+        "centerSelected": true,
         "zoomAfterDeletion": false,
         "zoomToClicked": false,
         "centerClicked": false
@@ -177,35 +182,72 @@
     },
     "agssearch": {
       "AutoStoreRegistration": {
-        "componentEnabled": true
+        "componentEnabled": false
       },
       "AGSStore": [
         {
           "id": "esri",
           "title": "Esri",
           "description": "Esri",
+          "idProperty": "OBJECTID",
           "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
-          "fetchIdProperty": false,
           "useIn": [
             "selection"
           ]
+        },
+        {
+          "id": "airtraffic",
+          "title": "Airtraffic",
+          "description": "Airtraffic",
+          "idProperty": "OBJECTID",
+          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+          "useIn": [
+            "selection"
+          ],
+          "filterOptions": {
+            "metadata": {
+              "fields": [
+                {
+                  "name": "OBJECTID",
+                  "title": "ID"
+                },
+                {
+                  "name": "aeroway",
+                  "title": "AEROWAY"
+                },
+                {
+                  "name": "OSMID",
+                  "title": "OSM ID"
+                },
+                {
+                  "name": "osm_name",
+                  "title": "NAME"
+                },
+                {
+                  "name": "osm_ref",
+                  "title": "REF"
+                },
+                {
+                  "name": "osm_type",
+                  "title": "TYPE"
+                },
+                {
+                  "name": "osm_operator",
+                  "title": "OPERATOR"
+                },
+                {
+                  "name": "osm_website",
+                  "title": "WEBSITE"
+                }
+              ]
+            }
+          }
         },
         {
           "id": "countries",
           "title": "Countries",
           "description": "Countries of the world",
           "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
-          "fetchIdProperty": true,
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "usa_cities",
-          "title": "USA (Cities)",
-          "description": "",
-          "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0",
-          "fetchIdProperty": true,
           "useIn": [
             "selection"
           ]
@@ -213,20 +255,48 @@
         {
           "id": "baumkataster",
           "title": "Baumkataster",
-          "description": "",
+          "description": "Baumkataster",
           "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
           "useIn": [
             "selection"
-          ],
-          "fetchIdProperty": true
+          ]
         },
         {
           "id": "stoerungen",
           "title": "Störungen",
-          "description": "",
+          "description": "Störungen",
           "idProperty": "objectid",
           "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0",
-          "fetchIdProperty": true,
+          "useIn": [
+            "selection"
+          ]
+        },
+        {
+          "id": "zensus_2011_bundeslaender",
+          "title": "Zensus 2011 Bundesländer",
+          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+          "idProperty": "OBJECTID_1",
+          "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/0",
+          "useIn": [
+            "selection"
+          ]
+        },
+        {
+          "id": "zensus_2011_kreise",
+          "title": "Zensus 2011 Kreise",
+          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+          "idProperty": "OBJECTID_1",
+          "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/1",
+          "useIn": [
+            "selection"
+          ]
+        },
+        {
+          "id": "zensus_2011_gemeinden",
+          "title": "Zensus 2011 Gemeinden",
+          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+          "idProperty": "OBJECTID_1",
+          "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/2",
           "useIn": [
             "selection"
           ]
@@ -249,7 +319,11 @@
           {
             "id": "mapview_tools",
             "tools": [
-              "*"
+              "zoomInTool",
+              "zoomOutTool",
+              "compassTool",
+              "restoreInitialViewTool",
+              "viewmodeSwitcherTool"
             ],
             "registerWidget": {
               "widgetRole": "mapview_tools"
@@ -257,6 +331,26 @@
             "container": "ignore",
             "windowType": "container",
             "cssClass": "muted"
+          },
+          {
+            "id": "questions",
+            "title": "Questions And Answers",
+            "container": "map",
+            "window": {
+              "closable": true
+            },
+            "tooltip": "List of predefined questions, click to see the answer",
+            "cssClass": "ctWDYWBtn ctPrimaryInput",
+            "max_horizontal": 1,
+            "windowType": "dropdown",
+            "position": {
+              "rel_l": 20,
+              "rel_t": 20
+            },
+            "tools": [
+              "querybuilder_*",
+              "queryBuilderToggleTool"
+            ]
           }
         ]
       }
