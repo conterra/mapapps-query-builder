@@ -5,10 +5,6 @@
   "description": "${bundleDescription}",
   "vendor": "con terra GmbH",
   "productName": "devnet-mapapps-query-builder",
-  "layer": "module",
-  "i18n": [
-    "bundle"
-  ],
   "dependencies": {
     "dataform": "^4.2.0",
     "wizard": "^4.2.0",

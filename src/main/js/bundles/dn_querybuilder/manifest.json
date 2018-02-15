@@ -6,7 +6,6 @@
   "vendor": "con terra GmbH",
   "productName": "devnet-mapapps-query-builder",
   "Config-Bundle-Location": "/config",
-  "layer": "module",
   "dependencies": {
     "apprt-vue": "^4.2.0",
     "apprt-binding": "^4.2.0",
