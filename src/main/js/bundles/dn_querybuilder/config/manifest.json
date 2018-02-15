@@ -144,7 +144,7 @@
           "description": "${toolsBuilder.toolsBuilderDescription}"
         },
         "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/font-mapapps/latest/index.html",
-        "complexQueryDocUrl": "http://developernetwork.conterra.de/en/documentation/mapapps/developers-documentation/complex-query-dojostore"
+        "complexQueryDocUrl": "https://developernetwork.conterra.de/en/documentation/mapapps/43/development-guide/complex-query-dojostore"
       },
       "references": [
         {
