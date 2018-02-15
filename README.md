@@ -78,6 +78,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
     "defaultLinkOperator": "$or",
     "defaultSpatialRelation": "everywhere",
     "useMemorySelectionStore": true,
+    "useUserExtent": false,
     "allowNegation": false
 }
 ```
