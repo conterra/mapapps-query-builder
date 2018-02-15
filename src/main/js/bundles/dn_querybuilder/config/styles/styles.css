@@ -132,3 +132,7 @@
 .ctEnv_IE_9 .queryBuilderWizard .fieldWidget .buttonContainer {
     width: 100px;
 }
+
+.liveconfiguration.ctBuilderWindowRoot .dijitTextArea.dijitTextAreaHover {
+    color: #000
+}
