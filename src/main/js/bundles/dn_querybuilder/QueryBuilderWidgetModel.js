@@ -20,6 +20,7 @@ import ServiceResolver from "apprt/ServiceResolver";
 
 const QueryBuilderWidgetModel = declare({
 
+    stores: [],
     storeData: [],
     selectedStoreId: null,
     linkOperator: null,
@@ -33,22 +34,25 @@ const QueryBuilderWidgetModel = declare({
         let bundleCtx = componentContext.getBundleContext();
         serviceResolver.setBundleCtx(bundleCtx);
 
-        let stores = this._stores;
-        let storeIds = this._properties.storeIds;
-        let storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
-        if (storeData.length === 0) {
-            storeData = this._metadataAnalyzer.getStoreData(stores);
-        }
-
         let queryBuilderProperties = this._queryBuilderProperties;
-        this.storeData = storeData;
-        this.selectedStoreId = stores[0].id;
+        this.getStoreData();
+        this.selectedStoreId = this.stores[0].id || null;
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
         this.enableNegation = queryBuilderProperties.allowNegation;
         this.fieldQueries = [];
 
         this.addFieldQuery();
+    },
+
+    getStoreData() {
+        let stores = this.stores;
+        let storeIds = this._properties.storeIds;
+        let storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
+        if (storeData.length === 0) {
+            storeData = this._metadataAnalyzer.getStoreData(stores);
+        }
+        this.storeData = storeData;
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
@@ -162,6 +166,9 @@ const QueryBuilderWidgetModel = declare({
         }
     },
 
+    addStores(store) {
+        this.stores.push(store);
+    }
 
 });
 

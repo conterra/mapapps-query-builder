@@ -41,6 +41,9 @@ class QueryBuilderWidgetFactory {
         vm.loading = model.loading;
 
         // listen to view model methods
+        vm.$on('startup', () => {
+            model.getStoreData();
+        });
         vm.$on('search', () => {
             model.search();
         });
@@ -58,7 +61,7 @@ class QueryBuilderWidgetFactory {
         Binding
             .create()
             .bindTo(vm, model)
-            .syncAll("selectedStoreId", "linkOperator", "spatialRelation", "fieldQueries", "loading")
+            .syncAll("selectedStoreId", "linkOperator", "spatialRelation", "fieldQueries", "loading", "storeData")
             .enable();
     }
 

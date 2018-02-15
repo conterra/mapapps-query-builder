@@ -145,6 +145,9 @@
                 loading: false
             };
         },
+        mounted: function () {
+            this.$emit('startup');
+        },
         components: {
             "field-widget": FieldWidget
         },

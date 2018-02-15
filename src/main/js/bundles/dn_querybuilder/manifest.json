@@ -182,12 +182,6 @@
           "providing": "map-widget.MapWidgetModel"
         },
         {
-          "name": "_stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        },
-        {
           "name": "_tool",
           "providing": "ct.tools.Tool",
           "filter": "(id=queryBuilderToggleTool)"
@@ -195,6 +189,12 @@
         {
           "name": "_metadataAnalyzer",
           "providing": "dn_querybuilder.MetadataAnalyzer"
+        },
+        {
+          "name": "stores",
+          "providing": "ct.api.Store",
+          "cardinality": "1..n",
+          "filter": "(useIn=selection)"
         }
       ]
     },
