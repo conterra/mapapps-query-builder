@@ -16,8 +16,8 @@
 module.exports = {
     bundleName: "Query Builder",
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
-    windowTitle: "Eigene Query bauen",
-    editableWindowTitle: "Eigene Query bauen",
+    windowTitle: "Eigene Abfrage Query",
+    editableWindowTitle: "Editierbare Query",
     tool: {
         title: "Eigene Query erstellen",
         tooltip: "Bauen Sie Ihre eigene Query",
