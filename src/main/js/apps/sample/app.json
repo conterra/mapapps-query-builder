@@ -20,6 +20,7 @@
       "console",
       "notifier",
       "agssearch",
+      "banner",
       "wizard",
       "dn_querybuilder"
     ],
@@ -152,6 +153,14 @@
           "storeId": "stoerungen"
         }
       ]
+    },
+    "banner": {
+      "BannerWidget": {
+        "label": "Developer Network",
+        "image": "https://www.conterra.de/~/media/conterra/images/site_logos/conterra-logo.ashx",
+        "imagePosition": "above",
+        "link": "http://developernetwork.conterra.de"
+      }
     },
     "resultcenter": {
       "ActionController": {
