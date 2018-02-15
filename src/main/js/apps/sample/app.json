@@ -87,24 +87,6 @@
           },
           "options": {
             "editable": false,
-            "editOptions": {
-              "spatialRelation": false,
-              "linkOperator": true,
-              "editFields": [
-                {
-                  "not": false,
-                  "field": false,
-                  "relation": false,
-                  "value": true
-                },
-                {
-                  "not": false,
-                  "field": false,
-                  "relation": false,
-                  "value": true
-                }
-              ]
-            },
             "mode": "builder",
             "count": -1,
             "ignoreCase": false,
@@ -156,6 +138,31 @@
             }
           },
           "storeId": "stoerungen"
+        },
+        {
+          "id": "querybuilder_1469615816195",
+          "title": "Where are Germany's airports?",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "OBJECTID": {
+                  "$gt": 0
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "airtraffic"
         }
       ]
     },
