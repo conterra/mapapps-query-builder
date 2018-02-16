@@ -22,6 +22,7 @@
       "agssearch",
       "banner",
       "wizard",
+      "authentication",
       "viewmodeswitcher",
       "dn_querybuilder"
     ],
