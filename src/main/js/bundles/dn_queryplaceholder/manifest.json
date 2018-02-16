@@ -6,9 +6,6 @@
   "vendor": "con terra GmbH",
   "productName": "devnet-mapapps-query-builder",
   "main": "",
-  "dependencies": {
-    "authentication": "^4.2.0"
-  },
   "Bundle-Localization": [],
   "components": [
     {
