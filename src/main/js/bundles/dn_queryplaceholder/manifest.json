@@ -1,6 +1,6 @@
 {
   "name": "dn_queryplaceholder",
-  "version": "4.0.1-SNAPSHOT",
+  "version": "4.0.1",
   "title": "Query Builder Placeholder",
   "description": "Replaces placeholder in the Query Builder bundle",
   "vendor": "con terra GmbH",
