@@ -88,7 +88,7 @@ class MetadataAnalyzer {
                             let distinctValues = [];
                             result.features.forEach((feature) => {
                                 let value = feature.attributes[data.id];
-                                if (value !== "") {
+                                if (value !== null && value !== "") {
                                     distinctValues.push(value);
                                 }
                             });
