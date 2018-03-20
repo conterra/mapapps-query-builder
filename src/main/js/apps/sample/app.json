@@ -39,7 +39,8 @@
         "enableDistinctValues": true,
         "defaultRelationalOperator": "$or",
         "searchEverywhereAsDefault": true,
-        "useMemorySelectionStore": true
+        "useMemorySelectionStore": true,
+        "useUserExtent": false
       },
       "UserQueryBuilderWidgetFactory": {
         "storeIds": [

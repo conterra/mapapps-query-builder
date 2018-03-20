@@ -120,7 +120,8 @@
         "enableDistinctValues": true,
         "defaultRelationalOperator": "$and",
         "searchEverywhereAsDefault": true,
-        "useMemorySelectionStore": true
+        "useMemorySelectionStore": true,
+        "useUserExtent": false
       }
     },
     {

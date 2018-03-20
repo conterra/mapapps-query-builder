@@ -24,7 +24,9 @@ define({
             propertiesWidgetDescription: "Basic settings for the Query Builder",
             enableDistinctValues: "Use distinct values",
             defaultRelationalOperator: "Default relational operator",
-            searchEverywhereAsDefault: "Search everywhere as default setting"
+            searchEverywhereAsDefault: "Search everywhere as default setting",
+            useMemorySelectionStore: "Use Memory Selection Store",
+            useUserExtent: "Use user's current map extent instead of a preset one",
         },
         userQueryBuilderWidgetStoreSelection: {
             menuTitle: "UserQueryBuilderWidget",

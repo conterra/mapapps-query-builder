@@ -73,6 +73,12 @@ define([
                 this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
             } else {
                 this.searchReplacer(customquery);
+                if (customquery.geometry && this._queryBuilderProperties.useUserExtent) {
+                    var extent = this._mapState.getExtent();
+                    customquery.geometry = {
+                        $contains: extent
+                    };
+                }
                 var options = {};
                 var count = event.options.count;
                 if (count >= 0) {

@@ -1,41 +1,53 @@
 {
-    "dataform-version": "1.0.0",
-    "size": {
-        "h": 300,
-        "w": 400
+  "dataform-version": "1.0.0",
+  "size": {
+    "h": 300,
+    "w": 400
+  },
+  "type": "gridpanel",
+  "showLabels": true,
+  "cols": 1,
+  "children": [
+    {
+      "type": "checkbox",
+      "label": "${propertiesWidget.enableDistinctValues}",
+      "field": "enableDistinctValues"
     },
-    "type": "gridpanel",
-    "showLabels": true,
-    "cols": 1,
-    "children": [
+    {
+      "type": "checkbox",
+      "label": "${propertiesWidget.searchEverywhereAsDefault}",
+      "field": "searchEverywhereAsDefault"
+    },
+    {
+      "type": "selectbox",
+      "field": "defaultRelationalOperator",
+      "label": "${propertiesWidget.defaultRelationalOperator}",
+      "searchAttribute": "name",
+      "labelAttribute": "${name}",
+      "values": [
         {
-            "type": "checkbox",
-            "label": "${propertiesWidget.enableDistinctValues}",
-            "field": "enableDistinctValues"
+          "name": "${widget.wizard.and}",
+          "value": "$and"
         },
         {
-            "type": "checkbox",
-            "label": "${propertiesWidget.searchEverywhereAsDefault}",
-            "field": "searchEverywhereAsDefault"
-        },
-        {
-            "type": "selectbox",
-            "field": "defaultRelationalOperator",
-            "label": "${propertiesWidget.defaultRelationalOperator}",
-            "searchAttribute": "name",
-            "labelAttribute": "${name}",
-            "values": [{
-                "name": "${widget.wizard.and}",
-                "value": "$and"
-            }, {
-                "name": "${widget.wizard.or}",
-                "value": "$or"
-            }
-            ],
-            "max": 2,
-            "size": {
-                "w": 150
-            }
+          "name": "${widget.wizard.or}",
+          "value": "$or"
         }
-    ]
+      ],
+      "max": 2,
+      "size": {
+        "w": 150
+      }
+    },
+    {
+      "type": "checkbox",
+      "field": "useMemorySelectionStore",
+      "label": "${propertiesWidget.useMemorySelectionStore}"
+    },
+    {
+      "type": "checkbox",
+      "field": "useUserExtent",
+      "label": "${propertiesWidget.useUserExtent}"
+    }
+  ]
 }

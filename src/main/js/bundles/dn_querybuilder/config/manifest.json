@@ -79,7 +79,9 @@
         "defaultProperties": {
           "enableDistinctValues": true,
           "defaultRelationalOperator": "$and",
-          "searchEverywhereAsDefault": true
+          "searchEverywhereAsDefault": true,
+          "useMemorySelectionStore": true,
+          "useUserExtent": false
         },
         "description": "${propertiesWidget.propertiesWidgetDescription}"
       },

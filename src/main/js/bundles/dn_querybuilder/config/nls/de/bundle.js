@@ -23,7 +23,9 @@ define({
         propertiesWidgetDescription: "Grundeinstellungen f\u00FCr das Query Builder Bundle",
         enableDistinctValues: "Distinct Values vorschlagen",
         defaultRelationalOperator: "Standard-Vergleichsoperator",
-        searchEverywhereAsDefault: "Als Standardeinstellung \u00FCberall suchen"
+        searchEverywhereAsDefault: "Als Standardeinstellung \u00FCberall suchen",
+        useMemorySelectionStore: "Memory Selection Store verwenden",
+        useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
     },
     userQueryBuilderWidgetStoreSelection: {
         menuTitle: "UserQueryBuilderWidget",
