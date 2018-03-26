@@ -354,6 +354,25 @@ define([
                             intermediateChanges: true,
                             required: true
                         });
+                    } else if (type === "boolean") {
+                        if (this.fieldId === this.getSelectedField()) {
+                            value = this.value;
+                        } else {
+                            value = true;
+                        }
+                        var i18n = this.i18n;
+                        var booleanStore = new Memory({
+                            data: [
+                                {id: true, name: i18n.yes},
+                                {id: false, name: i18n.no}
+                            ]
+                        });
+                        valueSelect = this._valueField = new FilteringSelect({
+                            name: "value",
+                            value: value,
+                            store: booleanStore,
+                            maxHeight: this.maxComboBoxHeight
+                        });
                     } else {
                         if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
@@ -388,6 +407,29 @@ define([
             domConstruct.place(relationalOperatorSelect.domNode, this._compareNode);
             d_class.add(relationalOperatorSelect.domNode, "relationalOperatorSelect");
             relationalOperatorSelect.startup();
+            this.connect(relationalOperatorSelect, "onChange", function (value) {
+                if (value === "$exists") {
+                    while (this._valueNode.firstChild) {
+                        this._valueNode.removeChild(this._valueNode.firstChild);
+                    }
+                    var i18n = this.i18n;
+                    var booleanStore = new Memory({
+                        data: [
+                            {id: true, name: i18n.yes},
+                            {id: false, name: i18n.no}
+                        ]
+                    });
+                    this._valueField = new FilteringSelect({
+                        name: "value",
+                        value: true,
+                        store: booleanStore,
+                        maxHeight: this.maxComboBoxHeight
+                    });
+                    domConstruct.place(this._valueField.domNode, this._valueNode);
+                } else {
+                    this._changeGUI();
+                }
+            });
         },
         _getDistinctValues: function (selectedField) {
             if (!this.store.target) {
@@ -419,7 +461,8 @@ define([
                     {id: "$gt", name: i18n.is_greater_than},
                     {id: "$gte", name: i18n.is_greater_or_equal},
                     {id: "$lt", name: i18n.is_less_than},
-                    {id: "$lte", name: i18n.is_less_or_equal}
+                    {id: "$lte", name: i18n.is_less_or_equal},
+                    {id: "$exists", name: i18n.exists}
                 ]
             });
         },
@@ -427,7 +470,8 @@ define([
             var i18n = this.i18n;
             return new Memory({
                 data: [
-                    {id: "$eq", name: i18n.is}
+                    {id: "$eq", name: i18n.is},
+                    {id: "$exists", name: i18n.exists}
                 ]
             });
         },
@@ -437,7 +481,8 @@ define([
                 data: [
                     {id: "$eq", name: i18n.is},
                     {id: "$eqw", name: i18n.eqw},
-                    {id: "$suggest", name: i18n.suggest}
+                    {id: "$suggest", name: i18n.suggest},
+                    {id: "$exists", name: i18n.exists}
                 ]
             });
         },
@@ -449,7 +494,8 @@ define([
                     {id: "$gt", name: i18n.is_greater_than},
                     {id: "$gte", name: i18n.is_greater_or_equal},
                     {id: "$lt", name: i18n.is_less_than},
-                    {id: "$lte", name: i18n.is_less_or_equal}
+                    {id: "$lte", name: i18n.is_less_or_equal},
+                    {id: "$exists", name: i18n.exists}
                 ]
             });
         },
@@ -458,7 +504,8 @@ define([
             return new Memory({
                 data: [
                     {id: "$lte", name: i18n.before},
-                    {id: "$gte", name: i18n.after}
+                    {id: "$gte", name: i18n.after},
+                    {id: "$exists", name: i18n.exists}
                 ]
             });
         },

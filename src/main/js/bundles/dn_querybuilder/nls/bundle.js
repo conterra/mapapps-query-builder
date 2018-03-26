@@ -72,6 +72,7 @@ define({
             fields: {
                 typeInValue: "type in value",
                 is: "is",
+                exists: "exists",
                 eqw: "is (wildcard)",
                 suggest: "suggest",
                 contains: "contains",
