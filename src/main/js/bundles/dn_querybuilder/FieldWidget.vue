@@ -19,21 +19,23 @@
                         ></v-switch>
                     </v-flex>
                     <v-flex xs5 md3 v-bind:class="{ xs7: !allowNegation, md4: !allowNegation }">
-                        <v-select v-bind:items="fieldQuery.fields"
-                                  v-model="fieldQuery.selectedFieldId"
-                                  v-bind:disabled="fieldQuery.disableField"
-                                  @change="$root.fieldChanged($event, fieldQuery)"
-                                  item-value="id"
-                                  class="pa-0"
-                                  single-line
-                                  hide-details
+                        <v-select
+                                v-model="fieldQuery.selectedFieldId"
+                                v-bind:items="fieldQuery.fields"
+                                v-bind:disabled="fieldQuery.disableField"
+                                @change="$root.fieldChanged($event, fieldQuery)"
+                                item-value="id"
+                                class="pa-0"
+                                single-line
+                                hide-details
                         ></v-select>
                     </v-flex>
                     <v-flex xs5 md3>
                         <v-select
+                                v-model="fieldQuery.relationalOperator"
                                 v-bind:items="$root.getRelationalOperators($root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId))"
                                 v-bind:disabled="fieldQuery.disableRelationalOperator"
-                                v-model="fieldQuery.relationalOperator"
+                                @change="$root.relationalOperatorChanged($event, fieldQuery)"
                                 class="pa-0"
                                 single-line
                                 hide-details
@@ -41,7 +43,7 @@
                     </v-flex>
                     <v-flex xs8 md3 v-bind:class="{ xs12: $root.editable, md5: $root.editable }">
                         <v-menu
-                                v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date'"
+                                v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date' && fieldQuery.relationalOperator !== '$exists'"
                                 v-bind:close-on-content-click="false"
                                 transition="scale-transition"
                                 offset-y
@@ -65,8 +67,8 @@
                             </v-date-picker>
                         </v-menu>
                         <v-select
-                                v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'boolean'"
-                                v-bind:items="$root.getBooleanItems"
+                                v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'boolean' || fieldQuery.relationalOperator === '$exists'"
+                                v-bind:items="$root.getBooleanItems()"
                                 v-bind:disabled="fieldQuery.disableValue"
                                 v-model="fieldQuery.value"
                                 class="pa-0"

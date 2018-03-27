@@ -41,6 +41,7 @@ module.exports = {
             enterValue: "enter value",
             relationalOperators: {
                 is: "is",
+                exists: "exists",
                 eqw: "is (wildcard)",
                 suggest: "suggest",
                 contains: "contains",

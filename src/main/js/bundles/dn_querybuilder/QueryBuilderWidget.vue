@@ -109,6 +109,7 @@
                             enterValue: "enter value",
                             relationalOperators: {
                                 is: "is",
+                                exists: "exists",
                                 eqw: "is (wildcard)",
                                 suggest: "suggest",
                                 contains: "contains",
@@ -155,16 +156,32 @@
         methods: {
             fieldChanged: function (selectedFieldId, fieldQuery) {
                 let selectedField = this.getSelectedField(fieldQuery.fields, selectedFieldId);
-                fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
-                fieldQuery.relationalOperator = "$eq";
+                if (selectedField.type === "date") {
+                    fieldQuery.value = null;
+                    fieldQuery.relationalOperator = "$lte";
+                } else {
+                    fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                    fieldQuery.relationalOperator = "$eq";
+                }
+                if (fieldQuery.relationalOperator === "$exists") {
+                    fieldQuery.value = true;
+                }
+            },
+            relationalOperatorChanged: function (relationalOperator, fieldQuery) {
+                let selectedField = this.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId);
+                if (relationalOperator === "$exists") {
+                    fieldQuery.value = true;
+                } else {
+                    fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                }
             },
             getSelectedField: function (fields, selectedFieldId) {
                 return ct_array.arraySearchFirst(fields, {id: selectedFieldId});
             },
             getBooleanItems: function () {
                 return [
-                    {value: false, text: "false"},
-                    {value: true, text: "true"}
+                    {value: true, text: this.$data.i18n.yes},
+                    {value: false, text: this.$data.i18n.no}
                 ]
             },
             getRelationalOperators: function (field) {
@@ -179,17 +196,20 @@
                             {value: "$gt", text: this.$data.i18n.relationalOperators.is_greater_than},
                             {value: "$gte", text: this.$data.i18n.relationalOperators.is_greater_or_equal},
                             {value: "$lt", text: this.$data.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.$data.i18n.relationalOperators.is_less_or_equal}
+                            {value: "$lte", text: this.$data.i18n.relationalOperators.is_less_or_equal},
+                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                     case "boolean":
                         return [
-                            {value: "$eq", text: this.$data.i18n.relationalOperators.is}
+                            {value: "$eq", text: this.$data.i18n.relationalOperators.is},
+                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                     case "string":
                         return [
                             {value: "$eq", text: this.$data.i18n.relationalOperators.is},
                             {value: "$eqw", text: this.$data.i18n.relationalOperators.eqw},
-                            {value: "$suggest", text: this.$data.i18n.relationalOperators.suggest}
+                            {value: "$suggest", text: this.$data.i18n.relationalOperators.suggest},
+                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                     case "number":
                         return [
@@ -197,12 +217,14 @@
                             {value: "$gt", text: this.$data.i18n.relationalOperators.is_greater_than},
                             {value: "$gte", text: this.$data.i18n.relationalOperators.is_greater_or_equal},
                             {value: "$lt", text: this.$data.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.$data.i18n.relationalOperators.is_less_or_equal}
+                            {value: "$lte", text: this.$data.i18n.relationalOperators.is_less_or_equal},
+                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                     case "date":
                         return [
                             {value: "$lte", text: this.$data.i18n.relationalOperators.before},
-                            {value: "$gte", text: this.$data.i18n.relationalOperators.after}
+                            {value: "$gte", text: this.$data.i18n.relationalOperators.after},
+                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                 }
             }

@@ -86,6 +86,7 @@ module.exports = {
             fields: {
                 typeInValue: "Wert eingeben",
                 is: "ist gleich",
+                exists: "ist vorhanden",
                 eqw: "ist gleich (wildcard)",
                 suggest: "\u00e4hnelt",
                 is_not: "ist nicht gleich",

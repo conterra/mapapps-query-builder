@@ -40,6 +40,7 @@ module.exports = {
         enterValue: "Wert eingeben",
         relationalOperators: {
             is: "ist gleich",
+            exists: "ist vorhanden",
             eqw: "ist gleich (wildcard)",
             suggest: "\u00e4hnelt",
             contains: "enth\u00e4lt",

@@ -327,8 +327,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 domConstruct.place(valueComboBox.domNode, this._valueNode);
                 valueComboBox.startup();
             } else {
+                let value;
                 if (type === "date") {
-                    let value;
                     if (this.fieldId === this.getSelectedField()) {
                         value = this.value;
                     } else {
@@ -354,6 +354,25 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                         placeHolder: this.i18n.typeInValue,
                         intermediateChanges: true,
                         required: true
+                    });
+                } else if (type === "boolean") {
+                    if (this.fieldId === this.getSelectedField()) {
+                        value = this.value;
+                    } else {
+                        value = true;
+                    }
+                    let i18n = this.i18n;
+                    let booleanStore = new Memory({
+                        data: [
+                            {id: true, name: i18n.yes},
+                            {id: false, name: i18n.no}
+                        ]
+                    });
+                    valueSelect = this._valueField = new FilteringSelect({
+                        name: "value",
+                        value: value,
+                        store: booleanStore,
+                        maxHeight: this.maxComboBoxHeight
                     });
                 } else {
                     if (this.fieldId === this.getSelectedField()) {
@@ -390,6 +409,29 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         domConstruct.place(relationalOperatorSelect.domNode, this._relationalOperatorNode);
         d_class.add(relationalOperatorSelect.domNode, "relationalOperatorSelect");
         relationalOperatorSelect.startup();
+        this.connect(relationalOperatorSelect, "onChange", function (value) {
+            if (value === "$exists") {
+                while (this._valueNode.firstChild) {
+                    this._valueNode.removeChild(this._valueNode.firstChild);
+                }
+                let i18n = this.i18n;
+                let booleanStore = new Memory({
+                    data: [
+                        {id: true, name: i18n.yes},
+                        {id: false, name: i18n.no}
+                    ]
+                });
+                this._valueField = new FilteringSelect({
+                    name: "value",
+                    value: true,
+                    store: booleanStore,
+                    maxHeight: this.maxComboBoxHeight
+                });
+                domConstruct.place(this._valueField.domNode, this._valueNode);
+            } else {
+                this._changeGUI();
+            }
+        });
     },
 
     _getDistinctValues(selectedField) {
@@ -423,7 +465,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 {id: "$gt", name: i18n.is_greater_than},
                 {id: "$gte", name: i18n.is_greater_or_equal},
                 {id: "$lt", name: i18n.is_less_than},
-                {id: "$lte", name: i18n.is_less_or_equal}
+                {id: "$lte", name: i18n.is_less_or_equal},
+                {id: "$exists", name: i18n.exists}
             ]
         });
     },
@@ -432,7 +475,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         let i18n = this.i18n;
         return new Memory({
             data: [
-                {id: "$eq", name: i18n.is}
+                {id: "$eq", name: i18n.is},
+                {id: "$exists", name: i18n.exists}
             ]
         });
     },
@@ -443,7 +487,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
             data: [
                 {id: "$eq", name: i18n.is},
                 {id: "$eqw", name: i18n.eqw},
-                {id: "$suggest", name: i18n.suggest}
+                {id: "$suggest", name: i18n.suggest},
+                {id: "$exists", name: i18n.exists}
             ]
         });
     },
@@ -456,7 +501,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 {id: "$gt", name: i18n.is_greater_than},
                 {id: "$gte", name: i18n.is_greater_or_equal},
                 {id: "$lt", name: i18n.is_less_than},
-                {id: "$lte", name: i18n.is_less_or_equal}
+                {id: "$lte", name: i18n.is_less_or_equal},
+                {id: "$exists", name: i18n.exists}
             ]
         });
     },
@@ -466,7 +512,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         return new Memory({
             data: [
                 {id: "$lte", name: i18n.before},
-                {id: "$gte", name: i18n.after}
+                {id: "$gte", name: i18n.after},
+                {id: "$exists", name: i18n.exists}
             ]
         });
     },
