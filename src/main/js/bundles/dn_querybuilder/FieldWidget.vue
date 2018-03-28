@@ -52,8 +52,8 @@
                                 min-width="290px">
                             <v-text-field
                                     slot="activator"
-                                    v-bind:disabled="fieldQuery.disableValue"
                                     v-model="fieldQuery.value"
+                                    v-bind:disabled="fieldQuery.disableValue"
                                     required
                                     class="pa-0"
                                     hide-details
@@ -68,18 +68,18 @@
                         </v-menu>
                         <v-select
                                 v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'boolean' || fieldQuery.relationalOperator === '$exists'"
+                                v-model="fieldQuery.value"
                                 v-bind:items="$root.getBooleanItems()"
                                 v-bind:disabled="fieldQuery.disableValue"
-                                v-model="fieldQuery.value"
                                 class="pa-0"
                                 single-line
                                 hide-details
                         ></v-select>
                         <v-select
                                 v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues.length > 0"
+                                v-model="fieldQuery.value"
                                 v-bind:items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues"
                                 v-bind:disabled="fieldQuery.disableValue"
-                                v-model="fieldQuery.value"
                                 key="select"
                                 item-value="code"
                                 item-text="name"
@@ -93,6 +93,7 @@
                                 v-bind:disabled="fieldQuery.disableValue"
                                 v-model="fieldQuery.value"
                                 v-bind:rules="[rules.required, rules.number]"
+                                v-bind:loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                                 required
                                 key="combobox"
                                 class="pa-0"
@@ -108,6 +109,7 @@
                                 v-bind:disabled="fieldQuery.disableValue"
                                 v-model="fieldQuery.value"
                                 v-bind:rules="[rules.required]"
+                                v-bind:loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                                 required
                                 key="combobox"
                                 class="pa-0"
@@ -122,21 +124,24 @@
                                 v-model="fieldQuery.value"
                                 v-bind:disabled="fieldQuery.disableValue"
                                 v-bind:rules="[rules.required, rules.number]"
+                                v-bind:loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                                 required
                                 class="pa-0"
                                 hide-details
                                 clearable
                                 v-bind:placeholder="i18n.enterValue"
                         ></v-text-field>
-                        <v-text-field v-else
-                                      v-model="fieldQuery.value"
-                                      v-bind:disabled="fieldQuery.disableValue"
-                                      required
-                                      v-bind:rules="[rules.required]"
-                                      class="pa-0"
-                                      hide-details
-                                      clearable
-                                      v-bind:placeholder="i18n.enterValue"
+                        <v-text-field
+                                v-else
+                                v-model="fieldQuery.value"
+                                v-bind:disabled="fieldQuery.disableValue"
+                                v-bind:loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
+                                required
+                                v-bind:rules="[rules.required]"
+                                class="pa-0"
+                                hide-details
+                                clearable
+                                v-bind:placeholder="i18n.enterValue"
                         ></v-text-field>
                     </v-flex>
                     <v-flex xs2 md1 v-if="!$root.editable">

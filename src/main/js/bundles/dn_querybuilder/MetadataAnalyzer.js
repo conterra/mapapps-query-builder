@@ -51,12 +51,9 @@ class MetadataAnalyzer {
                         }
                     });
                     if (this._queryBuilderProperties.enableDistinctValues) {
-                        this.getDistinctValues(store, storeData).then((storeData) => {
-                            resolve(storeData);
-                        });
-                    } else {
-                        resolve(storeData);
+                        this.getDistinctValues(store, storeData);
                     }
+                    resolve(storeData);
                 }, this);
             }
             catch (e) {
@@ -73,36 +70,32 @@ class MetadataAnalyzer {
         return ct_when(metadata, (metadata) => {
             let supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
             if (supportsDistincts) {
-                let promises = storeData.map((data) => {
-                    return new Promise((resolve) => {
-                        let queryTask = new QueryTask({
-                            url: store.target
+                storeData.forEach((data) => {
+                    data.loading = true;
+                    let queryTask = new QueryTask({
+                        url: store.target
+                    });
+                    let query = new Query();
+                    query.where = "1=1";
+                    query.outFields = [data.id];
+                    query.orderByFields = [data.id];
+                    query.returnGeometry = false;
+                    query.returnDistinctValues = true;
+                    queryTask.execute(query).then((result) => {
+                        let distinctValues = [];
+                        result.features.forEach((feature) => {
+                            let value = feature.attributes[data.id];
+                            if (value !== null && value !== "") {
+                                distinctValues.push(value);
+                            }
                         });
-                        let query = new Query();
-                        query.where = "1=1";
-                        query.outFields = [data.id];
-                        query.orderByFields = [data.id];
-                        query.returnGeometry = false;
-                        query.returnDistinctValues = true;
-                        queryTask.execute(query).then((result) => {
-                            let distinctValues = [];
-                            result.features.forEach((feature) => {
-                                let value = feature.attributes[data.id];
-                                if (value !== null && value !== "") {
-                                    distinctValues.push(value);
-                                }
-                            });
-                            data.distinctValues = distinctValues;
-                            resolve(data);
-                        }, (error) => {
-                            data.distinctValues = [];
-                            resolve(data);
-                        });
+                        data.distinctValues = distinctValues;
+                        data.loading = false;
+                    }, (error) => {
+                        data.distinctValues = [];
+                        data.loading = false;
                     });
                 });
-                return Promise.all(promises);
-            } else {
-                return storeData;
             }
         });
     }

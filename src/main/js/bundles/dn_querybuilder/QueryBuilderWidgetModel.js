@@ -36,23 +36,23 @@ const QueryBuilderWidgetModel = declare({
 
         let queryBuilderProperties = this._queryBuilderProperties;
         this.getStoreData();
-        this.selectedStoreId = this.stores[0].id || null;
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
         this.enableNegation = queryBuilderProperties.allowNegation;
         this.fieldQueries = [];
-
-        this.addFieldQuery();
     },
 
     getStoreData() {
         let stores = this.stores;
         let storeIds = this._properties.storeIds;
         let storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
-        if (storeData.length === 0) {
-            storeData = this._metadataAnalyzer.getStoreData(stores);
-        }
-        this.storeData = storeData;
+        ct_when(storeData, (data) => {
+            if (data.length === 0) {
+                data = this._metadataAnalyzer.getStoreData(stores);
+            }
+            this.storeData = data;
+            this.selectedStoreId = data[0].id;
+        });
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
@@ -168,6 +168,7 @@ const QueryBuilderWidgetModel = declare({
 
     addStores(store) {
         this.stores.push(store);
+        this.getStoreData();
     }
 
 });

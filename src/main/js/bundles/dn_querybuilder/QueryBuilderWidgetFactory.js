@@ -42,7 +42,7 @@ class QueryBuilderWidgetFactory {
 
         // listen to view model methods
         vm.$on('startup', () => {
-            model.getStoreData();
+            model.addFieldQuery();
         });
         vm.$on('search', () => {
             model.search();
