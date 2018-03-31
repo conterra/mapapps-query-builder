@@ -412,6 +412,7 @@ define([
                     });
                     domConstruct.place(this._valueField.domNode, this._valueNode);
                 } else {
+                    this.relationalOperatorId = value;
                     this._changeGUI();
                 }
             });
