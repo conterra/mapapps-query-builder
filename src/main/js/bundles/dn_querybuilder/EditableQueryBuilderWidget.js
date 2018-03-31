@@ -103,6 +103,12 @@ define([
             var customQuery = this.getComplexQuery();
 
             this.queryController.searchReplacer(customQuery);
+            if (customQuery.geometry && this._queryBuilderProperties.useUserExtent) {
+                var extent = this._mapState.getExtent();
+                customquery.geometry = {
+                    $contains: extent
+                };
+            }
 
             var store = this.store;
             var options = {};
