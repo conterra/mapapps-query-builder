@@ -313,7 +313,7 @@ define([
                             maxHeight: this.maxComboBoxHeight
                         });
                     } else if (type === "date") {
-                        if (this.fieldId === this.getSelectedField()) {
+                        if (this.fieldId === this.getSelectedField() && this.value instanceof Date) {
                             value = this.value;
                         } else {
                             value = new Date();
