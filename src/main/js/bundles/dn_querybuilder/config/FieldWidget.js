@@ -261,69 +261,39 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 }
             }
             if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
-                let valueComboBox, value;
-                if (type === "string") {
-                    let field = fieldSelect.getValue();
-                    let store = new MapServerLayerStore({
-                        target: this.store.target,
-                        idProperty: field,
-                        fetchIdProperty: false,
-                        disableIdQueries: true
+                let valueComboBox = this._valueField = new ComboBox({
+                    name: "value",
+                    searchAttr: "id",
+                    maxHeight: this.maxComboBoxHeight,
+                    required: true,
+                    queryExpr: "*${0}*",
+                    autoComplete: false
+                });
+                if (!this.valueSelectDisabled)
+                    valueComboBox.set('disabled', true);
+                domConstruct.place(valueComboBox.domNode, this._valueNode);
+                valueComboBox.startup();
+                ct_when(this._getDistinctValues(selectedField), (result) => {
+                    result.sort();
+                    let distinctValueData = [];
+                    d_array.forEach(result, (distinctValue) => {
+                        if (typeof(distinctValue) === "number") {
+                            distinctValueData.push({id: d_number.format(distinctValue)});
+                        } else {
+                            distinctValueData.push({id: distinctValue});
+                        }
                     });
-                    store = Filter(store, {}, {
-                        returnDistinctValues: true
+                    let distinctValueStore = new Memory({
+                        data: distinctValueData
                     });
-                    store = SuggestQueryStore(store);
-                    valueComboBox = this._valueField = new ComboBox({
-                        name: "value",
-                        searchAttr: field,
-                        labelAttr: field,
-                        maxHeight: this.maxComboBoxHeight,
-                        required: true,
-                        store: store,
-                        searchDelay: 200,
-                        queryExpr: "*${0}*",
-                        autoComplete: false
-                    });
-                    if (this.fieldId === this.getSelectedField() && this.value !== undefined) {
+                    valueComboBox.set("store", distinctValueStore);
+                    let value = distinctValueData[0] && distinctValueData[0].id;
+                    if (this.fieldId === this.getSelectedField() && this.value !== undefined)
                         value = this.value;
-                        valueComboBox.set("value", value);
-                    }
-                } else {
-                    valueComboBox = this._valueField = new ComboBox({
-                        name: "value",
-                        searchAttr: "id",
-                        maxHeight: this.maxComboBoxHeight,
-                        required: true,
-                        queryExpr: "*${0}*",
-                        autoComplete: false
-                    });
+                    valueComboBox.set("value", value);
                     if (!this.valueSelectDisabled)
-                        valueComboBox.set('disabled', true);
-                    domConstruct.place(valueComboBox.domNode, this._valueNode);
-                    valueComboBox.startup();
-                    ct_when(this._getDistinctValues(selectedField), (result) => {
-                        result.sort();
-                        let distinctValueData = [];
-                        d_array.forEach(result, (distinctValue) => {
-                            if (typeof(distinctValue) === "number") {
-                                distinctValueData.push({id: d_number.format(distinctValue)});
-                            } else {
-                                distinctValueData.push({id: distinctValue});
-                            }
-                        });
-                        let distinctValueStore = new Memory({
-                            data: distinctValueData
-                        });
-                        valueComboBox.set("store", distinctValueStore);
-                        value = distinctValueData[0] && distinctValueData[0].id;
-                        if (this.fieldId === this.getSelectedField() && this.value !== undefined)
-                            value = this.value;
-                        valueComboBox.set("value", value);
-                        if (!this.valueSelectDisabled)
-                            valueComboBox.set('disabled', false);
-                    }, this);
-                }
+                        valueComboBox.set('disabled', false);
+                }, this);
                 domConstruct.place(valueComboBox.domNode, this._valueNode);
                 valueComboBox.startup();
             } else {
