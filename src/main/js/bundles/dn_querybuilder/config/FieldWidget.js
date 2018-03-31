@@ -418,6 +418,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 });
                 domConstruct.place(this._valueField.domNode, this._valueNode);
             } else {
+                this.relationalOperatorId = value;
                 this._changeGUI();
             }
         });
