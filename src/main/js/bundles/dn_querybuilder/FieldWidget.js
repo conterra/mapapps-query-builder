@@ -292,8 +292,27 @@ define([
                     domConstruct.place(valueComboBox.domNode, this._valueNode);
                     valueComboBox.startup();
                 } else {
-                    var value;
-                    if (type === "date") {
+                    var value, i18n, booleanStore;
+                    if (this.relationalOperatorId === "$exists") {
+                        if (this.fieldId === this.getSelectedField()) {
+                            value = this.value;
+                        } else {
+                            value = true;
+                        }
+                        i18n = this.i18n;
+                        booleanStore = new Memory({
+                            data: [
+                                {id: true, name: i18n.yes},
+                                {id: false, name: i18n.no}
+                            ]
+                        });
+                        valueSelect = this._valueField = new FilteringSelect({
+                            name: "value",
+                            value: value,
+                            store: booleanStore,
+                            maxHeight: this.maxComboBoxHeight
+                        });
+                    } else if (type === "date") {
                         if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
                         } else {
@@ -326,8 +345,8 @@ define([
                         } else {
                             value = true;
                         }
-                        var i18n = this.i18n;
-                        var booleanStore = new Memory({
+                        i18n = this.i18n;
+                        booleanStore = new Memory({
                             data: [
                                 {id: true, name: i18n.yes},
                                 {id: false, name: i18n.no}
