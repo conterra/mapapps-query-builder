@@ -172,7 +172,11 @@
                 if (relationalOperator === "$exists") {
                     fieldQuery.value = true;
                 } else {
-                    fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                    if (selectedField.type === "date") {
+                        fieldQuery.value = "";
+                    } else {
+                        fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                    }
                 }
             },
             getSelectedField: function (fields, selectedFieldId) {
