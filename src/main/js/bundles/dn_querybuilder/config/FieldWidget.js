@@ -297,8 +297,27 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 domConstruct.place(valueComboBox.domNode, this._valueNode);
                 valueComboBox.startup();
             } else {
-                let value;
-                if (type === "date") {
+                let value, i18n, booleanStore;
+                if (this.relationalOperatorId === "$exists") {
+                    if (this.fieldId === this.getSelectedField()) {
+                        value = this.value;
+                    } else {
+                        value = true;
+                    }
+                    i18n = this.i18n;
+                    booleanStore = new Memory({
+                        data: [
+                            {id: true, name: i18n.yes},
+                            {id: false, name: i18n.no}
+                        ]
+                    });
+                    valueSelect = this._valueField = new FilteringSelect({
+                        name: "value",
+                        value: value,
+                        store: booleanStore,
+                        maxHeight: this.maxComboBoxHeight
+                    });
+                } else if (type === "date") {
                     if (this.fieldId === this.getSelectedField()) {
                         value = this.value;
                     } else {
@@ -331,8 +350,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                     } else {
                         value = true;
                     }
-                    let i18n = this.i18n;
-                    let booleanStore = new Memory({
+                    i18n = this.i18n;
+                    booleanStore = new Memory({
                         data: [
                             {id: true, name: i18n.yes},
                             {id: false, name: i18n.no}
