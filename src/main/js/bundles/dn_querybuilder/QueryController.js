@@ -64,6 +64,7 @@ define([
                     replacer: replacer,
                     metadataAnalyzer: metadataAnalyzer,
                     queryBuilderProperties: queryBuilderProperties,
+                    mapState: this._mapState,
                     queryController: this
                 });
                 var serviceProperties = {

@@ -103,9 +103,9 @@ define([
             var customQuery = this.getComplexQuery();
 
             this.queryController.searchReplacer(customQuery);
-            if (customQuery.geometry && this._queryBuilderProperties.useUserExtent) {
-                var extent = this._mapState.getExtent();
-                customquery.geometry = {
+            if (customQuery.geometry && this.queryBuilderProperties.useUserExtent) {
+                var extent = this.mapState.getExtent();
+                customQuery.geometry = {
                     $contains: extent
                 };
             }
