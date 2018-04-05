@@ -1,7 +1,7 @@
 # Query Builder Bundle
 The Query Builder Bundle allows you to create your own Query Tools that perform custom complex queries on a store. For example, choosing all cities with more than 1 million inhabitants. The results of your queries are shown in the resultcenter. As an admin, it is possible to create complex queries using an interactive graphical user interface, or manually in a text format. If you enable the editing of a tool, the users will be able to change selected parts of the query. They can create their own queries if you add a special tool to your app.
 
-The Query Builder 3 can be found in the 3.x branch:
+The Query Builder 3 for Linie 3 can be found in the 3.x branch:
 https://github.com/conterra/mapapps-query-builder/tree/3.x
 
 Sample App
