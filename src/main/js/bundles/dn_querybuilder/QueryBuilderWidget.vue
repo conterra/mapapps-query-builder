@@ -65,7 +65,8 @@
                     <v-flex md12>
                         <v-card class="elevation-6">
                             <v-tooltip top>
-                                <v-btn block ripple color="primary" slot="activator" @click="$emit('search', {})">
+                                <v-btn block ripple color="primary" slot="activator" @click="$emit('search', {})"
+                                       v-bind:loading="processing">
                                     <v-icon left>search</v-icon>
                                     {{i18n.search}}
                                 </v-btn>
@@ -143,7 +144,8 @@
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
                 allowNegation: false,
-                loading: false
+                loading: false,
+                processing: false
             };
         },
         mounted: function () {

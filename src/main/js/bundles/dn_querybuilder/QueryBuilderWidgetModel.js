@@ -28,6 +28,7 @@ const QueryBuilderWidgetModel = declare({
     enableNegation: null,
     fieldQueries: [],
     loading: false,
+    processing: false,
 
     activate(componentContext) {
         let serviceResolver = this.serviceResolver = new ServiceResolver();
@@ -58,7 +59,7 @@ const QueryBuilderWidgetModel = declare({
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
         let selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         let complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
-        this._queryController.query(selectedStore, complexQuery, {}, tool || this._tool);
+        this._queryController.query(selectedStore, complexQuery, {}, tool || this._tool, this);
     },
 
     addFieldQuery(selectedStoreId) {

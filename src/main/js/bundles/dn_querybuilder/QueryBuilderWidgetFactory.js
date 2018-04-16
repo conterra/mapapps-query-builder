@@ -61,7 +61,7 @@ class QueryBuilderWidgetFactory {
         Binding
             .create()
             .bindTo(vm, model)
-            .syncAll("selectedStoreId", "linkOperator", "spatialRelation", "fieldQueries", "loading", "storeData")
+            .syncAll("selectedStoreId", "linkOperator", "spatialRelation", "fieldQueries", "loading", "processing", "storeData")
             .enable();
     }
 

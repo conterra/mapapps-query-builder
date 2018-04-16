@@ -22,18 +22,18 @@ class QueryController {
         this.i18n = this._i18n.get().ui;
     }
 
-    query(store, complexQuery, options, tool) {
+    query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this.searchReplacer(complexQuery);
         let queryBuilderProperties = this._queryBuilderProperties;
         if (queryBuilderProperties.useMemorySelectionStore) {
-            this.memorySelectionQuery(store, complexQuery, options, tool);
+            this.memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
         } else {
-            this.defaultQuery(store, complexQuery, options, tool);
+            this.defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
         }
     }
 
-    memorySelectionQuery(store, complexQuery, options, tool) {
-        this._setProcessing(tool, true);
+    memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+        this._setProcessing(tool, true, queryBuilderWidgetModel);
         options.fields = {geometry: 1};
         ct_when(store.query(complexQuery, options), (result) => {
             if (result.total > 0) {
@@ -61,40 +61,40 @@ class QueryController {
                 });
 
                 this._dataModel.setDatasource(memorySelectionStore);
-                this._setProcessing(tool, false);
+                this._setProcessing(tool, false, queryBuilderWidgetModel);
 
             } else {
                 this._logService.warn({
                     id: 0,
                     message: this.i18n.errors.noResultsError
                 });
-                this._setProcessing(tool, false);
+                this._setProcessing(tool, false, queryBuilderWidgetModel);
             }
         }, (e) => {
             this._logService.error({
                 id: e.code,
                 message: e
             });
-            this._setProcessing(tool, false);
+            this._setProcessing(tool, false, queryBuilderWidgetModel);
         });
     }
 
-    defaultQuery(store, complexQuery, options, tool) {
-        this._setProcessing(tool, true);
+    defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+        this._setProcessing(tool, true, queryBuilderWidgetModel);
         let filter = new Filter(store, complexQuery, options);
         ct_when(filter.query({}, {count: 0}).total, (total) => {
             if (total) {
                 this._dataModel.setDatasource(filter);
-                this._setProcessing(tool, false);
+                this._setProcessing(tool, false, queryBuilderWidgetModel);
             } else {
                 this._logService.warn({
                     id: 0,
                     message: this.i18n.errors.noResultsError
                 });
-                this._setProcessing(tool, false);
+                this._setProcessing(tool, false, queryBuilderWidgetModel);
             }
         }, (e) => {
-            this._setProcessing(tool, false);
+            this._setProcessing(tool, false, queryBuilderWidgetModel);
             this._logService.error({
                 id: e.code,
                 message: e
@@ -114,7 +114,8 @@ class QueryController {
         }
     }
 
-    _setProcessing(tool, processing) {
+    _setProcessing(tool, processing, queryBuilderWidgetModel) {
+        queryBuilderWidgetModel.processing = processing;
         if (tool) {
             tool.set("processing", processing);
         }
