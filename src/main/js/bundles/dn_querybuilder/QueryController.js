@@ -92,16 +92,16 @@ define([
                 this.query(store, customquery, options, tool);
             }
         },
-        query: function (store, customquery, options, tool) {
+        query: function (store, customquery, options, tool, widget) {
             var queryBuilderProperties = this._queryBuilderProperties;
             if (queryBuilderProperties.useMemorySelectionStore) {
-                this.memorySelectionQuery(store, customquery, options, tool);
+                this.memorySelectionQuery(store, customquery, options, tool, widget);
             } else {
-                this.defaultQuery(store, customquery, options, tool);
+                this.defaultQuery(store, customquery, options, tool, widget);
             }
         },
-        memorySelectionQuery: function (store, customQuery, options, tool) {
-            this._setProcessing(tool, true);
+        memorySelectionQuery: function (store, customQuery, options, tool, widget) {
+            this._setProcessing(tool, true, widget);
             options.fields = {geometry: 1};
             ct_when(store.query(customQuery, options), function (result) {
                 if (result.total > 0) {
@@ -127,39 +127,39 @@ define([
                     });
 
                     this._dataModel.setDatasource(memorySelectionStore);
-                    this._setProcessing(tool, false);
+                    this._setProcessing(tool, false, widget);
 
                 } else {
                     this._logService.warn({
                         id: 0,
                         message: this.i18n.no_results_error
                     });
-                    this._setProcessing(tool, false);
+                    this._setProcessing(tool, false, widget);
                 }
             }, function (e) {
                 this._logService.error({
                     id: e.code,
                     message: e
                 });
-                this._setProcessing(tool, false);
+                this._setProcessing(tool, false, widget);
             }, this);
         },
-        defaultQuery: function (store, customQuery, options, tool) {
-            this._setProcessing(tool, true);
+        defaultQuery: function (store, customQuery, options, tool, widget) {
+            this._setProcessing(tool, true, widget);
             var filter = new Filter(store, customQuery, options);
             ct_when(filter.query({}, {count: 0}).total, function (total) {
                 if (total) {
                     this._dataModel.setDatasource(filter);
-                    this._setProcessing(tool, false);
+                    this._setProcessing(tool, false, widget);
                 } else {
                     this._logService.warn({
                         id: 0,
                         message: this.i18n.no_results_error
                     });
-                    this._setProcessing(tool, false);
+                    this._setProcessing(tool, false, widget);
                 }
             }, function (e) {
-                this._setProcessing(tool, false);
+                this._setProcessing(tool, false, widget);
                 this._logService.error({
                     id: e.code,
                     message: e
@@ -177,9 +177,16 @@ define([
                 }
             }
         },
-        _setProcessing: function (tool, processing) {
+        _setProcessing: function (tool, processing, widget) {
             if (tool) {
                 tool.set("processing", processing);
+            }
+            if (widget) {
+                if(processing){
+                    widget._doneButton.set("iconClass", "icon-spinner");
+                }else {
+                    widget._doneButton.set("iconClass", "icon-magnifier");
+                }
             }
         }
     });

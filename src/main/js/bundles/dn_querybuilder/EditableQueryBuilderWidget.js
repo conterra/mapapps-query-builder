@@ -119,7 +119,7 @@ define([
             options.ignoreCase = this.properties.options.ignoreCase;
             options.locale = this.properties.options.locale;
 
-            this.queryController.query(store, customQuery, options, this.tool);
+            this.queryController.query(store, customQuery, options, this.tool, this);
         },
         deactivateTool: function () {
             this.tool.set("active", false);

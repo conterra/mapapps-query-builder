@@ -164,7 +164,7 @@ define([
             var store = this._getSelectedStoreObj(storeId);
             var options = {}/*{ignoreCase: true}*/;
 
-            this.queryController.query(store, customQuery, options, this.tool);
+            this.queryController.query(store, customQuery, options, this.tool, this);
         }
     });
 });
