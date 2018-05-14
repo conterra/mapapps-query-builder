@@ -47,9 +47,11 @@ define([
                 var storeData = [];
                 d_array.forEach(fields, function (field) {
                     var codedValues = [];
-                    if (field.domain)
-                        if (field.domain.codedValues)
+                    if (field.domain) {
+                        if (field.domain.codedValues) {
                             codedValues = field.domain.codedValues;
+                        }
+                    }
                     var codedValueString = "";
                     if (codedValues.length > 0) {
                         codedValueString = "[CV]";

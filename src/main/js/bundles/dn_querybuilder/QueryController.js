@@ -182,9 +182,9 @@ define([
                 tool.set("processing", processing);
             }
             if (widget) {
-                if(processing){
+                if (processing) {
                     widget._doneButton.set("iconClass", "icon-spinner");
-                }else {
+                } else {
                     widget._doneButton.set("iconClass", "icon-magnifier");
                 }
             }

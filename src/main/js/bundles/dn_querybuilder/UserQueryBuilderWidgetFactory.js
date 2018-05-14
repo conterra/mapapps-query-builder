@@ -21,6 +21,7 @@ define([
     return declare([], {
         constructor: function () {
             this.inherited(arguments);
+            this.stores = [];
         },
         activate: function () {
             this.inherited(arguments);
@@ -61,12 +62,20 @@ define([
             });
         },
         setDrawGeometryHandler: function (service) {
-            if (this.widget)
+            if (this.widget) {
                 this.widget.drawGeometryHandler = service;
+            }
         },
         setQueryGeometryTool: function (service) {
-            if (this.widget)
+            if (this.widget) {
                 this.widget.querygeometryTool = service;
+            }
+        },
+        addStores: function (store) {
+            this.stores.push(store);
+            if (this.widget) {
+                this.widget.getStoreData();
+            }
         }
     });
 });

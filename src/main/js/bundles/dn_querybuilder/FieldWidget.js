@@ -136,8 +136,9 @@ define([
                         onClick: d_lang.hitch(this, function () {
                             removeButton.domNode.parentNode.parentNode.remove();
                             this.source._changeChildrenButtons();
-                            if (this.type === "user")
+                            if (this.type === "user") {
                                 this.source._changeMatchVisibility();
+                            }
                         })
                     });
                     domConstruct.place(removeButton.domNode, this._buttonNode, "last");
@@ -285,8 +286,9 @@ define([
                         });
                         valueComboBox.set("store", distinctValueStore);
                         value = distinctValueData[0] && distinctValueData[0].id;
-                        if (this.fieldId === this.getSelectedField() && this.value !== undefined)
+                        if (this.fieldId === this.getSelectedField() && this.value !== undefined) {
                             value = this.value;
+                        }
                         valueComboBox.set("value", value);
                     }, this);
                     domConstruct.place(valueComboBox.domNode, this._valueNode);
@@ -324,8 +326,9 @@ define([
                             validator: this._validator,
                             intermediateChanges: true
                         });
-                        if (valueSelect.value === null)
+                        if (valueSelect.value === null) {
                             valueSelect.set("displayedValue", value);
+                        }
                     } else if (type === "number" || type === "integer" || type === "single" || type === "double") {
                         if (this.fieldId === this.getSelectedField()) {
                             value = this.value;
@@ -376,10 +379,12 @@ define([
                 }
                 d_class.add(this._valueField.domNode, "valueField");
             }
-            if (this.relationalOperatorSelectDisabled)
+            if (this.relationalOperatorSelectDisabled) {
                 this._relationalOperatorSelect.set("disabled", this.relationalOperatorSelectDisabled);
-            if (this.valueSelectDisabled)
+            }
+            if (this.valueSelectDisabled) {
                 this._valueField.set("disabled", this.valueSelectDisabled);
+            }
         },
         _createRelationalOperatorSelect: function (value, compareStore) {
             var relationalOperatorSelect = this._relationalOperatorSelect = new FilteringSelect({

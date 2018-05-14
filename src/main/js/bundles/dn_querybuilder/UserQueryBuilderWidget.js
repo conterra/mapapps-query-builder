@@ -33,11 +33,7 @@ define([
         baseClass: "userQueryBuilderWidget",
         startup: function () {
             this.inherited(arguments);
-            var stores = this.stores;
-            var storeIds = this.properties.storeIds;
-            this.storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
-            if (this.storeData.length === 0)
-                this.storeData = this.metadataAnalyzer.getStoreData(stores);
+            this.getStoreData();
             ct_css.switchHidden(this._errorNode, true);
             this._init();
             this._addField();
@@ -135,6 +131,14 @@ define([
                 if (this.drawGeometryHandler)
                     this.drawGeometryHandler.clearGraphics();
             }, this);
+        },
+        getStoreData: function () {
+            var stores = this.stores;
+            var storeIds = this.properties.storeIds;
+            this.storeData = this.metadataAnalyzer.getStoreDataByIds(storeIds);
+            if (this.storeData.length === 0) {
+                this.storeData = this.metadataAnalyzer.getStoreData(stores);
+            }
         },
         _onDone: function () {
             var customQuery = {};
