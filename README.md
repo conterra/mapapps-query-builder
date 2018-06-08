@@ -48,7 +48,7 @@ To add a toolset to your app that contains the Query Tools, copy the following c
 
 Enable user querybuilder tool:
 
-To enable user query tools in your app, add the "userQueryBuilderTool" to your toolset:
+To enable user query tools in your app, add the "queryBuilderToggleTool" to your toolset:
 ```
 "toolset": {
   "ToolsetManager": {
