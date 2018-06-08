@@ -369,7 +369,8 @@
           {
             "id": "streets",
             "title": "${map.basemaps.street}",
-            "basemap": "streets"
+            "basemap": "streets",
+            "selected": true
           },
           {
             "id": "topo",
@@ -402,25 +403,7 @@
               "elevationInfo": {
                 "mode": "on-the-ground"
               },
-              "visible": true,
-              "popupTemplate": {
-                "title": "{STV_NAME}",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "Das k\u00F6lner Stadtviertel <b>{STV_NAME}</b>."
-                  },
-                  {
-                    "type": "fields",
-                    "fieldInfos": [
-                      {
-                        "fieldName": "STV_NR",
-                        "label": "Nummer"
-                      }
-                    ]
-                  }
-                ]
-              }
+              "visible": true
             }
           ],
           "ground": {
