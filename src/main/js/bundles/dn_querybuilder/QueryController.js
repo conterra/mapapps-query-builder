@@ -115,7 +115,9 @@ class QueryController {
     }
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {
-        queryBuilderWidgetModel.processing = processing;
+        if(queryBuilderWidgetModel) {
+            queryBuilderWidgetModel.processing = processing;
+        }
         if (tool) {
             tool.set("processing", processing);
         }
