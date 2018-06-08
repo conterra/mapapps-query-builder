@@ -28,7 +28,6 @@
   "layout-widgets": [
     {
       "widgetRole": "queryBuilderWidget",
-      "template": "seasons",
       "sublayout": [
         "desktop"
       ],
@@ -52,7 +51,6 @@
     },
     {
       "widgetRole": "queryBuilderWidget",
-      "template": "seasons",
       "sublayout": [
         "tablet_landscape",
         "tablet_portrait"
@@ -74,7 +72,6 @@
     },
     {
       "widgetRole": "queryBuilderWidget",
-      "template": "seasons",
       "sublayout": [
         "mobile_landscape",
         "mobile_portrait"
@@ -97,7 +94,6 @@
     },
     {
       "widgetRole": "editableQueryBuilderWidget",
-      "template": "seasons",
       "sublayout": [
         "desktop"
       ],
@@ -120,7 +116,6 @@
     },
     {
       "widgetRole": "editableQueryBuilderWidget",
-      "template": "seasons",
       "sublayout": [
         "tablet_landscape",
         "tablet_portrait"
@@ -141,7 +136,6 @@
     },
     {
       "widgetRole": "editableQueryBuilderWidget",
-      "template": "seasons",
       "sublayout": [
         "mobile_landscape",
         "mobile_portrait"
