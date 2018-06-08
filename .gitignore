@@ -11,3 +11,4 @@
 /.project
 /.settings/
 /.externalToolBuilders/
+/package-lock.json
