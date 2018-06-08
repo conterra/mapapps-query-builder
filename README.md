@@ -67,7 +67,7 @@ To enable user query tools in your app, add the "userQueryBuilderTool" to your t
         "rel_l": 20,
         "rel_t": 20
       },
-      "tools": ["querybuilder_*", "userQueryBuilderTool"]
+      "tools": ["querybuilder_*", "queryBuilderToggleTool"]
     }]
   },
   "enabled": true
