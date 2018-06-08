@@ -45,7 +45,9 @@
                         <v-menu
                                 v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date' && fieldQuery.relationalOperator !== '$exists'"
                                 v-bind:close-on-content-click="false"
+                                v-model="$root.dateMenu"
                                 transition="scale-transition"
+                                lazy
                                 offset-y
                                 full-width
                                 max-width="290px"
@@ -62,8 +64,7 @@
                             ></v-text-field>
                             <v-date-picker v-model="fieldQuery.value" no-title scrollable>
                                 <v-spacer></v-spacer>
-                                <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                                <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                                <v-btn flat color="primary" @click="$root.dateMenu=false">OK</v-btn>
                             </v-date-picker>
                         </v-menu>
                         <v-select

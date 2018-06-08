@@ -145,7 +145,8 @@
                 fieldQueries: [],
                 allowNegation: false,
                 loading: false,
-                processing: false
+                processing: false,
+                dateMenu: false
             };
         },
         mounted: function () {
