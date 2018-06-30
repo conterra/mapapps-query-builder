@@ -1,6 +1,6 @@
 <template>
-    <div class="querybuilder">
-        <div class="top">
+    <div class="ct-flex-container ct-flex-container--column fullHeight">
+        <div class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container grid-list-md fluid>
                 <v-layout row wrap justify-space-between>
                     <v-flex xs4 md4>
@@ -51,7 +51,7 @@
                 </v-layout>
             </v-container>
         </div>
-        <div class="center">
+        <div class="center ct-flex-item overflowAuto">
             <v-container grid-list-md fluid class="pt-0">
                 <field-widget v-for="(fieldQuery, index) in fieldQueries"
                               v-bind:key="index" v-bind:fieldQuery="fieldQuery" v-bind:index="index"
@@ -59,7 +59,7 @@
                               v-bind:i18n="i18n"/>
             </v-container>
         </div>
-        <div class="bottom">
+        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container grid-list-md fluid>
                 <v-layout row wrap justify-center>
                     <v-flex md12>
