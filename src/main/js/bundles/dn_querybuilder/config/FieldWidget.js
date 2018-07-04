@@ -65,7 +65,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 if (this.editFields) {
                     this.notSelectDisabled = !this.editFields.not;
                     this.fieldSelectDisabled = !this.editFields.field;
-                    this.relationalOperatorSelectDisabled = !this.editFields.relation;
+                    this.relationalOperatorSelectDisabled = !this.editFields.relationalOperator;
                     this.valueSelectDisabled = !this.editFields.value;
                 }
             } else {
@@ -516,7 +516,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         if (this.editFields) {
             not = this.editFields.not;
             field = this.editFields.field;
-            relation = this.editFields.relation;
+            relation = this.editFields.relationalOperator;
             value = this.editFields.value;
         }
         this._notCheckBox = new CheckBox({

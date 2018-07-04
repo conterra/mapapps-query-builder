@@ -126,7 +126,7 @@
                 {
                   "not": false,
                   "field": false,
-                  "relation": false,
+                  "relationalOperator": false,
                   "value": true
                 }
               ]
