@@ -1,473 +1,474 @@
 {
-  "properties": {
-    "title": "${apptitle}"
-  },
-  "load": {
-    "bundleLocations": [
-      "localbundles",
-      "bundles"
-    ],
-    "allowedBundles": [
-      "system",
-      "splashscreen",
-      "templatelayout",
-      "template-seasons",
-      "theme-everlasting",
-      "toolset",
-      "map-init",
-      "map-preload-2D",
-      "map-preload-3D",
-      "mapnavigation",
-      "notifier",
-      "agssearch",
-      "banner",
-      "wizard",
-      "authentication",
-      "viewmodeswitcher",
-      "dn_querybuilder"
-    ],
-    "require": [
-      "${app}.app"
-    ],
-    "i18n": [
-      "bundle"
-    ]
-  },
-  "bundles": {
-    "dn_querybuilder": {
-      "QueryBuilderProperties": {
-        "enableDistinctValues": true,
-        "defaultLinkOperator": "$or",
-        "defaultSpatialRelation": "everywhere",
-        "useMemorySelectionStore": true,
-        "useUserExtent": false,
-        "allowNegation": false
-      },
-      "QueryBuilderWidgetModel": {
-        "storeIds": [
-          "esri",
-          "airtraffic",
-          "countries",
-          "baumkataster",
-          "stoerungen",
-          "zensus_2011_bundeslaender",
-          "zensus_2011_kreise",
-          "zensus_2011_gemeinden"
-        ]
-      },
-      "QueryTools": [
-        {
-          "id": "querybuilder_1441021732534",
-          "title": "Show reported street damages that are not yet fixed in Münster",
-          "iconClass": "icon-toolcase",
-          "storeId": "stoerungen",
-          "complexQuery": {
-            "geometry": {
-              "$contains": {
-                "xmin": -1454749.7653909875,
-                "ymin": 4027109.2609186354,
-                "xmax": 4454749.7653909875,
-                "ymax": 8972890.739081364,
-                "spatialReference": {
-                  "wkid": 3857
-                }
-              }
-            },
-            "$and": [
-              {
-                "art": {
-                  "$eq": 5
-                }
-              },
-              {
-                "status": {
-                  "$eq": 1
-                }
-              }
-            ]
-          },
-          "options": {
-            "editable": false,
-            "mode": "builder",
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            },
-            "sort": [
-              {
-                "attribute": "details",
-                "descending": true
-              }
-            ]
-          }
-        },
-        {
-          "id": "querybuilder_1442569207538",
-          "title": "Date Test [editable]",
-          "iconClass": "icon-custom-info",
-          "complexQuery": {
-            "$and": [
-              {
-                "zeitpunkt": {
-                  "$gte": ""
-                }
-              }
-            ]
-          },
-          "options": {
-            "mode": "builder",
-            "editable": true,
-            "editOptions": {
-              "spatialRelation": false,
-              "linkOperator": false,
-              "editFields": [
-                {
-                  "not": false,
-                  "field": false,
-                  "relationalOperator": false,
-                  "value": true
-                }
-              ]
-            },
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "stoerungen"
-        },
-        {
-          "id": "querybuilder_1469615816195",
-          "title": "Where are Germany's airports?",
-          "iconClass": "icon-custom-info",
-          "customquery": {
-            "$and": [
-              {
-                "OBJECTID": {
-                  "$gt": 0
-                }
-              }
-            ]
-          },
-          "options": {
-            "mode": "builder",
-            "editable": false,
-            "count": -1,
-            "ignoreCase": false,
-            "locale": {
-              "language": "en",
-              "country": "EN"
-            }
-          },
-          "storeId": "airtraffic"
-        }
-      ]
+    "properties": {
+        "title": "${apptitle}"
     },
-    "banner": {
-      "BannerWidget": {
-        "label": "Developer Network",
-        "image": "https://www.conterra.de/~/media/conterra/images/site_logos/conterra-logo.ashx",
-        "imagePosition": "above",
-        "link": "http://developernetwork.conterra.de"
-      }
-    },
-    "resultcenter": {
-      "ActionController": {
-        "zoomToFeatures": true,
-        "zoomToSelected": false,
-        "centerSelected": true,
-        "zoomAfterDeletion": false,
-        "zoomToClicked": false,
-        "centerClicked": false
-      },
-      "FeatureMapVisualizer": {
-        "useDataViewPaging": true
-      }
-    },
-    "agssearch": {
-      "AutoStoreRegistration": {
-        "componentEnabled": false
-      },
-      "AGSStore": [
-        {
-          "id": "esri",
-          "title": "Esri",
-          "description": "Esri",
-          "idProperty": "OBJECTID",
-          "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "airtraffic",
-          "title": "Airtraffic",
-          "description": "Airtraffic",
-          "idProperty": "OBJECTID",
-          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
-          "useIn": [
-            "selection"
-          ],
-          "filterOptions": {
-            "metadata": {
-              "fields": [
-                {
-                  "name": "OBJECTID",
-                  "title": "ID"
-                },
-                {
-                  "name": "aeroway",
-                  "title": "AEROWAY"
-                },
-                {
-                  "name": "OSMID",
-                  "title": "OSM ID"
-                },
-                {
-                  "name": "osm_name",
-                  "title": "NAME"
-                },
-                {
-                  "name": "osm_ref",
-                  "title": "REF"
-                },
-                {
-                  "name": "osm_type",
-                  "title": "TYPE"
-                },
-                {
-                  "name": "osm_operator",
-                  "title": "OPERATOR"
-                },
-                {
-                  "name": "osm_website",
-                  "title": "WEBSITE"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "id": "countries",
-          "title": "Countries",
-          "description": "Countries of the world",
-          "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "baumkataster",
-          "title": "Baumkataster",
-          "description": "Baumkataster",
-          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "stoerungen",
-          "title": "Störungen",
-          "description": "Störungen",
-          "idProperty": "objectid",
-          "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0",
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "zensus_2011_bundeslaender",
-          "title": "Zensus 2011 Bundesländer",
-          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-          "idProperty": "OBJECTID_1",
-          "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/0",
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "zensus_2011_kreise",
-          "title": "Zensus 2011 Kreise",
-          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-          "idProperty": "OBJECTID_1",
-          "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/1",
-          "useIn": [
-            "selection"
-          ]
-        },
-        {
-          "id": "zensus_2011_gemeinden",
-          "title": "Zensus 2011 Gemeinden",
-          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-          "idProperty": "OBJECTID_1",
-          "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/2",
-          "useIn": [
-            "selection"
-          ]
-        }
-      ]
-    },
-    "coordinateviewer": {
-      "Config": {
-        "decimalPlaces": 3,
-        "showScale": true,
-        "showCoordinates": true,
-        "degreeFormat": true,
-        "transformSrs": true,
-        "targetSrs": "WGS84"
-      }
-    },
-    "toolset": {
-      "ToolsetManager": {
-        "toolsets": [
-          {
-            "id": "mapview_tools",
-            "tools": [
-              "zoomInTool",
-              "zoomOutTool",
-              "compassTool",
-              "restoreInitialViewTool",
-              "viewmodeSwitcherTool"
-            ],
-            "registerWidget": {
-              "widgetRole": "mapview_tools"
-            },
-            "container": "ignore",
-            "windowType": "container",
-            "cssClass": "muted"
-          },
-          {
-            "id": "questions",
-            "title": "Questions And Answers",
-            "container": "map",
-            "window": {
-              "closable": true
-            },
-            "tooltip": "List of predefined questions, click to see the answer",
-            "cssClass": "ctWDYWBtn ctPrimaryInput",
-            "max_horizontal": 1,
-            "windowType": "dropdown",
-            "position": {
-              "rel_l": 20,
-              "rel_t": 20
-            },
-            "tools": [
-              "querybuilder_*",
-              "queryBuilderToggleTool"
-            ]
-          }
-        ]
-      }
-    },
-    "map-init": {
-      "Config": {
-        "basemaps": [
-          {
-            "id": "streets",
-            "title": "${map.basemaps.street}",
-            "basemap": "streets",
-            "selected": true
-          },
-          {
-            "id": "topo",
-            "title": "${map.basemaps.topo}",
-            "basemap": "topo",
-            "icon": "filter_hdr"
-          },
-          {
-            "id": "gray",
-            "title": "${map.basemaps.gray}",
-            "basemap": "gray",
-            "icon": "gradient"
-          },
-          {
-            "id": "satellite",
-            "title": "${map.basemaps.satellite}",
-            "basemap": "satellite",
-            "icon": "photo_camera",
-            "description": "Satellit"
-          }
+    "load": {
+        "bundleLocations": [
+            "localbundles",
+            "bundles"
         ],
-        "map": {
-          "layers": [
-            {
-              "id": "esri_group_sites",
-              "title": "${map.operationalLayer.esrisites}",
-              "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer",
-              "layerId": 0,
-              "type": "AGS_FEATURE",
-              "elevationInfo": {
-                "mode": "on-the-ground"
-              },
-              "visible": true
-            }
-          ],
-          "ground": {
-            "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
-            "type": "ELEVATION"
-          }
-        },
-        "view": {
-          "viewmode": "2D",
-          "extent": {
-            "xmin": -1000000,
-            "ymin": 3000000,
-            "xmax": 4000000,
-            "ymax": 10000000,
-            "spatialReference": 3857
-          }
-        }
-      }
-    },
-    "templates": {
-      "TemplateModel": {
-        "_templates": [
-          {
-            "name": "seasons",
-            "widgets": [
-              {
-                "widgetRole": "queryBuilderWidget",
-                "template": "seasons",
-                "sublayout": [
-                  "desktop"
-                ],
-                "window": {
-                  "marginBox": {
-                    "w": 800,
-                    "h": 400,
-                    "l": 20,
-                    "t": 120
-                  }
-                }
-              },
-              {
-                "widgetRole": "editableQueryBuilderWidget",
-                "template": "seasons",
-                "sublayout": [
-                  "desktop"
-                ],
-                "window": {
-                  "marginBox": {
-                    "w": 800,
-                    "h": 400,
-                    "l": 20,
-                    "t": 120
-                  }
-                }
-              }
-            ]
-          }
+        "allowedBundles": [
+            "system",
+            "splashscreen",
+            "templatelayout",
+            "template-seasons",
+            "theme-everlasting",
+            "toolset",
+            "map-init",
+            "map-preload-2D",
+            "map-preload-3D",
+            "mapnavigation",
+            "notifier",
+            "agssearch",
+            "banner",
+            "wizard",
+            "authentication",
+            "viewmodeswitcher",
+            "dn_querybuilder"
+        ],
+        "require": [
+            "${app}.app"
+        ],
+        "i18n": [
+            "bundle"
         ]
-      }
     },
-    "themes": {
-      "ThemeModel": {
-        "_selectedTheme": "everlasting"
-      }
+    "bundles": {
+        "dn_querybuilder": {
+            "QueryBuilderProperties": {
+                "enableDistinctValues": true,
+                "defaultLinkOperator": "$or",
+                "defaultSpatialRelation": "everywhere",
+                "useMemorySelectionStore": true,
+                "useUserExtent": false,
+                "allowNegation": false,
+                "showQuerySettingsInEditableMode": true
+            },
+            "QueryBuilderWidgetModel": {
+                "storeIds": [
+                    "esri",
+                    "airtraffic",
+                    "countries",
+                    "baumkataster",
+                    "stoerungen",
+                    "zensus_2011_bundeslaender",
+                    "zensus_2011_kreise",
+                    "zensus_2011_gemeinden"
+                ]
+            },
+            "QueryTools": [
+                {
+                    "id": "querybuilder_1441021732534",
+                    "title": "Show reported street damages that are not yet fixed in Münster",
+                    "iconClass": "icon-toolcase",
+                    "storeId": "stoerungen",
+                    "complexQuery": {
+                        "geometry": {
+                            "$contains": {
+                                "xmin": -1454749.7653909875,
+                                "ymin": 4027109.2609186354,
+                                "xmax": 4454749.7653909875,
+                                "ymax": 8972890.739081364,
+                                "spatialReference": {
+                                    "wkid": 3857
+                                }
+                            }
+                        },
+                        "$and": [
+                            {
+                                "art": {
+                                    "$eq": 5
+                                }
+                            },
+                            {
+                                "status": {
+                                    "$eq": 1
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "editable": false,
+                        "mode": "builder",
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        },
+                        "sort": [
+                            {
+                                "attribute": "details",
+                                "descending": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "querybuilder_1442569207538",
+                    "title": "Date Test [editable]",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$and": [
+                            {
+                                "zeitpunkt": {
+                                    "$gte": ""
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": true,
+                        "editOptions": {
+                            "spatialRelation": false,
+                            "linkOperator": false,
+                            "editFields": [
+                                {
+                                    "not": false,
+                                    "field": false,
+                                    "relationalOperator": false,
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "stoerungen"
+                },
+                {
+                    "id": "querybuilder_1469615816195",
+                    "title": "Where are Germany's airports?",
+                    "iconClass": "icon-custom-info",
+                    "customquery": {
+                        "$and": [
+                            {
+                                "OBJECTID": {
+                                    "$gt": 0
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": false,
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "airtraffic"
+                }
+            ]
+        },
+        "banner": {
+            "BannerWidget": {
+                "label": "Developer Network",
+                "image": "https://www.conterra.de/~/media/conterra/images/site_logos/conterra-logo.ashx",
+                "imagePosition": "above",
+                "link": "http://developernetwork.conterra.de"
+            }
+        },
+        "resultcenter": {
+            "ActionController": {
+                "zoomToFeatures": true,
+                "zoomToSelected": false,
+                "centerSelected": true,
+                "zoomAfterDeletion": false,
+                "zoomToClicked": false,
+                "centerClicked": false
+            },
+            "FeatureMapVisualizer": {
+                "useDataViewPaging": true
+            }
+        },
+        "agssearch": {
+            "AutoStoreRegistration": {
+                "componentEnabled": false
+            },
+            "AGSStore": [
+                {
+                    "id": "esri",
+                    "title": "Esri",
+                    "description": "Esri",
+                    "idProperty": "OBJECTID",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "airtraffic",
+                    "title": "Airtraffic",
+                    "description": "Airtraffic",
+                    "idProperty": "OBJECTID",
+                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+                    "useIn": [
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "metadata": {
+                            "fields": [
+                                {
+                                    "name": "OBJECTID",
+                                    "title": "ID"
+                                },
+                                {
+                                    "name": "aeroway",
+                                    "title": "AEROWAY"
+                                },
+                                {
+                                    "name": "OSMID",
+                                    "title": "OSM ID"
+                                },
+                                {
+                                    "name": "osm_name",
+                                    "title": "NAME"
+                                },
+                                {
+                                    "name": "osm_ref",
+                                    "title": "REF"
+                                },
+                                {
+                                    "name": "osm_type",
+                                    "title": "TYPE"
+                                },
+                                {
+                                    "name": "osm_operator",
+                                    "title": "OPERATOR"
+                                },
+                                {
+                                    "name": "osm_website",
+                                    "title": "WEBSITE"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "countries",
+                    "title": "Countries",
+                    "description": "Countries of the world",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "baumkataster",
+                    "title": "Baumkataster",
+                    "description": "Baumkataster",
+                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "stoerungen",
+                    "title": "Störungen",
+                    "description": "Störungen",
+                    "idProperty": "objectid",
+                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0",
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "zensus_2011_bundeslaender",
+                    "title": "Zensus 2011 Bundesländer",
+                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+                    "idProperty": "OBJECTID_1",
+                    "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/0",
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "zensus_2011_kreise",
+                    "title": "Zensus 2011 Kreise",
+                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+                    "idProperty": "OBJECTID_1",
+                    "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/1",
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "zensus_2011_gemeinden",
+                    "title": "Zensus 2011 Gemeinden",
+                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
+                    "idProperty": "OBJECTID_1",
+                    "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/2",
+                    "useIn": [
+                        "selection"
+                    ]
+                }
+            ]
+        },
+        "coordinateviewer": {
+            "Config": {
+                "decimalPlaces": 3,
+                "showScale": true,
+                "showCoordinates": true,
+                "degreeFormat": true,
+                "transformSrs": true,
+                "targetSrs": "WGS84"
+            }
+        },
+        "toolset": {
+            "ToolsetManager": {
+                "toolsets": [
+                    {
+                        "id": "mapview_tools",
+                        "tools": [
+                            "zoomInTool",
+                            "zoomOutTool",
+                            "compassTool",
+                            "restoreInitialViewTool",
+                            "viewmodeSwitcherTool"
+                        ],
+                        "registerWidget": {
+                            "widgetRole": "mapview_tools"
+                        },
+                        "container": "ignore",
+                        "windowType": "container",
+                        "cssClass": "muted"
+                    },
+                    {
+                        "id": "questions",
+                        "title": "Questions And Answers",
+                        "container": "map",
+                        "window": {
+                            "closable": true
+                        },
+                        "tooltip": "List of predefined questions, click to see the answer",
+                        "cssClass": "ctWDYWBtn ctPrimaryInput",
+                        "max_horizontal": 1,
+                        "windowType": "dropdown",
+                        "position": {
+                            "rel_l": 20,
+                            "rel_t": 20
+                        },
+                        "tools": [
+                            "querybuilder_*",
+                            "queryBuilderToggleTool"
+                        ]
+                    }
+                ]
+            }
+        },
+        "map-init": {
+            "Config": {
+                "basemaps": [
+                    {
+                        "id": "streets",
+                        "title": "${map.basemaps.street}",
+                        "basemap": "streets",
+                        "selected": true
+                    },
+                    {
+                        "id": "topo",
+                        "title": "${map.basemaps.topo}",
+                        "basemap": "topo",
+                        "icon": "filter_hdr"
+                    },
+                    {
+                        "id": "gray",
+                        "title": "${map.basemaps.gray}",
+                        "basemap": "gray",
+                        "icon": "gradient"
+                    },
+                    {
+                        "id": "satellite",
+                        "title": "${map.basemaps.satellite}",
+                        "basemap": "satellite",
+                        "icon": "photo_camera",
+                        "description": "Satellit"
+                    }
+                ],
+                "map": {
+                    "layers": [
+                        {
+                            "id": "esri_group_sites",
+                            "title": "${map.operationalLayer.esrisites}",
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer",
+                            "layerId": 0,
+                            "type": "AGS_FEATURE",
+                            "elevationInfo": {
+                                "mode": "on-the-ground"
+                            },
+                            "visible": true
+                        }
+                    ],
+                    "ground": {
+                        "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+                        "type": "ELEVATION"
+                    }
+                },
+                "view": {
+                    "viewmode": "2D",
+                    "extent": {
+                        "xmin": -1000000,
+                        "ymin": 3000000,
+                        "xmax": 4000000,
+                        "ymax": 10000000,
+                        "spatialReference": 3857
+                    }
+                }
+            }
+        },
+        "templates": {
+            "TemplateModel": {
+                "_templates": [
+                    {
+                        "name": "seasons",
+                        "widgets": [
+                            {
+                                "widgetRole": "queryBuilderWidget",
+                                "template": "seasons",
+                                "sublayout": [
+                                    "desktop"
+                                ],
+                                "window": {
+                                    "marginBox": {
+                                        "w": 800,
+                                        "h": 400,
+                                        "l": 20,
+                                        "t": 120
+                                    }
+                                }
+                            },
+                            {
+                                "widgetRole": "editableQueryBuilderWidget",
+                                "template": "seasons",
+                                "sublayout": [
+                                    "desktop"
+                                ],
+                                "window": {
+                                    "marginBox": {
+                                        "w": 800,
+                                        "h": 400,
+                                        "l": 20,
+                                        "t": 120
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "themes": {
+            "ThemeModel": {
+                "_selectedTheme": "everlasting"
+            }
+        }
     }
-  }
 }

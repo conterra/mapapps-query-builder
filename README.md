@@ -84,7 +84,8 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
     "defaultSpatialRelation": "everywhere",
     "useMemorySelectionStore": true,
     "useUserExtent": false,
-    "allowNegation": false
+    "allowNegation": false,
+    "showSearchSettingsInEditableMode": false
 }
 ```
 

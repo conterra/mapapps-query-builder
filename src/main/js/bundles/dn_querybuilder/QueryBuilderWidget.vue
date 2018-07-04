@@ -3,24 +3,27 @@
         <div class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container grid-list-md fluid>
                 <v-layout row wrap justify-space-between>
-                    <v-flex xs4 md4>
+                    <v-flex v-if="editable && title" xs12 md12>
+                        <div>{{title}}</div>
+                    </v-flex>
+                    <v-flex v-if="showSearchSettings" xs4 md4>
                         <div>
                             <div>{{i18n.selectStore}}</div>
                             <v-select
-                                    v-bind:items="storeData"
-                                    v-bind:disabled="editable"
-                                    v-bind:loading="loading"
-                                    v-model="selectedStoreId"
-                                    item-value="id"
-                                    @change="$emit('storeChanged', $event)"
+                                v-bind:items="storeData"
+                                v-bind:disabled="editable"
+                                v-bind:loading="loading"
+                                v-model="selectedStoreId"
+                                item-value="id"
+                                @change="$emit('storeChanged', $event)"
                             ></v-select>
                         </div>
                     </v-flex>
-                    <v-flex xs4 md4>
+                    <v-flex v-if="showSearchSettings" xs4 md4>
                         <div>
                             <div>{{i18n.spatialRelation}}</div>
                             <v-radio-group
-                                    class="pt-0" v-model="spatialRelation">
+                                class="pt-0" v-model="spatialRelation">
                                 <v-radio hide-details v-bind:label="i18n.everywhere"
                                          v-bind:disabled="disableSpatialRelationRadio"
                                          value="everywhere"></v-radio>
@@ -30,7 +33,7 @@
                             </v-radio-group>
                         </div>
                     </v-flex>
-                    <v-flex xs4 md4>
+                    <v-flex v-if="showSearchSettings" xs4 md4>
                         <v-slide-x-transition>
                             <div v-if="fieldQueries.length > 1">
                                 <div>{{i18n.linkOperator}}</div>
@@ -138,6 +141,8 @@
                 storeData: [],
                 editable: false,
                 selectedStoreId: "",
+                title: null,
+                showSearchSettings: true,
                 linkOperator: "$and",
                 disableLinkOperatorRadio: false,
                 spatialRelation: "everywhere",

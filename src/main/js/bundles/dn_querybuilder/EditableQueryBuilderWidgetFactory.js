@@ -20,6 +20,7 @@ import VueDijit from "apprt-vue/VueDijit";
 class EditableQueryBuilderWidgetFactory {
 
     getWidget(properties, queryController, tool) {
+        let queryBuilderProperties = this._queryBuilderProperties;
         let model = this._queryBuilderWidgetModel;
         this.tool = tool;
         let complexQuery = properties.complexQuery;
@@ -41,6 +42,8 @@ class EditableQueryBuilderWidgetFactory {
         vm.editable = true;
         vm.storeData = model.storeData;
         vm.selectedStoreId = properties.storeId;
+        vm.title = properties.title;
+        vm.showSearchSettings = queryBuilderProperties.showQuerySettingsInEditableMode;
         vm.linkOperator = linkOperator;
         vm.disableLinkOperatorRadio = !editOptions.linkOperator;
         vm.spatialRelation = spatialRelation;

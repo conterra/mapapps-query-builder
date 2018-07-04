@@ -1,363 +1,371 @@
 {
-  "name": "dn_querybuilder",
-  "version": "4.1.2-SNAPSHOT",
-  "title": "${bundleName}",
-  "description": "${bundleDescription}",
-  "vendor": "con terra GmbH",
-  "productName": "devnet-mapapps-query-builder",
-  "Config-Bundle-Location": "/config",
-  "layer": "module",
-  "i18n": ["bundle"],
-  "dependencies": {
-    "apprt-vue": "^4.2.0",
-    "apprt-binding": "^4.2.0",
-    "apprt-vuetify": "^4.2.0",
-    "resultcenter": "^4.2.0",
-    "agssearch": "^4.2.0",
-    "coordinatetransformer": "^4.2.0",
-    "dn_queryplaceholder": "^4.0.0"
-  },
-  "CSS-Themes-Extension": [
-    {
-      "name": "*",
-      "files": [
-        "./css/styles.css"
-      ]
-    }
-  ],
-  "layout-widgets": [
-    {
-      "widgetRole": "queryBuilderWidget",
-      "sublayout": [
-        "desktop"
-      ],
-      "window": {
-        "title": "${windowTitle}",
-        "dockTool": "queryBuilderToggleTool",
-        "closable": true,
-        "maximizable": true,
-        "minimizeOnClose": true,
-        "resizable": true,
-        "marginBox": {
-          "w": 800,
-          "h": 400
-        },
-        "minSize": {
-          "w": 600,
-          "h": 300
-        },
-        "windowClass": "noPadding querybuilder-window"
-      }
+    "name": "dn_querybuilder",
+    "version": "4.1.2-SNAPSHOT",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-query-builder",
+    "Config-Bundle-Location": "/config",
+    "layer": "module",
+    "i18n": [
+        "bundle"
+    ],
+    "dependencies": {
+        "apprt-vue": "^4.2.0",
+        "apprt-binding": "^4.2.0",
+        "apprt-vuetify": "^4.2.0",
+        "resultcenter": "^4.2.0",
+        "agssearch": "^4.2.0",
+        "coordinatetransformer": "^4.2.0",
+        "dn_queryplaceholder": "^4.0.0"
     },
-    {
-      "widgetRole": "queryBuilderWidget",
-      "sublayout": [
-        "tablet_landscape",
-        "tablet_portrait"
-      ],
-      "window": {
-        "title": "${windowTitle}",
-        "dockTool": "queryBuilderToggleTool",
-        "closable": true,
-        "maximizable": true,
-        "minimizeOnClose": true,
-        "resizable": false,
-        "marginBox": {
-          "w": "100%",
-          "h": "50%",
-          "t": 0
-        },
-        "windowClass": "noPadding querybuilder-window"
-      }
-    },
-    {
-      "widgetRole": "queryBuilderWidget",
-      "sublayout": [
-        "mobile_landscape",
-        "mobile_portrait"
-      ],
-      "window": {
-        "title": "${windowTitle}",
-        "dockTool": "queryBuilderToggleTool",
-        "dockable": true,
-        "dockingBar": "${id}-dockingBarBottomLeft",
-        "closable": true,
-        "maximizable": true,
-        "minimizeOnClose": true,
-        "resizable": false,
-        "marginBox": {
-          "w": "100%",
-          "h": "100%"
-        },
-        "windowClass": "noPadding querybuilder-window"
-      }
-    },
-    {
-      "widgetRole": "editableQueryBuilderWidget",
-      "sublayout": [
-        "desktop"
-      ],
-      "window": {
-        "title": "${editableWindowTitle}",
-        "closable": true,
-        "maximizable": true,
-        "minimizeOnClose": true,
-        "resizable": true,
-        "marginBox": {
-          "w": 800,
-          "h": 400
-        },
-        "minSize": {
-          "w": 600,
-          "h": 300
-        },
-        "windowClass": "noPadding querybuilder-window"
-      }
-    },
-    {
-      "widgetRole": "editableQueryBuilderWidget",
-      "sublayout": [
-        "tablet_landscape",
-        "tablet_portrait"
-      ],
-      "window": {
-        "title": "${editableWindowTitle}",
-        "closable": true,
-        "maximizable": true,
-        "minimizeOnClose": true,
-        "resizable": false,
-        "marginBox": {
-          "w": "100%",
-          "h": "50%",
-          "t": 0
-        },
-        "windowClass": "noPadding querybuilder-window"
-      }
-    },
-    {
-      "widgetRole": "editableQueryBuilderWidget",
-      "sublayout": [
-        "mobile_landscape",
-        "mobile_portrait"
-      ],
-      "window": {
-        "title": "${editableWindowTitle}",
-        "closable": true,
-        "maximizable": true,
-        "minimizeOnClose": true,
-        "resizable": false,
-        "marginBox": {
-          "w": "100%",
-          "h": "100%"
-        },
-        "windowClass": "noPadding querybuilder-window"
-      }
-    }
-  ],
-  "components": [
-    {
-      "name": "QueryBuilderWidgetModel",
-      "provides": "dn_querybuilder.QueryBuilderWidgetModel",
-      "propertiesConstructor": true,
-      "properties": {
-        "storeIds": []
-      },
-      "references": [
+    "CSS-Themes-Extension": [
         {
-          "name": "_queryController",
-          "providing": "dn_querybuilder.QueryController"
-        },
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_mapWidgetModel",
-          "providing": "map-widget.MapWidgetModel"
-        },
-        {
-          "name": "_tool",
-          "providing": "ct.tools.Tool",
-          "filter": "(id=queryBuilderToggleTool)"
-        },
-        {
-          "name": "_metadataAnalyzer",
-          "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
+            "name": "*",
+            "files": [
+                "./css/styles.css"
+            ]
         }
-      ]
-    },
-    {
-      "name": "QueryBuilderWidgetFactory",
-      "provides": "dijit.Widget",
-      "instanceFactory": true,
-      "properties": {
-        "widgetRole": "queryBuilderWidget"
-      },
-      "references": [
+    ],
+    "layout-widgets": [
         {
-          "name": "_queryBuilderWidgetModel",
-          "providing": "dn_querybuilder.QueryBuilderWidgetModel"
+            "widgetRole": "queryBuilderWidget",
+            "sublayout": [
+                "desktop"
+            ],
+            "window": {
+                "title": "${windowTitle}",
+                "dockTool": "queryBuilderToggleTool",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": true,
+                "resizable": true,
+                "marginBox": {
+                    "w": 800,
+                    "h": 400
+                },
+                "minSize": {
+                    "w": 600,
+                    "h": 300
+                },
+                "windowClass": "noPadding querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "queryBuilderWidget",
+            "sublayout": [
+                "tablet_landscape",
+                "tablet_portrait"
+            ],
+            "window": {
+                "title": "${windowTitle}",
+                "dockTool": "queryBuilderToggleTool",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": true,
+                "resizable": false,
+                "marginBox": {
+                    "w": "100%",
+                    "h": "50%",
+                    "t": 0
+                },
+                "windowClass": "noPadding querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "queryBuilderWidget",
+            "sublayout": [
+                "mobile_landscape",
+                "mobile_portrait"
+            ],
+            "window": {
+                "title": "${windowTitle}",
+                "dockTool": "queryBuilderToggleTool",
+                "dockable": true,
+                "dockingBar": "${id}-dockingBarBottomLeft",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": true,
+                "resizable": false,
+                "marginBox": {
+                    "w": "100%",
+                    "h": "100%"
+                },
+                "windowClass": "noPadding querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "editableQueryBuilderWidget",
+            "sublayout": [
+                "desktop"
+            ],
+            "window": {
+                "title": "${editableWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": true,
+                "resizable": true,
+                "marginBox": {
+                    "w": 800,
+                    "h": 400
+                },
+                "minSize": {
+                    "w": 600,
+                    "h": 300
+                },
+                "windowClass": "noPadding querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "editableQueryBuilderWidget",
+            "sublayout": [
+                "tablet_landscape",
+                "tablet_portrait"
+            ],
+            "window": {
+                "title": "${editableWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": true,
+                "resizable": false,
+                "marginBox": {
+                    "w": "100%",
+                    "h": "50%",
+                    "t": 0
+                },
+                "windowClass": "noPadding querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "editableQueryBuilderWidget",
+            "sublayout": [
+                "mobile_landscape",
+                "mobile_portrait"
+            ],
+            "window": {
+                "title": "${editableWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": true,
+                "resizable": false,
+                "marginBox": {
+                    "w": "100%",
+                    "h": "100%"
+                },
+                "windowClass": "noPadding querybuilder-window"
+            }
         }
-      ]
-    },
-    {
-      "name": "EditableQueryBuilderWidgetFactory",
-      "provides": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
-      "properties": {},
-      "references": [
+    ],
+    "components": [
         {
-          "name": "_queryBuilderWidgetModel",
-          "providing": "dn_querybuilder.QueryBuilderWidgetModel",
-          "cardinality": "0..1"
+            "name": "QueryBuilderWidgetModel",
+            "provides": "dn_querybuilder.QueryBuilderWidgetModel",
+            "propertiesConstructor": true,
+            "properties": {
+                "storeIds": []
+            },
+            "references": [
+                {
+                    "name": "_queryController",
+                    "providing": "dn_querybuilder.QueryController"
+                },
+                {
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                },
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=queryBuilderToggleTool)"
+                },
+                {
+                    "name": "_metadataAnalyzer",
+                    "providing": "dn_querybuilder.MetadataAnalyzer"
+                },
+                {
+                    "name": "stores",
+                    "providing": "ct.api.Store",
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
+                }
+            ]
+        },
+        {
+            "name": "QueryBuilderWidgetFactory",
+            "provides": "dijit.Widget",
+            "instanceFactory": true,
+            "properties": {
+                "widgetRole": "queryBuilderWidget"
+            },
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel"
+                }
+            ]
+        },
+        {
+            "name": "EditableQueryBuilderWidgetFactory",
+            "provides": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
+            "properties": {
+            },
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
+                },
+                {
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                }
+            ]
+        },
+        {
+            "name": "QueryBuilderProperties",
+            "impl": "ct/Stateful",
+            "provides": [
+                "dn_querybuilder.QueryBuilderProperties"
+            ],
+            "propertiesConstructor": true,
+            "properties": {
+                "enableDistinctValues": true,
+                "defaultLinkOperator": "$or",
+                "defaultSpatialRelation": "everywhere",
+                "useMemorySelectionStore": true,
+                "useUserExtent": false,
+                "allowNegation": false,
+                "showQuerySettingsInEditableMode": true
+            }
+        },
+        {
+            "name": "QueryTools",
+            "impl": "ct/tools/Tool",
+            "provides": "ct.tools.Tool",
+            "propertiesConstructor": true,
+            "componentFactory": true,
+            "properties": {
+                "id": "querytool",
+                "title": "Query a store",
+                "toolRole": "toolset",
+                "iconClass": "icon-info",
+                "clickHandler": "onQueryToolActivated",
+                "complexQuery": {},
+                "storeId": "*",
+                "togglable": false
+            },
+            "references": [
+                {
+                    "name": "handlerScope",
+                    "providing": "dn_querybuilder.QueryToolController"
+                },
+                {
+                    "name": "store",
+                    "providing": "ct.api.Store",
+                    "filter": "(id={storeId})"
+                }
+            ]
+        },
+        {
+            "name": "QueryController",
+            "provides": [
+                "dn_querybuilder.QueryController"
+            ],
+            "references": [
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_dataModel",
+                    "providing": "resultcenter.DataModel"
+                },
+                {
+                    "name": "_coordinateTransformer",
+                    "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
+                },
+                {
+                    "name": "_metadataAnalyzer",
+                    "providing": "dn_querybuilder.MetadataAnalyzer"
+                },
+                {
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                },
+                {
+                    "name": "_replacer",
+                    "providing": "dn_queryplaceholder.Replacer"
+                },
+                {
+                    "name": "_logService",
+                    "providing": "ct.framework.api.LogService"
+                }
+            ]
+        },
+        {
+            "name": "QueryToolController",
+            "provides": [
+                "dn_querybuilder.QueryToolController"
+            ],
+            "references": [
+                {
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                },
+                {
+                    "name": "_queryController",
+                    "providing": "dn_querybuilder.QueryController"
+                },
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_editableQueryBuilderWidgetFactory",
+                    "providing": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
+                    "cardinality": "0..1"
+                }
+            ]
+        },
+        {
+            "name": "MetadataAnalyzer",
+            "immediate": true,
+            "provides": [
+                "dn_querybuilder.MetadataAnalyzer"
+            ],
+            "references": [
+                {
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                },
+                {
+                    "name": "_logService",
+                    "providing": "ct.framework.api.LogService"
+                }
+            ]
+        },
+        {
+            "name": "QueryBuilderToggleTool",
+            "impl": "ct/tools/Tool",
+            "provides": [
+                "ct.tools.Tool"
+            ],
+            "propertiesConstructor": true,
+            "properties": {
+                "id": "queryBuilderToggleTool",
+                "title": "${tool.title}",
+                "tooltip": "${tool.tooltip}",
+                "iconClass": "icon-custom-info-help",
+                "toolRole": "toolset",
+                "togglable": true,
+                "rules": {
+                    "noGroup": true
+                }
+            }
         }
-      ]
-    },
-    {
-      "name": "QueryBuilderProperties",
-      "impl": "ct/Stateful",
-      "provides": [
-        "dn_querybuilder.QueryBuilderProperties"
-      ],
-      "propertiesConstructor": true,
-      "properties": {
-        "enableDistinctValues": true,
-        "defaultLinkOperator": "$or",
-        "defaultSpatialRelation": "everywhere",
-        "useMemorySelectionStore": true,
-        "useUserExtent": false,
-        "allowNegation": false
-      }
-    },
-    {
-      "name": "QueryTools",
-      "impl": "ct/tools/Tool",
-      "provides": "ct.tools.Tool",
-      "propertiesConstructor": true,
-      "componentFactory": true,
-      "properties": {
-        "id": "querytool",
-        "title": "Query a store",
-        "toolRole": "toolset",
-        "iconClass": "icon-info",
-        "clickHandler": "onQueryToolActivated",
-        "complexQuery": {},
-        "storeId": "*",
-        "togglable": false
-      },
-      "references": [
-        {
-          "name": "handlerScope",
-          "providing": "dn_querybuilder.QueryToolController"
-        },
-        {
-          "name": "store",
-          "providing": "ct.api.Store",
-          "filter": "(id={storeId})"
-        }
-      ]
-    },
-    {
-      "name": "QueryController",
-      "provides": [
-        "dn_querybuilder.QueryController"
-      ],
-      "references": [
-        {
-          "name": "_mapWidgetModel",
-          "providing": "map-widget.MapWidgetModel"
-        },
-        {
-          "name": "_dataModel",
-          "providing": "resultcenter.DataModel"
-        },
-        {
-          "name": "_coordinateTransformer",
-          "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
-        },
-        {
-          "name": "_metadataAnalyzer",
-          "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_replacer",
-          "providing": "dn_queryplaceholder.Replacer"
-        },
-        {
-          "name": "_logService",
-          "providing": "ct.framework.api.LogService"
-        }
-      ]
-    },
-    {
-      "name": "QueryToolController",
-      "provides": [
-        "dn_querybuilder.QueryToolController"
-      ],
-      "references": [
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_queryController",
-          "providing": "dn_querybuilder.QueryController"
-        },
-        {
-          "name": "_mapWidgetModel",
-          "providing": "map-widget.MapWidgetModel"
-        },
-        {
-          "name": "_editableQueryBuilderWidgetFactory",
-          "providing": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
-          "cardinality": "0..1"
-        }
-      ]
-    },
-    {
-      "name": "MetadataAnalyzer",
-      "immediate": true,
-      "provides": [
-        "dn_querybuilder.MetadataAnalyzer"
-      ],
-      "references": [
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_logService",
-          "providing": "ct.framework.api.LogService"
-        }
-      ]
-    },
-    {
-      "name": "QueryBuilderToggleTool",
-      "impl": "ct/tools/Tool",
-      "provides": [
-        "ct.tools.Tool"
-      ],
-      "propertiesConstructor": true,
-      "properties": {
-        "id": "queryBuilderToggleTool",
-        "title": "${tool.title}",
-        "tooltip": "${tool.tooltip}",
-        "iconClass": "icon-custom-info-help",
-        "toolRole": "toolset",
-        "togglable": true,
-        "rules": {
-          "noGroup": true
-        }
-      }
-    }
-  ]
+    ]
 }
