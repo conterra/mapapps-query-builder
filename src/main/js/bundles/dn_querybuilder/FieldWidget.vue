@@ -1,6 +1,6 @@
 <template>
     <v-slide-y-transition>
-        <v-card raised class="mb-2">
+        <v-card raised class="mb-2" v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue">
             <v-container fluid grid-list-md v-if="fieldQuery.not">
                 <v-chip label color="red">
                     <v-icon left>warning</v-icon>
