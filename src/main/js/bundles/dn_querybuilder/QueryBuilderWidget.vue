@@ -67,14 +67,11 @@
                 <v-layout row wrap justify-center>
                     <v-flex md12>
                         <v-card class="elevation-6">
-                            <v-tooltip top>
-                                <v-btn block ripple color="primary" slot="activator" @click="$emit('search', {})"
-                                       v-bind:loading="processing">
-                                    <v-icon left>search</v-icon>
-                                    {{i18n.search}}
-                                </v-btn>
-                                <span>{{i18n.search}}</span>
-                            </v-tooltip>
+                            <v-btn block ripple color="primary" @click="$emit('search', {})"
+                                   v-bind:loading="processing">
+                                <v-icon left>search</v-icon>
+                                {{i18n.search}}
+                            </v-btn>
                         </v-card>
                     </v-flex>
                 </v-layout>
@@ -150,8 +147,7 @@
                 fieldQueries: [],
                 allowNegation: false,
                 loading: false,
-                processing: false,
-                dateMenu: false
+                processing: false
             };
         },
         mounted: function () {

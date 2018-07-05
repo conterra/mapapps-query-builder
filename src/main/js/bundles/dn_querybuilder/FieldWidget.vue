@@ -45,13 +45,12 @@
                         <v-menu
                             v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date' && fieldQuery.relationalOperator !== '$exists'"
                             v-bind:close-on-content-click="false"
-                            v-model="$root.dateMenu"
                             transition="scale-transition"
                             lazy
                             offset-y
                             full-width
-                            max-width="290px"
-                            min-width="290px">
+                            max-width="300px"
+                            min-width="300px">
                             <v-text-field
                                 slot="activator"
                                 v-model="fieldQuery.value"
