@@ -30,6 +30,7 @@ class QueryController {
         } else {
             this.defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
         }
+        this._eventService.postEvent("dn_querybuilder/QUERY");
     }
 
     memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
@@ -115,7 +116,7 @@ class QueryController {
     }
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {
-        if(queryBuilderWidgetModel) {
+        if (queryBuilderWidgetModel) {
             queryBuilderWidgetModel.processing = processing;
         }
         if (tool) {

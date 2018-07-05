@@ -23,6 +23,10 @@ class QueryToolController {
     }
 
     deactivate() {
+        this.hideWindow();
+    }
+
+    hideWindow() {
         let registration = this._serviceregistration;
 
         // clear the reference

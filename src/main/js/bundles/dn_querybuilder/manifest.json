@@ -301,6 +301,10 @@
                     "providing": "dn_queryplaceholder.Replacer"
                 },
                 {
+                    "name": "_eventService",
+                    "providing": "ct.framework.api.EventService"
+                },
+                {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
                 }
@@ -309,8 +313,17 @@
         {
             "name": "QueryToolController",
             "provides": [
-                "dn_querybuilder.QueryToolController"
+                "dn_querybuilder.QueryToolController",
+                "ct.framework.api.EventHandler"
             ],
+            "properties": {
+                "Event-Topics": [
+                    {
+                        "topic": "dn_querybuilder/QUERY",
+                        "method": "hideWindow"
+                    }
+                ]
+            },
             "references": [
                 {
                     "name": "_queryBuilderProperties",
