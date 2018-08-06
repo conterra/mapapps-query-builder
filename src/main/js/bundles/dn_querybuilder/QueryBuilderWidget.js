@@ -93,7 +93,7 @@ define([
                     var relationalOperatorId = widget.getSelectedRelationalOperator();
                     var not = widget.getSelectedNot();
                     var value = widget.getValue();
-                    if (value === "") {
+                    if (value === "" || !value) {
                         return;
                     }
                     var obj1 = {};
