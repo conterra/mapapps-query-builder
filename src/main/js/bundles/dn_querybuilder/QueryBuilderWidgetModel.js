@@ -140,7 +140,7 @@ const QueryBuilderWidgetModel = declare({
             let relationalOperator = fieldQuery.relationalOperator;
             let not = fieldQuery.not;
             let value = fieldQuery.value;
-            if (value === "") {
+            if (value === "" || !value) {
                 return;
             }
             let obj1 = {};
