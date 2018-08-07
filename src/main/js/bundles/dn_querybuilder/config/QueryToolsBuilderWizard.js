@@ -23,6 +23,7 @@ import Memory from "dojo/store/Memory";
 
 import _Connect from "ct/_Connect";
 import ct_when from "ct/_when";
+import ct_lang from "ct/_lang";
 import ct_array from "ct/array";
 import ct_css from "ct/util/css";
 import ComplexMemoryStore from "ct/store/ComplexMemory";
@@ -247,11 +248,11 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         let i = 0;
         let obj1 = [];
         let obj2 = [];
-        for (let child in complexQueryObj) {
+        ct_lang.forEachOwnProp(complexQueryObj, function (value, name) {
             i++;
-            obj1.push(complexQueryObj[child]);
-            obj2.push(child);
-        }
+            obj1.push(value);
+            obj2.push(name);
+        });
         let objects, results;
         if (i === 1) {
             if (obj2[0] === "$and" || obj2[0] === "$or") {
@@ -259,11 +260,11 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                 results = 0;
                 d_array.forEach(objects, (object, i) => {
                     i = 0;
-                    for (let child in object) {
-                        for (let c in object[child]) {
+                    ct_lang.forEachOwnProp(object, function (v1, n1) {
+                        ct_lang.forEachOwnProp(v1, function (v2, n2) {
                             i++;
-                        }
-                    }
+                        });
+                    });
                     if (i === 1) {
                         results++;
                     }
@@ -279,11 +280,11 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                     results = 0;
                     d_array.forEach(objects, (object, i) => {
                         i = 0;
-                        for (let child in object) {
-                            for (let c in object[child]) {
+                        ct_lang.forEachOwnProp(object, function (v1, n1) {
+                            ct_lang.forEachOwnProp(v1, function (v2, n2) {
                                 i++;
-                            }
-                        }
+                            });
+                        });
                         if (i === 1) {
                             results++;
                         }
@@ -311,22 +312,22 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         let not;
         if (field.$not) {
             not = true;
-            for (let a in field.$not) {
-                fieldId = a;
-                for (let b in field.$not[fieldId]) {
-                    relationalOperatorId = b;
-                    value = field.$not[fieldId][relationalOperatorId];
-                }
-            }
+            ct_lang.forEachOwnProp(field.$not, function (v1, n1) {
+                fieldId = n1;
+                ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                    relationalOperatorId = n2;
+                    value = v2;
+                });
+            });
         } else {
             not = false;
-            for (let a in field) {
-                fieldId = a;
-                for (let b in field[fieldId]) {
-                    relationalOperatorId = b;
-                    value = field[fieldId][relationalOperatorId];
-                }
-            }
+            ct_lang.forEachOwnProp(field, function (v1, n1) {
+                fieldId = n1;
+                ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                    relationalOperatorId = n2;
+                    value = v2;
+                });
+            });
         }
         let storeId = this._storeSelect.value;
         let store = this._getSelectedStoreObj(storeId);
@@ -522,13 +523,13 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
     _createPlaceholderGUI() {
         let placeholderObj = this.replacer.placeholder;
         let placeholderArray = [];
-        for (let placeholder in placeholderObj) {
+        ct_lang.forEachOwnProp(placeholderObj, function (value, name) {
             placeholderArray.push({
-                id: placeholder,
-                key: "${" + placeholder + "}",
-                value: placeholderObj[placeholder]
+                id: name,
+                key: "${" + name + "}",
+                value: value
             });
-        }
+        });
         let store = new ComplexMemoryStore({
             data: placeholderArray,
             idProperty: "id",

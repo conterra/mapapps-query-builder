@@ -16,6 +16,7 @@
 import {declare} from "apprt-core/Mutable";
 import ct_array from "ct/array";
 import ct_when from "ct/_when";
+import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
 
 const QueryBuilderWidgetModel = declare({
@@ -86,22 +87,22 @@ const QueryBuilderWidgetModel = declare({
             let fieldId, not, relationalOperator, value;
             if (field.$not) {
                 not = true;
-                for (let a in field.$not) {
-                    fieldId = a;
-                    for (let b in field.$not[fieldId]) {
-                        relationalOperator = b;
-                        value = field.$not[fieldId][relationalOperator];
-                    }
-                }
+                ct_lang.forEachOwnProp(field.$not, function (v1, n1) {
+                    fieldId = n1;
+                    ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                        relationalOperator = n2;
+                        value = v2;
+                    });
+                });
             } else {
                 not = false;
-                for (let a in field) {
-                    fieldId = a;
-                    for (let b in field[fieldId]) {
-                        relationalOperator = b;
-                        value = field[fieldId][relationalOperator];
-                    }
-                }
+                ct_lang.forEachOwnProp(field, function (v1, n1) {
+                    fieldId = n1;
+                    ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                        relationalOperator = n2;
+                        value = v2;
+                    });
+                });
             }
             this.loading = true;
             let fieldData = this._metadataAnalyzer.getFields(store);

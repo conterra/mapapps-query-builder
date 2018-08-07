@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import d_lang from "dojo/_base/lang";
+import ct_lang from "ct/_lang";
 import ct_when from "ct/_when";
 
 class Replacer {
@@ -26,11 +27,11 @@ class Replacer {
     replace(string) {
         this.refresh();
         let s = string.substring(2, string.length - 1);
-        for (let i in this.placeholder) {
-            if (i === s) {
-                return this.placeholder[i];
+        ct_lang.forEachOwnProp(this.placeholder, function (value, name) {
+            if (name === s) {
+                return value;
             }
-        }
+        });
         return string;
     }
 

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import ct_when from "ct/_when";
+import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
 
@@ -104,15 +105,15 @@ class QueryController {
     }
 
     searchReplacer(o) {
-        for (let i in o) {
-            let value = o[i];
+        let that = this;
+        ct_lang.forEachOwnProp(o, function (value, name) {
             if (typeof(value) === "string") {
-                o[i] = this._replacer.replace(value);
+                o[name] = that._replacer.replace(value);
             }
             if (value !== null && typeof(value) === "object" && !value.extent) {
-                this.searchReplacer(value);
+                that.searchReplacer(value);
             }
-        }
+        });
     }
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {
