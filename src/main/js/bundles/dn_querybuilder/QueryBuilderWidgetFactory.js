@@ -18,7 +18,7 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import Binding from "apprt-binding/Binding";
 
-class QueryBuilderWidgetFactory {
+export default class QueryBuilderWidgetFactory {
 
     activate(componentContext) {
         this._initComponent();
@@ -66,5 +66,3 @@ class QueryBuilderWidgetFactory {
     }
 
 }
-
-module.exports = QueryBuilderWidgetFactory;

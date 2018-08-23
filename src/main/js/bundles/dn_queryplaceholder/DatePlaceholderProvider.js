@@ -15,7 +15,7 @@
  */
 import d_locale from "dojo/date/locale";
 
-class DatePlaceholderProvider {
+export default class DatePlaceholderProvider {
 
     getPlaceholder() {
         let dateObj = new Date();
@@ -33,5 +33,3 @@ class DatePlaceholderProvider {
         return this.getPlaceholder();
     }
 }
-
-module.exports = DatePlaceholderProvider;

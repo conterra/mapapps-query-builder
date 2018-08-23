@@ -17,7 +17,7 @@ import d_lang from "dojo/_base/lang";
 import ct_lang from "ct/_lang";
 import ct_when from "ct/_when";
 
-class Replacer {
+export default class Replacer {
 
     activate() {
         this.placeholder = this.placeholder || {};
@@ -59,5 +59,3 @@ class Replacer {
         }, this);
     }
 }
-
-module.exports = Replacer;

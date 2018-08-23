@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class ExtentPlaceholderProvider {
+export default class ExtentPlaceholderProvider {
 
     getPlaceholder() {
         let placeholder = {};
@@ -25,5 +25,3 @@ class ExtentPlaceholderProvider {
         return this.getPlaceholder();
     }
 }
-
-module.exports = ExtentPlaceholderProvider;

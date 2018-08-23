@@ -19,7 +19,7 @@ import ct_when from "ct/_when";
 import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
 
-const QueryBuilderWidgetModel = declare({
+export default declare({
 
     stores: [],
     storeData: [],
@@ -174,5 +174,3 @@ const QueryBuilderWidgetModel = declare({
     }
 
 });
-
-module.exports = QueryBuilderWidgetModel;

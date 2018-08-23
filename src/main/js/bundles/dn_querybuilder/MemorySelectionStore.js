@@ -16,7 +16,7 @@
 import declare from "dojo/_base/declare";
 import ComplexMemoryStore from "ct/store/ComplexMemory";
 
-let MemorySelectionStore = declare([ComplexMemoryStore], {
+export default declare([ComplexMemoryStore], {
     masterStore: null,
     initialQuery: null,
     getMetadata: function (object) {
@@ -26,5 +26,3 @@ let MemorySelectionStore = declare([ComplexMemoryStore], {
         return this.initialQuery;
     }
 });
-
-module.exports = MemorySelectionStore;

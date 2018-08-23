@@ -17,7 +17,7 @@ import QueryBuilderWidget from "./QueryBuilderWidget.vue";
 import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 
-class EditableQueryBuilderWidgetFactory {
+export default class EditableQueryBuilderWidgetFactory {
 
     getWidget(properties, queryController, tool) {
         let queryBuilderProperties = this._queryBuilderProperties;
@@ -59,5 +59,3 @@ class EditableQueryBuilderWidgetFactory {
         return VueDijit(vm);
     }
 }
-
-module.exports = EditableQueryBuilderWidgetFactory;

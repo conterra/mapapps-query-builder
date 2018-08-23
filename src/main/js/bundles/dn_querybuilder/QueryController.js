@@ -18,7 +18,7 @@ import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
 
-class QueryController {
+export default class QueryController {
     activate(componentContext) {
         this.i18n = this._i18n.get().ui;
     }
@@ -125,5 +125,3 @@ class QueryController {
         }
     }
 }
-
-module.exports = QueryController;

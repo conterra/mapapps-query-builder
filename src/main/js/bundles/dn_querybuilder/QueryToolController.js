@@ -16,7 +16,7 @@
 
 import Extent from "esri/geometry/Extent";
 
-class QueryToolController {
+export default class QueryToolController {
     activate(componentContext) {
         this._bundleContext = componentContext.getBundleContext();
         this.i18n = this._i18n.get().ui;
@@ -82,5 +82,3 @@ class QueryToolController {
         }
     }
 }
-
-module.exports = QueryToolController;

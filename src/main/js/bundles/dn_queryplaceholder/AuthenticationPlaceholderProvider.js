@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class AuthenticationPlaceholderProvider {
+export default class AuthenticationPlaceholderProvider {
 
     getPlaceholder() {
         let placeholder = {};
@@ -25,5 +25,3 @@ class AuthenticationPlaceholderProvider {
         return placeholder;
     }
 }
-
-module.exports = AuthenticationPlaceholderProvider;

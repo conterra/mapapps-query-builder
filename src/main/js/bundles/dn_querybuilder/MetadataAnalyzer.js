@@ -19,7 +19,7 @@ import Promise from "apprt-core/Promise";
 import QueryTask from "esri/tasks/QueryTask";
 import Query from "esri/tasks/support/Query";
 
-class MetadataAnalyzer {
+export default class MetadataAnalyzer {
     activate(componentContext) {
         let serviceResolver = this.serviceResolver = new ServiceResolver();
         let bundleCtx = componentContext.getBundleContext();
@@ -135,5 +135,3 @@ class MetadataAnalyzer {
         return resolver.getServiceProperties(idOrStore);
     }
 }
-
-module.exports = MetadataAnalyzer;
