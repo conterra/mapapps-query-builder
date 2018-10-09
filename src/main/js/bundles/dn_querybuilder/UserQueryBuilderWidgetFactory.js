@@ -15,8 +15,10 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/_base/array",
     "./UserQueryBuilderWidget"
 ], function (declare,
+             d_array,
              UserQueryBuilderWidget) {
     return declare([], {
         constructor: function () {
@@ -76,6 +78,15 @@ define([
             if (this.widget) {
                 this.widget.getStoreData();
             }
-        }
+		},
+		removeStores: function (store) {
+			this.stores = d_array.filter(this.stores, function (item) {
+				return item !== store;
+			});
+
+			if (this.widget) {
+				this.widget.getStoreData();
+			}
+		}
     });
 });
