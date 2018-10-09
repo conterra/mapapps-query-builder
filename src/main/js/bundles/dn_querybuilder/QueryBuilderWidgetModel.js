@@ -171,6 +171,10 @@ export default declare({
     addStores(store) {
         this.stores.push(store);
         this.getStoreData();
-    }
+    },
 
+    removeStores(store){
+        this.stores.splice(this.stores.indexOf(store), 1);
+        this.getStoreData();
+    }
 });
