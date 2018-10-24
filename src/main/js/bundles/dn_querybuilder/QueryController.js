@@ -41,7 +41,7 @@ export default class QueryController {
             if (result.total > 0) {
                 let mapWidgetModel = this._mapWidgetModel;
                 let spatialReference = mapWidgetModel.get("spatialReference");
-                let wkid = spatialReference.latestWkid || wkid;
+                let wkid = spatialReference.latestWkid || spatialReference.wkid;
                 let geometries = result.map((item) => {
                     return item.geometry;
                 });
