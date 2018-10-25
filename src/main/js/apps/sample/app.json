@@ -275,7 +275,7 @@
                     "title": "Störungen",
                     "description": "Störungen",
                     "idProperty": "objectid",
-                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/stoerung/FeatureServer/0",
+                    "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
                     "useIn": [
                         "selection"
                     ]
