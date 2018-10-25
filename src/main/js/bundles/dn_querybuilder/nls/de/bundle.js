@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 module.exports = {
-    bundleName: "Query Builder",
+    bundleName: "QueryBuilder",
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
     windowTitle: "Eigene Abfrage Query",
     editableWindowTitle: "Editierbare Query",
