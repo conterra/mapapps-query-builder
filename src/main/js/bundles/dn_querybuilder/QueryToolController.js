@@ -77,6 +77,7 @@ export default class QueryToolController {
             options.ignoreCase = event.options.ignoreCase;
             options.locale = event.options.locale;
             options.sort = event.options.sort || [];
+            options.suggestContains = true;
 
             this._queryController.query(store, complexQuery, options, tool);
         }

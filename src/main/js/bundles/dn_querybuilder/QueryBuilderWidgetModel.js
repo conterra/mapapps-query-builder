@@ -60,7 +60,7 @@ export default declare({
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
         let selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         let complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
-        this._queryController.query(selectedStore, complexQuery, {}, tool || this._tool, this);
+        this._queryController.query(selectedStore, complexQuery, {suggestContains: true}, tool || this._tool, this);
     },
 
     addFieldQuery(selectedStoreId) {
@@ -173,7 +173,7 @@ export default declare({
         this.getStoreData();
     },
 
-    removeStores(store){
+    removeStores(store) {
         this.stores.splice(this.stores.indexOf(store), 1);
         this.getStoreData();
     }
