@@ -104,7 +104,7 @@
                         ]
                     }
                 },
-                {
+                /*{
                     "id": "querybuilder_1442569207538",
                     "title": "Date Test [editable]",
                     "iconClass": "icon-custom-info",
@@ -140,7 +140,7 @@
                         }
                     },
                     "storeId": "stoerungen"
-                },
+                },*/
                 {
                     "id": "querybuilder_1469615816195",
                     "title": "Where are Germany's airports?",
@@ -165,6 +165,81 @@
                         }
                     },
                     "storeId": "airtraffic"
+                },
+                {
+                    "id": "querybuilder_1540467316530",
+                    "title": "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "Bevölkerungsdichte": {
+                                    "$gt": 1000
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": false,
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "wahlkreise_strukturdaten"
+                },
+                {
+                    "id": "querybuilder_1540467904227",
+                    "title": "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "Haushaltseinkommen_eur_je_Einw": {
+                                    "$gte": 20000
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": false,
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "wahlkreise_strukturdaten"
+                },
+                {
+                    "id": "querybuilder_1540468225267",
+                    "title": "Wahlkreise deren Bevölkerung zunimmt",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "Geburtensaldo_je1000": {
+                                    "$gt": 0
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": false,
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "wahlkreise_strukturdaten"
                 }
             ]
         },
@@ -309,6 +384,16 @@
                     "useIn": [
                         "selection"
                     ]
+                },
+                {
+                    "id": "wahlkreise_strukturdaten",
+                    "title": "Wahlkreise 2017 - Strukturdaten",
+                    "description": "Wahlkreise 2017 - Strukturdaten",
+                    "idProperty": "OBJECTID",
+                    "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+                    "useIn": [
+                        "selection"
+                    ]
                 }
             ]
         },
@@ -368,29 +453,10 @@
             "Config": {
                 "basemaps": [
                     {
-                        "id": "streets",
-                        "title": "${map.basemaps.street}",
-                        "basemap": "streets",
+                        "id": "dark_gray",
+                        "title": "Dark Gray",
+                        "basemap": "dark-gray",
                         "selected": true
-                    },
-                    {
-                        "id": "topo",
-                        "title": "${map.basemaps.topo}",
-                        "basemap": "topo",
-                        "icon": "filter_hdr"
-                    },
-                    {
-                        "id": "gray",
-                        "title": "${map.basemaps.gray}",
-                        "basemap": "gray",
-                        "icon": "gradient"
-                    },
-                    {
-                        "id": "satellite",
-                        "title": "${map.basemaps.satellite}",
-                        "basemap": "satellite",
-                        "icon": "photo_camera",
-                        "description": "Satellit"
                     }
                 ],
                 "map": {
