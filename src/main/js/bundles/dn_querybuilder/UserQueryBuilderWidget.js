@@ -166,7 +166,7 @@ define([
 
             var storeId = this._storeSelect.get("value");
             var store = this._getSelectedStoreObj(storeId);
-            var options = {}/*{ignoreCase: true}*/;
+            var options = {suggestContains: true};
 
             this.queryController.query(store, customQuery, options, this.tool, this);
         }

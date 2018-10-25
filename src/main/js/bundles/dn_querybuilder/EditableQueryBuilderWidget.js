@@ -118,6 +118,8 @@ define([
             }
             options.ignoreCase = this.properties.options.ignoreCase;
             options.locale = this.properties.options.locale;
+            options.sort = event.options.sort || [];
+            options.suggestContains = true;
 
             this.queryController.query(store, customQuery, options, this.tool, this);
         },
