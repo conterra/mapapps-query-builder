@@ -15,7 +15,7 @@
  */
 define({
     root: {
-        bundleName: "Query Builder",
+        bundleName: "QueryBuilder",
         bundleDescription: "Bundle to build custom query tools",
         wizard: {
             title: "Title",

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 define({
-    bundleName: "Query Builder",
+    bundleName: "QueryBuilder",
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte QueryTools zu erstellen",
     wizard: {
         title: "Titel",
