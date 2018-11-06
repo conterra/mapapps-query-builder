@@ -6,12 +6,10 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 The Query Builder 3 for Linie 3 can be found in the 3.x branch:
 https://github.com/conterra/mapapps-query-builder/tree/3.x
 
-Sample App
-------------------
+##Sample App
 https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder4/index.html
 
-Installation Guide
-------------------
+##Installation Guide
 **Requirement: map.apps 4.3.0**
 
 1. First, you need to add the bundles "agssearch" and "dn_querybuilder" to your app.
@@ -74,9 +72,9 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 }
 ```
 
-#### Configurable Components of dn_querybuilder:
+### Configurable Components of dn_querybuilder:
 
-##### QueryBuilderProperties:
+#### QueryBuilderProperties:
 ```
 "QueryBuilderProperties": {
     "enableDistinctValues": true,
@@ -89,7 +87,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 }
 ```
 
-##### UserQueryBuilderWidgetFactory:
+#### UserQueryBuilderWidgetFactory:
 ```
 "QueryBuilderWidgetFactory": {
   "storeIds": [
@@ -107,16 +105,16 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 }
 ```
 
-##### QueryTools:
+#### QueryTools:
 ```
 "QueryTools": [
   // list of query tools
 ]
 ```
 
-#### Configurable Components of dn_queryplaceholder:
+### Configurable Components of dn_queryplaceholder:
 
-##### Replacer:
+#### Replacer:
 ```
 "Replacer": {
   "placeholder": {
@@ -128,13 +126,12 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 More information about how to place a widget:
 https://developernetwork.conterra.de/en/documentation/mapapps/39/developers-documentation/templates
 
-Development Guide
-------------------
+##Development Guide
 ### Define the mapapps remote base
 Before you can run the project you have to define the mapapps.remote.base property in the pom.xml-file:
 `<mapapps.remote.base>http://%YOURSERVER%/ct-mapapps-webapp-%VERSION%</mapapps.remote.base>`
 
-##### Other methods to to define the mapapps.remote.base property.
+### Other methods to to define the mapapps.remote.base property.
 1. Goal parameters
 `mvn install -Dmapapps.remote.base=http://%YOURSERVER%/ct-mapapps-webapp-%VERSION%`
 
