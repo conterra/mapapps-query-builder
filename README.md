@@ -6,10 +6,10 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 The Query Builder 3 for Linie 3 can be found in the 3.x branch:
 https://github.com/conterra/mapapps-query-builder/tree/3.x
 
-##Sample App
+## Sample App
 https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder4/index.html
 
-##Installation Guide
+## Installation Guide
 **Requirement: map.apps 4.3.0**
 
 1. First, you need to add the bundles "agssearch" and "dn_querybuilder" to your app.
