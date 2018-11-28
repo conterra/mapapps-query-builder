@@ -104,43 +104,6 @@
                         ]
                     }
                 },
-                /*{
-                    "id": "querybuilder_1442569207538",
-                    "title": "Date Test [editable]",
-                    "iconClass": "icon-custom-info",
-                    "complexQuery": {
-                        "$and": [
-                            {
-                                "zeitpunkt": {
-                                    "$gte": ""
-                                }
-                            }
-                        ]
-                    },
-                    "options": {
-                        "mode": "builder",
-                        "editable": true,
-                        "editOptions": {
-                            "spatialRelation": false,
-                            "linkOperator": false,
-                            "editFields": [
-                                {
-                                    "not": false,
-                                    "field": false,
-                                    "relationalOperator": false,
-                                    "value": true
-                                }
-                            ]
-                        },
-                        "count": -1,
-                        "ignoreCase": false,
-                        "locale": {
-                            "language": "en",
-                            "country": "EN"
-                        }
-                    },
-                    "storeId": "stoerungen"
-                },*/
                 {
                     "id": "querybuilder_1469615816195",
                     "title": "Where are Germany's airports?",
@@ -262,6 +225,21 @@
             },
             "FeatureMapVisualizer": {
                 "useDataViewPaging": true
+            },
+            "DataView": {
+                "DGRID": {
+                    "checkboxSelection": true,
+                    "columns": [
+                        {
+                            "matches": {
+                                "name": {
+                                    "$exists": true
+                                }
+                            },
+                            "width": 150
+                        }
+                    ]
+                }
             }
         },
         "agssearch": {

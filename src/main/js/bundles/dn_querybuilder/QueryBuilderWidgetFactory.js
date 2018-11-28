@@ -32,13 +32,6 @@ export default class QueryBuilderWidgetFactory {
         const vm = this.queryBuilderWidget = new Vue(QueryBuilderWidget);
         let model = this._queryBuilderWidgetModel;
         vm.i18n = this._i18n.get().ui;
-        vm.storeData = model.storeData;
-        vm.selectedStoreId = model.selectedStoreId;
-        vm.linkOperator = model.linkOperator;
-        vm.spatialRelation = model.spatialRelation;
-        vm.enableNegation = model.allowNegation;
-        vm.fieldQueries = model.fieldQueries;
-        vm.loading = model.loading;
 
         // listen to view model methods
         vm.$on('startup', () => {
@@ -58,11 +51,9 @@ export default class QueryBuilderWidgetFactory {
             model.addFieldQuery(selectedStoreId);
         });
 
-        Binding
-            .create()
-            .bindTo(vm, model)
-            .syncAll("selectedStoreId", "linkOperator", "spatialRelation", "fieldQueries", "loading", "processing", "storeData")
-            .enable();
+        Binding.for(vm, model)
+            .syncAll("storeData","selectedStoreId", "linkOperator", "spatialRelation","enableNegation", "fieldQueries", "loading", "processing")
+            .enable()
+            .syncToLeftNow();
     }
-
 }
