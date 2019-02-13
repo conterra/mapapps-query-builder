@@ -126,7 +126,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 More information about how to place a widget:
 https://developernetwork.conterra.de/en/documentation/mapapps/39/developers-documentation/templates
 
-##Development Guide
+## Development Guide
 ### Define the mapapps remote base
 Before you can run the project you have to define the mapapps.remote.base property in the pom.xml-file:
 `<mapapps.remote.base>http://%YOURSERVER%/ct-mapapps-webapp-%VERSION%</mapapps.remote.base>`
