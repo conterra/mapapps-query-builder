@@ -334,36 +334,6 @@
                     ]
                 },
                 {
-                    "id": "zensus_2011_bundeslaender",
-                    "title": "Zensus 2011 Bundesländer",
-                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-                    "idProperty": "OBJECTID_1",
-                    "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/0",
-                    "useIn": [
-                        "selection"
-                    ]
-                },
-                {
-                    "id": "zensus_2011_kreise",
-                    "title": "Zensus 2011 Kreise",
-                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-                    "idProperty": "OBJECTID_1",
-                    "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/1",
-                    "useIn": [
-                        "selection"
-                    ]
-                },
-                {
-                    "id": "zensus_2011_gemeinden",
-                    "title": "Zensus 2011 Gemeinden",
-                    "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-                    "idProperty": "OBJECTID_1",
-                    "url": "https://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/2",
-                    "useIn": [
-                        "selection"
-                    ]
-                },
-                {
                     "id": "wahlkreise_strukturdaten",
                     "title": "Wahlkreise 2017 - Strukturdaten",
                     "description": "Wahlkreise 2017 - Strukturdaten",
