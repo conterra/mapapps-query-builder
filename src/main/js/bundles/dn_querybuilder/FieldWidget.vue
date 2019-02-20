@@ -1,13 +1,13 @@
 <template>
     <v-slide-y-transition>
         <v-card raised class="mb-2" v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue">
-            <v-container fluid grid-list-md v-if="fieldQuery.not">
+            <v-container fluid grid-list-md v-if="fieldQuery.not" class="pa-0 pl-2">
                 <v-chip label color="red">
                     <v-icon left>warning</v-icon>
                     {{i18n.negated}}
                 </v-chip>
             </v-container>
-            <v-container fluid grid-list-md>
+            <v-container fluid grid-list-md pa-1 pl-2>
                 <v-layout row wrap align-center>
                     <v-flex xs2 md1 v-if="allowNegation">
                         <v-switch

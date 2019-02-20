@@ -48,7 +48,7 @@
                     "w": 600,
                     "h": 300
                 },
-                "windowClass": "noPadding querybuilder-window"
+                "windowClass": "querybuilder-window"
             }
         },
         {
@@ -69,7 +69,7 @@
                     "h": "50%",
                     "t": 0
                 },
-                "windowClass": "noPadding querybuilder-window"
+                "windowClass": "querybuilder-window"
             }
         },
         {
@@ -91,7 +91,7 @@
                     "w": "100%",
                     "h": "100%"
                 },
-                "windowClass": "noPadding querybuilder-window"
+                "windowClass": "querybuilder-window"
             }
         },
         {
@@ -113,7 +113,7 @@
                     "w": 600,
                     "h": 300
                 },
-                "windowClass": "noPadding querybuilder-window"
+                "windowClass": "querybuilder-window"
             }
         },
         {
@@ -133,7 +133,7 @@
                     "h": "50%",
                     "t": 0
                 },
-                "windowClass": "noPadding querybuilder-window"
+                "windowClass": "querybuilder-window"
             }
         },
         {
@@ -152,7 +152,7 @@
                     "w": "100%",
                     "h": "100%"
                 },
-                "windowClass": "noPadding querybuilder-window"
+                "windowClass": "querybuilder-window"
             }
         }
     ],

@@ -1,7 +1,7 @@
 <template>
     <div class="ct-flex-container ct-flex-container--column fullHeight">
         <div class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
-            <v-container grid-list-md fluid>
+            <v-container grid-list-md fluid class="pa-1">
                 <v-layout row wrap justify-space-between>
                     <v-flex v-if="editable && title" xs12 md12>
                         <div>{{title}}</div>
@@ -26,10 +26,10 @@
                                 class="pt-0" v-model="spatialRelation">
                                 <v-radio hide-details v-bind:label="i18n.everywhere"
                                          v-bind:disabled="disableSpatialRelationRadio"
-                                         value="everywhere"></v-radio>
+                                         value="everywhere" color="success"></v-radio>
                                 <v-radio hide-details v-bind:label="i18n.currentExtent"
                                          v-bind:disabled="disableSpatialRelationRadio"
-                                         value="current_extent"></v-radio>
+                                         value="current_extent" color="success"></v-radio>
                             </v-radio-group>
                         </div>
                     </v-flex>
@@ -40,10 +40,10 @@
                                 <v-radio-group class="pt-0" v-model="linkOperator">
                                     <v-radio hide-details v-bind:label="i18n.and"
                                              v-bind:disabled="disableLinkOperatorRadio"
-                                             value="$and"></v-radio>
+                                             value="$and" color="success"></v-radio>
                                     <v-radio hide-details v-bind:label="i18n.or"
                                              v-bind:disabled="disableLinkOperatorRadio"
-                                             value="$or"></v-radio>
+                                             value="$or" color="success"></v-radio>
                                 </v-radio-group>
                             </div>
                         </v-slide-x-transition>
@@ -55,7 +55,7 @@
             </v-container>
         </div>
         <div class="center ct-flex-item overflowAuto">
-            <v-container grid-list-md fluid class="pt-0">
+            <v-container grid-list-md fluid class="pa-1">
                 <field-widget v-for="(fieldQuery, index) in fieldQueries"
                               v-bind:key="index" v-bind:fieldQuery="fieldQuery" v-bind:index="index"
                               v-bind:allowNegation="enableNegation"
@@ -63,7 +63,7 @@
             </v-container>
         </div>
         <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
-            <v-container grid-list-md fluid>
+            <v-container grid-list-md fluid class="pa-1">
                 <v-layout row wrap justify-center>
                     <v-flex md12>
                         <v-card class="elevation-6">

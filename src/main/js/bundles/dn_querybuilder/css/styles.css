@@ -6,14 +6,10 @@
     overflow: auto;
 }
 
-.ctAppRoot .querybuilder-window .header .radio-group .input-group__details {
-    min-height: 0;
-}
-
-.ctAppRoot .querybuilder-window .center .chip .chip__content {
+.ctAppRoot .querybuilder-window .center .v-chip .v-chip__content {
     height: 26px;
 }
 
-.ctAppRoot .querybuilder-window .center .chip .chip__content .icon {
+.ctAppRoot .querybuilder-window .center .v-chip .v-chip__content .v-icon {
     font-size: 18px;
 }

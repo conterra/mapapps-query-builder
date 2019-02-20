@@ -1,4 +1,5 @@
 /.idea
+/.vs
 **/nbactions.xml
 **/*.iml
 **/*.lnk
@@ -10,5 +11,6 @@
 /.classpath
 /.project
 /.settings/
+/.vscode/settings.json
 /.externalToolBuilders/
 /package-lock.json

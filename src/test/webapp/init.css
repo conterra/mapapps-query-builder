@@ -2,10 +2,11 @@
 @import url("login.css");
 
 .start .splashScreen .anim_bg .progress {
-    background-color: #3C3C3C;  /*<<--- put here ur main color.*/
+    background-color: #3C3C3C; /*<<--- put here ur main color.*/
 }
+
 .start {
-    background: #fff!important;
+    background: #fff !important;
 }
 
 .started {
@@ -15,7 +16,7 @@
 
 .started .splashScreen {
     /*hide splashscreen as soon as application is started*/
-    display: none!important;
+    display: none !important;
 }
 
 html,
@@ -25,6 +26,7 @@ body,
     padding: 0;
     height: 100%;
 }
+
 .splashScreen {
     color: #fff;
     background: #2c2d2e;
@@ -35,11 +37,13 @@ body,
     overflow: hidden;
     font-size: 15px; /*Set base font-size to prevent jiggling when theme comes in*/
 }
+
 .splashScreen {
     font-family: sans-serif;
 }
-.splashScreen .splashHeader{
-   font-size: 1.2em;
+
+.splashScreen .splashHeader {
+    font-size: 1.2em;
     margin-top: 1em;
     font-weight: 100;
     font-weight: normal;
@@ -50,23 +54,24 @@ body,
 }
 
 /*.splashHeader,*/
-.splashScreen .launchLog{    
+.splashScreen .launchLog {
     transition: opacity .5s ease-in-out;
 }
 
-.splashScreen .launchLog--error{
+.splashScreen .launchLog--error {
     color: #e74c3c;
 }
 
-.splashScreen .launch__bundles{
+.splashScreen .launch__bundles {
     font-size: .8rem;
     padding-left: .8rem;
-    color: rgba(94,94,94,.7);
+    color: rgba(94, 94, 94, .7);
     position: absolute;
     bottom: 0;
     left: 0;
 
 }
+
 .splashScreen .launch__animation {
     position: relative;
     width: 600px;
@@ -91,38 +96,54 @@ body,
     animation: bring-in-small-dots 3s infinite ease-in-out;
 }
 
-.splashScreen--error .dot{
+.splashScreen--error .dot {
     animation-play-state: paused;
 }
+
 .splashScreen .dot-outer:first-child .dot {
     animation-name: bring-in-and-scale-first-dot;
 }
+
 .splashScreen .dot-outer:last-child .dot {
     animation-name: bring-in-and-scale-last-dot;
 }
+
 .splashScreen .dot-1 {
     animation-delay: 0s;
 }
+
 .splashScreen .dot-2 {
     animation-delay: 0.21s;
 }
+
 .splashScreen .dot-3 {
     animation-delay: 0.42s;
 }
+
 .splashScreen .dot-4 {
     animation-delay: 0.63s;
 }
+
 .splashScreen .dot-5 {
     animation-delay: 0.84s;
 }
+
 .splashScreen .dot-6 {
     animation-delay: 1.05s;
 }
+
 @keyframes splashscreen-fadeout {
-    from { opacity: 1;}
-    99%{ opacity: 0;}
-    to { display: none; }
+    from {
+        opacity: 1;
+    }
+    99% {
+        opacity: 0;
+    }
+    to {
+        display: none;
+    }
 }
+
 @keyframes bring-in-small-dots {
     from {
         opacity: 0;
@@ -145,6 +166,7 @@ body,
         transform: translateX(585px);
     }
 }
+
 @keyframes bring-in-and-scale-first-dot {
     from {
         opacity: 0;
@@ -168,6 +190,7 @@ body,
         transform: translateX(585px) scale(1);
     }
 }
+
 @keyframes bring-in-and-scale-last-dot {
     from {
         opacity: 0;

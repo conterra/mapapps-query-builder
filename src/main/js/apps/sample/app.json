@@ -41,7 +41,7 @@
                 "defaultSpatialRelation": "everywhere",
                 "useMemorySelectionStore": true,
                 "useUserExtent": false,
-                "allowNegation": false,
+                "allowNegation": true,
                 "showQuerySettingsInEditableMode": true
             },
             "QueryBuilderWidgetModel": {
@@ -203,6 +203,43 @@
                         }
                     },
                     "storeId": "wahlkreise_strukturdaten"
+                },
+                {
+                    "id": "querybuilder_1550577927595",
+                    "title": "Peter",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "gattung": {
+                                    "$eq": "Ahorn (Acer)"
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": true,
+                        "editOptions": {
+                            "spatialRelation": true,
+                            "linkOperator": true,
+                            "editFields": [
+                                {
+                                    "not": false,
+                                    "field": false,
+                                    "relationalOperator": false,
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "baumkataster"
                 }
             ]
         },

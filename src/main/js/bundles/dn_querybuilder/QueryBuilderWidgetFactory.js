@@ -52,7 +52,7 @@ export default class QueryBuilderWidgetFactory {
         });
 
         Binding.for(vm, model)
-            .syncAll("storeData","selectedStoreId", "linkOperator", "spatialRelation","enableNegation", "fieldQueries", "loading", "processing")
+            .syncAll("storeData", "selectedStoreId", "linkOperator", "spatialRelation", "enableNegation", "fieldQueries", "loading", "processing")
             .enable()
             .syncToLeftNow();
     }
