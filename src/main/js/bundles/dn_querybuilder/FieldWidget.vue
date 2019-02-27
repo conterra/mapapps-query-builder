@@ -36,7 +36,7 @@
                             :disabled="fieldQuery.disableNot"
                             color="red"
                             hide-details
-                        ></v-switch>
+                        />
                     </v-flex>
                     <v-flex
                         :class="{ xs7: !allowNegation, md4: !allowNegation }"
@@ -51,7 +51,7 @@
                             single-line
                             hide-details
                             @change="$root.fieldChanged($event, fieldQuery)"
-                        ></v-select>
+                        />
                     </v-flex>
                     <v-flex
                         xs5
@@ -64,7 +64,7 @@
                             single-line
                             hide-details
                             @change="$root.relationalOperatorChanged($event, fieldQuery)"
-                        ></v-select>
+                        />
                     </v-flex>
                     <v-flex
                         :class="{ xs12: $root.editable, md5: $root.editable }"
@@ -88,11 +88,11 @@
                                 pa-0
                                 hide-details
                                 readonly
-                            ></v-text-field>
+                            />
                             <v-date-picker
                                 v-model="fieldQuery.value"
                                 no-title
-                                scrollable></v-date-picker>
+                                scrollable/>
                         </v-menu>
                         <v-select
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'boolean' || fieldQuery.relationalOperator === '$exists'"
@@ -102,7 +102,7 @@
                             pa-0
                             single-line
                             hide-details
-                        ></v-select>
+                        />
                         <v-select
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues.length > 0"
                             v-model="fieldQuery.value"
@@ -113,7 +113,7 @@
                             pa-0
                             single-line
                             hide-details
-                        ></v-select>
+                        />
                         <v-combobox
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
                             :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
@@ -127,7 +127,7 @@
                             single-line
                             hide-details
                             clearable
-                        ></v-combobox>
+                        />
                         <v-combobox
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
                             :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
@@ -141,7 +141,7 @@
                             single-line
                             hide-details
                             clearable
-                        ></v-combobox>
+                        />
                         <v-text-field
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
                             v-model="fieldQuery.value"
@@ -153,7 +153,7 @@
                             pa-0
                             hide-details
                             clearable
-                        ></v-text-field>
+                        />
                         <v-text-field
                             v-else
                             v-model="fieldQuery.value"
@@ -165,7 +165,7 @@
                             pa-0
                             hide-details
                             clearable
-                        ></v-text-field>
+                        />
                     </v-flex>
                     <v-flex
                         v-if="!$root.editable"

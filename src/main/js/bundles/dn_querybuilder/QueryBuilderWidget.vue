@@ -28,7 +28,7 @@
                                 v-model="selectedStoreId"
                                 item-value="id"
                                 @change="$emit('storeChanged', $event)"
-                            ></v-select>
+                            />
                         </div>
                     </v-flex>
                     <v-flex
@@ -45,13 +45,13 @@
                                     :disabled="disableSpatialRelationRadio"
                                     hide-details
                                     value="everywhere"
-                                    color="success"></v-radio>
+                                    color="success"/>
                                 <v-radio
                                     :label="i18n.currentExtent"
                                     :disabled="disableSpatialRelationRadio"
                                     hide-details
                                     value="current_extent"
-                                    color="success"></v-radio>
+                                    color="success"/>
                             </v-radio-group>
                         </div>
                     </v-flex>
@@ -71,13 +71,13 @@
                                         :disabled="disableLinkOperatorRadio"
                                         hide-details
                                         value="$and"
-                                        color="success"></v-radio>
+                                        color="success"/>
                                     <v-radio
                                         :label="i18n.or"
                                         :disabled="disableLinkOperatorRadio"
                                         hide-details
                                         value="$or"
-                                        color="success"></v-radio>
+                                        color="success"/>
                                 </v-radio-group>
                             </div>
                         </v-slide-x-transition>
