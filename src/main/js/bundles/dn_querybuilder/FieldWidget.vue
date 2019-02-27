@@ -3,13 +3,12 @@
         <v-card
             v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             raised
-            mb-2>
+            class="mb-2">
             <v-container
                 v-if="fieldQuery.not"
                 fluid
                 grid-list-md
-                pa-0
-                pl-2>
+                class="pa-0 pl-2">
                 <v-chip
                     label
                     color="red">
@@ -20,8 +19,7 @@
             <v-container
                 fluid
                 grid-list-md
-                pa-1
-                pl-2>
+                class="pa-1 pl-2">
                 <v-layout
                     row
                     wrap
