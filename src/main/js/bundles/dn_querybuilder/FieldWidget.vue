@@ -105,7 +105,6 @@
                         ></v-select>
                         <v-select
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues.length > 0"
-                            key="select"
                             v-model="fieldQuery.value"
                             :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues"
                             :disabled="fieldQuery.disableValue"
@@ -115,9 +114,8 @@
                             single-line
                             hide-details
                         ></v-select>
-                        <v-select
+                        <v-combobox
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
-                            key="combobox"
                             :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
                             :disabled="fieldQuery.disableValue"
                             v-model="fieldQuery.value"
@@ -126,14 +124,12 @@
                             :placeholder="i18n.enterValue"
                             required
                             pa-0
-                            combobox
                             single-line
                             hide-details
                             clearable
-                        ></v-select>
-                        <v-select
+                        ></v-combobox>
+                        <v-combobox
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
-                            key="combobox"
                             :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
                             :disabled="fieldQuery.disableValue"
                             v-model="fieldQuery.value"
@@ -142,11 +138,10 @@
                             :placeholder="i18n.enterValue"
                             required
                             pa-0
-                            combobox
                             single-line
                             hide-details
                             clearable
-                        ></v-select>
+                        ></v-combobox>
                         <v-text-field
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
                             v-model="fieldQuery.value"
