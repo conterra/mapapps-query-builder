@@ -47,7 +47,6 @@
                             :items="fieldQuery.fields"
                             :disabled="fieldQuery.disableField"
                             item-value="id"
-                            pa-0
                             single-line
                             hide-details
                             @change="$root.fieldChanged($event, fieldQuery)"
@@ -60,7 +59,6 @@
                             v-model="fieldQuery.relationalOperator"
                             :items="$root.getRelationalOperators($root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId))"
                             :disabled="fieldQuery.disableRelationalOperator"
-                            pa-0
                             single-line
                             hide-details
                             @change="$root.relationalOperatorChanged($event, fieldQuery)"
@@ -99,7 +97,6 @@
                             v-model="fieldQuery.value"
                             :items="$root.getBooleanItems()"
                             :disabled="fieldQuery.disableValue"
-                            pa-0
                             single-line
                             hide-details
                         />
@@ -110,7 +107,6 @@
                             :disabled="fieldQuery.disableValue"
                             item-value="code"
                             item-text="name"
-                            pa-0
                             single-line
                             hide-details
                         />
@@ -123,7 +119,6 @@
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
                             required
-                            pa-0
                             single-line
                             hide-details
                             clearable
@@ -137,7 +132,6 @@
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
                             required
-                            pa-0
                             single-line
                             hide-details
                             clearable
@@ -150,7 +144,6 @@
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
                             required
-                            pa-0
                             hide-details
                             clearable
                         />
@@ -162,7 +155,6 @@
                             :placeholder="i18n.enterValue"
                             :rules="[rules.required]"
                             required
-                            pa-0
                             hide-details
                             clearable
                         />
