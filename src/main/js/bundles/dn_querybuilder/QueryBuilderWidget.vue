@@ -1,76 +1,129 @@
 <template>
     <div class="ct-flex-container ct-flex-container--column fullHeight">
         <div class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
-            <v-container grid-list-md fluid class="pa-1">
-                <v-layout row wrap justify-space-between>
-                    <v-flex v-if="editable && title" xs12 md12>
-                        <div>{{title}}</div>
+            <v-container
+                grid-list-md
+                fluid
+                class="pa-1">
+                <v-layout
+                    row
+                    wrap
+                    justify-space-between>
+                    <v-flex
+                        v-if="editable && title"
+                        xs12
+                        md12>
+                        <div>{{ title }}</div>
                     </v-flex>
-                    <v-flex v-if="showSearchSettings" xs4 md4>
+                    <v-flex
+                        v-if="showSearchSettings"
+                        xs4
+                        md4>
                         <div>
-                            <div>{{i18n.selectStore}}</div>
+                            <div>{{ i18n.selectStore }}</div>
                             <v-select
-                                v-bind:items="storeData"
-                                v-bind:disabled="editable"
-                                v-bind:loading="loading"
+                                :items="storeData"
+                                :disabled="editable"
+                                :loading="loading"
                                 v-model="selectedStoreId"
                                 item-value="id"
                                 @change="$emit('storeChanged', $event)"
                             ></v-select>
                         </div>
                     </v-flex>
-                    <v-flex v-if="showSearchSettings" xs4 md4>
+                    <v-flex
+                        v-if="showSearchSettings"
+                        xs4
+                        md4>
                         <div>
-                            <div>{{i18n.spatialRelation}}</div>
+                            <div>{{ i18n.spatialRelation }}</div>
                             <v-radio-group
-                                class="pt-0" v-model="spatialRelation">
-                                <v-radio hide-details v-bind:label="i18n.everywhere"
-                                         v-bind:disabled="disableSpatialRelationRadio"
-                                         value="everywhere" color="success"></v-radio>
-                                <v-radio hide-details v-bind:label="i18n.currentExtent"
-                                         v-bind:disabled="disableSpatialRelationRadio"
-                                         value="current_extent" color="success"></v-radio>
+                                v-model="spatialRelation"
+                                class="pt-0">
+                                <v-radio
+                                    :label="i18n.everywhere"
+                                    :disabled="disableSpatialRelationRadio"
+                                    hide-details
+                                    value="everywhere"
+                                    color="success"></v-radio>
+                                <v-radio
+                                    :label="i18n.currentExtent"
+                                    :disabled="disableSpatialRelationRadio"
+                                    hide-details
+                                    value="current_extent"
+                                    color="success"></v-radio>
                             </v-radio-group>
                         </div>
                     </v-flex>
-                    <v-flex v-if="showSearchSettings" xs4 md4>
+                    <v-flex
+                        v-if="showSearchSettings"
+                        xs4
+                        md4>
                         <v-slide-x-transition>
-                            <div v-if="fieldQueries.length > 1">
-                                <div>{{i18n.linkOperator}}</div>
-                                <v-radio-group class="pt-0" v-model="linkOperator">
-                                    <v-radio hide-details v-bind:label="i18n.and"
-                                             v-bind:disabled="disableLinkOperatorRadio"
-                                             value="$and" color="success"></v-radio>
-                                    <v-radio hide-details v-bind:label="i18n.or"
-                                             v-bind:disabled="disableLinkOperatorRadio"
-                                             value="$or" color="success"></v-radio>
+                            <div
+                                v-if="fieldQueries.length > 1">
+                                <div>{{ i18n.linkOperator }}</div>
+                                <v-radio-group
+                                    v-model="linkOperator"
+                                    class="pt-0">
+                                    <v-radio
+                                        :label="i18n.and"
+                                        :disabled="disableLinkOperatorRadio"
+                                        hide-details
+                                        value="$and"
+                                        color="success"></v-radio>
+                                    <v-radio
+                                        :label="i18n.or"
+                                        :disabled="disableLinkOperatorRadio"
+                                        hide-details
+                                        value="$or"
+                                        color="success"></v-radio>
                                 </v-radio-group>
                             </div>
                         </v-slide-x-transition>
                     </v-flex>
-                    <v-flex xs12 md12>
-                        <div>{{i18n.searchParameter}}</div>
+                    <v-flex
+                        xs12
+                        md12>
+                        <div>{{ i18n.searchParameter }}</div>
                     </v-flex>
                 </v-layout>
             </v-container>
         </div>
         <div class="center ct-flex-item overflowAuto">
-            <v-container grid-list-md fluid class="pa-1">
-                <field-widget v-for="(fieldQuery, index) in fieldQueries"
-                              v-bind:key="index" v-bind:fieldQuery="fieldQuery" v-bind:index="index"
-                              v-bind:allowNegation="enableNegation"
-                              v-bind:i18n="i18n"/>
+            <v-container
+                grid-list-md
+                fluid
+                class="pa-1">
+                <field-widget
+                    v-for="(fieldQuery, index) in fieldQueries"
+                    :key="index"
+                    :fieldQuery="fieldQuery"
+                    :index="index"
+                    :allowNegation="enableNegation"
+                    :i18n="i18n"/>
             </v-container>
         </div>
         <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
-            <v-container grid-list-md fluid class="pa-1">
-                <v-layout row wrap justify-center>
+            <v-container
+                grid-list-md
+                fluid
+                class="pa-1">
+                <v-layout
+                    row
+                    wrap
+                    justify-center>
                     <v-flex md12>
-                        <v-card class="elevation-6">
-                            <v-btn block ripple color="primary" @click="$emit('search', {})"
-                                   v-bind:loading="processing">
+                        <v-card
+                            class="elevation-6">
+                            <v-btn
+                                :loading="processing"
+                                block
+                                ripple
+                                color="primary"
+                                @click="$emit('search', {})">
                                 <v-icon left>search</v-icon>
-                                {{i18n.search}}
+                                {{ i18n.search }}
                             </v-btn>
                         </v-card>
                     </v-flex>
@@ -86,6 +139,9 @@
     import FieldWidget from "./FieldWidget.vue";
 
     export default {
+        components: {
+            "field-widget": FieldWidget
+        },
         mixins: [Bindable],
         data: function () {
             return {
@@ -122,7 +178,7 @@
                                 is_less_than: "is less than",
                                 is_less_or_equal: "is less or equal",
                                 before: "before",
-                                after: "after",
+                                after: "after"
                             },
                             rules: {
                                 required: "required",
@@ -153,10 +209,6 @@
         mounted: function () {
             this.$emit('startup');
         },
-        components: {
-            "field-widget": FieldWidget
-        },
-        watch: {},
         methods: {
             fieldChanged: function (selectedFieldId, fieldQuery) {
                 let selectedField = this.getSelectedField(fieldQuery.fields, selectedFieldId);
