@@ -206,7 +206,7 @@
                 },
                 {
                     "id": "querybuilder_1550577927595",
-                    "title": "Ahornbäume",
+                    "title": "Baumart suchen",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
