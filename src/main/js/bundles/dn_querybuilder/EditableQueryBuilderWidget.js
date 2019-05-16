@@ -111,15 +111,17 @@ define([
             }
 
             var store = this.store;
-            var options = {};
-            var count = this.properties.options.count;
-            if (count >= 0) {
-                options.count = count;
+            if (this.properties.options) {
+                var options = {};
+                var count = this.properties.options.count;
+                if (count >= 0) {
+                    options.count = count;
+                }
+                options.ignoreCase = this.properties.options.ignoreCase;
+                options.locale = this.properties.options.locale;
+                options.sort = this.properties.options.sort || [];
+                options.suggestContains = true;
             }
-            options.ignoreCase = this.properties.options.ignoreCase;
-            options.locale = this.properties.options.locale;
-            options.sort = event.options.sort || [];
-            options.suggestContains = true;
 
             this.queryController.query(store, customQuery, options, this.tool, this);
         },
