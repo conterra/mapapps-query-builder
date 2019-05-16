@@ -56,8 +56,7 @@ export default class QueryController {
 
                 let memorySelectionStore = new MemorySelectionStore({
                     id: "querybuilder_" + store.id,
-                    masterStore: store,
-                    metadata: store.getMetadata,
+                    metadata: store.getMetadata(),
                     data: result,
                     idProperty: store.idProperty
                 });
@@ -107,10 +106,10 @@ export default class QueryController {
     searchReplacer(o) {
         let that = this;
         ct_lang.forEachOwnProp(o, function (value, name) {
-            if (typeof(value) === "string") {
+            if (typeof (value) === "string") {
                 o[name] = that._replacer.replace(value);
             }
-            if (value !== null && typeof(value) === "object" && !value.extent) {
+            if (value !== null && typeof (value) === "object" && !value.extent) {
                 that.searchReplacer(value);
             }
         });

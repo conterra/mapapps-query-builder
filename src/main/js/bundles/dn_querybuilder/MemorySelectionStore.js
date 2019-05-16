@@ -19,8 +19,8 @@ import ComplexMemoryStore from "ct/store/ComplexMemory";
 export default declare([ComplexMemoryStore], {
     masterStore: null,
     initialQuery: null,
-    getMetadata: function (object) {
-        return this.masterStore.getMetadata(object);
+    getMetadata: function () {
+        return this.metadata;
     },
     getInitialQuery: function () {
         return this.initialQuery;
