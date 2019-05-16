@@ -113,12 +113,17 @@ define([
             var store = this.store;
             if (this.properties.options) {
                 var options = {};
-                var count = this.properties.options.count;
+                var count = this.properties.options.count || -1;
                 if (count >= 0) {
                     options.count = count;
+                } else {
+                    options.count = -1;
                 }
-                options.ignoreCase = this.properties.options.ignoreCase;
-                options.locale = this.properties.options.locale;
+                options.ignoreCase = this.properties.options.ignoreCase || false;
+                options.locale = this.properties.options.locale || {
+                    "language": "en",
+                    "country": "EN"
+                };
                 options.sort = this.properties.options.sort || [];
                 options.suggestContains = true;
             }
