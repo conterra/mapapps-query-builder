@@ -70,12 +70,15 @@ export default class QueryToolController {
             }
             let options = {};
             if (event.options) {
-                let count = event.options.count;
+                let count = event.options.count || -1;
                 if (count >= 0) {
                     options.count = count;
                 }
-                options.ignoreCase = event.options.ignoreCase;
-                options.locale = event.options.locale;
+                options.ignoreCase = event.options.ignoreCase || false;
+                options.locale = event.options.locale || {
+                    "language": "en",
+                    "country": "EN"
+                };
                 options.sort = event.options.sort || [];
                 options.suggestContains = true;
             }
