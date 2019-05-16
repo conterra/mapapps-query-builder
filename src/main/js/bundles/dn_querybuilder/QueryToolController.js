@@ -69,14 +69,16 @@ export default class QueryToolController {
                 }
             }
             let options = {};
-            let count = event.options.count;
-            if (count >= 0) {
-                options.count = count;
+            if (event.options) {
+                let count = event.options.count;
+                if (count >= 0) {
+                    options.count = count;
+                }
+                options.ignoreCase = event.options.ignoreCase;
+                options.locale = event.options.locale;
+                options.sort = event.options.sort || [];
+                options.suggestContains = true;
             }
-            options.ignoreCase = event.options.ignoreCase;
-            options.locale = event.options.locale;
-            options.sort = event.options.sort || [];
-            options.suggestContains = true;
 
             this._queryController.query(store, complexQuery, options, tool);
         }
