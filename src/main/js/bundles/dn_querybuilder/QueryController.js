@@ -50,7 +50,7 @@ define([
             }
             var customquery = event.customquery;
             var tool = this.tool = event.tool;
-            if (event.options.editable === true) {
+            if (event.options && event.options.editable === true) {
                 var props = event._properties;
                 var i18n = event._i18n.get();
                 var replacer = this._replacer;
@@ -81,13 +81,15 @@ define([
                     };
                 }
                 var options = {};
-                var count = event.options.count;
-                if (count >= 0) {
-                    options.count = count;
+                if (event.options) {
+                    var count = event.options.count;
+                    if (count >= 0) {
+                        options.count = count;
+                    }
+                    options.ignoreCase = event.options.ignoreCase;
+                    options.locale = event.options.locale;
+                    options.sort = event.options.sort || [];
                 }
-                options.ignoreCase = event.options.ignoreCase;
-                options.locale = event.options.locale;
-                options.sort = event.options.sort || [];
 
                 this.query(store, customquery, options, tool);
             }
@@ -169,10 +171,10 @@ define([
         searchReplacer: function (o) {
             for (var i in o) {
                 var value = o[i];
-                if (typeof(value) === "string") {
+                if (typeof (value) === "string") {
                     o[i] = this._replacer.replace(value);
                 }
-                if (value !== null && typeof(value) === "object") {
+                if (value !== null && typeof (value) === "object") {
                     this.searchReplacer(value);
                 }
             }
