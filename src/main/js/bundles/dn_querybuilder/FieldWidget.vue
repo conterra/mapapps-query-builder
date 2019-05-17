@@ -121,6 +121,7 @@
                             :rules="[rules.required, rules.number]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
+                            @input.native="changeValue"
                             class="pa-0"
                             required
                             single-line
@@ -135,6 +136,7 @@
                             :rules="[rules.required]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
+                            @input.native="changeValue"
                             class="pa-0"
                             required
                             single-line
@@ -231,6 +233,11 @@
                     number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
                     string: (value) => typeof value === "string" || this.i18n.rules.string
                 }
+            }
+        },
+        methods: {
+            changeValue: function (event) {
+                this.fieldQuery.value = event.target.value;
             }
         }
     }
