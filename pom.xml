@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.conterra.devnet</groupId>
     <artifactId>mapapps-query-builder</artifactId>
-    <version>4.2.1</version>
+    <version>4.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <repositories>
         <repository>
@@ -529,7 +529,7 @@
         <connection>scm:git:https://github.com/conterra/mapapps-query-builder.git</connection>
         <developerConnection>scm:git:https://github.com/conterra/mapapps-query-builder.git</developerConnection>
         <url>https://github.com/conterra/mapapps-query-builder</url>
-        <tag>4.2.1</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <repository>
