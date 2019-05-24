@@ -46,7 +46,6 @@
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
-                    "esri",
                     "airtraffic",
                     "countries",
                     "baumkataster",
@@ -285,16 +284,6 @@
             },
             "AGSStore": [
                 {
-                    "id": "esri",
-                    "title": "Esri",
-                    "description": "Esri",
-                    "idProperty": "OBJECTID",
-                    "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
-                    "useIn": [
-                        "selection"
-                    ]
-                },
-                {
                     "id": "airtraffic",
                     "title": "Airtraffic",
                     "description": "Airtraffic",
@@ -445,19 +434,7 @@
                     }
                 ],
                 "map": {
-                    "layers": [
-                        {
-                            "id": "esri_group_sites",
-                            "title": "${map.operationalLayer.esrisites}",
-                            "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer",
-                            "layerId": 0,
-                            "type": "AGS_FEATURE",
-                            "elevationInfo": {
-                                "mode": "on-the-ground"
-                            },
-                            "visible": true
-                        }
-                    ],
+                    "layers": [],
                     "ground": {
                         "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
                         "type": "ELEVATION"
