@@ -141,7 +141,7 @@ export default declare({
             let relationalOperator = fieldQuery.relationalOperator;
             let not = fieldQuery.not;
             let value = fieldQuery.value;
-            if (value === "" || !value) {
+            if (value === "" || value === null) {
                 return;
             }
             let obj1 = {};
