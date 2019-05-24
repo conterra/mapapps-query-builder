@@ -134,7 +134,7 @@ define([
                         iconClass: "icon-minus",
                         showLabel: false,
                         onClick: d_lang.hitch(this, function () {
-                            removeButton.domNode.parentNode.parentNode.remove();
+                            domConstruct.destroy(removeButton.domNode.parentNode.parentNode);
                             this.source._changeChildrenButtons();
                             if (this.type === "user") {
                                 this.source._changeMatchVisibility();
