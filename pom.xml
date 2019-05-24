@@ -517,8 +517,8 @@
         <netbeans.hint.jdkPlatform>JDK_1.7</netbeans.hint.jdkPlatform>
 
         <!-- JS lib versions -->
-        <mapapps.version>3.10.1</mapapps.version>
-        <mapapps4.version>4.6.0</mapapps4.version>
+        <mapapps.version>3.10.2</mapapps.version>
+        <mapapps4.version>4.6.2</mapapps4.version>
 
         <!-- Defines runtime version for the sample project. Defaults to map.apps 3.x -->
         <!-- To develope mapapps 4.x apps, change this property -->
