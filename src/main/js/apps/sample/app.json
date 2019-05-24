@@ -42,21 +42,283 @@
         "useMemorySelectionStore": true,
         "useUserExtent": false
       },
-      "UserQueryBuilderWidgetFactory": {
-        "storeIds": [
-          "stoerungen",
-          "airtraffic",
-          "usa_counties",
-          "usa_highways",
-          "usa_states",
-          "usa_cities",
-          "zensus_2011_bundeslaender",
-          "zensus_2011_kreise",
-          "zensus_2011_gemeinden",
-          "baumkataster"
-        ]
-      },
       "QueryTools": [
+        {
+          "id": "fc_1441021732534",
+          "title": "Show reported street damages that are not yet fixed in Münster",
+          "iconClass": "icon-toolcase",
+          "storeId": "stoerungen",
+          "customquery": {
+            "geometry": {
+              "$contains": {
+                "xmin": -1454749.7653909875,
+                "ymin": 4027109.2609186354,
+                "xmax": 4454749.7653909875,
+                "ymax": 8972890.739081364,
+                "spatialReference": {
+                  "wkid": 3857
+                }
+              }
+            },
+            "$and": [
+              {
+                "art": {
+                  "$eq": 5
+                }
+              },
+              {
+                "status": {
+                  "$eq": 1
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            },
+            "sort": [
+              {
+                "attribute": "details",
+                "descending": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "fc_1469615816195",
+          "title": "Where are Germany's airports?",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "OBJECTID": {
+                  "$gt": 0
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "airtraffic"
+        },
+        {
+          "id": "fc_1540467316530",
+          "title": "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$or": [
+              {
+                "Bevölkerungsdichte": {
+                  "$gt": 1000
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "wahlkreise_strukturdaten"
+        },
+        {
+          "id": "fc_1540467904227",
+          "title": "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$or": [
+              {
+                "Haushaltseinkommen_eur_je_Einw": {
+                  "$gte": 20000
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "wahlkreise_strukturdaten"
+        },
+        {
+          "id": "fc_1540468225267",
+          "title": "Wahlkreise deren Bevölkerung zunimmt",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$or": [
+              {
+                "Geburtensaldo_je1000": {
+                  "$gt": 0
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "wahlkreise_strukturdaten"
+        },
+        {
+          "id": "fc_154046822787",
+          "title": "Wahlkreise Editierbarü",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "Geburtensaldo_je1000": {
+                  "$gt": 0
+                }
+              },
+              {
+                "Haushaltseinkommen_eur_je_Einw": {
+                  "$gte": 20000
+                }
+              },
+              {
+                "Bevölkerungsdichte": {
+                  "$gt": 1000
+                }
+              },
+              {
+                "Bevölkerungsdichte": {
+                  "$lt": 1200
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": true,
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ],
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "de",
+              "country": "DE"
+            }
+          },
+          "storeId": "wahlkreise_strukturdaten"
+        },
+        {
+          "id": "fc_1550577927595",
+          "title": "Baumart suchen",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$or": [
+              {
+                "gattung": {
+                  "$eq": "Ahorn (Acer)"
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": true,
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ],
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "baumkataster"
+        },
+        {
+          "id": "fc_1441279619509",
+          "title": "In which cities is it warmer than 25°C",
+          "iconClass": "icon-cog",
+          "storeId": "owm_datastore",
+          "customquery": {
+            "$and": [
+              {
+                "temp": {
+                  "$gt": 25
+                }
+              },
+              {
+                "weather_id": {
+                  "$eq": 800
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": false,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          }
+        },
         {
           "id": "fc_1441021732534",
           "title": "Show reported street damages that are not yet fixed in Münster",
@@ -84,20 +346,51 @@
             "locale": {
               "language": "en",
               "country": "EN"
-            },
-            "sort": [
+            }
+          }
+        },
+        {
+          "id": "fc_1558623296249",
+          "title": "Ahornbäume",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
               {
-                "attribute": "objectid",
-                "descending": true
+                "gattung": {
+                  "$eq": "Ahorn (Acer)"
+                }
               }
             ]
-          }
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "_AGS_STORE_1490009753909"
         },
         {
           "id": "fc_1442569207538",
           "title": "Date Test [editable]",
           "iconClass": "icon-custom-info",
           "customquery": {
+            "geometry": {
+              "$contains": {
+                "type": "extent",
+                "xmin": -2138769.395495612,
+                "ymin": 4171707.7514311336,
+                "xmax": 4538769.395495612,
+                "ymax": 8628292.248568866,
+                "spatialReference": {
+                  "wkid": 3857
+                }
+              }
+            },
             "$and": [
               {
                 "zeitpunkt": {
@@ -127,21 +420,36 @@
           "storeId": "stoerungen"
         },
         {
-          "id": "fc_1469615816195",
-          "title": "Where are Germany's airports?",
-          "iconClass": "icon-custom-info",
+          "id": "fc_1441976636993",
+          "title": "Holiday Weather",
+          "iconClass": "icon-selection-circle",
           "customquery": {
             "$and": [
               {
-                "OBJECTID": {
-                  "$gt": 0
+                "temp": {
+                  "$gte": 25
+                }
+              },
+              {
+                "temp": {
+                  "$lte": 35
+                }
+              },
+              {
+                "humidity": {
+                  "$lte": 50
+                }
+              },
+              {
+                "clouds": {
+                  "$lt": 20
                 }
               }
             ]
           },
           "options": {
-            "mode": "builder",
             "editable": false,
+            "mode": "builder",
             "count": -1,
             "ignoreCase": false,
             "locale": {
@@ -149,7 +457,7 @@
               "country": "EN"
             }
           },
-          "storeId": "airtraffic"
+          "storeId": "owm_datastore"
         },
         {
           "id": "fc_1441982464561",
@@ -225,8 +533,167 @@
             }
           },
           "storeId": "usa_cities"
+        },
+        {
+          "id": "fc_1442315929545",
+          "title": "Holiday Weather [editable]",
+          "iconClass": "icon-selection-circle",
+          "customquery": {
+            "$and": [
+              {
+                "temp": {
+                  "$gte": 25
+                }
+              },
+              {
+                "temp": {
+                  "$lte": 35
+                }
+              },
+              {
+                "humidity": {
+                  "$lte": 50
+                }
+              },
+              {
+                "clouds": {
+                  "$lt": 20
+                }
+              },
+              {
+                "$not": {
+                  "weather_id": {
+                    "$eq": 521
+                  }
+                }
+              }
+            ]
+          },
+          "options": {
+            "editable": true,
+            "mode": "builder",
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            },
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": true,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ]
+          },
+          "storeId": "owm_datastore"
+        },
+        {
+          "id": "fc_1490010331343",
+          "title": "Ahornbäume im Allwetterzoo",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "anlage": {
+                  "$eq": "Allwetterzoo"
+                }
+              },
+              {
+                "gattung": {
+                  "$eq": "Ahorn (Acer)"
+                }
+              },
+              {
+                "hoehe": {
+                  "$gt": 20
+                }
+              },
+              {
+                "hoehe": {
+                  "$lt": 25
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": true,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            },
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": false
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ]
+          },
+          "storeId": "baumkataster"
         }
-      ]
+      ],
+      "UserQueryBuilderWidgetFactory": {
+        "storeIds": [
+          "countries",
+          "airtraffic",
+          "baumkataster",
+          "stoerungen",
+          "wahlkreise_strukturdaten",
+          "usa_counties",
+          "usa_highways",
+          "usa_states",
+          "usa_cities",
+          "owm_datastore"
+        ]
+      }
     },
     "dn_queryplaceholder": {
       "Replacer": {
@@ -237,25 +704,15 @@
     "agssearch": {
       "AGSStore": [
         {
-          "id": "stoerungen",
-          "title": "Stoerungen",
-          "useIn": "selection",
-          "idProperty": "OBJECTID",
-          "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0"
-        },
-        {
+          "id": "airtraffic",
           "title": "Airtraffic",
-          "description": "",
-          "omniSearchLabelAttr": "osm_name",
-          "omniSearchSearchAttr": "osm_name",
+          "description": "Airtraffic",
           "idProperty": "OBJECTID",
           "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
           "useIn": [
-            "omnisearch",
             "selection"
           ],
           "filterOptions": {
-            "suggestContains": true,
             "metadata": {
               "fields": [
                 {
@@ -292,181 +749,97 @@
                 }
               ]
             }
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "airtraffic"
+          }
         },
         {
-          "title": "USA (Counties)",
-          "description": "",
-          "omniSearchLabelAttr": "name",
-          "omniSearchSearchAttr": "name",
-          "idProperty": "objectid",
-          "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/3",
+          "id": "countries",
+          "title": "Countries",
+          "description": "Countries of the world",
+          "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
           "useIn": [
-            "omnisearch",
             "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "usa_counties"
+          ]
         },
         {
-          "title": "USA (Highways)",
-          "description": "",
-          "omniSearchLabelAttr": "type",
-          "omniSearchSearchAttr": "type",
-          "idProperty": "objectid",
-          "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "usa_highways"
-        },
-        {
-          "title": "USA (States)",
-          "description": "",
-          "omniSearchLabelAttr": "state_name",
-          "omniSearchSearchAttr": "state_name",
-          "idProperty": "objectid",
-          "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "usa_states"
-        },
-        {
-          "title": "Zensus 2011 Bundesländer",
-          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-          "omniSearchLabelAttr": "NAME",
-          "omniSearchSearchAttr": "NAME",
-          "idProperty": "OBJECTID_1",
-          "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/0",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "zensus_2011_bundeslaender"
-        },
-        {
-          "title": "Zensus 2011 Kreise",
-          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-          "omniSearchLabelAttr": "NAME",
-          "omniSearchSearchAttr": "NAME",
-          "idProperty": "OBJECTID_1",
-          "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/1",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "zensus_2011_kreise"
-        },
-        {
-          "title": "Zensus 2011 Gemeinden",
-          "description": "Dieser Feature-Service stellt die finalen Zensus Ergebnisse der Tabelle 1B_EinwohnerzahlNationationalitaet.xls (Version 2, 10.04.2014) auf Länder-, Kreis- und Gemeinde-Ebene dar. Diese Tabelle wurde im April 2014 von Destatis als Download veröffentlicht, wurde aber inzwischen durch eine neue Tabelle Bevölkerung ersetzt.\n\nDie Gemeindeebene ist ab einem Maßstab von ≤ 1:1.500.000 sichtbar, um eine flüssige Darstellung zu gewährleisten. \nEs gibt 224 Datensätze mit Null-Werten auf der Ebene der Gemeinden, weil sie als gemeindefreies Gebiet gekennzeichnet sind und keine Daten aufweisen.",
-          "omniSearchLabelAttr": "NAME",
-          "omniSearchSearchAttr": "NAME",
-          "idProperty": "OBJECTID_1",
-          "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer/2",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "zensus_2011_gemeinden"
-        },
-        {
-          "title": "USA (Cities)",
-          "description": "",
-          "omniSearchLabelAttr": "areaname",
-          "omniSearchSearchAttr": "areaname",
-          "idProperty": "objectid",
-          "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0",
-          "useIn": [
-            "omnisearch",
-            "selection"
-          ],
-          "filterOptions": {
-            "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "usa_cities"
-        },
-        {
+          "id": "baumkataster",
           "title": "Baumkataster",
-          "description": "",
-          "omniSearchLabelAttr": "anlage",
-          "omniSearchSearchAttr": "anlage",
-          "idProperty": "objectid",
+          "description": "Baumkataster",
           "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
           "useIn": [
-            "omnisearch",
+            "selection"
+          ]
+        },
+        {
+          "id": "stoerungen",
+          "title": "Störungen",
+          "description": "Störungen",
+          "idProperty": "objectid",
+          "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
+          "useIn": [
+            "selection"
+          ]
+        },
+        {
+          "id": "wahlkreise_strukturdaten",
+          "title": "Wahlkreise 2017 - Strukturdaten",
+          "description": "Wahlkreise 2017 - Strukturdaten",
+          "idProperty": "OBJECTID",
+          "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+          "useIn": [
+            "selection"
+          ]
+        },
+        {
+          "id": "usa_counties",
+          "title": "USA (Counties)",
+          "description": "",
+          "idProperty": "objectid",
+          "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/3",
+          "useIn": [
             "selection"
           ],
           "filterOptions": {
             "suggestContains": true
-          },
-          "omniSearchTypingDelay": 500,
-          "omniSearchPageSize": 20,
-          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
-          "fetchIdProperty": true,
-          "enablePagination": false,
-          "id": "baumkataster"
+          }
+        },
+        {
+          "id": "usa_highways",
+          "title": "USA (Highways)",
+          "description": "",
+          "idProperty": "objectid",
+          "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1",
+          "useIn": [
+            "selection"
+          ],
+          "filterOptions": {
+            "suggestContains": true
+          }
+        },
+        {
+          "id": "usa_states",
+          "title": "USA (States)",
+          "description": "",
+          "idProperty": "objectid",
+          "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2",
+          "useIn": [
+            "selection"
+          ],
+          "filterOptions": {
+            "suggestContains": true
+          }
+        },
+        {
+          "id": "usa_cities",
+          "title": "USA (Cities)",
+          "description": "",
+          "idProperty": "objectid",
+          "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/0",
+          "useIn": [
+            "selection"
+          ],
+          "filterOptions": {
+            "suggestContains": true
+          }
         }
       ]
     },
@@ -659,7 +1032,7 @@
           "services": [
             {
               "id": "service_43687",
-              "url": "http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer",
+              "url": "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer",
               "type": "AGS_TILED",
               "title": "Canvas Base",
               "description": "This map draws attention to your thematic content by providing a neutral background with minimal colors, labels, and features. Only key information is represented to provide geographic context, allowing your data to come to the foreground. This light gray map supports any strong colors, creating a visually compelling map graphic which helps your reader see the patterns intended. This map was developed by Esri using HERE data, DeLorme basemap layers, OpenStreetMap contributors, Esri basemap data, and select data from the GIS user community. Worldwide coverage is provided from Level 0 (1:591M scale) through Level 13 (1:72k scale). In North America (Canada, Mexico, United States), Europe, India, South America and Central America, Africa, most of the Middle east, and Australia & New Zealand coverage is provided from Level 14 (1:36k scale) through Level 16 (1:9k scale). For more information on this map, including our terms of use, visit us online at http://goto.arcgisonline.com/maps/World_Light_Gray_Base",
@@ -674,7 +1047,7 @@
             },
             {
               "id": "service_40216",
-              "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
+              "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
               "type": "AGS_TILED",
               "title": "World Topographic Map",
               "description": "This map is designed to be used as a basemap by GIS professionals and as a reference map by anyone. The map includes administrative boundaries, cities, water features, physiographic features, parks, landmarks, highways, roads, railways, and airports overlaid on land cover and shaded relief imagery for added context. The map provides coverage for the world down to a scale of ~1:72k. Coverage is provided down to ~1:4k for the following areas: Australia and New Zealand; India; Europe; Canada; Mexico; the continental United States and Hawaii; South America and Central America; Africa; and most of the Middle East. Coverage down to ~1:1k and ~1:2k is available in select urban areas. This basemap was compiled from a variety of best available sources from several data providers, including the U.S. Geological Survey (USGS), U.S. Environmental Protection Agency (EPA), U.S. National Park Service (NPS), Food and Agriculture Organization of the United Nations (FAO), Department of Natural Resources Canada (NRCAN), GeoBase, Agriculture and Agri-Food Canada, DeLorme, HERE, Esri, OpenStreetMap contributors, and the GIS User Community. For more information on this map, including our terms of use, visit us online at http://goto.arcgisonline.com/maps/World_Topo_Map",
@@ -689,7 +1062,7 @@
             },
             {
               "id": "service_11893",
-              "url": "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
+              "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
               "type": "AGS_TILED",
               "title": "World Street Map",
               "description": "This worldwide street map presents highway-level data for the world. Street-level data includes the United States; much of Canada; Mexico; Europe; Japan; Australia and New Zealand; India; South America and Central America; Africa; and most of the Middle East. This comprehensive street map includes highways, major roads, minor roads, one-way arrow indicators, railways, water features, administrative boundaries, cities, parks, and landmarks, overlaid on shaded relief imagery for added context. The map also includes building footprints for selected areas. Coverage is provided down to ~1:4k with ~1:1k and ~1:2k data available in select urban areas. The street map was developed by Esri using Esri basemap data, DeLorme basemap layers, U.S. Geological Survey (USGS) elevation data, Intact Forest Landscape (IFL) data for the world; HERE data for Europe, Australia and New Zealand, North America, South America and Central America, Africa, and most of the Middle East; OpenStreetMap contributors for select countries in Africa; MapmyIndia data in India; and select data from the GIS user community. For more information on this map, including the terms of use, visit us online at http://goto.arcgisonline.com/maps/World_Street_Map",
@@ -698,191 +1071,6 @@
                   "id": "0",
                   "title": "World Street Map",
                   "enabled": true
-                }
-              ],
-              "options": {}
-            },
-            {
-              "id": "stoerungen",
-              "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer",
-              "type": "AGS_DYNAMIC",
-              "title": "Stoerungen",
-              "description": "Karte mit fiktiven Störungsmeldungen für map.apps Trainings.",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "Störungen",
-                  "enabled": true
-                },
-                {
-                  "id": "1",
-                  "title": "Status",
-                  "enabled": true
-                }
-              ],
-              "options": {}
-            },
-            {
-              "id": "service_54006",
-              "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
-              "type": "AGS_DYNAMIC",
-              "title": "USA",
-              "description": "This map contains sample data of the United States.\n\nThis is a sample service hosted by ESRI, powered by ArcGIS Server. ESRI reserves the right to change or remove this service at any time and without notice.",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "Cities",
-                  "enabled": true
-                },
-                {
-                  "id": "1",
-                  "title": "Highways",
-                  "enabled": true
-                },
-                {
-                  "id": "2",
-                  "title": "States",
-                  "enabled": true
-                },
-                {
-                  "id": "3",
-                  "title": "Counties",
-                  "enabled": true
-                }
-              ],
-              "options": {}
-            },
-            {
-              "id": "service_44082",
-              "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer",
-              "type": "AGS_DYNAMIC",
-              "title": "Airtraffic",
-              "description": "",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "aerodrome2",
-                  "maxScale": 50000,
-                  "enabled": true
-                },
-                {
-                  "id": "1",
-                  "title": "aerodrome1",
-                  "maxScale": 50000,
-                  "enabled": true
-                },
-                {
-                  "id": "2",
-                  "title": "terminal",
-                  "minScale": 24000,
-                  "enabled": true
-                },
-                {
-                  "id": "3",
-                  "title": "Helipad",
-                  "minScale": 50000,
-                  "enabled": true
-                },
-                {
-                  "id": "4",
-                  "title": "runway",
-                  "minScale": 500000,
-                  "enabled": true
-                },
-                {
-                  "id": "5",
-                  "title": "taxiway",
-                  "minScale": 200000,
-                  "enabled": true
-                },
-                {
-                  "id": "6",
-                  "title": "runway",
-                  "minScale": 500000,
-                  "enabled": true
-                },
-                {
-                  "id": "7",
-                  "title": "taxiway",
-                  "minScale": 200000,
-                  "enabled": true
-                },
-                {
-                  "id": "8",
-                  "title": "terminal",
-                  "minScale": 2000000,
-                  "enabled": true
-                },
-                {
-                  "id": "9",
-                  "title": "apron",
-                  "minScale": 2000000,
-                  "enabled": true
-                },
-                {
-                  "id": "10",
-                  "title": "aerodrome",
-                  "minScale": 2000000,
-                  "enabled": true
-                }
-              ],
-              "options": {}
-            },
-            {
-              "id": "service_50538",
-              "url": "http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/Bev%C3%B6lkerungNationalit%C3%A4t1B/FeatureServer",
-              "type": "AGS_FEATURE",
-              "title": "Zensus Deutschland 2011",
-              "description": "Bevölkerung nach Geschlecht, Staatsangehörigkeit (Deutsche/Ausländer) und Alter (5 Altersklassen) für Gemeinden, Kreise und Länder, Ergebnisse des Zensus am 9. Mai 2011",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "Zensus 2011 Bundesländer",
-                  "enabled": true
-                },
-                {
-                  "id": "1",
-                  "title": "Zensus 2011 Kreise",
-                  "enabled": true
-                },
-                {
-                  "id": "2",
-                  "title": "Zensus 2011 Gemeinden",
-                  "enabled": true
-                }
-              ],
-              "options": {}
-            },
-            {
-              "id": "service_74466",
-              "url": "http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/NOAA_METAR_current_wind_speed_direction/MapServer",
-              "type": "AGS_DYNAMIC",
-              "title": "NOAA",
-              "description": "The <a href=\"http://www.noaa.gov/\" target=\"_blank\">National Oceanic and Atmospheric Administration</a> (NOAA) provided <a href=\"http://www.ncdc.noaa.gov/oa/wdc/metar/\" target=\"_blank\">METARs</a> (The acronym roughly translates from French as Aviation Routine Weather Report) typically come from airports or permanent weather observation stations. Reports are generated once an hour or half an hour, but if conditions change significantly, a report known as a special (SPECI) may be issued. Some METARs are encoded by automated airport weather stations located at airports, military bases, and other sites. Some locations still use augmented observations, which are recorded by digital sensors, encoded via software, and then reviewed by certified weather observers or forecasters prior to being transmitted. Observations may also be taken by trained observers or forecasters who manually observe and encode their observations prior to transmission.\n<br><br>A typical METAR contains data for the temperature, dew point, wind speed and direction, precipitation, cloud cover and heights, visibility, and barometric pressure. A METAR may also contain information on precipitation amounts, lightning, and other information that would be of interest to pilots or meteorologists such as a pilot report or PIREP, color states and runway visual range (RVR).\n<br><br>In addition, a short period forecast called a TREND may be added at the end of the METAR covering likely changes in weather conditions in the two hours following the observation. These are in the same format as a <a href=\"http://www.ncdc.noaa.gov/oa/wdc/metar/\" target=\"_blank\">Terminal Aerodrome Forecast</a> (TAF).\n<br><br>The complement to METARs, reporting forecast weather rather than current weather, are TAFs. METARs and TAFs are used in VOLMET broadcasts.\n<br><br><b>Source:</b> <a href=\"http://weather.noaa.gov/pub/data/observations/metar/cycles\" target=\"_blank\">http://weather.noaa.gov/pub/data/observations/metar/cycles</a>\n<br><br><b>Organization:</b> NOAA <b>POC:</b> \n<br><br><b>Scale/Resolution:</b> NA\t\t\n<br><br><b>Update Frequency: </b> Top of each hour \n<br><br><b>Area Covered:</b> World wide\t\t\n<br>\n<br><br><b>Access and Use Constraints:</b> \n<br><br><a href=\"http://www.esri.com\" target=\"_blank\"><img src=\"http://tmimages.esri.com/tmservices/logo.png\"></a>\n<br><br><font face=\"verdana\" color=\"gray\">This work is licensed under the Web Services and API Terms of Use.  </font>\n<br><b><a href=\"http://links.esri.com/e800-summary\" target=\"_blank\">View Summary</a></b> | <b><a href=\"http://links.esri.com/agol_tou\" target=\"_blank\">View Terms of Use</a></b>\n<br><br><font face=\"verdana\" color=\"gray\">This map is provided for informational purposes and is not monitored 24/7 for accuracy and currency.</font>\n<br><br><b>Processing:</b> This data is downloaded and then populated into our ArcGIS service via the <a href=\"http://www.esriurl.com/LiveFeed\" target=\"_blank\">Aggregated Live Feed Methodology</a>\n<br><br>\n<b>Attributes:</b>\n<br><br><b>Symbology:</b>\n<br><br>The symbology uses the <a href=\"https://en.wikipedia.org/wiki/Beaufort_scale\" target=\"_blank\">Beaufort Scale</a>. The Beaufort scale is the observed wind speed and conditions at sea. The scale ranges from 0 to 17. At 0, the sea is calm with wind at less than 1 knot and at a scale reading of 17, the sea has huge, hurricane-like waves and a wind speed at 64 knots or above.   \n<br><a href=\"MapServer/legend\" target=\"_blank\">View Legend</a>",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "Stations",
-                  "enabled": true
-                },
-                {
-                  "id": "1",
-                  "title": "Buoys",
-                  "enabled": true
-                }
-              ],
-              "options": {}
-            },
-            {
-              "id": "baumkataster_zustand",
-              "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer",
-              "type": "AGS_FEATURE",
-              "title": "Baumkataster Zustand",
-              "description": "",
-              "layers": [
-                {
-                  "id": "0",
-                  "title": "Baumkataster"
                 }
               ],
               "options": {}
