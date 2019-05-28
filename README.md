@@ -83,7 +83,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
     "useMemorySelectionStore": true,
     "useUserExtent": false,
     "allowNegation": false,
-    "showSearchSettingsInEditableMode": false
+    "showQuerySettingsInEditableMode": false
 }
 ```
 
