@@ -550,7 +550,7 @@
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
         <!-- JS lib versions -->
-        <mapapps.version>4.6.1</mapapps.version>
+        <mapapps.version>4.6.2</mapapps.version>
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
         <ct.jsregistry.version>1.2.6</ct.jsregistry.version>
@@ -687,6 +687,12 @@
         </profile>
         <profile>
             <id>watch-all</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -701,11 +707,9 @@
                                 </goals>
                                 <configuration>
                                     <async>true</async>
-                                    <executable>${env.M2_HOME}/bin/${mvn.cmd}</executable>
-                                    <!--<workingDirectory>${basedir}</workingDirectory>-->
+                                    <executable>${maven.home}/bin/${mvn.cmd}</executable>
                                     <arguments>
-                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes
-                                        </argument>
+                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
