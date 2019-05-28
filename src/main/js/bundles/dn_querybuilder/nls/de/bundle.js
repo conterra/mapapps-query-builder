@@ -26,6 +26,7 @@ module.exports = {
         selectStore: "Was suchen?",
         spatialRelation: "Wo suchen?",
         linkOperator: "Wie verknüpfen?",
+        sortOptions: "Wie sortieren?",
         everywhere: "\u00fcberall",
         currentExtent: "Aktueller Kartenausschnitt",
         delete: "Löschen",

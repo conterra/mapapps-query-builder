@@ -23,13 +23,16 @@ export default declare({
 
     stores: [],
     storeData: [],
+    fieldData: [],
     selectedStoreId: null,
+    selectedSortFieldName: null,
     linkOperator: null,
     spatialRelation: null,
     enableNegation: null,
     fieldQueries: [],
     loading: false,
     processing: false,
+    showSortSelectInUserMode: false,
 
     activate(componentContext) {
         let serviceResolver = this.serviceResolver = new ServiceResolver();
@@ -38,9 +41,11 @@ export default declare({
 
         let queryBuilderProperties = this._queryBuilderProperties;
         this.getStoreData();
+        this.getFieldData();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
         this.enableNegation = queryBuilderProperties.allowNegation;
+        this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
         this.fieldQueries = [];
     },
 
@@ -57,17 +62,27 @@ export default declare({
         });
     },
 
+    getFieldData(selectedStoreId) {
+        let fieldData = this._getSelectedFieldData(selectedStoreId);
+        ct_when(fieldData, (data) => {
+            this.fieldData = data;
+            this.selectedSortFieldName = data[0].id;
+        });
+    },
+
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
         let selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         let complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
-        this._queryController.query(selectedStore, complexQuery, {suggestContains: true}, tool || this._tool, this);
+        let sortOptions = this.getSortOptions();
+        this._queryController.query(selectedStore, complexQuery, {
+            suggestContains: false,
+            sort: sortOptions
+        }, tool || this._tool, this);
     },
 
     addFieldQuery(selectedStoreId) {
-        let storeId = selectedStoreId || this.selectedStoreId;
-        let store = this.getSelectedStoreObj(storeId);
         this.loading = true;
-        let fieldData = this._metadataAnalyzer.getFields(store);
+        let fieldData = this._getSelectedFieldData(selectedStoreId);
         ct_when(fieldData, (fields) => {
             this.fieldQueries.push({
                 fields: fields,
@@ -83,7 +98,6 @@ export default declare({
     addFieldQueries(fieldQueries, fields, editFields, selectedStoreId) {
         fields.forEach((field, i) => {
             let editOptions = editFields && editFields[i];
-            let store = this.getSelectedStoreObj(selectedStoreId);
             let fieldId, not, relationalOperator, value;
             if (field.$not) {
                 not = true;
@@ -105,7 +119,7 @@ export default declare({
                 });
             }
             this.loading = true;
-            let fieldData = this._metadataAnalyzer.getFields(store);
+            let fieldData = this._getSelectedFieldData(selectedStoreId);
             ct_when(fieldData, (fields) => {
                 fieldQueries.push({
                     fields: fields,
@@ -121,6 +135,12 @@ export default declare({
                 this.loading = false;
             }, this);
         }, this);
+    },
+
+    _getSelectedFieldData(selectedStoreId) {
+        let storeId = selectedStoreId || this.selectedStoreId;
+        let store = this.getSelectedStoreObj(storeId);
+        return this._metadataAnalyzer.getFields(store);
     },
 
     getSelectedStoreObj(id) {
@@ -156,6 +176,16 @@ export default declare({
             }
         }, this);
         return complexQuery;
+    },
+
+    getSortOptions() {
+        let attribute = this.selectedSortFieldName;
+        return [
+            {
+                "attribute": attribute,
+                "descending": false
+            }
+        ];
     },
 
     removeFieldQuery(fieldQuery) {

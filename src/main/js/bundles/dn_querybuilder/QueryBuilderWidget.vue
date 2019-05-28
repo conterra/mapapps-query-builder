@@ -17,8 +17,9 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
-                        xs4
-                        md4>
+                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
+                        xs3
+                        md3>
                         <div>
                             <div>{{ i18n.selectStore }}</div>
                             <v-select
@@ -27,14 +28,17 @@
                                 :loading="loading"
                                 v-model="selectedStoreId"
                                 item-value="id"
+                                single-line
+                                hide-details
                                 @change="$emit('storeChanged', $event)"
                             />
                         </div>
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
-                        xs4
-                        md4>
+                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
+                        xs3
+                        md3>
                         <div>
                             <div>{{ i18n.spatialRelation }}</div>
                             <v-radio-group
@@ -56,9 +60,27 @@
                         </div>
                     </v-flex>
                     <v-flex
+                        v-if="showQuerySettings && showSortSelectInUserMode"
+                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
+                        xs3
+                        md3>
+                        <div>
+                            <div>{{ i18n.sortOptions }}</div>
+                            <v-select
+                                v-model="selectedSortFieldName"
+                                :items="fieldData"
+                                :disabled="editable"
+                                item-value="id"
+                                single-line
+                                hide-details
+                            />
+                        </div>
+                    </v-flex>
+                    <v-flex
                         v-if="showQuerySettings"
-                        xs4
-                        md4>
+                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
+                        xs3
+                        md3>
                         <v-slide-x-transition>
                             <div
                                 v-if="fieldQueries.length > 1">
@@ -192,8 +214,10 @@
                     }
                 },
                 storeData: [],
+                fieldData: [],
                 editable: false,
                 selectedStoreId: "",
+                selectedSortFieldName: "",
                 title: null,
                 showQuerySettings: true,
                 linkOperator: "$and",
@@ -203,7 +227,8 @@
                 fieldQueries: [],
                 allowNegation: false,
                 loading: false,
-                processing: false
+                processing: false,
+                showSortSelectInUserMode: false
             };
         },
         mounted: function () {

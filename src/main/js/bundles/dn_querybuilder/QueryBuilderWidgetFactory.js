@@ -49,10 +49,11 @@ export default class QueryBuilderWidgetFactory {
         vm.$on('storeChanged', (selectedStoreId) => {
             model.removeFieldQueries();
             model.addFieldQuery(selectedStoreId);
+            model.getFieldData(selectedStoreId);
         });
 
         Binding.for(vm, model)
-            .syncAll("storeData", "selectedStoreId", "linkOperator", "spatialRelation", "enableNegation", "fieldQueries", "loading", "processing")
+            .syncAll("storeData", "selectedStoreId", "fieldData", "selectedSortFieldName", "linkOperator", "spatialRelation", "enableNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode")
             .enable()
             .syncToLeftNow();
     }

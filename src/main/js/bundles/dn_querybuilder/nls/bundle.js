@@ -27,6 +27,7 @@ module.exports = {
             selectStore: "What do you want to search?",
             spatialRelation: "Where do you want to search?",
             linkOperator: "How to link?",
+            sortOptions: "How to sort?",
             everywhere: "everywhere",
             currentExtent: "current extent",
             delete: "Delete",

@@ -239,7 +239,8 @@
                 "useMemorySelectionStore": true,
                 "useUserExtent": false,
                 "allowNegation": false,
-                "showQuerySettingsInEditableMode": true
+                "showQuerySettingsInEditableMode": true,
+                "showSortSelectInUserMode": false
             }
         },
         {

@@ -38,7 +38,7 @@ export default class QueryController {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         options.fields = {geometry: 1};
         ct_when(store.query(complexQuery, options), (result) => {
-            if (result.total > 0) {
+            if (result.total) {
                 let mapWidgetModel = this._mapWidgetModel;
                 let spatialReference = mapWidgetModel.get("spatialReference");
                 let wkid = spatialReference.latestWkid || spatialReference.wkid;
@@ -83,7 +83,8 @@ export default class QueryController {
     defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         let filter = new Filter(store, complexQuery, options);
-        ct_when(filter.query({}, {count: 0}).total, (total) => {
+        let countFilter = new Filter(store, complexQuery, {});
+        ct_when(countFilter.query({}, {count: 0}).total, (total) => {
             if (total) {
                 this._dataModel.setDatasource(filter);
                 this._setProcessing(tool, false, queryBuilderWidgetModel);

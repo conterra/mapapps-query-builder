@@ -42,7 +42,8 @@
                 "useMemorySelectionStore": true,
                 "useUserExtent": false,
                 "allowNegation": true,
-                "showQuerySettingsInEditableMode": true
+                "showQuerySettingsInEditableMode": true,
+                "showSortSelectInUserMode": false
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
