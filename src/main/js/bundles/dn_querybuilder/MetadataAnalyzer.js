@@ -41,9 +41,13 @@ export default class MetadataAnalyzer {
                             codedValueString = "[CV]";
                         }
                         if (field.type !== "geometry") {
+                            let title = field.title;
+                            if (!title || title === "") {
+                                title = field.name;
+                            }
                             storeData.push({
                                 id: field.name,
-                                text: field.title + " (" + field.type + ") " + codedValueString,
+                                text: title + " (" + field.type + ") " + codedValueString,
                                 type: field.type,
                                 codedValues: codedValues,
                                 distinctValues: []
@@ -55,8 +59,7 @@ export default class MetadataAnalyzer {
                     }
                     resolve(storeData);
                 }, this);
-            }
-            catch (e) {
+            } catch (e) {
                 this._logService.error({
                     id: 0,
                     message: e
