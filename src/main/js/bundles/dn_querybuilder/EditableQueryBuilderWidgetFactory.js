@@ -43,7 +43,7 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.storeData = model.storeData;
         vm.selectedStoreId = properties.storeId;
         vm.title = properties.title;
-        vm.showSearchSettings = queryBuilderProperties.showQuerySettingsInEditableMode;
+        vm.showQuerySettings = queryBuilderProperties.showQuerySettingsInEditableMode;
         vm.linkOperator = linkOperator;
         vm.disableLinkOperatorRadio = !editOptions.linkOperator;
         vm.spatialRelation = spatialRelation;

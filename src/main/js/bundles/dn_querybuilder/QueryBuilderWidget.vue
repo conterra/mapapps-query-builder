@@ -16,7 +16,7 @@
                         <div>{{ title }}</div>
                     </v-flex>
                     <v-flex
-                        v-if="showSearchSettings"
+                        v-if="showQuerySettings"
                         xs4
                         md4>
                         <div>
@@ -32,7 +32,7 @@
                         </div>
                     </v-flex>
                     <v-flex
-                        v-if="showSearchSettings"
+                        v-if="showQuerySettings"
                         xs4
                         md4>
                         <div>
@@ -56,7 +56,7 @@
                         </div>
                     </v-flex>
                     <v-flex
-                        v-if="showSearchSettings"
+                        v-if="showQuerySettings"
                         xs4
                         md4>
                         <v-slide-x-transition>
@@ -195,7 +195,7 @@
                 editable: false,
                 selectedStoreId: "",
                 title: null,
-                showSearchSettings: true,
+                showQuerySettings: true,
                 linkOperator: "$and",
                 disableLinkOperatorRadio: false,
                 spatialRelation: "everywhere",
