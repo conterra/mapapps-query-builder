@@ -43,7 +43,7 @@
                 "useUserExtent": false,
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
-                "showSortSelectInUserMode": true
+                "showSortSelectInUserMode": false
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
