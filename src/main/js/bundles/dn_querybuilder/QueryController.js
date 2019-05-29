@@ -56,6 +56,7 @@ export default class QueryController {
 
                 let memorySelectionStore = new MemorySelectionStore({
                     id: "querybuilder_" + store.id,
+                    masterStore: store,
                     metadata: store.getMetadata(),
                     data: result,
                     idProperty: store.idProperty
