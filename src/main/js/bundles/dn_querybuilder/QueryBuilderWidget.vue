@@ -49,13 +49,13 @@
                                     :disabled="disableSpatialRelationRadio"
                                     hide-details
                                     value="everywhere"
-                                    color="success"/>
+                                    color="primary"/>
                                 <v-radio
                                     :label="i18n.currentExtent"
                                     :disabled="disableSpatialRelationRadio"
                                     hide-details
                                     value="current_extent"
-                                    color="success"/>
+                                    color="primary"/>
                             </v-radio-group>
                         </div>
                     </v-flex>
@@ -74,6 +74,15 @@
                                 single-line
                                 hide-details
                             />
+                            <v-btn
+                                flat
+                                class="mx-0"
+                                color="primary"
+                                @click="sortDescending=!sortDescending">
+                                <v-icon left v-if="sortDescending">arrow_downward</v-icon>
+                                <v-icon left v-else>arrow_upward</v-icon>
+                                {{ i18n.sorting }}
+                            </v-btn>
                         </div>
                     </v-flex>
                     <v-flex
@@ -93,13 +102,13 @@
                                         :disabled="disableLinkOperatorRadio"
                                         hide-details
                                         value="$and"
-                                        color="success"/>
+                                        color="primary"/>
                                     <v-radio
                                         :label="i18n.or"
                                         :disabled="disableLinkOperatorRadio"
                                         hide-details
                                         value="$or"
-                                        color="success"/>
+                                        color="primary"/>
                                 </v-radio-group>
                             </div>
                         </v-slide-x-transition>
@@ -218,6 +227,7 @@
                 editable: false,
                 selectedStoreId: "",
                 selectedSortFieldName: "",
+                sortDescending: false,
                 title: null,
                 showQuerySettings: true,
                 linkOperator: "$and",

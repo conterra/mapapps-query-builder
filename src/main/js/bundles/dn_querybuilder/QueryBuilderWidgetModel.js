@@ -26,6 +26,7 @@ export default declare({
     fieldData: [],
     selectedStoreId: null,
     selectedSortFieldName: null,
+    sortDescending: false,
     linkOperator: null,
     spatialRelation: null,
     enableNegation: null,
@@ -73,7 +74,10 @@ export default declare({
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
         let selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         let complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
-        let sortOptions = this.getSortOptions();
+        let sortOptions = [];
+        if (this._queryBuilderProperties.showSortSelectInUserMode) {
+            sortOptions = this.getSortOptions();
+        }
         this._queryController.query(selectedStore, complexQuery, {
             suggestContains: false,
             sort: sortOptions
@@ -183,7 +187,7 @@ export default declare({
         return [
             {
                 "attribute": attribute,
-                "descending": false
+                "descending": this.sortDescending
             }
         ];
     },
