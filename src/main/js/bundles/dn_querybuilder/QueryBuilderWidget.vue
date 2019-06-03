@@ -129,6 +129,7 @@
                 <field-widget
                     v-for="(fieldQuery, index) in fieldQueries"
                     :key="index"
+                    :locale="locale"
                     :fieldQuery="fieldQuery"
                     :index="index"
                     :allowNegation="enableNegation"
@@ -222,6 +223,7 @@
                         }
                     }
                 },
+                locale: "en",
                 storeData: [],
                 fieldData: [],
                 editable: false,

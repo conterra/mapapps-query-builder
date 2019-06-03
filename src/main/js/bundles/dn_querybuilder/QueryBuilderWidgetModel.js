@@ -18,9 +18,11 @@ import ct_array from "ct/array";
 import ct_when from "ct/_when";
 import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
+import Locale from "ct/Locale";
 
 export default declare({
 
+    locale: "en",
     stores: [],
     storeData: [],
     fieldData: [],
@@ -36,6 +38,7 @@ export default declare({
     showSortSelectInUserMode: false,
 
     activate(componentContext) {
+        this.locale = Locale.getCurrent().getLanguage();
         let serviceResolver = this.serviceResolver = new ServiceResolver();
         let bundleCtx = componentContext.getBundleContext();
         serviceResolver.setBundleCtx(bundleCtx);

@@ -93,7 +93,7 @@
                             </template>
                             <v-date-picker
                                 v-model="fieldQuery.value"
-                                no-title
+                                :locale="locale"
                                 full-width
                                 scrollable/>
                         </v-menu>
@@ -214,6 +214,10 @@
                 default: function () {
                     return {};
                 }
+            },
+            locale: {
+                type: String,
+                default: "en"
             },
             fieldQuery: {
                 type: Object,
