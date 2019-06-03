@@ -70,6 +70,7 @@
                         xs8
                         md3>
                         <v-menu
+                            ref="dateMenu"
                             v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date' && fieldQuery.relationalOperator !== '$exists'"
                             :close-on-content-click="false"
                             transition="scale-transition"
@@ -78,16 +79,18 @@
                             full-width
                             max-width="300px"
                             min-width="300px">
-                            <v-text-field
-                                slot="activator"
-                                v-model="fieldQuery.value"
-                                :disabled="fieldQuery.disableValue"
-                                :placeholder="i18n.enterValue"
-                                class="pa-0"
-                                required
-                                hide-details
-                                readonly
-                            />
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="fieldQuery.value"
+                                    :disabled="fieldQuery.disableValue"
+                                    :placeholder="i18n.enterValue"
+                                    class="pa-0"
+                                    required
+                                    hide-details
+                                    readonly
+                                    v-on="on"
+                                />
+                            </template>
                             <v-date-picker
                                 v-model="fieldQuery.value"
                                 no-title
