@@ -77,8 +77,7 @@
                             lazy
                             offset-y
                             full-width
-                            max-width="300px"
-                            min-width="300px">
+                            max-width="290px">
                             <template v-slot:activator="{ on }">
                                 <v-text-field
                                     v-model="fieldQuery.value"
