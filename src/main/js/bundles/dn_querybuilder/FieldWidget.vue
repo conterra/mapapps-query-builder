@@ -77,7 +77,8 @@
                             lazy
                             offset-y
                             full-width
-                            max-width="290px">
+                            max-width="290px"
+                            min-width="290px">
                             <template v-slot:activator="{ on }">
                                 <v-text-field
                                     v-model="fieldQuery.value"
@@ -93,6 +94,7 @@
                             <v-date-picker
                                 v-model="fieldQuery.value"
                                 no-title
+                                full-width
                                 scrollable/>
                         </v-menu>
                         <v-select
