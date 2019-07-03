@@ -52,9 +52,9 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
         try {
             this._getComponentConfig().update(config);
         } catch (e) {
-            e = Exception.wrap(e);
+            let error = Exception.wrap(e);
             let msg = "_Configurable: Can't apply changed configuration! Error:" + e;
-            console.error(msg, e);
+            console.error(msg, error);
             throw e;
         }
     },

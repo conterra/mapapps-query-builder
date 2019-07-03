@@ -105,7 +105,10 @@ export default declare({
     addFieldQueries(fieldQueries, fields, editFields, selectedStoreId) {
         fields.forEach((field, i) => {
             let editOptions = editFields && editFields[i];
-            let fieldId, not, relationalOperator, value;
+            let fieldId;
+            let not;
+            let relationalOperator;
+            let value;
             if (field.$not) {
                 not = true;
                 ct_lang.forEachOwnProp(field.$not, function (v1, n1) {

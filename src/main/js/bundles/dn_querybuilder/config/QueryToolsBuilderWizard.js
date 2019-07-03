@@ -149,7 +149,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             if (this.properties.options.editable === true) {
                 this.properties.options.editOptions = {
                     spatialRelation: true,
-                    linkOperator: true,
+                    linkOperator: true
                 };
                 this.properties.options.editOptions.editFields = [];
                 let children = this._queryNode.children;
@@ -253,7 +253,8 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             obj1.push(value);
             obj2.push(name);
         });
-        let objects, results;
+        let objects;
+        let results;
         if (i === 1) {
             if (obj2[0] === "$and" || obj2[0] === "$or") {
                 objects = obj1[0];

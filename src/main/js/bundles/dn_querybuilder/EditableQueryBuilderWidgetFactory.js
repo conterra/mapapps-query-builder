@@ -25,7 +25,8 @@ export default class EditableQueryBuilderWidgetFactory {
         this.tool = tool;
         let complexQuery = properties.complexQuery;
         let editOptions = properties.options.editOptions;
-        let linkOperator, spatialRelation;
+        let linkOperator;
+        let spatialRelation;
         if (complexQuery.geometry) {
             spatialRelation = "current_extent";
         } else {

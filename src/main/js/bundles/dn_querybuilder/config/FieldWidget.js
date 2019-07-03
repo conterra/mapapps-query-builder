@@ -198,7 +198,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
             this._valueNode.removeChild(this._valueNode.firstChild);
         }
         let relationalOperatorSelect = this._relationalOperatorSelect;
-        let relationalOperatorStore, valueSelect;
+        let relationalOperatorStore;
+        let valueSelect;
         if (codedValues.length > 0) {
             relationalOperatorStore = this._createCodedValueRelationalOperatorStore();
             if (this._relationalOperatorSelect) {
@@ -277,7 +278,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                     result.sort();
                     let distinctValueData = [];
                     d_array.forEach(result, (distinctValue) => {
-                        if (typeof(distinctValue) === "number") {
+                        if (typeof (distinctValue) === "number") {
                             distinctValueData.push({id: d_number.format(distinctValue)});
                         } else {
                             distinctValueData.push({id: distinctValue});
@@ -297,7 +298,9 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 domConstruct.place(valueComboBox.domNode, this._valueNode);
                 valueComboBox.startup();
             } else {
-                let value, i18n, booleanStore;
+                let value;
+                let i18n;
+                let booleanStore;
                 if (this.relationalOperatorId === "$exists") {
                     if (this.fieldId === this.getSelectedField()) {
                         value = this.value;
@@ -612,8 +615,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         } else if (fieldType === "number" || fieldType === "integer" || fieldType === "single" || fieldType === "double") {
             if (result === undefined || result === null) {
                 result = this._valueField.displayedValue;
-            }
-            else if (typeof(result) === "string") {
+            } else if (typeof (result) === "string") {
                 result = d_number.parse(result);
                 if (isNaN(result)) {
                     result = undefined;

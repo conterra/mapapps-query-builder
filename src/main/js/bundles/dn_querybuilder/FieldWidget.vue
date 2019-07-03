@@ -211,7 +211,7 @@
         props: {
             i18n: {
                 type: Object,
-                default: function () {
+                default: () => {
                     return {};
                 }
             },
@@ -221,7 +221,7 @@
             },
             fieldQuery: {
                 type: Object,
-                default: function () {
+                default: () => {
                     return {};
                 }
             },

@@ -42,9 +42,7 @@ export default class QueryController {
                 let mapWidgetModel = this._mapWidgetModel;
                 let spatialReference = mapWidgetModel.get("spatialReference");
                 let wkid = spatialReference.latestWkid || spatialReference.wkid;
-                let geometries = result.map((item) => {
-                    return item.geometry;
-                });
+                let geometries = result.map((item) => item.geometry);
 
                 if (geometries[0]) {
                     ct_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {

@@ -124,9 +124,7 @@ export default class MetadataAnalyzer {
                 );
             }
         }, this);
-        storeData.sort((a, b) => {
-            return a.text.localeCompare(b.text);
-        });
+        storeData.sort((a, b) => a.text.localeCompare(b.text));
         return storeData;
     }
 
