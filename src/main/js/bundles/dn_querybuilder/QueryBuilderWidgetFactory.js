@@ -20,17 +20,19 @@ import Binding from "apprt-binding/Binding";
 
 export default class QueryBuilderWidgetFactory {
 
-    activate(componentContext) {
+    activate() {
         this._initComponent();
     }
 
     createInstance() {
+        const model = this._queryBuilderWidgetModel;
+        model.activeTool = true;
         return VueDijit(this.queryBuilderWidget);
     }
 
     _initComponent() {
         const vm = this.queryBuilderWidget = new Vue(QueryBuilderWidget);
-        let model = this._queryBuilderWidgetModel;
+        const model = this._queryBuilderWidgetModel;
         vm.i18n = this._i18n.get().ui;
 
         // listen to view model methods
@@ -53,7 +55,7 @@ export default class QueryBuilderWidgetFactory {
         });
 
         Binding.for(vm, model)
-            .syncAll("locale", "storeData", "selectedStoreId", "fieldData", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "enableNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode")
+            .syncAll("locale", "storeData", "selectedStoreId", "fieldData", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "enableNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode", "activeTool")
             .enable()
             .syncToLeftNow();
     }

@@ -19,6 +19,7 @@ import ct_when from "ct/_when";
 import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
+import Connect from "ct/_Connect";
 
 export default declare({
 
@@ -36,6 +37,7 @@ export default declare({
     loading: false,
     processing: false,
     showSortSelectInUserMode: false,
+    activeTool: false,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -51,6 +53,14 @@ export default declare({
         this.enableNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
         this.fieldQueries = [];
+
+        const connect = new Connect();
+        connect.connect(this._tool, "onActivate", () => {
+            this.activeTool = true;
+        });
+        connect.connect(this._tool, "onDeactivate", () => {
+            this.activeTool = false;
+        });
     },
 
     getStoreData() {

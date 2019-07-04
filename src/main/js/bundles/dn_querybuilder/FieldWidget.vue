@@ -50,6 +50,7 @@
                             single-line
                             hide-details
                             @change="$root.fieldChanged($event, fieldQuery)"
+                            ref="selectedFieldIdSelect"
                         />
                     </v-flex>
                     <v-flex
@@ -63,6 +64,7 @@
                             single-line
                             hide-details
                             @change="$root.relationalOperatorChanged($event, fieldQuery)"
+                            ref="relationalOperatorSelect"
                         />
                     </v-flex>
                     <v-flex
@@ -105,6 +107,7 @@
                             class="pa-0"
                             single-line
                             hide-details
+                            ref="valueBooleanSelect"
                         />
                         <v-select
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues.length > 0"
@@ -116,6 +119,7 @@
                             item-text="name"
                             single-line
                             hide-details
+                            ref="valueCodedValueSelect"
                         />
                         <v-combobox
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
@@ -131,6 +135,7 @@
                             single-line
                             hide-details
                             clearable
+                            ref="valueNumberDistinctValuesCombobox"
                         />
                         <v-combobox
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
@@ -146,6 +151,7 @@
                             single-line
                             hide-details
                             clearable
+                            ref="valueStringDistinctValuesCombobox"
                         />
                         <v-text-field
                             v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
@@ -232,6 +238,10 @@
             allowNegation: {
                 type: Boolean,
                 default: false
+            },
+            activeTool: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -240,6 +250,30 @@
                     required: (value) => !!value || this.i18n.rules.required,
                     number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
                     string: (value) => typeof value === "string" || this.i18n.rules.string
+                }
+            }
+        },
+        watch: {
+            activeTool: function (value) {
+                if (!value) {
+                    if (this.$refs.selectedFieldIdSelect) {
+                        this.$refs.selectedFieldIdSelect.isMenuActive = false;
+                    }
+                    if (this.$refs.relationalOperatorSelect) {
+                        this.$refs.relationalOperatorSelect.isMenuActive = false;
+                    }
+                    if (this.$refs.valueBooleanSelect) {
+                        this.$refs.valueBooleanSelect.isMenuActive = false;
+                    }
+                    if (this.$refs.valueCodedValueSelect) {
+                        this.$refs.valueCodedValueSelect.isMenuActive = false;
+                    }
+                    if (this.$refs.valueNumberDistinctValuesCombobox) {
+                        this.$refs.valueNumberDistinctValuesCombobox.isMenuActive = false;
+                    }
+                    if (this.$refs.valueStringDistinctValuesCombobox) {
+                        this.$refs.valueStringDistinctValuesCombobox.isMenuActive = false;
+                    }
                 }
             }
         },

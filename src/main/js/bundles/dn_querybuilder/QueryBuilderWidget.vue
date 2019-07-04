@@ -31,6 +31,7 @@
                                 single-line
                                 hide-details
                                 @change="$emit('storeChanged', $event)"
+                                ref="selectedStoreIdSelect"
                             />
                         </div>
                     </v-flex>
@@ -73,6 +74,7 @@
                                 item-value="id"
                                 single-line
                                 hide-details
+                                ref="selectedSortFieldNameSelect"
                             />
                             <v-btn
                                 flat
@@ -133,6 +135,7 @@
                     :fieldQuery="fieldQuery"
                     :index="index"
                     :allowNegation="enableNegation"
+                    :activeTool="activeTool"
                     :i18n="i18n"/>
             </v-container>
         </div>
@@ -240,8 +243,21 @@
                 allowNegation: false,
                 loading: false,
                 processing: false,
-                showSortSelectInUserMode: false
+                showSortSelectInUserMode: false,
+                activeTool: false
             };
+        },
+        watch: {
+            activeTool: function (value) {
+                if (!value) {
+                    if(this.$refs.selectedStoreIdSelect) {
+                        this.$refs.selectedStoreIdSelect.isMenuActive = false;
+                    }
+                    if(this.$refs.selectedSortFieldNameSelect) {
+                        this.$refs.selectedSortFieldNameSelect.isMenuActive = false;
+                    }
+                }
+            }
         },
         mounted: function () {
             this.$emit('startup');

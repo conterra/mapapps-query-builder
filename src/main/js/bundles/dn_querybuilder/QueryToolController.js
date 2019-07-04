@@ -15,6 +15,9 @@
  */
 import Extent from "esri/geometry/Extent";
 
+import Connect from "ct/_Connect";
+import ct_util from "ct/ui/desktop/util";
+
 export default class QueryToolController {
     activate(componentContext) {
         this._bundleContext = componentContext.getBundleContext();
@@ -53,6 +56,13 @@ export default class QueryToolController {
             };
             let interfaces = ["dijit.Widget"];
             this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
+            setTimeout(() => {
+                let window = ct_util.findEnclosingWindow(widget);
+                window.on("Close", () => {
+                    this.hideWindow();
+                    widget.destroyRecursive();
+                });
+            }, 1000);
         } else {
             if (complexQuery.geometry) {
                 let extent;

@@ -103,7 +103,7 @@
                 "title": "${editableWindowTitle}",
                 "closable": true,
                 "maximizable": true,
-                "minimizeOnClose": true,
+                "minimizeOnClose": false,
                 "resizable": true,
                 "marginBox": {
                     "w": 800,
@@ -126,7 +126,7 @@
                 "title": "${editableWindowTitle}",
                 "closable": true,
                 "maximizable": true,
-                "minimizeOnClose": true,
+                "minimizeOnClose": false,
                 "resizable": false,
                 "marginBox": {
                     "w": "100%",
@@ -146,7 +146,7 @@
                 "title": "${editableWindowTitle}",
                 "closable": true,
                 "maximizable": true,
-                "minimizeOnClose": true,
+                "minimizeOnClose": false,
                 "resizable": false,
                 "marginBox": {
                     "w": "100%",
