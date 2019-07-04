@@ -51,9 +51,7 @@
                     "countries",
                     "baumkataster",
                     "stoerungen",
-                    "zensus_2011_bundeslaender",
-                    "zensus_2011_kreise",
-                    "zensus_2011_gemeinden"
+                    "wahlkreise_strukturdaten"
                 ]
             },
             "QueryTools": [
