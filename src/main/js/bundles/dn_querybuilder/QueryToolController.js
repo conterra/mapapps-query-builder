@@ -49,7 +49,7 @@ export default class QueryToolController {
         let complexQuery = event.complexQuery;
         let tool = this.tool = event.tool;
 
-        if (event.options.editable === true) {
+        if (event.options && event.options.editable === true) {
             let widget = this._editableQueryBuilderWidgetFactory.getWidget(event._properties, this, tool);
             let serviceProperties = {
                 "widgetRole": "editableQueryBuilderWidget"
@@ -80,7 +80,7 @@ export default class QueryToolController {
             }
             let options = {};
             if (event.options) {
-                let count = event.options.count || -1;
+                let count = event.options && event.options.count || -1;
                 if (count >= 0) {
                     options.count = count;
                 }
