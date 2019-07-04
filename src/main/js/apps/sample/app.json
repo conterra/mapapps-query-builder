@@ -192,7 +192,7 @@
         },
         {
           "id": "fc_154046822787",
-          "title": "Wahlkreise Editierbarü",
+          "title": "Wahlkreise Editierbar",
           "iconClass": "icon-custom-info",
           "customquery": {
             "$and": [
@@ -678,6 +678,80 @@
             ]
           },
           "storeId": "baumkataster"
+        },
+        {
+          "id": "fc_1562243311240",
+          "title": "Sachsensuche",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "LAND": {
+                  "$eq": "Sachsen"
+                }
+              },
+              {
+                "WKR_NAME": {
+                  "$eq": "Nordsachsen"
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": false,
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "_AGS_STORE_1562243182242"
+        },
+        {
+          "id": "fc_1562243368609",
+          "title": "Sachsensuche (editierbar)",
+          "iconClass": "icon-custom-info",
+          "customquery": {
+            "$and": [
+              {
+                "LAND": {
+                  "$eq": "Sachsen"
+                }
+              },
+              {
+                "WKR_NAME": {
+                  "$eq": "Nordsachsen"
+                }
+              }
+            ]
+          },
+          "options": {
+            "mode": "builder",
+            "editable": true,
+            "editOptions": [
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              },
+              {
+                "not": false,
+                "field": false,
+                "compare": false,
+                "value": true
+              }
+            ],
+            "count": -1,
+            "ignoreCase": false,
+            "locale": {
+              "language": "en",
+              "country": "EN"
+            }
+          },
+          "storeId": "_AGS_STORE_1562243182242"
         }
       ],
       "UserQueryBuilderWidgetFactory": {
@@ -840,6 +914,27 @@
           "filterOptions": {
             "suggestContains": true
           }
+        },
+        {
+          "title": "Wahlkreise",
+          "description": "Wahlkreise_2017_mit_Strukturdaten",
+          "omniSearchLabelAttr": "WKR_NAME",
+          "omniSearchSearchAttr": "WKR_NAME",
+          "idProperty": "OBJECTID",
+          "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+          "useIn": [
+            "omnisearch",
+            "selection"
+          ],
+          "filterOptions": {
+            "suggestContains": true
+          },
+          "omniSearchTypingDelay": 500,
+          "omniSearchPageSize": 20,
+          "omniSearchDefaultLabel": "Suchbegriff eingeben...",
+          "fetchIdProperty": true,
+          "enablePagination": false,
+          "id": "_AGS_STORE_1562243182242"
         }
       ]
     },
