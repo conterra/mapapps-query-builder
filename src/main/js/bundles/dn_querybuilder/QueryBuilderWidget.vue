@@ -248,7 +248,7 @@
         },
         methods: {
             fieldChanged: function (selectedFieldId, fieldQuery) {
-                let selectedField = this.getSelectedField(fieldQuery.fields, selectedFieldId);
+                const selectedField = this.getSelectedField(fieldQuery.fields, selectedFieldId);
                 if (selectedField.type === "date") {
                     fieldQuery.value = null;
                     fieldQuery.relationalOperator = "$lte";
@@ -261,7 +261,7 @@
                 }
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
-                let selectedField = this.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId);
+                const selectedField = this.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId);
                 if (relationalOperator === "$exists") {
                     fieldQuery.value = true;
                 } else {
