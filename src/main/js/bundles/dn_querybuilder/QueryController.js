@@ -82,17 +82,12 @@ define([
                 }
                 var options = {};
                 if (event.options) {
-                    var count = event.options.count || -1;
+                    var count = event.options.count;
                     if (count >= 0) {
                         options.count = count;
-                    } else {
-                        options.count = -1;
                     }
-                    options.ignoreCase = event.options.ignoreCase || false;
-                    options.locale = event.options.locale || {
-                        "language": "en",
-                        "country": "EN"
-                    };
+                    options.ignoreCase = event.options.ignoreCase;
+                    options.locale = event.options.locale;
                     options.sort = event.options.sort || [];
                 }
 
