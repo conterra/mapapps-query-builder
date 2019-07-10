@@ -26,13 +26,14 @@ export default class Replacer {
 
     replace(string) {
         this.refresh();
-        let s = string.substring(2, string.length - 1);
+        const s = string.substring(2, string.length - 1);
+        let result = string;
         ct_lang.forEachOwnProp(this.placeholder, function (value, name) {
             if (name === s) {
-                return value;
+                result = value;
             }
         });
-        return string;
+        return result;
     }
 
     _getPlaceholder() {
