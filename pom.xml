@@ -625,25 +625,20 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>de.conterra.jsrt</groupId>
-                        <artifactId>ct-jsrt-test-maven-plugin</artifactId>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
                             <execution>
+                                <id>run gulp js tests</id>
                                 <phase>test</phase>
                                 <goals>
-                                    <goal>runTests</goal>
+                                    <goal>gulp</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>run-browser-tests --tests http://localhost:${jetty.server.port}/js/tests/runTests.html</arguments>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <initialDelay>2000</initialDelay>
-                            <timeout>60000</timeout>
-                            <tests>
-                                <test>
-                                    http://localhost:${jetty.server.port}/resources/jsregistry/root/intern/latest/runner.html?boot=/js/tests/test-init.js&amp;test=sample_helloworld/tests/all
-                                </test>
-                            </tests>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
