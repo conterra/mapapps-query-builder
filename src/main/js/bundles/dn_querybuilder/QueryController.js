@@ -54,10 +54,9 @@ export default class QueryController {
 
                 let memorySelectionStore = new MemorySelectionStore({
                     id: "querybuilder_" + store.id,
+                    idProperty: store.idProperty,
                     masterStore: store,
-                    metadata: store.getMetadata(),
-                    data: result,
-                    idProperty: store.idProperty
+                    data: result
                 });
 
                 this._dataModel.setDatasource(memorySelectionStore);
