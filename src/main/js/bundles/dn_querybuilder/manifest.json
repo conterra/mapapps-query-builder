@@ -64,6 +64,7 @@
                 "maximizable": true,
                 "minimizeOnClose": true,
                 "resizable": false,
+                "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "50%",
@@ -87,6 +88,7 @@
                 "maximizable": true,
                 "minimizeOnClose": true,
                 "resizable": false,
+                "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "100%"
@@ -128,6 +130,7 @@
                 "maximizable": true,
                 "minimizeOnClose": false,
                 "resizable": false,
+                "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "50%",
@@ -148,6 +151,7 @@
                 "maximizable": true,
                 "minimizeOnClose": false,
                 "resizable": false,
+                "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "100%"
