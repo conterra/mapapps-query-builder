@@ -50,6 +50,7 @@ export default class QueryToolController {
         let tool = this.tool = event.tool;
 
         if (event.options && event.options.editable === true) {
+            this.hideWindow();
             let widget = this._editableQueryBuilderWidgetFactory.getWidget(event._properties, this, tool);
             let serviceProperties = {
                 "widgetRole": "editableQueryBuilderWidget"
