@@ -16,9 +16,9 @@
 export default class AuthenticationPlaceholderProvider {
 
     getPlaceholder() {
-        let placeholder = {};
-        let userAdminService = this._userAdminService;
-        let authentication = userAdminService.getAuthentication();
+        const placeholder = {};
+        const userAdminService = this._userAdminService;
+        const authentication = userAdminService.getAuthentication();
         if (authentication.getUser()) {
             placeholder["current_user_name"] = authentication.getUser().name;
         }

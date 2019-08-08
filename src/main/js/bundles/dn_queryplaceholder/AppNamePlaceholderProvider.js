@@ -16,9 +16,9 @@
 export default class AppNamePlaceholderProvider {
 
     getPlaceholder() {
-        let placeholder = {};
-        let appName = this._appCtx.getApplicationName();
-        let appTitle = this._appCtx.getApplicationProperties().title;
+        const placeholder = {};
+        const appName = this._appCtx.getApplicationName();
+        const appTitle = this._appCtx.getApplicationProperties().title;
         placeholder["current_app_name"] = appName;
         placeholder["current_app_title"] = appTitle;
         return placeholder;

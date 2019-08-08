@@ -44,8 +44,8 @@ export default class Replacer {
     addPlaceholderProvider(placeholderProvider) {
         this.placeholderProvider = this.placeholderProvider || [];
         this.placeholderProvider.push(placeholderProvider);
-        let globalPlaceholder = this.placeholder || {};
-        let placeholder = placeholderProvider.getPlaceholder();
+        const globalPlaceholder = this.placeholder || {};
+        const placeholder = placeholderProvider.getPlaceholder();
         d_lang.mixin(globalPlaceholder, placeholder);
         this.placeholder = globalPlaceholder;
     }
@@ -57,6 +57,6 @@ export default class Replacer {
                     d_lang.mixin(this.placeholder, placeholder);
                 });
             }
-        }, this);
+        });
     }
 }

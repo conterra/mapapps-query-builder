@@ -16,7 +16,7 @@
 export default class ExtentPlaceholderProvider {
 
     getPlaceholder() {
-        let placeholder = {};
+        const placeholder = {};
         placeholder["current_extent"] = JSON.stringify(this._mapState.getExtent(), "", "\t");
         return placeholder;
     }

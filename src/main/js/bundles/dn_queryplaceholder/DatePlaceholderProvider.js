@@ -18,11 +18,11 @@ import d_locale from "dojo/date/locale";
 export default class DatePlaceholderProvider {
 
     getPlaceholder() {
-        let dateObj = new Date();
-        let dateString = d_locale.format(dateObj, {datePattern: "yyyy-MM-dd", selector: 'date'});
-        let date = new Date();
-        let timeString = d_locale.format(dateObj, {datePattern: "HH:mm:ss", selector: 'date'});
-        let placeholder = {};
+        const dateObj = new Date();
+        const dateString = d_locale.format(dateObj, {datePattern: "yyyy-MM-dd", selector: 'date'});
+        const date = new Date();
+        const timeString = d_locale.format(dateObj, {datePattern: "HH:mm:ss", selector: 'date'});
+        const placeholder = {};
         placeholder["current_date"] = date;
         placeholder["current_date_string"] = dateString;
         placeholder["current_time_string"] = timeString;
