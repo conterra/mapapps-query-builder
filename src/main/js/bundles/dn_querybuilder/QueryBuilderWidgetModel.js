@@ -41,13 +41,12 @@ export default declare({
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
-        let serviceResolver = this.serviceResolver = new ServiceResolver();
-        let bundleCtx = componentContext.getBundleContext();
+        const serviceResolver = this.serviceResolver = new ServiceResolver();
+        const bundleCtx = componentContext.getBundleContext();
         serviceResolver.setBundleCtx(bundleCtx);
 
-        let queryBuilderProperties = this._queryBuilderProperties;
+        const queryBuilderProperties = this._queryBuilderProperties;
         this.getStoreData();
-        this.getFieldData();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
         this.enableNegation = queryBuilderProperties.allowNegation;
@@ -64,9 +63,9 @@ export default declare({
     },
 
     getStoreData() {
-        let stores = this.stores;
-        let storeIds = this._properties.storeIds;
-        let storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
+        const stores = this.stores;
+        const storeIds = this._properties.storeIds;
+        const storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
         apprt_when(storeData, (data) => {
             if (data.length === 0) {
                 data = this._metadataAnalyzer.getStoreData(stores);
@@ -77,7 +76,7 @@ export default declare({
     },
 
     getFieldData(selectedStoreId) {
-        let fieldData = this._getSelectedFieldData(selectedStoreId);
+        const fieldData = this._getSelectedFieldData(selectedStoreId);
         apprt_when(fieldData, (data) => {
             this.fieldData = data;
             this.selectedSortFieldName = data[0].id;
@@ -85,8 +84,8 @@ export default declare({
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
-        let selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        let complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
+        const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
+        const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
         if (this._queryBuilderProperties.showSortSelectInUserMode) {
             sortOptions = this.getSortOptions();
@@ -99,7 +98,7 @@ export default declare({
 
     addFieldQuery(selectedStoreId) {
         this.loading = true;
-        let fieldData = this._getSelectedFieldData(selectedStoreId);
+        const fieldData = this._getSelectedFieldData(selectedStoreId);
         apprt_when(fieldData, (fields) => {
             this.fieldQueries.push({
                 fields: fields,
@@ -114,7 +113,7 @@ export default declare({
 
     addFieldQueries(fieldQueries, fields, editFields, selectedStoreId) {
         fields.forEach((field, i) => {
-            let editOptions = editFields && editFields[i];
+            const editOptions = editFields && editFields[i];
             let fieldId;
             let not;
             let relationalOperator;
@@ -139,7 +138,7 @@ export default declare({
                 });
             }
             this.loading = true;
-            let fieldData = this._getSelectedFieldData(selectedStoreId);
+            const fieldData = this._getSelectedFieldData(selectedStoreId);
             apprt_when(fieldData, (fields) => {
                 fieldQueries.push({
                     fields: fields,
@@ -158,8 +157,11 @@ export default declare({
     },
 
     _getSelectedFieldData(selectedStoreId) {
-        let storeId = selectedStoreId || this.selectedStoreId;
-        let store = this.getSelectedStoreObj(storeId);
+        const storeId = selectedStoreId || this.selectedStoreId;
+        const store = this.getSelectedStoreObj(storeId);
+        if(!store) {
+            return;
+        }
         return this._metadataAnalyzer.getFields(store);
     },
 
@@ -168,28 +170,28 @@ export default declare({
     },
 
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
-        let complexQuery = {};
+        const complexQuery = {};
         if (spatialRelation === "current_extent") {
-            let extent = this._mapWidgetModel.get("extent");
+            const extent = this._mapWidgetModel.get("extent");
             complexQuery.geometry = {
                 $contains: extent
             };
         }
         complexQuery[linkOperator] = [];
         fieldQueries.forEach((fieldQuery) => {
-            let fieldId = fieldQuery.selectedFieldId;
-            let relationalOperator = fieldQuery.relationalOperator;
-            let not = fieldQuery.not;
-            let value = fieldQuery.value;
+            const fieldId = fieldQuery.selectedFieldId;
+            const relationalOperator = fieldQuery.relationalOperator;
+            const not = fieldQuery.not;
+            const value = fieldQuery.value;
             if (value === "" || value === null) {
                 return;
             }
-            let obj1 = {};
+            const obj1 = {};
             obj1[relationalOperator] = value;
-            let obj2 = {};
+            const obj2 = {};
             obj2[fieldId] = obj1;
             if (not) {
-                let object = {$not: obj2};
+                const object = {$not: obj2};
                 complexQuery[linkOperator].push(object);
             } else {
                 complexQuery[linkOperator].push(obj2);
@@ -199,7 +201,7 @@ export default declare({
     },
 
     getSortOptions() {
-        let attribute = this.selectedSortFieldName;
+        const attribute = this.selectedSortFieldName;
         return [
             {
                 "attribute": attribute,
