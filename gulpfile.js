@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 const gulp = require("gulp");
-const run_sequence = require('run-sequence');
 const mapapps = require('ct-mapapps-gulp-js');
 
 mapapps.registerTasks({
@@ -32,10 +31,10 @@ mapapps.registerTasks({
     }*/
 });
 
-gulp.task("default", function (callback) {
-    run_sequence(
+gulp.task("default",
+    gulp.series(
         "copy-resources",
         "themes-copy",
-        ["js-transpile", "themes-compile"],
-        callback);
-});
+        gulp.parallel("js-transpile", "themes-compile")
+    )
+);

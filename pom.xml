@@ -76,10 +76,12 @@
         <dependency>
             <groupId>de.conterra.jsrt</groupId>
             <artifactId>ct-jsrt-test-intern</artifactId>
+            <version>${ct.jsrt-test.version}</version>
         </dependency>
         <dependency>
             <groupId>de.conterra.jsrt</groupId>
             <artifactId>ct-jsrt-test-uitest</artifactId>
+            <version>${ct.jsrt-test.version}</version>
         </dependency>
 
     </dependencies>
@@ -99,7 +101,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.1.0</version>
                     <configuration>
                         <escapeString>\</escapeString>
                     </configuration>
@@ -111,29 +113,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                        <showDeprecation>true</showDeprecation>
-                        <excludes>
-                            <exclude>**/*</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.1.1</version>
                     <configuration>
                         <classesDirectory>${js.build.outputPath}</classesDirectory>
                         <includes>
@@ -157,7 +138,12 @@
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.3.20.v20170531</version>
+                    <version>9.4.17.v20190418</version>
+                    <configuration>
+                        <supportedPackagings>
+                            <supportedPackaging>jar</supportedPackaging>
+                        </supportedPackagings>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -173,11 +159,31 @@
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.6</version>
+                    <configuration>
+                        <nodeVersion>v10.15.3</nodeVersion>
+                        <npmVersion>6.9.0</npmVersion>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>1.10</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
@@ -210,11 +216,6 @@
                 <plugin>
                     <artifactId>maven-scm-plugin</artifactId>
                     <version>1.9.5</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.github.eirslett</groupId>
-                    <artifactId>frontend-maven-plugin</artifactId>
-                    <version>1.5</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -260,11 +261,15 @@
                     </properties>
                     <includes>
                         <include>src/main/js/**/*.js</include>
+                        <include>src/main/js/**/*.vue</include>
                         <include>src/main/config/assembly.xml</include>
                         <include>**/build.properties</include>
                         <include>**/gulpfile.js</include>
                         <include>**/pom.xml</include>
                     </includes>
+                    <mapping>
+                        <vue>XML_STYLE</vue>
+                    </mapping>
                 </configuration>
                 <executions>
                     <execution>
@@ -290,7 +295,7 @@
                     <!-- add here properties which are used in plugin configuration resolution -->
                     <properties>
                         <!-- deployment of map.apps installation -->
-                        <mapapps.remote.base />
+                        <mapapps.remote.base/>
                     </properties>
                 </configuration>
             </plugin>
@@ -375,7 +380,7 @@
                                     <!-- remove bundleLocations from app.json -->
                                     <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
                                     </token>
-                                    <value />
+                                    <value/>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -478,33 +483,12 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>v10.15.1</nodeVersion>
-                            <npmVersion>6.4.1</npmVersion>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>run gulp default</id>
+                        <id>run gulp ${gulp.task}</id>
                         <goals>
                             <goal>gulp</goal>
                         </goals>
                         <configuration>
-                            <environmentVariables>
-                                <NODE_ENV>production</NODE_ENV>
-                            </environmentVariables>
+                            <arguments>${gulp.task}</arguments>
                         </configuration>
                     </execution>
                     <execution>
@@ -516,9 +500,6 @@
                         <phase>none</phase>
                         <configuration>
                             <arguments>watch</arguments>
-                            <environmentVariables>
-                                <!--<NODE_ENV>production</NODE_ENV>-->
-                            </environmentVariables>
                         </configuration>
                     </execution>
                 </executions>
@@ -549,11 +530,11 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
+        <mapapps.version>4.7.2</mapapps.version>
         <!-- JS lib versions -->
-        <mapapps.version>4.7.0</mapapps.version>
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.3.0</ct.jsregistry.version>
+        <ct.jsregistry.version>1.3.2</ct.jsregistry.version>
         <ct.jsrt-test.version>1.1.5</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
@@ -562,7 +543,10 @@
         <!-- don't do this in production configuration! This allows to go any http traffic over the /proxy endpoint -->
         <proxy.allowedServerUrls>http,*;</proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
+        <proxy.use.rules></proxy.use.rules>
         <jetty.port>9090</jetty.port>
+        <mvn.cmd>mvn</mvn.cmd>
+        <gulp.task></gulp.task>
 
         <!-- required for release build -->
         <scm.push>false</scm.push>
@@ -572,11 +556,6 @@
     <profiles>
         <profile>
             <id>run-js-tests</id>
-            <!--
-                Execute:
-
-                mvn package -P run-js-tests -Dmapapps.remote.base=...
-            -->
             <build>
                 <plugins>
                     <plugin>
@@ -644,6 +623,75 @@
             </build>
         </profile>
         <profile>
+            <id>include-mapapps-deps</id>
+            <dependencies>
+                <dependency>
+                    <groupId>de.conterra.mapapps</groupId>
+                    <artifactId>ct-mapapps-js-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.dojotoolkit</groupId>
+                    <artifactId>dojo-release</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.dojotoolkit</groupId>
+                    <artifactId>dgrid</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.dojotoolkit</groupId>
+                    <artifactId>dstore</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.esri.js</groupId>
+                    <artifactId>ags-js-api4</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>moment-js</groupId>
+                    <artifactId>moment-js</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>de.conterra.js</groupId>
+                    <artifactId>babel-polyfill</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>node-install</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>!dev</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>install node and npm</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>npm install</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>env-dev</id>
             <!-- This is the development profile, per default it points to a build.properties
         file in the user home, but this can be changed localy by specifiying the
@@ -657,6 +705,9 @@
             </activation>
             <properties>
                 <local.configfile>${basedir}/build.properties</local.configfile>
+                <!-- change if you have a dev task in your gulpfile.js defined
+                <gulp.task>dev</gulp.task>
+                -->
             </properties>
             <build>
                 <plugins>
@@ -670,6 +721,7 @@
                                     <goal>read-project-properties</goal>
                                 </goals>
                                 <configuration>
+                                    <quiet>true</quiet>
                                     <files>
                                         <file>${local.configfile}</file>
                                     </files>
@@ -704,7 +756,8 @@
                                     <async>true</async>
                                     <executable>${maven.home}/bin/${mvn.cmd}</executable>
                                     <arguments>
-                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes</argument>
+                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes
+                                        </argument>
                                     </arguments>
                                 </configuration>
                             </execution>
