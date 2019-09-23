@@ -22,7 +22,7 @@ import domConstruct from "dojo/dom-construct";
 import Memory from "dojo/store/Memory";
 
 import _Connect from "ct/_Connect";
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import ct_array from "ct/array";
 import ct_css from "ct/util/css";
@@ -133,7 +133,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
     _onDone() {
         if (this.drawGeometryHandler)
             this.drawGeometryHandler.clearGraphics();
-        ct_when(this._saveProperties(), this._onReady);
+        apprt_when(this._saveProperties(), this._onReady);
     },
     _onReady() {
     },
@@ -223,7 +223,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             let windowManager = this.windowManager;
             let appCtx = this.appCtx;
             let errorMessage = e.toString();
-            ct_when(windowManager.createInfoDialogWindow({
+            apprt_when(windowManager.createInfoDialogWindow({
                 message: errorMessage,
                 attachToDom: appCtx.builderWindowRoot
             }));
@@ -334,7 +334,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         let store = this._getSelectedStoreObj(storeId);
         let fieldData = this.metadataAnalyzer.getFields(store);
 
-        ct_when(fieldData, (storeData) => {
+        apprt_when(fieldData, (storeData) => {
             let storeId = this._storeSelect.value;
             let fieldWidget = new FieldWidget({
                 source: this,
@@ -357,7 +357,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         let storeId = this._storeSelect.value;
         let store = this._getSelectedStoreObj(storeId);
         let fieldData = this.metadataAnalyzer.getFields(store);
-        ct_when(fieldData, (storeData) => {
+        apprt_when(fieldData, (storeData) => {
             let fieldWidget = new FieldWidget({
                 source: this,
                 store: this._getSelectedStoreObj(storeId),

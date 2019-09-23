@@ -21,7 +21,7 @@ import d_registry from "dijit/registry";
 
 import _Connect from "ct/_Connect";
 import ct_array from "ct/array";
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 import ComplexMemoryStore from "ct/store/ComplexMemory";
 
 import ToolsBuilderWidget from "./QueryToolsBuilderWidget";
@@ -220,7 +220,7 @@ const QueryToolsBuilder = declare([_Connect], {
 
     _onRemoveQueryTool(event) {
         let ids = event.ids || [];
-        ct_when(this._windowManager.createInfoDialogWindow({
+        apprt_when(this._windowManager.createInfoDialogWindow({
             message: this.i18n.widget.window.removeToolMessage,
             attachToDom: this._appCtx.builderWindowRoot
         }), () => {

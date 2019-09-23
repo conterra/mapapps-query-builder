@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
@@ -37,7 +37,7 @@ export default class QueryController {
     memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         options.fields = {geometry: 1};
-        ct_when(store.query(complexQuery, options), (result) => {
+        apprt_when(store.query(complexQuery, options), (result) => {
             if (result.total) {
                 let mapWidgetModel = this._mapWidgetModel;
                 let spatialReference = mapWidgetModel.get("spatialReference");
@@ -45,7 +45,7 @@ export default class QueryController {
                 let geometries = result.map((item) => item.geometry);
 
                 if (geometries[0]) {
-                    ct_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {
+                    apprt_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {
                         transformedGeometries.forEach((tg, index) => {
                             result[index].geometry = tg;
                         });
@@ -82,7 +82,7 @@ export default class QueryController {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         let filter = new Filter(store, complexQuery, options);
         let countFilter = new Filter(store, complexQuery, {});
-        ct_when(countFilter.query({}, {count: 0}).total, (total) => {
+        apprt_when(countFilter.query({}, {count: 0}).total, (total) => {
             if (total) {
                 this._dataModel.setDatasource(filter);
                 this._setProcessing(tool, false, queryBuilderWidgetModel);

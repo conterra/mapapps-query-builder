@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 import ServiceResolver from "apprt/ServiceResolver";
 import Promise from "apprt-core/Promise";
 import QueryTask from "esri/tasks/QueryTask";
@@ -30,7 +30,7 @@ export default class MetadataAnalyzer {
         return new Promise((resolve) => {
             try {
                 let metadata = store.getMetadata();
-                ct_when(metadata, (metadata) => {
+                apprt_when(metadata, (metadata) => {
                     let fields = metadata.fields;
                     let storeData = [];
                     fields.forEach((field) => {
@@ -70,7 +70,7 @@ export default class MetadataAnalyzer {
 
     getDistinctValues(store, storeData) {
         let metadata = store.getMetadata();
-        return ct_when(metadata, (metadata) => {
+        return apprt_when(metadata, (metadata) => {
             let supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
             if (supportsDistincts) {
                 storeData.forEach((data) => {

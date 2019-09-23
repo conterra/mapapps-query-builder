@@ -15,7 +15,7 @@
  */
 import d_lang from "dojo/_base/lang";
 import ct_lang from "ct/_lang";
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 
 export default class Replacer {
 
@@ -53,7 +53,7 @@ export default class Replacer {
     refresh() {
         this.placeholderProvider.forEach((provider) => {
             if (provider.reEvaluate) {
-                ct_when(provider.reEvaluate(), (placeholder) => {
+                apprt_when(provider.reEvaluate(), (placeholder) => {
                     d_lang.mixin(this.placeholder, placeholder);
                 });
             }

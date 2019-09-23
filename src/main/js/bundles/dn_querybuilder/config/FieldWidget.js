@@ -22,11 +22,8 @@ import domConstruct from "dojo/dom-construct";
 import Memory from "dojo/store/Memory";
 
 import _Connect from "ct/_Connect";
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 import ct_css from "ct/util/css";
-import SuggestQueryStore from "ct/store/SuggestQueryStore";
-import Filter from "ct/store/Filter";
-import MapServerLayerStore from "ct/mapping/store/MapServerLayerStore";
 
 import Query from "esri/tasks/support/Query";
 import QueryTask from "esri/tasks/QueryTask";
@@ -53,7 +50,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
 
     postCreate() {
         this.inherited(arguments);
-        ct_when(this.store.getMetadata(), (metadata) => {
+        apprt_when(this.store.getMetadata(), (metadata) => {
             this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
             this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
             if (this.type === "user") {
@@ -274,7 +271,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                     valueComboBox.set('disabled', true);
                 domConstruct.place(valueComboBox.domNode, this._valueNode);
                 valueComboBox.startup();
-                ct_when(this._getDistinctValues(selectedField), (result) => {
+                apprt_when(this._getDistinctValues(selectedField), (result) => {
                     result.sort();
                     let distinctValueData = [];
                     d_array.forEach(result, (distinctValue) => {
@@ -437,7 +434,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         query.returnGeometry = false;
         query.outFields = [selectedField];
         query.returnDistinctValues = true;
-        return ct_when(queryTask.execute(query), (result) => {
+        return apprt_when(queryTask.execute(query), (result) => {
             let distinctValues = [];
             let features = result.features;
             d_array.forEach(features, (feature) => {

@@ -15,7 +15,7 @@
  */
 import {declare} from "apprt-core/Mutable";
 import ct_array from "ct/array";
-import ct_when from "ct/_when";
+import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
@@ -67,7 +67,7 @@ export default declare({
         let stores = this.stores;
         let storeIds = this._properties.storeIds;
         let storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
-        ct_when(storeData, (data) => {
+        apprt_when(storeData, (data) => {
             if (data.length === 0) {
                 data = this._metadataAnalyzer.getStoreData(stores);
             }
@@ -78,7 +78,7 @@ export default declare({
 
     getFieldData(selectedStoreId) {
         let fieldData = this._getSelectedFieldData(selectedStoreId);
-        ct_when(fieldData, (data) => {
+        apprt_when(fieldData, (data) => {
             this.fieldData = data;
             this.selectedSortFieldName = data[0].id;
         });
@@ -100,7 +100,7 @@ export default declare({
     addFieldQuery(selectedStoreId) {
         this.loading = true;
         let fieldData = this._getSelectedFieldData(selectedStoreId);
-        ct_when(fieldData, (fields) => {
+        apprt_when(fieldData, (fields) => {
             this.fieldQueries.push({
                 fields: fields,
                 not: false,
@@ -140,7 +140,7 @@ export default declare({
             }
             this.loading = true;
             let fieldData = this._getSelectedFieldData(selectedStoreId);
-            ct_when(fieldData, (fields) => {
+            apprt_when(fieldData, (fields) => {
                 fieldQueries.push({
                     fields: fields,
                     not: not,
