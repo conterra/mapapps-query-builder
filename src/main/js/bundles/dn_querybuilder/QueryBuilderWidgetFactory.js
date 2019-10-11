@@ -18,10 +18,17 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import Binding from "apprt-binding/Binding";
 
+const _binding = Symbol("_binding");
+
 export default class QueryBuilderWidgetFactory {
 
     activate() {
         this._initComponent();
+    }
+
+    deactivate() {
+        this[_binding].unbind();
+        this[_binding] = undefined;
     }
 
     createInstance() {
@@ -54,7 +61,7 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData(selectedStoreId);
         });
 
-        Binding.for(vm, model)
+        this[_binding] = Binding.for(vm, model)
             .syncAll("locale", "storeData", "selectedStoreId", "fieldData", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "enableNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode", "activeTool")
             .enable()
             .syncToLeftNow();
