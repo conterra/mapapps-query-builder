@@ -56,6 +56,7 @@ export default declare({
         const connect = new Connect();
         connect.connect(this._tool, "onActivate", () => {
             this.activeTool = true;
+            this.getStoreData();
         });
         connect.connect(this._tool, "onDeactivate", () => {
             this.activeTool = false;
