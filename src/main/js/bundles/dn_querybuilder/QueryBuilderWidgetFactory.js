@@ -45,6 +45,7 @@ export default class QueryBuilderWidgetFactory {
         // listen to view model methods
         vm.$on('startup', () => {
             model.addFieldQuery();
+            model.getFieldData();
         });
         vm.$on('search', () => {
             model.search();

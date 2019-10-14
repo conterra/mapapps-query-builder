@@ -76,7 +76,7 @@ export default declare({
     },
 
     getFieldData(selectedStoreId) {
-        const fieldData = this._getSelectedFieldData(selectedStoreId);
+        const fieldData = this._getSelectedFieldData(selectedStoreId || this.selectedStoreId);
         apprt_when(fieldData, (data) => {
             this.fieldData = data;
             this.selectedSortFieldName = data[0].id;
@@ -159,7 +159,7 @@ export default declare({
     _getSelectedFieldData(selectedStoreId) {
         const storeId = selectedStoreId || this.selectedStoreId;
         const store = this.getSelectedStoreObj(storeId);
-        if(!store) {
+        if (!store) {
             return;
         }
         return this._metadataAnalyzer.getFields(store);

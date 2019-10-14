@@ -267,10 +267,10 @@
         watch: {
             activeTool: function (value) {
                 if (!value) {
-                    if(this.$refs.selectedStoreIdSelect) {
+                    if (this.$refs.selectedStoreIdSelect) {
                         this.$refs.selectedStoreIdSelect.isMenuActive = false;
                     }
-                    if(this.$refs.selectedSortFieldNameSelect) {
+                    if (this.$refs.selectedSortFieldNameSelect) {
                         this.$refs.selectedSortFieldNameSelect.isMenuActive = false;
                     }
                 }
