@@ -72,6 +72,7 @@ export default declare({
             }
             this.storeData = data;
             this.selectedStoreId = data[0].id;
+            this.getFieldData();
         });
     },
 
@@ -87,13 +88,14 @@ export default declare({
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
+        const options = {
+            suggestContains: false
+        };
         if (this._queryBuilderProperties.showSortSelectInUserMode) {
             sortOptions = this.getSortOptions();
+            options.sort = sortOptions;
         }
-        this._queryController.query(selectedStore, complexQuery, {
-            suggestContains: false,
-            sort: sortOptions
-        }, tool || this._tool, this);
+        this._queryController.query(selectedStore, complexQuery, options, tool || this._tool, this);
     },
 
     addFieldQuery(selectedStoreId) {
