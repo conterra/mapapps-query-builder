@@ -100,7 +100,7 @@
                             min-width="290px">
                             <template v-slot:activator="{ on }">
                                 <v-text-field
-                                    v-model="fieldQuery.value"
+                                    v-model="dateString"
                                     :disabled="fieldQuery.disableValue"
                                     :placeholder="i18n.enterValue"
                                     class="pa-0"
@@ -111,7 +111,7 @@
                                 />
                             </template>
                             <v-date-picker
-                                v-model="fieldQuery.value"
+                                v-model="dateString"
                                 :locale="locale"
                                 full-width
                                 scrollable/>
@@ -146,7 +146,6 @@
                             :rules="[rules.required, rules.number]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
-                            @input.native="changeValue"
                             class="pa-0"
                             required
                             single-line
@@ -162,7 +161,6 @@
                             :rules="[rules.required]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
-                            @input.native="changeValue"
                             class="pa-0"
                             required
                             single-line
@@ -263,6 +261,7 @@
         },
         data() {
             return {
+                dateString: this.getDateString(),
                 rules: {
                     required: (value) => !!value || this.i18n.rules.required,
                     number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
@@ -271,6 +270,9 @@
             }
         },
         watch: {
+            dateString: function (value) {
+                this.fieldQuery.value = new Date(value);
+            },
             activeTool: function (value) {
                 if (!value) {
                     if (this.$refs.selectedFieldIdSelect) {
@@ -295,8 +297,16 @@
             }
         },
         methods: {
-            changeValue: function (event) {
-                this.fieldQuery.value = event.target.value;
+            getDateString() {
+                let dateObj = new Date(this.fieldQuery.value);
+                if(!isNaN(dateObj.getTime())) {
+                    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+                    let day = dateObj.getUTCDate();
+                    let year = dateObj.getUTCFullYear();
+                    return year + "-" + month + "-" + day;
+                } else {
+                    return null;
+                }
             }
         }
     }

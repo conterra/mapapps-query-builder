@@ -238,6 +238,43 @@
                         }
                     },
                     "storeId": "baumkataster"
+                },
+                {
+                    "id": "querybuilder_1572005863861",
+                    "title": "Störungen suchen",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "zeitpunkt": {
+                                    "$lte": "2019-10-25T12:18:15.749Z"
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": true,
+                        "editOptions": {
+                            "spatialRelation": true,
+                            "linkOperator": true,
+                            "editFields": [
+                                {
+                                    "not": false,
+                                    "field": false,
+                                    "relationalOperator": false,
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "stoerungen"
                 }
             ]
         },
