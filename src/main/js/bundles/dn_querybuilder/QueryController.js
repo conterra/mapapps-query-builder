@@ -116,7 +116,9 @@ export default class QueryController {
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {
         if (queryBuilderWidgetModel) {
-            queryBuilderWidgetModel.set("processing", processing);
+            async(() => {
+                queryBuilderWidgetModel.set("processing", processing)
+            }, 100);
         }
         if (tool) {
             tool.set("processing", processing);

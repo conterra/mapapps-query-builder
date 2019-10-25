@@ -60,6 +60,8 @@ export default declare({
         });
         connect.connect(this._tool, "onDeactivate", () => {
             this.activeTool = false;
+            this.loading = false;
+            this.processing = false;
         });
     },
 
