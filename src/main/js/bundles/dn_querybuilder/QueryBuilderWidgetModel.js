@@ -179,7 +179,7 @@ export default declare({
         if (spatialRelation === "current_extent") {
             const extent = this._mapWidgetModel.get("extent");
             complexQuery.geometry = {
-                $contains: extent
+                $intersects: extent
             };
         }
         complexQuery[linkOperator] = [];

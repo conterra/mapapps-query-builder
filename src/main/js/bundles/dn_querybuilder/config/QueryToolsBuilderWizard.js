@@ -189,7 +189,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         let extent = this.mapWidgetModel.get("extent").toJSON();
         if (this._spatialRelationSelect.value === "current_extent") {
             complexQuery.geometry = {
-                $contains: extent
+                $intersects: extent
             };
         }
         let children = this._queryNode.children;

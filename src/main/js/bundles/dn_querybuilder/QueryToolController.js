@@ -70,9 +70,14 @@ export default class QueryToolController {
                 if (this._queryBuilderProperties.useUserExtent) {
                     extent = this._mapWidgetModel.get("extent");
                     complexQuery.geometry = {
-                        $contains: extent
+                        $intersects: extent
                     };
-                } else if (!complexQuery.geometry.$contains.type) {
+                } else if (complexQuery.geometry.$intersects) {
+                    extent = new Extent(complexQuery.geometry.$intersects);
+                    complexQuery.geometry = {
+                        $intersects: extent
+                    };
+                } else if (complexQuery.geometry.$contains) {
                     extent = new Extent(complexQuery.geometry.$contains);
                     complexQuery.geometry = {
                         $contains: extent
