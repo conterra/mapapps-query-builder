@@ -85,7 +85,11 @@ export default class QueryController {
         let countFilter = new Filter(store, complexQuery, {});
         apprt_when(countFilter.query({}, {count: 0}).total, (total) => {
             if (total) {
-                this._dataModel.setDatasource(filter);
+                if (this._queryBuilderResultsFetcher) {
+                    this._queryBuilderResultsFetcher.addResultsToModel(filter);
+                } else {
+                    this._dataModel.setDatasource(filter);
+                }
                 this._setProcessing(tool, false, queryBuilderWidgetModel);
             } else {
                 this._logService.warn({

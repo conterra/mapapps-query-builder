@@ -290,6 +290,11 @@
                     "providing": "resultcenter.DataModel"
                 },
                 {
+                    "name": "_queryBuilderResultsFetcher",
+                    "providing": "sf_querybuilder.QueryBuilderResultsFetcher",
+                    "cardinality": "0..1"
+                },
+                {
                     "name": "_coordinateTransformer",
                     "providing": "ct.api.coordinatetransformer.CoordinateTransformer"
                 },
