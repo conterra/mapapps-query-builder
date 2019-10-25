@@ -32,7 +32,7 @@ export default declare({
     sortDescending: false,
     linkOperator: null,
     spatialRelation: null,
-    enableNegation: null,
+    allowNegation: null,
     fieldQueries: [],
     loading: false,
     processing: false,
@@ -49,7 +49,7 @@ export default declare({
         this.getStoreData();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
-        this.enableNegation = queryBuilderProperties.allowNegation;
+        this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
         this.fieldQueries = [];
 

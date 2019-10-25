@@ -151,7 +151,7 @@
                     :locale="locale"
                     :fieldQuery="fieldQuery"
                     :index="index"
-                    :allowNegation="enableNegation"
+                    :allowNegation="allowNegation"
                     :activeTool="activeTool"
                     :i18n="i18n"/>
             </v-container>
