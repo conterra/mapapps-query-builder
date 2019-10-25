@@ -74,7 +74,7 @@
           "enableDistinctValues": true,
           "defaultLinkOperator": "$or",
           "defaultSpatialRelation": "everywhere",
-          "useMemorySelectionStore": true,
+          "useMemorySelectionStore": false,
           "useUserExtent": false,
           "allowNegation": false
         },

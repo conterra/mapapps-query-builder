@@ -80,7 +80,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
     "enableDistinctValues": true,
     "defaultLinkOperator": "$or",
     "defaultSpatialRelation": "everywhere",
-    "useMemorySelectionStore": true,
+    "useMemorySelectionStore": false,
     "useUserExtent": false,
     "allowNegation": true,
     "showQuerySettingsInEditableMode": true,
@@ -93,7 +93,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 | enableDistinctValues            | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Distinct values are queried by the service.                                                                                            |
 | defaultLinkOperator             | Boolean | ```or``` &#124; ```and```                                             | ```or```                    | Defines the default link operator.                                                                                                     |
 | defaultSpatialRelation          | Boolean | ```everywhere``` &#124; ```current_extent```                          | ```everywhere```            | Defines the default spatial relation.                                                                                                  |
-| useMemorySelectionStore         | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Use MemorySelectionStore to save the results.                                                                                          |
+| useMemorySelectionStore         | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use MemorySelectionStore to save the results.                                                                                          |
 | useUserExtent                   | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use the current user extent to filter predefined queries.                                                                              |
 | allowNegation                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Allows the user to negate the different parts of the queries.                                                                          |
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the query settings for editable queries.                                                                                  |
