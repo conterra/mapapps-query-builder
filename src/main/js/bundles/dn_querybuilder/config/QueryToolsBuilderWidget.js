@@ -28,7 +28,7 @@ import templateStringContent from "dojo/text!./templates/QueryToolsBuilderWidget
 import "dijit/layout/ContentPane";
 import "dijit/layout/BorderContainer";
 
-const QueryToolsBuilderWidget = declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin], {
+export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin], {
 
     baseClass: "ctToolsBuilderWidget",
     templateString: templateStringContent,
@@ -37,10 +37,10 @@ const QueryToolsBuilderWidget = declare([_BuilderWidget, _TemplatedMixin, _Widge
     },
     postCreate() {
         this.inherited(arguments);
-        let model = this._viewModel = new DataViewModel({
+        const model = this._viewModel = new DataViewModel({
             store: this.configStore
         });
-        let dataView = this._dataView = this._createDataView();
+        const dataView = this._dataView = this._createDataView();
         this._gridNode.set("content", dataView);
         dataView.startup();
         dataView.set("model", model);
@@ -57,8 +57,8 @@ const QueryToolsBuilderWidget = declare([_BuilderWidget, _TemplatedMixin, _Widge
         }
     },
     _createDataView() {
-        let i18n = this.i18n.dataView;
-        let dataView = this._dataView = new DataView({
+        const i18n = this.i18n.dataView;
+        const dataView = this._dataView = new DataView({
             i18n: i18n,
             showFilter: true,
             filterDuringKeyUp: true,
@@ -120,7 +120,7 @@ const QueryToolsBuilderWidget = declare([_BuilderWidget, _TemplatedMixin, _Widge
         this.inherited(arguments);
     },
     removeQueryTool() {
-        let selectedIds = this._viewModel.get("selectedIds");
+        const selectedIds = this._viewModel.get("selectedIds");
         if (selectedIds.length === 0) {
             return;
         }
@@ -141,7 +141,7 @@ const QueryToolsBuilderWidget = declare([_BuilderWidget, _TemplatedMixin, _Widge
         });
     },
     copyQueryTool() {
-        let selectedIds = this._viewModel.get("selectedIds");
+        const selectedIds = this._viewModel.get("selectedIds");
         if (selectedIds.length === 0) {
             return;
         }
@@ -163,5 +163,3 @@ const QueryToolsBuilderWidget = declare([_BuilderWidget, _TemplatedMixin, _Widge
     onCopyQueryTool() {
     }
 });
-
-module.exports = QueryToolsBuilderWidget;

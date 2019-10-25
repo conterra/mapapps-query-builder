@@ -1,74 +1,74 @@
 {
-  "dataform-version": "1.0.0",
-  "size": {
-    "h": 300,
-    "w": 400
-  },
-  "type": "gridpanel",
-  "showLabels": true,
-  "cols": 1,
-  "children": [
-    {
-      "type": "checkbox",
-      "label": "${propertiesWidget.enableDistinctValues}",
-      "field": "enableDistinctValues"
+    "dataform-version": "1.0.0",
+    "size": {
+        "h": 300,
+        "w": 400
     },
-    {
-      "type": "selectbox",
-      "field": "defaultLinkOperator",
-      "label": "${propertiesWidget.defaultLinkOperator}",
-      "searchAttribute": "name",
-      "labelAttribute": "${name}",
-      "values": [
+    "type": "gridpanel",
+    "showLabels": true,
+    "cols": 1,
+    "children": [
         {
-          "name": "${widget.wizard.and}",
-          "value": "$and"
+            "type": "checkbox",
+            "label": "${propertiesWidget.enableDistinctValues}",
+            "field": "enableDistinctValues"
         },
         {
-          "name": "${widget.wizard.or}",
-          "value": "$or"
-        }
-      ],
-      "max": 2,
-      "size": {
-        "w": 150
-      }
-    },
-    {
-      "type": "selectbox",
-      "field": "defaultSpatialRelation",
-      "label": "${propertiesWidget.defaultSpatialRelation}",
-      "searchAttribute": "name",
-      "labelAttribute": "${name}",
-      "values": [
-        {
-          "name": "${widget.wizard.everywhere}",
-          "value": "everywhere"
+            "type": "selectbox",
+            "field": "defaultLinkOperator",
+            "label": "${propertiesWidget.defaultLinkOperator}",
+            "searchAttribute": "name",
+            "labelAttribute": "${name}",
+            "values": [
+                {
+                    "name": "${widget.wizard.and}",
+                    "value": "$and"
+                },
+                {
+                    "name": "${widget.wizard.or}",
+                    "value": "$or"
+                }
+            ],
+            "max": 2,
+            "size": {
+                "w": 150
+            }
         },
         {
-          "name": "${widget.wizard.extent}",
-          "value": "current_extent"
+            "type": "selectbox",
+            "field": "defaultSpatialRelation",
+            "label": "${propertiesWidget.defaultSpatialRelation}",
+            "searchAttribute": "name",
+            "labelAttribute": "${name}",
+            "values": [
+                {
+                    "name": "${widget.wizard.everywhere}",
+                    "value": "everywhere"
+                },
+                {
+                    "name": "${widget.wizard.extent}",
+                    "value": "current_extent"
+                }
+            ],
+            "max": 2,
+            "size": {
+                "w": 150
+            }
+        },
+        {
+            "type": "checkbox",
+            "label": "${propertiesWidget.useMemorySelectionStore}",
+            "field": "useMemorySelectionStore"
+        },
+        {
+            "type": "checkbox",
+            "label": "${propertiesWidget.useUserExtent}",
+            "field": "useUserExtent"
+        },
+        {
+            "type": "checkbox",
+            "label": "${propertiesWidget.allowNegation}",
+            "field": "allowNegation"
         }
-      ],
-      "max": 2,
-      "size": {
-        "w": 150
-      }
-    },
-    {
-      "type": "checkbox",
-      "label": "${propertiesWidget.useMemorySelectionStore}",
-      "field": "useMemorySelectionStore"
-    },
-    {
-      "type": "checkbox",
-      "label": "${propertiesWidget.useUserExtent}",
-      "field": "useUserExtent"
-    },
-    {
-      "type": "checkbox",
-      "label": "${propertiesWidget.allowNegation}",
-      "field": "allowNegation"
-    }
-  ]
+    ]
 }

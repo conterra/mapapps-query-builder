@@ -21,18 +21,18 @@ import Query from "esri/tasks/support/Query";
 
 export default class MetadataAnalyzer {
     activate(componentContext) {
-        let serviceResolver = this.serviceResolver = new ServiceResolver();
-        let bundleCtx = componentContext.getBundleContext();
+        const serviceResolver = this.serviceResolver = new ServiceResolver();
+        const bundleCtx = componentContext.getBundleContext();
         serviceResolver.setBundleCtx(bundleCtx);
     }
 
     getFields(store) {
         return new Promise((resolve) => {
             try {
-                let metadata = store.getMetadata();
+                const metadata = store.getMetadata();
                 apprt_when(metadata, (metadata) => {
-                    let fields = metadata.fields;
-                    let storeData = [];
+                    const fields = metadata.fields;
+                    const storeData = [];
                     fields.forEach((field) => {
                         let codedValues = [];
                         let codedValueString = "";
@@ -69,25 +69,26 @@ export default class MetadataAnalyzer {
     }
 
     getDistinctValues(store, storeData) {
-        let metadata = store.getMetadata();
+        const metadata = store.getMetadata();
         return apprt_when(metadata, (metadata) => {
-            let supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
+            const supportsDistincts = metadata.advancedQueryCapabilities
+                && metadata.advancedQueryCapabilities.supportsDistinct;
             if (supportsDistincts) {
                 storeData.forEach((data) => {
                     data.loading = true;
-                    let queryTask = new QueryTask({
+                    const queryTask = new QueryTask({
                         url: store.target
                     });
-                    let query = new Query();
+                    const query = new Query();
                     query.where = "1=1";
                     query.outFields = [data.id];
                     query.orderByFields = [data.id];
                     query.returnGeometry = false;
                     query.returnDistinctValues = true;
                     queryTask.execute(query).then((result) => {
-                        let distinctValues = [];
+                        const distinctValues = [];
                         result.features.forEach((feature) => {
-                            let value = feature.attributes[data.id];
+                            const value = feature.attributes[data.id];
                             if (value !== null && value !== "") {
                                 distinctValues.push(value);
                             }
@@ -104,7 +105,7 @@ export default class MetadataAnalyzer {
     }
 
     getStoreData(stores) {
-        let storeIds = [];
+        const storeIds = [];
         stores.forEach((store) => {
             storeIds.push(store.id);
         });
@@ -112,9 +113,9 @@ export default class MetadataAnalyzer {
     }
 
     getStoreDataByIds(storeIds) {
-        let storeData = [];
+        const storeData = [];
         storeIds.forEach((storeId) => {
-            let storeProperties = this.getStoreProperties(storeId);
+            const storeProperties = this.getStoreProperties(storeId);
             if (storeProperties) {
                 storeData.push(
                     {
@@ -129,7 +130,7 @@ export default class MetadataAnalyzer {
     }
 
     getStoreProperties(idOrStore) {
-        let resolver = this.serviceResolver;
+        const resolver = this.serviceResolver;
         if (typeof (idOrStore) === "string") {
             return resolver.getServiceProperties("ct.api.Store", "(id=" + idOrStore + ")");
         }

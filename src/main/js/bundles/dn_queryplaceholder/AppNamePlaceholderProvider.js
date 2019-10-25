@@ -23,4 +23,5 @@ export default class AppNamePlaceholderProvider {
         placeholder["current_app_title"] = appTitle;
         return placeholder;
     }
+
 }

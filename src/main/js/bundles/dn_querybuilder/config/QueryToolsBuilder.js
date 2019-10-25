@@ -27,19 +27,19 @@ import ComplexMemoryStore from "ct/store/ComplexMemory";
 import ToolsBuilderWidget from "./QueryToolsBuilderWidget";
 import ToolsBuilderWizard from "./QueryToolsBuilderWizard";
 
-const QueryToolsBuilder = declare([_Connect], {
+export default declare([_Connect], {
 
     createInstance() {
-        let configStore = this._getConfigStore();
-        let properties = this._properties || {};
-        let i18n = this.i18n = this._i18n.get();
-        let i18nGRID = i18n.widget.grid;
-        let opts = d_lang.mixin({
+        const configStore = this._getConfigStore();
+        const properties = this._properties || {};
+        const i18n = this.i18n = this._i18n.get();
+        const i18nGRID = i18n.widget.grid;
+        const opts = d_lang.mixin({
             configStore: configStore,
             toolbar: this._toolbar,
             i18n: i18nGRID
         }, properties.widgetProperties);
-        let widget = this._widget = new ToolsBuilderWidget(opts);
+        const widget = this._widget = new ToolsBuilderWidget(opts);
         this.connect(widget, "onRemoveQueryTool", "_onRemoveQueryTool");
         this.connect(widget, "onCreateQueryTool", "_onCreateQueryTool");
         this.connect(widget, "onEditQueryTool", "_onEditQueryTool");
@@ -50,7 +50,7 @@ const QueryToolsBuilder = declare([_Connect], {
     destroyInstance(instance) {
         this.disconnect();
         this._configStore = null;
-        let window = this._window;
+        const window = this._window;
         if (window) {
             window.close();
             this._window = null;
@@ -103,12 +103,12 @@ const QueryToolsBuilder = declare([_Connect], {
     },
 
     _initConfigStore() {
-        let configStore = this._configStore;
-        let configAdminService = this._configAdminService;
-        let properties = this._properties.widgetProperties;
+        const configStore = this._configStore;
+        const configAdminService = this._configAdminService;
+        const properties = this._properties.widgetProperties;
         let data = configAdminService.getFactoryConfigurations(properties.pid, properties.bid);
         data = d_array.map(data, (config) => {
-            let props = config.get("properties");
+            const props = config.get("properties");
             props.pid = config.get("pid");
             return props;
         }, this);
@@ -117,22 +117,22 @@ const QueryToolsBuilder = declare([_Connect], {
 
     _applyConfig(properties) {
         properties = d_lang.clone(properties);
-        let props = this._properties.widgetProperties;
-        let config = this._configAdminService.createFactoryConfiguration(props.pid, props.bid);
+        const props = this._properties.widgetProperties;
+        const config = this._configAdminService.createFactoryConfiguration(props.pid, props.bid);
         delete properties.pid;
         config.update(properties);
     },
 
     _updateConfig(properties) {
         properties = d_lang.clone(properties);
-        let config = this._getConfiguration(properties.pid);
+        const config = this._getConfiguration(properties.pid);
         delete properties.pid;
         config.update(properties);
     },
 
     _createWizard(properties) {
         // time & default icon
-        let date = new Date();
+        const date = new Date();
         if (properties.id === undefined) {
             properties.id = "querybuilder_" + date.getTime();
             properties.title = "";
@@ -140,7 +140,7 @@ const QueryToolsBuilder = declare([_Connect], {
             properties.complexQuery = {};
             properties.options = {};
         }
-        let wizardI18n = this.i18n.widget.wizard;
+        const wizardI18n = this.i18n.widget.wizard;
         return new ToolsBuilderWizard({
             widget: this._widget,
             globalProperties: this._properties,
@@ -158,16 +158,16 @@ const QueryToolsBuilder = declare([_Connect], {
     },
 
     _openWizardWindow(wizard, edit) {
-        let properties = wizard.get("properties");
-        let windowManager = this._windowManager;
-        let i18n = this.i18n.widget.wizard;
+        const properties = wizard.get("properties");
+        const windowManager = this._windowManager;
+        const i18n = this.i18n.widget.wizard;
         let title;
         if (edit === true) {
             title = i18n.windowtitleEdit;
         } else {
             title = i18n.windowtitleAdd;
         }
-        let window = windowManager.createWindow({
+        const window = windowManager.createWindow({
             title: title,
             marginBox: {
                 w: 840,
@@ -187,18 +187,18 @@ const QueryToolsBuilder = declare([_Connect], {
             }
             this._updateGrid();
             wizard.disconnect();
-            let children = wizard._queryNode.children;
+            const children = wizard._queryNode.children;
             d_array.forEach(children, (child) => {
-                let widget = d_registry.getEnclosingWidget(child);
+                const widget = d_registry.getEnclosingWidget(child);
                 widget.disconnect();
             }, this);
             window.close();
         });
         this.connect(wizard, "_onCancel", () => {
             wizard.disconnect();
-            let children = wizard._queryNode.children;
+            const children = wizard._queryNode.children;
             d_array.forEach(children, (child) => {
-                let widget = d_registry.getEnclosingWidget(child);
+                const widget = d_registry.getEnclosingWidget(child);
                 widget.disconnect();
             }, this);
             window.close();
@@ -206,27 +206,27 @@ const QueryToolsBuilder = declare([_Connect], {
     },
 
     _getConfiguration(pid) {
-        let properties = this._properties.widgetProperties;
-        let data = this._configAdminService.getFactoryConfigurations(properties.pid, properties.bid);
+        const properties = this._properties.widgetProperties;
+        const data = this._configAdminService.getFactoryConfigurations(properties.pid, properties.bid);
         return ct_array.arraySearchFirst(data, {
             pid: pid
         });
     },
 
     _onCreateQueryTool(event) {
-        let wizard = this._createWizard({});
+        const wizard = this._createWizard({});
         this._openWizardWindow(wizard, false);
     },
 
     _onRemoveQueryTool(event) {
-        let ids = event.ids || [];
+        const ids = event.ids || [];
         apprt_when(this._windowManager.createInfoDialogWindow({
             message: this.i18n.widget.window.removeToolMessage,
             attachToDom: this._appCtx.builderWindowRoot
         }), () => {
-            let store = this._getConfigStore();
+            const store = this._getConfigStore();
             d_array.forEach(ids, (pid) => {
-                let config = this._getConfiguration(pid);
+                const config = this._getConfiguration(pid);
                 if (config) {
                     config.remove();
                 }
@@ -237,19 +237,19 @@ const QueryToolsBuilder = declare([_Connect], {
     },
 
     _onEditQueryTool(event) {
-        let store = this._getConfigStore();
-        let config = store.get(event.id);
-        let wizard = this._createWizard(config);
+        const store = this._getConfigStore();
+        const config = store.get(event.id);
+        const wizard = this._createWizard(config);
         this._openWizardWindow(wizard, true);
     },
 
     _onCopyQueryTool(event) {
-        let ids = event.ids || [];
+        const ids = event.ids || [];
         d_array.forEach(ids, (pid) => {
-            let store = this._getConfigStore();
-            let config = store.get(pid);
+            const store = this._getConfigStore();
+            const config = store.get(pid);
             if (config) {
-                let date = new Date();
+                const date = new Date();
                 config.id = "querybuilder_" + date.getTime();
                 this._applyConfig(config);
             }
@@ -259,9 +259,7 @@ const QueryToolsBuilder = declare([_Connect], {
 
     _updateGrid() {
         this._initConfigStore();
-        let widget = this._widget;
+        const widget = this._widget;
         widget.updateGrid();
     }
 });
-
-module.exports = QueryToolsBuilder;

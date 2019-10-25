@@ -43,7 +43,7 @@ import CheckBox from "dijit/form/CheckBox";
 import "dijit/layout/ContentPane";
 import "dijit/layout/BorderContainer";
 
-const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
+export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Connect], {
 
     templateString: templateStringContent,
     baseClass: "fieldWidget",
@@ -51,7 +51,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     postCreate() {
         this.inherited(arguments);
         apprt_when(this.store.getMetadata(), (metadata) => {
-            this._supportsDistincts = metadata.advancedQueryCapabilities && metadata.advancedQueryCapabilities.supportsDistinct;
+            this._supportsDistincts = metadata.advancedQueryCapabilities
+                && metadata.advancedQueryCapabilities.supportsDistinct;
             this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
             if (this.type === "user") {
                 this.notSelectDisabled = false;
@@ -97,7 +98,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         }
         if (this.type !== "editing") {
             if (first) {
-                let firstAddButton = new Button({
+                const firstAddButton = new Button({
                     iconClass: "icon-plus",
                     showLabel: false,
                     onClick: d_lang.hitch(this, () => {
@@ -107,7 +108,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 domConstruct.place(firstAddButton.domNode, this._buttonNode, "last");
                 firstAddButton.startup();
             } else if (last) {
-                let lastRemoveButton = new Button({
+                const lastRemoveButton = new Button({
                     iconClass: "icon-minus",
                     showLabel: false,
                     onClick: d_lang.hitch(this, () => {
@@ -116,7 +117,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 });
                 domConstruct.place(lastRemoveButton.domNode, this._buttonNode, "last");
                 lastRemoveButton.startup();
-                let addButton = new Button({
+                const addButton = new Button({
                     iconClass: "icon-plus",
                     showLabel: false,
                     onClick: d_lang.hitch(this, () => {
@@ -126,7 +127,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 domConstruct.place(addButton.domNode, this._buttonNode, "last");
                 addButton.startup();
             } else {
-                let removeButton = new Button({
+                const removeButton = new Button({
                     iconClass: "icon-minus",
                     showLabel: false,
                     onClick: d_lang.hitch(this, () => {
@@ -143,11 +144,11 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createGUI() {
-        let fieldData = this.storeData;
-        let fieldStore = this._fieldStore = new Memory({
+        const fieldData = this.storeData;
+        const fieldStore = this._fieldStore = new Memory({
             data: fieldData
         });
-        let fieldSelect = this._fieldSelect = new FilteringSelect({
+        const fieldSelect = this._fieldSelect = new FilteringSelect({
             name: "fields",
             value: this.fieldId || fieldData[0].id,
             store: fieldStore,
@@ -158,8 +159,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         });
         domConstruct.place(fieldSelect.domNode, this._fieldNode);
         d_class.add(this._fieldSelect.domNode, "fieldSelect");
-        let i18n = this.i18n;
-        let notStore = new Memory({
+        const i18n = this.i18n;
+        const notStore = new Memory({
             data: [
                 {id: false, name: i18n.shouldBeTrue},
                 {id: true, name: i18n.shouldBeFalse}
@@ -169,7 +170,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         if (this.not) {
             not = this.not;
         }
-        let notSelect = this._notSelect = new FilteringSelect({
+        const notSelect = this._notSelect = new FilteringSelect({
             name: "not",
             value: not,
             store: notStore,
@@ -187,14 +188,14 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _changeGUI() {
-        let fieldSelect = this._fieldSelect;
-        let selectedField = fieldSelect.get("value");
-        let type = this._fieldStore.get(selectedField).type;
-        let codedValues = this._fieldStore.get(selectedField).codedValues;
+        const fieldSelect = this._fieldSelect;
+        const selectedField = fieldSelect.get("value");
+        const type = this._fieldStore.get(selectedField).type;
+        const codedValues = this._fieldStore.get(selectedField).codedValues;
         while (this._valueNode.firstChild) {
             this._valueNode.removeChild(this._valueNode.firstChild);
         }
-        let relationalOperatorSelect = this._relationalOperatorSelect;
+        const relationalOperatorSelect = this._relationalOperatorSelect;
         let relationalOperatorStore;
         let valueSelect;
         if (codedValues.length > 0) {
@@ -205,11 +206,11 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
             } else {
                 this._createRelationalOperatorSelect("$eq", relationalOperatorStore);
             }
-            let codedValueData = [];
+            const codedValueData = [];
             d_array.forEach(codedValues, (codedValue) => {
                 codedValueData.push({name: codedValue.name, id: codedValue.code});
             });
-            let codedValueStore = new Memory({
+            const codedValueStore = new Memory({
                 data: codedValueData
             });
             valueSelect = this._valueField = new FilteringSelect({
@@ -259,7 +260,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 }
             }
             if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
-                let valueComboBox = this._valueField = new ComboBox({
+                const valueComboBox = this._valueField = new ComboBox({
                     name: "value",
                     searchAttr: "id",
                     maxHeight: this.maxComboBoxHeight,
@@ -273,7 +274,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 valueComboBox.startup();
                 apprt_when(this._getDistinctValues(selectedField), (result) => {
                     result.sort();
-                    let distinctValueData = [];
+                    const distinctValueData = [];
                     d_array.forEach(result, (distinctValue) => {
                         if (typeof (distinctValue) === "number") {
                             distinctValueData.push({id: d_number.format(distinctValue)});
@@ -281,7 +282,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                             distinctValueData.push({id: distinctValue});
                         }
                     });
-                    let distinctValueStore = new Memory({
+                    const distinctValueStore = new Memory({
                         data: distinctValueData
                     });
                     valueComboBox.set("store", distinctValueStore);
@@ -388,7 +389,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createRelationalOperatorSelect(value, relationalOperatorStore) {
-        let relationalOperatorSelect = this._relationalOperatorSelect = new FilteringSelect({
+        const relationalOperatorSelect = this._relationalOperatorSelect = new FilteringSelect({
             name: "relationalOperator",
             value: this.relationalOperatorId || value,
             store: relationalOperatorStore,
@@ -403,8 +404,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
                 while (this._valueNode.firstChild) {
                     this._valueNode.removeChild(this._valueNode.firstChild);
                 }
-                let i18n = this.i18n;
-                let booleanStore = new Memory({
+                const i18n = this.i18n;
+                const booleanStore = new Memory({
                     data: [
                         {id: true, name: i18n.yes},
                         {id: false, name: i18n.no}
@@ -428,17 +429,17 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         if (!this.store.target) {
             return [];
         }
-        let query = new Query();
-        let queryTask = new QueryTask(this.store.target);
+        const query = new Query();
+        const queryTask = new QueryTask(this.store.target);
         query.where = "1=1";
         query.returnGeometry = false;
         query.outFields = [selectedField];
         query.returnDistinctValues = true;
         return apprt_when(queryTask.execute(query), (result) => {
-            let distinctValues = [];
-            let features = result.features;
+            const distinctValues = [];
+            const features = result.features;
             d_array.forEach(features, (feature) => {
-                let value = feature.attributes[selectedField];
+                const value = feature.attributes[selectedField];
                 if (value !== null) {
                     distinctValues.push(value);
                 }
@@ -448,7 +449,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createCodedValueRelationalOperatorStore() {
-        let i18n = this.i18n;
+        const i18n = this.i18n;
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
@@ -462,7 +463,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createBooleanRelationalOperatorStore() {
-        let i18n = this.i18n;
+        const i18n = this.i18n;
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
@@ -472,7 +473,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createStringRelationalOperatorStore() {
-        let i18n = this.i18n;
+        const i18n = this.i18n;
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
@@ -484,7 +485,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createNumberRelationalOperatorStore() {
-        let i18n = this.i18n;
+        const i18n = this.i18n;
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
@@ -498,7 +499,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     _createDateRelationalOperatorStore() {
-        let i18n = this.i18n;
+        const i18n = this.i18n;
         return new Memory({
             data: [
                 {id: "$lte", name: i18n.before},
@@ -562,7 +563,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
     },
 
     getSelectedFieldType() {
-        let data = this._fieldSelect.store.data;
+        const data = this._fieldSelect.store.data;
         let result = this._fieldSelect.type;
         d_array.forEach(data, (item) => {
             if (item.id === this._fieldSelect.value) {
@@ -598,7 +599,7 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
 
     getValue() {
         let result = this._valueField.value;
-        let fieldType = this.getSelectedFieldType();
+        const fieldType = this.getSelectedFieldType();
         if (fieldType === "date") {
             if (result === undefined || result === null) {
                 result = this._valueField.displayedValue;
@@ -609,7 +610,8 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
             if (this.replacer) {
                 result = this.replacer.replace(result);
             }
-        } else if (fieldType === "number" || fieldType === "integer" || fieldType === "single" || fieldType === "double") {
+        } else if (fieldType === "number" || fieldType === "integer"
+            || fieldType === "single" || fieldType === "double") {
             if (result === undefined || result === null) {
                 result = this._valueField.displayedValue;
             } else if (typeof (result) === "string") {
@@ -626,5 +628,3 @@ const FieldWidget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMix
         return true;
     }
 });
-
-module.exports = FieldWidget;

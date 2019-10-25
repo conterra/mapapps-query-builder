@@ -21,34 +21,38 @@
             <v-container
                 grid-list-md
                 fluid
-                class="pa-1">
+                class="pa-1"
+            >
                 <v-layout
                     row
                     wrap
-                    justify-space-between>
+                    justify-space-between
+                >
                     <v-flex
                         v-if="editable && title"
                         xs12
-                        md12>
+                        md12
+                    >
                         <div>{{ title }}</div>
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
                         :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
                         xs3
-                        md3>
+                        md3
+                    >
                         <div>
                             <div>{{ i18n.selectStore }}</div>
                             <v-select
+                                ref="selectedStoreIdSelect"
+                                v-model="selectedStoreId"
                                 :items="storeData"
                                 :disabled="editable"
                                 :loading="loading"
-                                v-model="selectedStoreId"
                                 item-value="id"
                                 single-line
                                 hide-details
                                 @change="$emit('storeChanged', $event)"
-                                ref="selectedStoreIdSelect"
                             />
                         </div>
                     </v-flex>
@@ -56,24 +60,28 @@
                         v-if="showQuerySettings"
                         :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
                         xs3
-                        md3>
+                        md3
+                    >
                         <div>
                             <div>{{ i18n.spatialRelation }}</div>
                             <v-radio-group
                                 v-model="spatialRelation"
-                                class="pt-0">
+                                class="pt-0"
+                            >
                                 <v-radio
                                     :label="i18n.everywhere"
                                     :disabled="disableSpatialRelationRadio"
                                     hide-details
                                     value="everywhere"
-                                    color="primary"/>
+                                    color="primary"
+                                />
                                 <v-radio
                                     :label="i18n.currentExtent"
                                     :disabled="disableSpatialRelationRadio"
                                     hide-details
                                     value="current_extent"
-                                    color="primary"/>
+                                    color="primary"
+                                />
                             </v-radio-group>
                         </div>
                     </v-flex>
@@ -81,25 +89,37 @@
                         v-if="showQuerySettings && showSortSelectInUserMode"
                         :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
                         xs3
-                        md3>
+                        md3
+                    >
                         <div>
                             <div>{{ i18n.sortOptions }}</div>
                             <v-select
+                                ref="selectedSortFieldNameSelect"
                                 v-model="selectedSortFieldName"
                                 :items="fieldData"
                                 :disabled="editable"
                                 item-value="id"
                                 single-line
                                 hide-details
-                                ref="selectedSortFieldNameSelect"
                             />
                             <v-btn
                                 flat
                                 class="mx-0"
                                 color="primary"
-                                @click="sortDescending=!sortDescending">
-                                <v-icon left v-if="sortDescending">arrow_downward</v-icon>
-                                <v-icon left v-else>arrow_upward</v-icon>
+                                @click="sortDescending=!sortDescending"
+                            >
+                                <v-icon
+                                    v-if="sortDescending"
+                                    left
+                                >
+                                    arrow_downward
+                                </v-icon>
+                                <v-icon
+                                    v-else
+                                    left
+                                >
+                                    arrow_upward
+                                </v-icon>
                                 {{ i18n.sorting }}
                             </v-btn>
                         </div>
@@ -108,33 +128,39 @@
                         v-if="showQuerySettings"
                         :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
                         xs3
-                        md3>
+                        md3
+                    >
                         <v-slide-x-transition>
                             <div
-                                v-if="fieldQueries.length > 1">
+                                v-if="fieldQueries.length > 1"
+                            >
                                 <div>{{ i18n.linkOperator }}</div>
                                 <v-radio-group
                                     v-model="linkOperator"
-                                    class="pt-0">
+                                    class="pt-0"
+                                >
                                     <v-radio
                                         :label="i18n.and"
                                         :disabled="disableLinkOperatorRadio"
                                         hide-details
                                         value="$and"
-                                        color="primary"/>
+                                        color="primary"
+                                    />
                                     <v-radio
                                         :label="i18n.or"
                                         :disabled="disableLinkOperatorRadio"
                                         hide-details
                                         value="$or"
-                                        color="primary"/>
+                                        color="primary"
+                                    />
                                 </v-radio-group>
                             </div>
                         </v-slide-x-transition>
                     </v-flex>
                     <v-flex
                         xs12
-                        md12>
+                        md12
+                    >
                         <div>{{ i18n.searchParameter }}</div>
                     </v-flex>
                 </v-layout>
@@ -144,37 +170,45 @@
             <v-container
                 grid-list-md
                 fluid
-                class="pa-1">
+                class="pa-1"
+            >
                 <field-widget
                     v-for="(fieldQuery, index) in fieldQueries"
                     :key="index"
                     :locale="locale"
-                    :fieldQuery="fieldQuery"
+                    :field-query="fieldQuery"
                     :index="index"
-                    :allowNegation="allowNegation"
-                    :activeTool="activeTool"
-                    :i18n="i18n"/>
+                    :allow-negation="allowNegation"
+                    :active-tool="activeTool"
+                    :i18n="i18n"
+                />
             </v-container>
         </div>
         <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container
                 grid-list-md
                 fluid
-                class="pa-1">
+                class="pa-1"
+            >
                 <v-layout
                     row
                     wrap
-                    justify-center>
+                    justify-center
+                >
                     <v-flex md12>
                         <v-card
-                            class="elevation-6">
+                            class="elevation-6"
+                        >
                             <v-btn
                                 :loading="processing"
                                 block
                                 ripple
                                 color="primary"
-                                @click="$emit('search', {})">
-                                <v-icon left>search</v-icon>
+                                @click="$emit('search', {})"
+                            >
+                                <v-icon left>
+                                    search
+                                </v-icon>
                                 {{ i18n.search }}
                             </v-btn>
                         </v-card>
@@ -286,7 +320,8 @@
                     fieldQuery.value = null;
                     fieldQuery.relationalOperator = "$lte";
                 } else {
-                    fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                    fieldQuery.value = (selectedField.codedValues[0]
+                        && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
                     fieldQuery.relationalOperator = "$eq";
                 }
                 if (fieldQuery.relationalOperator === "$exists") {
@@ -301,7 +336,8 @@
                     if (selectedField.type === "date") {
                         fieldQuery.value = "";
                     } else {
-                        fieldQuery.value = (selectedField.codedValues[0] && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        fieldQuery.value = (selectedField.codedValues[0]
+                            && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
                     }
                 }
             },
@@ -318,7 +354,7 @@
                 if (!field) {
                     return [];
                 }
-                let type = field.type;
+                const type = field.type;
                 switch (type) {
                     case "codedvalue":
                         return [

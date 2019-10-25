@@ -19,6 +19,8 @@ import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
 
+const DELAY = 500;
+
 export default class QueryController {
     activate(componentContext) {
         this.i18n = this._i18n.get().ui;
@@ -26,7 +28,7 @@ export default class QueryController {
 
     query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this.searchReplacer(complexQuery);
-        let queryBuilderProperties = this._queryBuilderProperties;
+        const queryBuilderProperties = this._queryBuilderProperties;
         if (queryBuilderProperties.useMemorySelectionStore) {
             this.memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
         } else {
@@ -40,10 +42,10 @@ export default class QueryController {
         options.fields = {geometry: 1};
         apprt_when(store.query(complexQuery, options), (result) => {
             if (result.total) {
-                let mapWidgetModel = this._mapWidgetModel;
-                let spatialReference = mapWidgetModel.get("spatialReference");
-                let wkid = spatialReference.latestWkid || spatialReference.wkid;
-                let geometries = result.map((item) => item.geometry);
+                const mapWidgetModel = this._mapWidgetModel;
+                const spatialReference = mapWidgetModel.get("spatialReference");
+                const wkid = spatialReference.latestWkid || spatialReference.wkid;
+                const geometries = result.map((item) => item.geometry);
 
                 if (geometries[0]) {
                     apprt_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {
@@ -53,7 +55,7 @@ export default class QueryController {
                     }, this);
                 }
 
-                let memorySelectionStore = new MemorySelectionStore({
+                const memorySelectionStore = new MemorySelectionStore({
                     id: "querybuilder_" + store.id,
                     idProperty: store.idProperty,
                     masterStore: store,
@@ -81,8 +83,8 @@ export default class QueryController {
 
     defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
-        let filter = new Filter(store, complexQuery, options);
-        let countFilter = new Filter(store, complexQuery, {});
+        const filter = new Filter(store, complexQuery, options);
+        const countFilter = new Filter(store, complexQuery, {});
         apprt_when(countFilter.query({}, {count: 0}).total, (total) => {
             if (total) {
                 if (this._queryBuilderResultsFetcher) {
@@ -108,7 +110,7 @@ export default class QueryController {
     }
 
     searchReplacer(o) {
-        let that = this;
+        const that = this;
         ct_lang.forEachOwnProp(o, function (value, name) {
             if (typeof (value) === "string") {
                 o[name] = that._replacer.replace(value);
@@ -123,7 +125,7 @@ export default class QueryController {
         if (queryBuilderWidgetModel) {
             async(() => {
                 queryBuilderWidgetModel.set("processing", processing)
-            }, 100);
+            }, DELAY);
         }
         if (tool) {
             tool.set("processing", processing);

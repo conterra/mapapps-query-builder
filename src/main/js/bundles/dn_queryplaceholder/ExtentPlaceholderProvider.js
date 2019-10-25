@@ -24,4 +24,5 @@ export default class ExtentPlaceholderProvider {
     reEvaluate() {
         return this.getPlaceholder();
     }
+
 }

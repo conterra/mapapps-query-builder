@@ -20,11 +20,11 @@ import VueDijit from "apprt-vue/VueDijit";
 export default class EditableQueryBuilderWidgetFactory {
 
     getWidget(properties, queryController, tool) {
-        let queryBuilderProperties = this._queryBuilderProperties;
-        let model = this._queryBuilderWidgetModel;
+        const queryBuilderProperties = this._queryBuilderProperties;
+        const model = this._queryBuilderWidgetModel;
         this.tool = tool;
-        let complexQuery = properties.complexQuery;
-        let editOptions = properties.options.editOptions;
+        const complexQuery = properties.complexQuery;
+        const editOptions = properties.options.editOptions;
         let linkOperator;
         let spatialRelation;
         if (complexQuery.geometry) {

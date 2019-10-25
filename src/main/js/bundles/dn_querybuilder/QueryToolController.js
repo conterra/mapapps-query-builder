@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import Extent from "esri/geometry/Extent";
-
-import Connect from "ct/_Connect";
 import ct_util from "ct/ui/desktop/util";
+
+const DELAY = 1000;
 
 export default class QueryToolController {
     activate(componentContext) {
@@ -29,7 +29,7 @@ export default class QueryToolController {
     }
 
     hideWindow() {
-        let registration = this._serviceregistration;
+        const registration = this._serviceregistration;
 
         // clear the reference
         this._serviceregistration = null;
@@ -41,29 +41,29 @@ export default class QueryToolController {
     }
 
     onQueryToolActivated(event) {
-        let store = event.store;
+        const store = event.store;
         if (!store) {
             // ignore
             return;
         }
-        let complexQuery = event.complexQuery;
-        let tool = this.tool = event.tool;
+        const complexQuery = event.complexQuery;
+        const tool = this.tool = event.tool;
 
         if (event.options && event.options.editable === true) {
             this.hideWindow();
-            let widget = this._editableQueryBuilderWidgetFactory.getWidget(event._properties, this, tool);
-            let serviceProperties = {
+            const widget = this._editableQueryBuilderWidgetFactory.getWidget(event._properties, this, tool);
+            const serviceProperties = {
                 "widgetRole": "editableQueryBuilderWidget"
             };
-            let interfaces = ["dijit.Widget"];
+            const interfaces = ["dijit.Widget"];
             this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
             setTimeout(() => {
-                let window = ct_util.findEnclosingWindow(widget);
+                const window = ct_util.findEnclosingWindow(widget);
                 window.on("Close", () => {
                     this.hideWindow();
                     widget.destroyRecursive();
                 });
-            }, 1000);
+            }, DELAY);
         } else {
             if (complexQuery.geometry) {
                 let extent;
@@ -84,9 +84,9 @@ export default class QueryToolController {
                     };
                 }
             }
-            let options = {};
+            const options = {};
             if (event.options) {
-                let count = event.options && event.options.count || -1;
+                const count = event.options && event.options.count || -1;
                 if (count >= 0) {
                     options.count = count;
                 }

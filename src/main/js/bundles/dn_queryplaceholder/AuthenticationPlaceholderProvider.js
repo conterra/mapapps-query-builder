@@ -24,4 +24,5 @@ export default class AuthenticationPlaceholderProvider {
         }
         return placeholder;
     }
+    
 }

@@ -63,7 +63,9 @@ export default class QueryBuilderWidgetFactory {
         });
 
         this[_binding] = Binding.for(vm, model)
-            .syncAll("locale", "storeData", "selectedStoreId", "fieldData", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "allowNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode", "activeTool")
+            .syncAll("locale", "storeData", "selectedStoreId", "fieldData", "selectedSortFieldName", "sortDescending",
+                "linkOperator", "spatialRelation", "allowNegation", "fieldQueries", "loading", "processing",
+                "showSortSelectInUserMode", "activeTool")
             .enable()
             .syncToLeftNow();
     }

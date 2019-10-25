@@ -28,7 +28,7 @@ import BuilderWidget from "wizard/_BuilderWidget";
 import "dijit/layout/ContentPane";
 import "dijit/layout/BorderContainer"
 
-const QueryBuilderWidgetStoreSelectionWidget = declare([BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
+export default declare([BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
 
     templateString: template,
     data: null,
@@ -121,5 +121,3 @@ const QueryBuilderWidgetStoreSelectionWidget = declare([BuilderWidget, _Template
         this._dataView.storeContentChanged();
     }
 });
-
-module.exports = QueryBuilderWidgetStoreSelectionWidget;

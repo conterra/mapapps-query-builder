@@ -22,19 +22,19 @@ import ComplexMemoryStore from "ct/store/ComplexMemory";
 
 import QueryBuilderWidgetStoreSelectionWidget from "./QueryBuilderWidgetStoreSelectionWidget";
 
-const QueryBuilderWidgetStoreSelection = declare([_Connect], {
+export default declare([_Connect], {
 
     createInstance() {
-        let configStore = this._getConfigStore();
-        let i18n = this._i18n.get().queryBuilderWidgetStoreSelection;
-        let properties = this._properties || {};
-        let opts = d_lang.mixin({
+        const configStore = this._getConfigStore();
+        const i18n = this._i18n.get().queryBuilderWidgetStoreSelection;
+        const properties = this._properties || {};
+        const opts = d_lang.mixin({
             i18n: i18n,
             configAdminService: this._configAdminService,
             configStore: configStore,
             config: this._getComponentConfig()
         }, properties.widgetProperties);
-        let widget = this._widget = new QueryBuilderWidgetStoreSelectionWidget(opts);
+        const widget = this._widget = new QueryBuilderWidgetStoreSelectionWidget(opts);
         this.connectP("model", widget._viewModel, "selectedIds", (type, oldVal, newVal) => {
             widget.fireConfigChangeEvent({
                 storeIds: newVal
@@ -44,7 +44,7 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
     },
 
     _getComponentConfig() {
-        let properties = this._properties.widgetProperties;
+        const properties = this._properties.widgetProperties;
         return this._configAdminService.getConfiguration(properties.pid, properties.bid);
     },
 
@@ -52,8 +52,8 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
         try {
             this._getComponentConfig().update(config);
         } catch (e) {
-            let error = Exception.wrap(e);
-            let msg = "_Configurable: Can't apply changed configuration! Error:" + e;
+            const error = Exception.wrap(e);
+            const msg = "_Configurable: Can't apply changed configuration! Error:" + e;
             console.error(msg, error);
             throw e;
         }
@@ -62,7 +62,7 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
     destroyInstance(instance) {
         this.disconnect();
         this._configStore = null;
-        let window = this._window;
+        const window = this._window;
         if (window) {
             window.close();
             this._window = null;
@@ -72,9 +72,9 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
     },
 
     _getConfigStore() {
-        let i18n = this._i18n.get().queryBuilderWidgetStoreSelection;
+        const i18n = this._i18n.get().queryBuilderWidgetStoreSelection;
         if (!this._configStore) {
-            let store = this._configStore = new ComplexMemoryStore({
+            const store = this._configStore = new ComplexMemoryStore({
                 data: [],
                 idProperty: "id"
             });
@@ -101,7 +101,7 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
     },
 
     addStore(service, properties) {
-        let configStore = this._getConfigStore();
+        const configStore = this._getConfigStore();
         if (!configStore.get(properties.id)) {
             configStore.add({
                 "id": properties.id,
@@ -111,5 +111,3 @@ const QueryBuilderWidgetStoreSelection = declare([_Connect], {
         }
     }
 });
-
-module.exports = QueryBuilderWidgetStoreSelection;

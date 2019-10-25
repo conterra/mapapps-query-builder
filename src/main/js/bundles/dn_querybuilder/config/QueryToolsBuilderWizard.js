@@ -47,7 +47,7 @@ import "dijit/form/ValidationTextBox";
 import "dijit/layout/ContentPane";
 import "dijit/layout/BorderContainer";
 
-const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
+export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
     templateString: templateStringContent,
     baseClass: "queryBuilderWizard",
     constructor(opts) {
@@ -66,11 +66,11 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         this.maxComboBoxHeight = 160;
         domStyle.set(this._titleTextBox.domNode, "width", "250px");
         domStyle.set(this._iconClassTextBox.domNode, "width", "209px");
-        let storeData = this.metadataAnalyzer.getStoreData(this.stores);
-        let store = new Memory({
+        const storeData = this.metadataAnalyzer.getStoreData(this.stores);
+        const store = new Memory({
             data: storeData
         });
-        let storeSelect = this._storeSelect = new FilteringSelect({
+        const storeSelect = this._storeSelect = new FilteringSelect({
             name: "stores",
             value: this.properties.storeId || storeData[0].id,
             store: store,
@@ -81,10 +81,10 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         storeSelect.startup();
         this._titleTextBox.set("value", this.properties.title);
         this._iconClassTextBox.set("value", this.properties.iconClass);
-        let complexQueryString = JSON.stringify(this.properties.complexQuery, "", "\t");
+        const complexQueryString = JSON.stringify(this.properties.complexQuery, "", "\t");
         this._complexQueryTextArea.set("value", complexQueryString);
         this._createOptionsGUI();
-        let valid = this._validateComplexQuery(complexQueryString);
+        const valid = this._validateComplexQuery(complexQueryString);
         if (!valid) {
             this._builderTab.set("disabled", true);
             this._manualTab.set("selected", true);
@@ -123,11 +123,11 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         window.open(url, "_blank");
     },
     _iconClassHelp() {
-        let url = this.globalProperties.webFontsGalleryUrl;
+        const url = this.globalProperties.webFontsGalleryUrl;
         this._createWindow(url, "WebFontsGallery");
     },
     _complexQueryHelp() {
-        let url = this.globalProperties.complexQueryDocUrl;
+        const url = this.globalProperties.complexQueryDocUrl;
         this._createWindow(url, "Complex Query Documentation");
     },
     _onDone() {
@@ -138,7 +138,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
     _onReady() {
     },
     _saveProperties() {
-        let def = new Deferred();
+        const def = new Deferred();
         if (!this.properties.options) {
             this.properties.options = {};
         }
@@ -152,10 +152,10 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                     linkOperator: true
                 };
                 this.properties.options.editOptions.editFields = [];
-                let children = this._queryNode.children;
+                const children = this._queryNode.children;
                 d_array.forEach(children, (child) => {
-                    let obj = {};
-                    let widget = d_registry.getEnclosingWidget(child);
+                    const obj = {};
+                    const widget = d_registry.getEnclosingWidget(child);
                     obj["not"] = widget.getNotCheckBoxValue();
                     obj["field"] = widget.getFieldCheckBoxValue();
                     obj["relationalOperator"] = widget.getRelationalOperatorCheckBoxValue();
@@ -168,7 +168,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             }
             def.resolve();
         } else {
-            let complexQueryString = this._complexQueryTextArea.value;
+            const complexQueryString = this._complexQueryTextArea.value;
             this.properties.complexQuery = this._getComplexQueryObj(complexQueryString);
             def.resolve();
         }
@@ -177,37 +177,37 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         this.properties.storeId = this._storeSelect.value;
         this.properties.options.count = this._countTextBox.value;
         this.properties.options.ignoreCase = this._ignoreCaseSelect.value;
-        let localeId = this._localeSelect.value;
-        let localeObj = this._localeStore.get(localeId);
+        const localeId = this._localeSelect.value;
+        const localeObj = this._localeStore.get(localeId);
         delete localeObj.id;
         this.properties.options.locale = localeObj;
         return def;
     },
     _getComplexQuery() {
-        let match = this._matchSelect.value;
-        let complexQuery = {};
-        let extent = this.mapWidgetModel.get("extent").toJSON();
+        const match = this._matchSelect.value;
+        const complexQuery = {};
+        const extent = this.mapWidgetModel.get("extent").toJSON();
         if (this._spatialRelationSelect.value === "current_extent") {
             complexQuery.geometry = {
                 $intersects: extent
             };
         }
-        let children = this._queryNode.children;
+        const children = this._queryNode.children;
         if (children.length > 0) {
             complexQuery[match] = [];
         }
         d_array.forEach(children, (child) => {
-            let widget = d_registry.getEnclosingWidget(child);
-            let fieldId = widget.getSelectedField();
-            let relationalOperatorId = widget.getSelectedRelationalOperator();
-            let not = widget.getSelectedNot();
-            let value = widget.getValue();
-            let obj1 = {};
+            const widget = d_registry.getEnclosingWidget(child);
+            const fieldId = widget.getSelectedField();
+            const relationalOperatorId = widget.getSelectedRelationalOperator();
+            const not = widget.getSelectedNot();
+            const value = widget.getValue();
+            const obj1 = {};
             obj1[relationalOperatorId] = value;
-            let obj2 = {};
+            const obj2 = {};
             obj2[fieldId] = obj1;
             if (not) {
-                let object = {$not: obj2};
+                const object = {$not: obj2};
                 complexQuery[match].push(object);
             } else {
                 complexQuery[match].push(obj2);
@@ -220,9 +220,9 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         try {
             complexQueryObj = JSON.parse(complexQuery);
         } catch (e) {
-            let windowManager = this.windowManager;
-            let appCtx = this.appCtx;
-            let errorMessage = e.toString();
+            const windowManager = this.windowManager;
+            const appCtx = this.appCtx;
+            const errorMessage = e.toString();
             apprt_when(windowManager.createInfoDialogWindow({
                 message: errorMessage,
                 attachToDom: appCtx.builderWindowRoot
@@ -246,8 +246,8 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             return true;
         }
         let i = 0;
-        let obj1 = [];
-        let obj2 = [];
+        const obj1 = [];
+        const obj2 = [];
         ct_lang.forEachOwnProp(complexQueryObj, function (value, name) {
             i++;
             obj1.push(value);
@@ -330,13 +330,13 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                 });
             });
         }
-        let storeId = this._storeSelect.value;
-        let store = this._getSelectedStoreObj(storeId);
-        let fieldData = this.metadataAnalyzer.getFields(store);
+        const storeId = this._storeSelect.value;
+        const store = this._getSelectedStoreObj(storeId);
+        const fieldData = this.metadataAnalyzer.getFields(store);
 
         apprt_when(fieldData, (storeData) => {
-            let storeId = this._storeSelect.value;
-            let fieldWidget = new FieldWidget({
+            const storeId = this._storeSelect.value;
+            const fieldWidget = new FieldWidget({
                 source: this,
                 store: this._getSelectedStoreObj(storeId),
                 storeData: storeData,
@@ -354,11 +354,11 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         });
     },
     _addField() {
-        let storeId = this._storeSelect.value;
-        let store = this._getSelectedStoreObj(storeId);
-        let fieldData = this.metadataAnalyzer.getFields(store);
+        const storeId = this._storeSelect.value;
+        const store = this._getSelectedStoreObj(storeId);
+        const fieldData = this.metadataAnalyzer.getFields(store);
         apprt_when(fieldData, (storeData) => {
-            let fieldWidget = new FieldWidget({
+            const fieldWidget = new FieldWidget({
                 source: this,
                 store: this._getSelectedStoreObj(storeId),
                 storeData: storeData,
@@ -380,9 +380,9 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         }
     },
     _changeChildrenButtons() {
-        let children = this._queryNode.children;
+        const children = this._queryNode.children;
         d_array.forEach(children, (child, i) => {
-            let widget = d_registry.getEnclosingWidget(child);
+            const widget = d_registry.getEnclosingWidget(child);
             if (i === 0 && children.length === 1) {
                 widget._changeButtons(true, false);
             } else if (i === children.length - 1 && children.length !== 1) {
@@ -393,14 +393,14 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         });
     },
     _createBuilderGUI(textAreaComplexQuery) {
-        let queryBuilderProperties = this.queryBuilderProperties._properties;
-        let spatialRelationStore = new Memory({
+        const queryBuilderProperties = this.queryBuilderProperties._properties;
+        const spatialRelationStore = new Memory({
             data: [
                 {name: this.i18n.everywhere, id: "everywhere"},
                 {name: this.i18n.extent, id: "current_extent"}
             ]
         });
-        let ynStore = new Memory({
+        const ynStore = new Memory({
             data: [
                 {name: this.i18n.yes, id: true},
                 {name: this.i18n.no, id: false}
@@ -428,7 +428,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                 maxHeight: this.maxComboBoxHeight
             }).placeAt(this._editableNode, "replace");
         }
-        let matchStore = new Memory({
+        const matchStore = new Memory({
             data: [
                 {name: this.i18n.and, id: "$and"},
                 {name: this.i18n.or, id: "$or"}]
@@ -444,7 +444,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                 maxHeight: this.maxComboBoxHeight
             }).placeAt(this._linkOperatorNode, "replace");
         }
-        let properties = this.properties;
+        const properties = this.properties;
         let complexQuery;
         if (textAreaComplexQuery) {
             complexQuery = textAreaComplexQuery;
@@ -452,7 +452,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             complexQuery = properties.complexQuery;
         }
         if (properties.options.editable !== undefined) {
-            let editable = properties.options.editable;
+            const editable = properties.options.editable;
             this._editableSelect.set("value", editable);
         }
         if (complexQuery.geometry) {
@@ -466,8 +466,8 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             this._matchSelect.set("value", "$or");
             match = "$or";
         }
-        let fields = complexQuery[match];
-        let editFields = this.properties.options.editOptions && this.properties.options.editOptions.editFields;
+        const fields = complexQuery[match];
+        const editFields = this.properties.options.editOptions && this.properties.options.editOptions.editFields;
         this._removeFields();
         if (fields) {
             d_array.forEach(fields, (field, i) => {
@@ -485,7 +485,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             required: true,
             constraints: {min: -1}
         }, this._countNode);
-        let ynStore = new Memory({
+        const ynStore = new Memory({
             data: [
                 {name: this.i18n.yes, id: false},
                 {name: this.i18n.no, id: true}
@@ -506,7 +506,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             required: true,
             maxHeight: this.maxComboBoxHeight
         }, this._ignoreCaseNode);
-        let localeStore = this._localeStore = new Memory({
+        const localeStore = this._localeStore = new Memory({
             data: [
                 {language: "de", country: "DE", id: "de"}, {language: "en", country: "EN", id: "en"}
             ]
@@ -522,8 +522,8 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         }, this._localeNode);
     },
     _createPlaceholderGUI() {
-        let placeholderObj = this.replacer.placeholder;
-        let placeholderArray = [];
+        const placeholderObj = this.replacer.placeholder;
+        const placeholderArray = [];
         ct_lang.forEachOwnProp(placeholderObj, function (value, name) {
             placeholderArray.push({
                 id: name,
@@ -531,7 +531,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                 value: value
             });
         });
-        let store = new ComplexMemoryStore({
+        const store = new ComplexMemoryStore({
             data: placeholderArray,
             idProperty: "id",
             metadata: {
@@ -551,10 +551,10 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
                 ]
             }
         });
-        let model = this._viewModel = new DataViewModel({
+        const model = this._viewModel = new DataViewModel({
             store: store
         });
-        let dataView = this._dataView = new DataView({
+        const dataView = this._dataView = new DataView({
             i18n: this.i18n,
             showFilter: true,
             filterDuringKeyUp: true,
@@ -593,7 +593,7 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
         if (this._titleTextBox.isValid() && this._iconClassTextBox.isValid()) {
             this._doneButton.set("disabled", false);
         }
-        let complexQueryString = this._complexQueryTextArea.get("value");
+        const complexQueryString = this._complexQueryTextArea.get("value");
         if (this._validateComplexQuery(complexQueryString)) {
             this._createBuilderGUI(JSON.parse(complexQueryString));
         }
@@ -610,16 +610,15 @@ const QueryToolsBuilderWizard = declare([_BuilderWidget, _TemplatedMixin, _Widge
             this._doneButton.set("disabled", false);
         }
         if (this._validateComplexQuery()) {
-            let complexQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
+            const complexQueryString = JSON.stringify(this._getComplexQuery(), "", "\t");
             this._complexQueryTextArea.set("value", complexQueryString);
         }
         ct_css.switchHidden(this._bottomNode.domNode, false);
     },
     _onTextAreaInput() {
-        let that = this;
-        let complexQueryString = that._complexQueryTextArea.get("value");
-        let valid = that._validateComplexQuery(complexQueryString);
+        const that = this;
+        const complexQueryString = that._complexQueryTextArea.get("value");
+        const valid = that._validateComplexQuery(complexQueryString);
         that._builderTab.set("disabled", !valid);
     }
 });
-module.exports = QueryToolsBuilderWizard;

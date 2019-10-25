@@ -89,7 +89,8 @@ export default declare({
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator, spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
+        const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
+            spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
         const options = {
             suggestContains: false
