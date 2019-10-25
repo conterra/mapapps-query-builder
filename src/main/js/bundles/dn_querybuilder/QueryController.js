@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import apprt_when from "apprt-core/when";
+import async from "apprt-core/async";
 import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
