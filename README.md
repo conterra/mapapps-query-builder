@@ -108,6 +108,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 | hidedFields                     | Array   |                                                                       | ```true```                  | Names of fields that should be hided in the field select                                                                               |
 
 #### QueryBuilderWidgetModel:
+List of store ids that should be available in the QueryBuilderWidget
 ```
 "QueryBuilderWidgetModel": {
   "storeIds": [
