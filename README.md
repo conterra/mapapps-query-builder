@@ -85,21 +85,27 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
     "allowNegation": true,
     "showQuerySettingsInEditableMode": true,
     "showSortSelectInUserMode": false,
-    "showFieldType": true
+    "showFieldType": true,
+    "hidedFields": [
+        "objectid",
+        "OBJECTID",
+        "shape"
+    ]
 }
 ```
 
 | Property                        | Type    | Possible Values                                                       | Default                     | Description                                                                                                                            |
 |---------------------------------|---------|-----------------------------------------------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | enableDistinctValues            | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Distinct values are queried by the service.                                                                                            |
-| defaultLinkOperator             | Boolean | ```or``` &#124; ```and```                                             | ```or```                    | Defines the default link operator.                                                                                                     |
-| defaultSpatialRelation          | Boolean | ```everywhere``` &#124; ```current_extent```                          | ```everywhere```            | Defines the default spatial relation.                                                                                                  |
+| defaultLinkOperator             | String  | ```or``` &#124; ```and```                                             | ```or```                    | Defines the default link operator.                                                                                                     |
+| defaultSpatialRelation          | String  | ```everywhere``` &#124; ```current_extent```                          | ```everywhere```            | Defines the default spatial relation.                                                                                                  |
 | useMemorySelectionStore         | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use MemorySelectionStore to save the results.                                                                                          |
 | useUserExtent                   | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use the current user extent to filter predefined queries.                                                                              |
 | allowNegation                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Allows the user to negate the different parts of the queries.                                                                          |
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the query settings for editable queries.                                                                                  |
 | showSortSelectInUserMode        | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Show or hide the sort field select in user mode.                                                                                       |
-| showFieldType                  | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                               |
+| showFieldType                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                                       |
+| hidedFields                     | Array   |                                                                       | ```true```                  | Names of fields that should be hided in the field select                                                                               |
 
 #### UserQueryBuilderWidgetFactory:
 ```

@@ -245,7 +245,12 @@
                 "allowNegation": false,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
-                "showFieldType": true
+                "showFieldType": true,
+                "hidedFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
+                ]
             }
         },
         {

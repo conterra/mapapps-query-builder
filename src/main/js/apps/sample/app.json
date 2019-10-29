@@ -44,7 +44,12 @@
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
-                "showFieldType": false
+                "showFieldType": false,
+                "hidedFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
+                ]
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
