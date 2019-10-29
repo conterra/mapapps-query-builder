@@ -107,9 +107,9 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 | showFieldType                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                                       |
 | hidedFields                     | Array   |                                                                       | ```true```                  | Names of fields that should be hided in the field select                                                                               |
 
-#### UserQueryBuilderWidgetFactory:
+#### QueryBuilderWidgetModel:
 ```
-"QueryBuilderWidgetFactory": {
+"QueryBuilderWidgetModel": {
   "storeIds": [
     "stoerungen",
     "_AGS_STORE_1469615663725",
