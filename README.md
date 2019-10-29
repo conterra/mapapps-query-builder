@@ -21,26 +21,29 @@ Use a toolset:
 To add a toolset to your app that contains the Query Tools, copy the following code to your app.json:
 ```
 "toolset": {
-  "ToolsetManager": {
-    "toolsets": [{
-      "id": "query_builder_toolset",
-      "title": "yourTitle",
-      "container": "map",
-      "window": {
-        "closable": true
-      },
-      "tooltip": "yourTooltip",
-      "cssClass": "ctWDYWBtn ctPrimaryInput",
-      "max_horizontal": 1,
-      "windowType": "dropdown",
-      "position": {
-        "rel_l": 20,
-        "rel_t": 20
-      },
-      "tools": ["querybuilder_*"]
-    }]
-  },
-  "enabled": true
+    "ToolsetManager": {
+        "toolsets": [
+            {
+                "id": "query_builder_toolset",
+                "title": "yourTitle",
+                "container": "map",
+                "window": {
+                    "closable": true
+                },
+                "tooltip": "yourTooltip",
+                "cssClass": "ctWDYWBtn ctPrimaryInput",
+                "max_horizontal": 1,
+                "windowType": "dropdown",
+                "position": {
+                    "rel_l": 20,
+                    "rel_t": 20
+                },
+                "tools": [
+                    "querybuilder_*"
+                ]
+            }
+        ]
+    }
 }
 ```
 
@@ -49,26 +52,30 @@ Enable user querybuilder tool:
 To enable user query tools in your app, add the "queryBuilderToggleTool" to your toolset:
 ```
 "toolset": {
-  "ToolsetManager": {
-    "toolsets": [{
-      "id": "query_builder_toolset",
-      "title": "yourTitle",
-      "container": "map",
-      "window": {
-        "closable": true
-      },
-      "tooltip": "yourTooltip",
-      "cssClass": "ctWDYWBtn ctPrimaryInput",
-      "max_horizontal": 1,
-      "windowType": "dropdown",
-      "position": {
-        "rel_l": 20,
-        "rel_t": 20
-      },
-      "tools": ["querybuilder_*", "queryBuilderToggleTool"]
-    }]
-  },
-  "enabled": true
+    "ToolsetManager": {
+        "toolsets": [
+            {
+                "id": "query_builder_toolset",
+                "title": "yourTitle",
+                "container": "map",
+                "window": {
+                    "closable": true
+                },
+                "tooltip": "yourTooltip",
+                 "cssClass": "ctWDYWBtn ctPrimaryInput",
+                "max_horizontal": 1,
+                "windowType": "dropdown",
+                "position": {
+                     "rel_l": 20,
+                     "rel_t": 20
+                },
+                "tools": [
+                    "querybuilder_*",
+                    "queryBuilderToggleTool"
+                ]
+            }
+        ]
+    }
 }
 ```
 
@@ -111,25 +118,20 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 List of store ids that should be available in the QueryBuilderWidget
 ```
 "QueryBuilderWidgetModel": {
-  "storeIds": [
-    "stoerungen",
-    "_AGS_STORE_1469615663725",
-    "_AGS_STORE_1441195340629",
-    "_AGS_STORE_1441195356941",
-    "_AGS_STORE_1441195705828",
-    "_AGS_STORE_1442226070628",
-    "_AGS_STORE_1442227045951",
-    "_AGS_STORE_1442227058500",
-    "_AGS_STORE_1442299569090",
-    "_AGS_STORE_1443534824350"
-  ]
+    "storeIds": [
+        "airtraffic",
+        "countries",
+        "baumkataster",
+        "stoerungen",
+        "wahlkreise_strukturdaten"
+    ]
 }
 ```
 
 #### QueryTools:
 ```
 "QueryTools": [
-  // list of query tools
+    // list of query tools
 ]
 ```
 
@@ -138,9 +140,9 @@ List of store ids that should be available in the QueryBuilderWidget
 #### Replacer:
 ```
 "Replacer": {
-  "placeholder": {
-    "user": "Müller"
-  }
+    "placeholder": {
+        "user": "Müller"
+    }
 }
 ```
 
