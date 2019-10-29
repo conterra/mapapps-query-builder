@@ -31,6 +31,10 @@ define([
             this.placeholder = this.placeholder || {};
             this.placeholderProvider = this.placeholderProvider || [];
         },
+        deactivate: function () {
+            this.placeholder = null;
+            this.placeholderProvider = null;
+        },
         replace: function (string) {
             this.refresh();
             var s = string.substring(2, string.length - 1);

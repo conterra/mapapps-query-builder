@@ -30,7 +30,7 @@ define([
             this._createWidget();
         },
         deactivate: function () {
-            this.disconnect();
+            this.widget = null;
         },
         createInstance: function () {
             return this.widget;
