@@ -45,9 +45,13 @@ export default class MetadataAnalyzer {
                             if (!title || title === "") {
                                 title = field.name;
                             }
+                            let text = title;
+                            if (this._queryBuilderProperties.showFieldType) {
+                                text = title + " (" + field.type + ") " + codedValueString;
+                            }
                             storeData.push({
                                 id: field.name,
-                                text: title + " (" + field.type + ") " + codedValueString,
+                                text: text,
                                 type: field.type,
                                 codedValues: codedValues,
                                 distinctValues: []

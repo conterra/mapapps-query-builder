@@ -84,7 +84,8 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
     "useUserExtent": false,
     "allowNegation": true,
     "showQuerySettingsInEditableMode": true,
-    "showSortSelectInUserMode": false
+    "showSortSelectInUserMode": false,
+    "showFieldType": true
 }
 ```
 
@@ -98,6 +99,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 | allowNegation                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Allows the user to negate the different parts of the queries.                                                                          |
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the query settings for editable queries.                                                                                  |
 | showSortSelectInUserMode        | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Show or hide the sort field select in user mode.                                                                                       |
+| showFieldType                  | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                               |
 
 #### UserQueryBuilderWidgetFactory:
 ```
