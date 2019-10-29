@@ -1,285 +1,287 @@
 {
-  "name": "dn_querybuilder-config",
-  "version": "4.3.2-SNAPSHOT",
-  "title": "${bundleName}",
-  "description": "${bundleDescription}",
-  "vendor": "con terra GmbH",
-  "productName": "devnet-mapapps-query-builder",
-  "layer": "module",
-  "i18n": ["bundle"],
-  "dependencies": {
-    "dataform": "^4.2.0",
-    "wizard": "^4.2.0",
-    "agssearch": "^4.2.0"
-  },
-  "CSS-Themes-Extension": [
-    {
-      "name": "*",
-      "files": [
-        "./styles/styles.css"
-      ]
-    }
-  ],
-  "components": [
-    {
-      "name": "BuilderEntry",
-      "impl": "ct/Stateful",
-      "provides": [
-        "wizard.MenuEntry"
-      ],
-      "propertiesConstructor": true,
-      "properties": {
-        "parentNodeId": "appBuilderToolsNode",
-        "menuNode": {
-          "title": "${title}",
-          "description": "${description}",
-          "iconUrl": "resource('styles/images/bundleIcon.png')",
-          "children": [
-            {
-              "title": "${propertiesWidget.propertiesWidgetTitle}",
-              "widget": "propertiesWidget",
-              "iconUrl": "resource('styles/images/config.png')",
-              "priority": -1
-            },
-            {
-              "title": "${queryBuilderWidgetStoreSelection.menuTitle}",
-              "widget": "queryBuilderWidgetStoreSelectionWidget",
-              "iconUrl": "resource('styles/images/config.png')",
-              "priority": -2
-            },
-            {
-              "title": "${toolsBuilder.toolsBuilderTitle}",
-              "widget": "toolsBuilderWidget",
-              "iconUrl": "resource('styles/images/bundleIcon.png')",
-              "priority": -3
+    "name": "dn_querybuilder-config",
+    "version": "4.3.2-SNAPSHOT",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-query-builder",
+    "layer": "module",
+    "i18n": [
+        "bundle"
+    ],
+    "dependencies": {
+        "dataform": "^4.2.0",
+        "wizard": "^4.2.0",
+        "agssearch": "^4.2.0"
+    },
+    "CSS-Themes-Extension": [
+        {
+            "name": "*",
+            "files": [
+                "./styles/styles.css"
+            ]
+        }
+    ],
+    "components": [
+        {
+            "name": "BuilderEntry",
+            "impl": "ct/Stateful",
+            "provides": [
+                "wizard.MenuEntry"
+            ],
+            "propertiesConstructor": true,
+            "properties": {
+                "parentNodeId": "appBuilderToolsNode",
+                "menuNode": {
+                    "title": "${title}",
+                    "description": "${description}",
+                    "iconUrl": "resource('styles/images/bundleIcon.png')",
+                    "children": [
+                        {
+                            "title": "${propertiesWidget.propertiesWidgetTitle}",
+                            "widget": "propertiesWidget",
+                            "iconUrl": "resource('styles/images/config.png')",
+                            "priority": -1
+                        },
+                        {
+                            "title": "${queryBuilderWidgetStoreSelection.menuTitle}",
+                            "widget": "queryBuilderWidgetStoreSelectionWidget",
+                            "iconUrl": "resource('styles/images/config.png')",
+                            "priority": -2
+                        },
+                        {
+                            "title": "${toolsBuilder.toolsBuilderTitle}",
+                            "widget": "toolsBuilderWidget",
+                            "iconUrl": "resource('styles/images/bundleIcon.png')",
+                            "priority": -3
+                        }
+                    ]
+                }
             }
-          ]
+        },
+        {
+            "name": "QueryBuilderPropertiesWidget",
+            "impl": "wizard/DataFormBuilderWidgetFactory",
+            "provides": [
+                "dijit.wizard.Widget"
+            ],
+            "immediate": true,
+            "instanceFactory": true,
+            "properties": {
+                "dataformFile": "resource('./PropertiesWidget.json')",
+                "bid": "dn_querybuilder",
+                "pid": "dn_querybuilder-QueryBuilderProperties",
+                "id": "propertiesWidget",
+                "defaultProperties": {
+                    "enableDistinctValues": true,
+                    "defaultLinkOperator": "$or",
+                    "defaultSpatialRelation": "everywhere",
+                    "useMemorySelectionStore": false,
+                    "useUserExtent": false,
+                    "allowNegation": false
+                },
+                "description": "${propertiesWidget.propertiesWidgetDescription}"
+            },
+            "references": [
+                {
+                    "name": "_configAdminService",
+                    "providing": "ct.framework.api.ConfigurationAdmin"
+                },
+                {
+                    "name": "_dataformService",
+                    "providing": "dataform.DataFormService"
+                }
+            ]
+        },
+        {
+            "name": "QueryBuilderWidgetStoreSelection",
+            "provides": [
+                "dijit.wizard.Widget"
+            ],
+            "immediate": true,
+            "instanceFactory": true,
+            "properties": {
+                "widgetProperties": {
+                    "bid": "dn_querybuilder",
+                    "pid": "dn_querybuilder-QueryBuilderWidgetModel",
+                    "id": "queryBuilderWidgetStoreSelectionWidget"
+                },
+                "defaultProperties": {
+                    "widgetEnabled": true,
+                    "storeIds": []
+                },
+                "description": "${queryBuilderWidgetStoreSelection.description}"
+            },
+            "references": [
+                {
+                    "name": "_configAdminService",
+                    "providing": "ct.framework.api.ConfigurationAdmin"
+                },
+                {
+                    "name": "_dataformService",
+                    "providing": "dataform.DataFormService"
+                },
+                {
+                    "name": "store",
+                    "providing": "ct.api.Store",
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
+                }
+            ]
+        },
+        {
+            "name": "QueryToolsBuilder",
+            "provides": [
+                "ct.framework.api.EventHandler",
+                "dijit.wizard.Widget",
+                "dn_querybuilder.QueryToolsBuilderWidget"
+            ],
+            "instanceFactory": true,
+            "properties": {
+                "Event-Topics": [],
+                "widgetProperties": {
+                    "bid": "dn_querybuilder",
+                    "pid": "dn_querybuilder-QueryTools-Factory",
+                    "id": "toolsBuilderWidget",
+                    "description": "${toolsBuilder.toolsBuilderDescription}"
+                },
+                "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/font-mapapps/latest/index.html",
+                "complexQueryDocUrl": "https://developernetwork.conterra.de/en/documentation/mapapps/43/development-guide/complex-query-dojostore"
+            },
+            "references": [
+                {
+                    "name": "_windowManager",
+                    "providing": "ct.framework.api.WindowManager"
+                },
+                {
+                    "name": "_appCtx",
+                    "providing": "ct.framework.api.ApplicationContext"
+                },
+                {
+                    "name": "_configAdminService",
+                    "providing": "ct.framework.api.ConfigurationAdmin"
+                },
+                {
+                    "name": "_toolbar",
+                    "providing": "dn_querybuilder.Toolbar"
+                },
+                {
+                    "name": "_dataformService",
+                    "providing": "dataform.DataFormService"
+                },
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_metadataAnalyzer",
+                    "providing": "dn_querybuilder.MetadataAnalyzer"
+                },
+                {
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                },
+                {
+                    "name": "_replacer",
+                    "providing": "dn_queryplaceholder.Replacer"
+                },
+                {
+                    "name": "_stores",
+                    "providing": "ct.api.Store",
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
+                }
+            ]
+        },
+        {
+            "name": "QueryBuilderToolbar",
+            "impl": "ct/tools/ToolContainer",
+            "provides": [
+                "dn_querybuilder.Toolbar"
+            ],
+            "references": [
+                {
+                    "name": "tool",
+                    "providing": "ct.tools.Tool",
+                    "cardinality": "0..n",
+                    "filter": "(toolRole=queryconfigtool)"
+                }
+            ]
+        },
+        {
+            "name": "AddServiceTool",
+            "impl": "ct/tools/Tool",
+            "provides": [
+                "ct.tools.Tool"
+            ],
+            "enabled": true,
+            "propertiesConstructor": true,
+            "properties": {
+                "priority": 3,
+                "toolRole": "queryconfigtool",
+                "id": "addServiceTool",
+                "title": "ADD",
+                "iconClass": "icon-plus",
+                "tooltip": "${widget.window.addTool}",
+                "togglable": false,
+                "clickHandler": "createQueryTool"
+            },
+            "references": [
+                {
+                    "name": "handlerScope",
+                    "providing": "dn_querybuilder.QueryToolsBuilderWidget"
+                }
+            ]
+        },
+        {
+            "name": "RemoveServiceTool",
+            "impl": "ct/tools/Tool",
+            "provides": [
+                "ct.tools.Tool"
+            ],
+            "enabled": true,
+            "propertiesConstructor": true,
+            "properties": {
+                "priority": 2,
+                "toolRole": "queryconfigtool",
+                "id": "removeSelectedServiceTool",
+                "title": "REMOVE",
+                "iconClass": "icon-minus",
+                "tooltip": "${widget.window.removeTool}",
+                "togglable": false,
+                "clickHandler": "removeQueryTool"
+            },
+            "references": [
+                {
+                    "name": "handlerScope",
+                    "providing": "dn_querybuilder.QueryToolsBuilderWidget"
+                }
+            ]
+        },
+        {
+            "name": "CopyServiceTool",
+            "impl": "ct/tools/Tool",
+            "provides": [
+                "ct.tools.Tool"
+            ],
+            "enabled": true,
+            "propertiesConstructor": true,
+            "properties": {
+                "priority": 1,
+                "toolRole": "queryconfigtool",
+                "id": "copySelectedServiceTool",
+                "title": "COPY",
+                "iconClass": "icon-editor-copy",
+                "tooltip": "${widget.window.copyTool}",
+                "togglable": false,
+                "clickHandler": "copyQueryTool"
+            },
+            "references": [
+                {
+                    "name": "handlerScope",
+                    "providing": "dn_querybuilder.QueryToolsBuilderWidget"
+                }
+            ]
         }
-      }
-    },
-    {
-      "name": "QueryBuilderPropertiesWidget",
-      "impl": "wizard/DataFormBuilderWidgetFactory",
-      "provides": [
-        "dijit.wizard.Widget"
-      ],
-      "immediate": true,
-      "instanceFactory": true,
-      "properties": {
-        "dataformFile": "resource('./PropertiesWidget.json')",
-        "bid": "dn_querybuilder",
-        "pid": "dn_querybuilder-QueryBuilderProperties",
-        "id": "propertiesWidget",
-        "defaultProperties": {
-          "enableDistinctValues": true,
-          "defaultLinkOperator": "$or",
-          "defaultSpatialRelation": "everywhere",
-          "useMemorySelectionStore": false,
-          "useUserExtent": false,
-          "allowNegation": false
-        },
-        "description": "${propertiesWidget.propertiesWidgetDescription}"
-      },
-      "references": [
-        {
-          "name": "_configAdminService",
-          "providing": "ct.framework.api.ConfigurationAdmin"
-        },
-        {
-          "name": "_dataformService",
-          "providing": "dataform.DataFormService"
-        }
-      ]
-    },
-    {
-      "name": "QueryBuilderWidgetStoreSelection",
-      "provides": [
-        "dijit.wizard.Widget"
-      ],
-      "immediate": true,
-      "instanceFactory": true,
-      "properties": {
-        "widgetProperties": {
-          "bid": "dn_querybuilder",
-          "pid": "dn_querybuilder-QueryBuilderWidgetModel",
-          "id": "queryBuilderWidgetStoreSelectionWidget"
-        },
-        "defaultProperties": {
-          "widgetEnabled": true,
-          "storeIds": []
-        },
-        "description": "${queryBuilderWidgetStoreSelection.description}"
-      },
-      "references": [
-        {
-          "name": "_configAdminService",
-          "providing": "ct.framework.api.ConfigurationAdmin"
-        },
-        {
-          "name": "_dataformService",
-          "providing": "dataform.DataFormService"
-        },
-        {
-          "name": "store",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        }
-      ]
-    },
-    {
-      "name": "QueryToolsBuilder",
-      "provides": [
-        "ct.framework.api.EventHandler",
-        "dijit.wizard.Widget",
-        "dn_querybuilder.QueryToolsBuilderWidget"
-      ],
-      "instanceFactory": true,
-      "properties": {
-        "Event-Topics": [],
-        "widgetProperties": {
-          "bid": "dn_querybuilder",
-          "pid": "dn_querybuilder-QueryTools-Factory",
-          "id": "toolsBuilderWidget",
-          "description": "${toolsBuilder.toolsBuilderDescription}"
-        },
-        "webFontsGalleryUrl": "http://www.mapapps.de/mapapps/resources/jsregistry/root/font-mapapps/latest/index.html",
-        "complexQueryDocUrl": "https://developernetwork.conterra.de/en/documentation/mapapps/43/development-guide/complex-query-dojostore"
-      },
-      "references": [
-        {
-          "name": "_windowManager",
-          "providing": "ct.framework.api.WindowManager"
-        },
-        {
-          "name": "_appCtx",
-          "providing": "ct.framework.api.ApplicationContext"
-        },
-        {
-          "name": "_configAdminService",
-          "providing": "ct.framework.api.ConfigurationAdmin"
-        },
-        {
-          "name": "_toolbar",
-          "providing": "dn_querybuilder.Toolbar"
-        },
-        {
-          "name": "_dataformService",
-          "providing": "dataform.DataFormService"
-        },
-        {
-          "name": "_mapWidgetModel",
-          "providing": "map-widget.MapWidgetModel"
-        },
-        {
-          "name": "_metadataAnalyzer",
-          "providing": "dn_querybuilder.MetadataAnalyzer"
-        },
-        {
-          "name": "_queryBuilderProperties",
-          "providing": "dn_querybuilder.QueryBuilderProperties"
-        },
-        {
-          "name": "_replacer",
-          "providing": "dn_queryplaceholder.Replacer"
-        },
-        {
-          "name": "_stores",
-          "providing": "ct.api.Store",
-          "cardinality": "1..n",
-          "filter": "(useIn=selection)"
-        }
-      ]
-    },
-    {
-      "name": "QueryBuilderToolbar",
-      "impl": "ct/tools/ToolContainer",
-      "provides": [
-        "dn_querybuilder.Toolbar"
-      ],
-      "references": [
-        {
-          "name": "tool",
-          "providing": "ct.tools.Tool",
-          "cardinality": "0..n",
-          "filter": "(toolRole=queryconfigtool)"
-        }
-      ]
-    },
-    {
-      "name": "AddServiceTool",
-      "impl": "ct/tools/Tool",
-      "provides": [
-        "ct.tools.Tool"
-      ],
-      "enabled": true,
-      "propertiesConstructor": true,
-      "properties": {
-        "priority": 3,
-        "toolRole": "queryconfigtool",
-        "id": "addServiceTool",
-        "title": "ADD",
-        "iconClass": "icon-plus",
-        "tooltip": "${widget.window.addTool}",
-        "togglable": false,
-        "clickHandler": "createQueryTool"
-      },
-      "references": [
-        {
-          "name": "handlerScope",
-          "providing": "dn_querybuilder.QueryToolsBuilderWidget"
-        }
-      ]
-    },
-    {
-      "name": "RemoveServiceTool",
-      "impl": "ct/tools/Tool",
-      "provides": [
-        "ct.tools.Tool"
-      ],
-      "enabled": true,
-      "propertiesConstructor": true,
-      "properties": {
-        "priority": 2,
-        "toolRole": "queryconfigtool",
-        "id": "removeSelectedServiceTool",
-        "title": "REMOVE",
-        "iconClass": "icon-minus",
-        "tooltip": "${widget.window.removeTool}",
-        "togglable": false,
-        "clickHandler": "removeQueryTool"
-      },
-      "references": [
-        {
-          "name": "handlerScope",
-          "providing": "dn_querybuilder.QueryToolsBuilderWidget"
-        }
-      ]
-    },
-    {
-      "name": "CopyServiceTool",
-      "impl": "ct/tools/Tool",
-      "provides": [
-        "ct.tools.Tool"
-      ],
-      "enabled": true,
-      "propertiesConstructor": true,
-      "properties": {
-        "priority": 1,
-        "toolRole": "queryconfigtool",
-        "id": "copySelectedServiceTool",
-        "title": "COPY",
-        "iconClass": "icon-editor-copy",
-        "tooltip": "${widget.window.copyTool}",
-        "togglable": false,
-        "clickHandler": "copyQueryTool"
-      },
-      "references": [
-        {
-          "name": "handlerScope",
-          "providing": "dn_querybuilder.QueryToolsBuilderWidget"
-        }
-      ]
-    }
-  ]
+    ]
 }
