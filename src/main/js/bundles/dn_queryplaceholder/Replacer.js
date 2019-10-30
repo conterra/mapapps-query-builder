@@ -24,6 +24,11 @@ export default class Replacer {
         this.placeholderProvider = this.placeholderProvider || [];
     }
 
+    deactivate() {
+        this.placeholder = {};
+        this.placeholderProvider = [];
+    }
+
     replace(string) {
         this.refresh();
         const s = string.substring(2, string.length - 1);
