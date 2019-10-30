@@ -53,7 +53,7 @@ export default declare({
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
         this.fieldQueries = [];
 
-        const connect = new Connect();
+        const connect = this.connect = new Connect();
         connect.connect(this._tool, "onActivate", () => {
             this.activeTool = true;
             this.getStoreData();
@@ -63,6 +63,11 @@ export default declare({
             this.loading = false;
             this.processing = false;
         });
+    },
+
+    deactivcate() {
+        this.locale = null;
+        this.connect.disconnect();
     },
 
     getStoreData() {

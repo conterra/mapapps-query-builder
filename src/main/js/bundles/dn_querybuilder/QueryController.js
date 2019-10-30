@@ -26,6 +26,10 @@ export default class QueryController {
         this.i18n = this._i18n.get().ui;
     }
 
+    deactivate() {
+        this.i18n = {};
+    }
+
     query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this.searchReplacer(complexQuery);
         const queryBuilderProperties = this._queryBuilderProperties;
