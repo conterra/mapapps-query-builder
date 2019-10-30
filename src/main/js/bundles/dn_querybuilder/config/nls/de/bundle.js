@@ -23,10 +23,13 @@ module.exports = {
         propertiesWidgetDescription: "Grundeinstellungen f\u00FCr das Query Builder Bundle",
         enableDistinctValues: "Distinct Values vorschlagen",
         defaultLinkOperator: "Standard-Vergleichsoperator",
-        defaultSpatialRelation: "Standard-Räumlicher-Vergleichsoperator",
+        defaultSpatialRelation: "Standard-R\u00E4umlicher-Vergleichsoperator",
         useMemorySelectionStore: "Memory Selection Store verwenden",
         useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
-        allowNegation: "Negation eines Feldes erlauben"
+        allowNegation: "Negation eines Feldes erlauben",
+        showQuerySettingsInEditableMode: "Sucheinstellungen im Editiermodus anzeigen",
+        showSortSelectInUserMode: "Sortierm\u00f6glichkeit im Widget anzeigen",
+        showFieldType: "Feldtyp im Widget anzeigen"
     },
     queryBuilderWidgetStoreSelection: {
         menuTitle: "QueryBuilderWidget",

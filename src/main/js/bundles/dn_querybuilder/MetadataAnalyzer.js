@@ -26,6 +26,10 @@ export default class MetadataAnalyzer {
         serviceResolver.setBundleCtx(bundleCtx);
     }
 
+    deactivate() {
+        this.serviceResolver = null;
+    }
+
     getFields(store) {
         return new Promise((resolve) => {
             try {

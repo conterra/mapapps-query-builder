@@ -78,7 +78,15 @@
                     "defaultSpatialRelation": "everywhere",
                     "useMemorySelectionStore": false,
                     "useUserExtent": false,
-                    "allowNegation": false
+                    "allowNegation": false,
+                    "showQuerySettingsInEditableMode": true,
+                    "showSortSelectInUserMode": false,
+                    "showFieldType": true,
+                    "hidedFields": [
+                        "objectid",
+                        "OBJECTID",
+                        "shape"
+                    ]
                 },
                 "description": "${propertiesWidget.propertiesWidgetDescription}"
             },
