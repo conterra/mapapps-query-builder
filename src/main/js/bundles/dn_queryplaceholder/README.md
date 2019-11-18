@@ -8,9 +8,7 @@ Add your own replacer strings.
 
 ## Configuration Reference
 
-### Configurable Components of dn_queryplaceholder:
-
-#### Replacer:
+### Replacer:
 ```json
 "Replacer": {
     "placeholder": {

@@ -81,9 +81,7 @@ No further configuration is required, default values will be used.
 
 ## Configuration Reference
 
-### Configurable Components of dn_querybuilder:
-
-#### QueryBuilderProperties:
+### QueryBuilderProperties:
 ```json
 "QueryBuilderProperties": {
     "enableDistinctValues": true,
@@ -116,7 +114,7 @@ No further configuration is required, default values will be used.
 | showFieldType                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                                       |
 | hidedFields                     | Array   |                                                                       | ```true```                  | Names of fields that should be hided in the field select                                                                               |
 
-#### QueryBuilderWidgetModel:
+### QueryBuilderWidgetModel:
 List of store ids that should be available in the QueryBuilderWidget
 ```json
 "QueryBuilderWidgetModel": {
@@ -130,7 +128,7 @@ List of store ids that should be available in the QueryBuilderWidget
 }
 ```
 
-#### QueryTools:
+### QueryTools:
 ```json
 "QueryTools": [
     // list of query tools
