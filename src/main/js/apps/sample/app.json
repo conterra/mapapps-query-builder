@@ -44,7 +44,7 @@
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
-                "showFieldType": false,
+                "showFieldType": true,
                 "hidedFields": [
                     "objectid",
                     "OBJECTID",
