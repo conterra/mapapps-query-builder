@@ -171,23 +171,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.10</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.0</version>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
+                    <version>3.0.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
@@ -254,37 +238,6 @@
         </testResources>
         <plugins>
             <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <configuration>
-                    <header>${project.baseUri}apache2-license-header.txt</header>
-                    <properties>
-                        <owner>con terra GmbH</owner>
-                        <email>info@conterra.de</email>
-                        <project.inceptionYear>2019</project.inceptionYear>
-                    </properties>
-                    <includes>
-                        <include>src/main/js/**/*.js</include>
-                        <include>src/main/js/**/*.vue</include>
-                        <include>src/main/config/assembly.xml</include>
-                        <include>**/build.properties</include>
-                        <include>**/gulpfile.js</include>
-                        <include>**/pom.xml</include>
-                    </includes>
-                    <mapping>
-                        <vue>XML_STYLE</vue>
-                    </mapping>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>de.conterra.maven</groupId>
                 <artifactId>setproperties-maven-plugin</artifactId>
                 <version>1.0.2</version>
@@ -299,8 +252,24 @@
                     <!-- add here properties which are used in plugin configuration resolution -->
                     <properties>
                         <!-- deployment of map.apps installation -->
-                        <mapapps.remote.base/>
+                        <mapapps.remote.base>.</mapapps.remote.base>
                     </properties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
@@ -362,6 +331,94 @@
                     <sourceDirectory>${js.build.outputPath}</sourceDirectory>
                     <outputDirectory>${js.build.outputPath}</outputDirectory>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <httpConnector>
+                        <port>${jetty.port}</port>
+                    </httpConnector>
+                    <stopPort>9966</stopPort>
+                    <stopKey>jetty-stop</stopKey>
+                    <stopWait>60000</stopWait>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <reload>manual</reload>
+                    <webXml>${basedir}/src/test/webapp/WEB-INF/web.xml</webXml>
+                    <useTestScope>true</useTestScope>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                        <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                            <resourcesAsCSV>${root.build.outputPath},${basedir}/src/test/webapp</resourcesAsCSV>
+                        </baseResource>
+                        <!-- include ct-jsregistry-embedded-<version>.jar as web-fragment provider -->
+                        <webInfIncludeJarPattern>.*/ct-jsregistry-embedded-[^/]*\.jar$</webInfIncludeJarPattern>
+                    </webAppConfig>
+                    <systemProperties>
+                        <systemProperty>
+                            <!-- set catalina base, so that log files are created in the target directory-->
+                            <name>catalina.base</name>
+                            <value>${project.build.directory}</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run gulp ${gulp.task}</id>
+                        <goals>
+                            <goal>gulp</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>${gulp.task}</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- trigger manual: com.github.eirslett:frontend-maven-plugin:gulp@watch-changes -->
+                        <id>watch-changes</id>
+                        <goals>
+                            <goal>gulp</goal>
+                        </goals>
+                        <phase>none</phase>
+                        <configuration>
+                            <arguments>watch</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <header>${project.baseUri}apache2-license-header.txt</header>
+                    <properties>
+                        <owner>con terra GmbH</owner>
+                        <email>info@conterra.de</email>
+                        <project.inceptionYear>2019</project.inceptionYear>
+                    </properties>
+                    <includes>
+                        <include>src/main/js/**/*.js</include>
+                        <include>src/main/js/**/*.vue</include>
+                        <include>src/main/config/assembly.xml</include>
+                        <include>**/build.properties</include>
+                        <include>**/gulpfile.js</include>
+                        <include>**/pom.xml</include>
+                    </includes>
+                    <mapping>
+                        <vue>XML_STYLE</vue>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
@@ -439,37 +496,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <configuration>
-                    <httpConnector>
-                        <port>${jetty.port}</port>
-                    </httpConnector>
-                    <stopPort>9966</stopPort>
-                    <stopKey>jetty-stop</stopKey>
-                    <stopWait>60000</stopWait>
-                    <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <reload>manual</reload>
-                    <webXml>${basedir}/src/test/webapp/WEB-INF/web.xml</webXml>
-                    <useTestScope>true</useTestScope>
-                    <webAppConfig>
-                        <contextPath>/</contextPath>
-                        <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                            <resourcesAsCSV>${root.build.outputPath},${basedir}/src/test/webapp</resourcesAsCSV>
-                        </baseResource>
-                        <!-- include ct-jsregistry-embedded-<version>.jar as web-fragment provider -->
-                        <webInfIncludeJarPattern>.*/ct-jsregistry-embedded-[^/]*\.jar$</webInfIncludeJarPattern>
-                    </webAppConfig>
-                    <systemProperties>
-                        <systemProperty>
-                            <!-- set catalina base, so that log files are created in the target directory-->
-                            <name>catalina.base</name>
-                            <value>${project.build.directory}</value>
-                        </systemProperty>
-                    </systemProperties>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <tagNameFormat>@{project.version}</tagNameFormat>
@@ -481,32 +507,6 @@
                     <username>${scm.username}</username>
                     <password>${scm.password}</password>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>run gulp ${gulp.task}</id>
-                        <goals>
-                            <goal>gulp</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>${gulp.task}</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- trigger manual: com.github.eirslett:frontend-maven-plugin:gulp@watch-changes -->
-                        <id>watch-changes</id>
-                        <goals>
-                            <goal>gulp</goal>
-                        </goals>
-                        <phase>none</phase>
-                        <configuration>
-                            <arguments>watch</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
