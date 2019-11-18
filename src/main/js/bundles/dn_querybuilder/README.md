@@ -17,7 +17,7 @@ To make the functions of this bundle available to the user, the following tool c
 
 Use a toolset:
 To add a toolset to your app that contains the Query Tools, copy the following code to your app.json:
-```
+```json
 "toolset": {
     "ToolsetManager": {
         "toolsets": [
@@ -48,7 +48,7 @@ To add a toolset to your app that contains the Query Tools, copy the following c
 Enable user querybuilder tool:
 
 To enable user query tools in your app, add the "queryBuilderToggleTool" to your toolset:
-```
+```json
 "toolset": {
     "ToolsetManager": {
         "toolsets": [
