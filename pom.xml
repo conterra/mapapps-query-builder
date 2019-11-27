@@ -402,6 +402,7 @@
                     <includes>
                         <include>src/main/js/**/*.js</include>
                         <include>src/main/js/**/*.vue</include>
+                        <include>src/main/js/**/*.css</include>
                         <include>src/main/config/assembly.xml</include>
                         <include>**/build.properties</include>
                         <include>**/gulpfile.js</include>
