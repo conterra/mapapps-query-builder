@@ -17,7 +17,7 @@ module.exports = {
     root: ({
         bundleName: "QueryBuilder",
         bundleDescription: "Bundle to build custom query tools",
-        windowTitle: "Build your own Query",
+        windowTitle: "QueryBuilder",
         editableWindowTitle: "Editable Query",
         tool: {
             title: "Build Query",
