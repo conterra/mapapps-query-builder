@@ -36,7 +36,7 @@
                         <div>{{ title }}</div>
                     </v-flex>
                     <v-flex
-                        v-if="showQuerySettings"
+                        v-if="showQuerySettings && storeData.length > 1"
                         :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
                         xs3
                         md3
