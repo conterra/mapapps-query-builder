@@ -16,7 +16,7 @@
 
 -->
 <template>
-    <v-slide-y-transition hide-on-leave>
+    <v-scroll-y-transition hide-on-leave>
         <v-card
             v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             raised
@@ -241,7 +241,7 @@
                 </v-layout>
             </v-container>
         </v-card>
-    </v-slide-y-transition>
+    </v-scroll-y-transition>
 </template>
 <script>
     export default {

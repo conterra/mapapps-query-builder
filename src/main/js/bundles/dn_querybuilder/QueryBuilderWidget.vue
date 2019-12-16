@@ -130,7 +130,7 @@
                         xs3
                         md3
                     >
-                        <v-slide-x-transition>
+                        <v-fade-transition>
                             <div
                                 v-if="fieldQueries.length > 1"
                             >
@@ -155,7 +155,7 @@
                                     />
                                 </v-radio-group>
                             </div>
-                        </v-slide-x-transition>
+                        </v-fade-transition>
                     </v-flex>
                     <v-flex
                         xs12
