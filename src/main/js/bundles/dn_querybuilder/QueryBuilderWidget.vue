@@ -37,9 +37,7 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings && storeData.length > 1"
-                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
-                        xs3
-                        md3
+                        :class="getClass()"
                     >
                         <div>
                             <div>{{ i18n.selectStore }}</div>
@@ -58,9 +56,7 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
-                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
-                        xs3
-                        md3
+                        :class="getClass()"
                     >
                         <div>
                             <div>{{ i18n.spatialRelation }}</div>
@@ -87,9 +83,7 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings && showSortSelectInUserMode"
-                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
-                        xs3
-                        md3
+                        :class="getClass()"
                     >
                         <div>
                             <div>{{ i18n.sortOptions }}</div>
@@ -126,9 +120,7 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
-                        :class="{ xs4: !showSortSelectInUserMode, md4: !showSortSelectInUserMode }"
-                        xs3
-                        md3
+                        :class="getClass()"
                     >
                         <v-fade-transition>
                             <div
@@ -393,6 +385,21 @@
                             {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                 }
+            },
+            getClass() {
+                let cssClass = "md3 xs6";
+                if (!this.showSortSelectInUserMode) {
+                    cssClass = "md4 xs6";
+                }
+                // eslint-disable-next-line no-magic-numbers
+                if (this.storeData.length < 2) {
+                    cssClass = "md4 xs6";
+                }
+                // eslint-disable-next-line no-magic-numbers
+                if (!this.showSortSelectInUserMode && this.storeData.length < 2) {
+                    cssClass = "md6 xs6";
+                }
+                return cssClass;
             }
         }
     };
