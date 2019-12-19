@@ -173,7 +173,11 @@ export default declare({
         if (!store) {
             return;
         }
-        return this._metadataAnalyzer.getFields(store);
+        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) => {
+            const queryBuilderProperties = this._queryBuilderProperties;
+            const hidedFields = queryBuilderProperties.hidedFields;
+            return fieldData.filter((field) => !hidedFields.includes(field.id));
+        });
     },
 
     getSelectedStoreObj(id) {

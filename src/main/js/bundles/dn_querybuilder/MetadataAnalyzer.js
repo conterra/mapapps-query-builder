@@ -33,12 +33,11 @@ export default class MetadataAnalyzer {
     getFields(store) {
         return new Promise((resolve) => {
             try {
-                const properties = this._queryBuilderProperties;
+                const queryBuilderProperties = this._queryBuilderProperties;
                 const metadata = store.getMetadata();
                 apprt_when(metadata, (metadata) => {
                     const fields = metadata.fields;
                     const storeData = [];
-                    const hidedFields = properties.hidedFields;
                     fields.forEach((field) => {
                         let codedValues = [];
                         let codedValueString = "";
@@ -46,13 +45,13 @@ export default class MetadataAnalyzer {
                             codedValues = field.domain.codedValues;
                             codedValueString = "[CV]";
                         }
-                        if (!hidedFields.includes(field.name) && field.type !== "geometry") {
+                        if (field.type !== "geometry") {
                             let title = field.title;
                             if (!title || title === "") {
                                 title = field.name;
                             }
                             let text = title;
-                            if (properties.showFieldType) {
+                            if (queryBuilderProperties.showFieldType) {
                                 text = title + " (" + field.type + ") " + codedValueString;
                             }
                             storeData.push({
@@ -64,7 +63,7 @@ export default class MetadataAnalyzer {
                             });
                         }
                     });
-                    if (properties.enableDistinctValues) {
+                    if (queryBuilderProperties.enableDistinctValues) {
                         this.getDistinctValues(store, storeData);
                     }
                     resolve(storeData);
