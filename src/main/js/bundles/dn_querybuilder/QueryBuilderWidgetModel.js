@@ -26,7 +26,7 @@ export default declare({
     locale: "en",
     stores: [],
     storeData: [],
-    fieldData: [],
+    sortFieldData: [],
     selectedStoreId: null,
     selectedSortFieldName: null,
     sortDescending: false,
@@ -85,9 +85,9 @@ export default declare({
     },
 
     getFieldData(selectedStoreId) {
-        const fieldData = this._getSelectedFieldData(selectedStoreId || this.selectedStoreId);
-        apprt_when(fieldData, (data) => {
-            this.fieldData = data;
+        const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
+        apprt_when(sortFieldData, (data) => {
+            this.sortFieldData = data;
             this.selectedSortFieldName = data[0].id;
         });
     },
@@ -168,15 +168,25 @@ export default declare({
     },
 
     _getSelectedFieldData(selectedStoreId) {
+        const queryBuilderProperties = this._queryBuilderProperties;
+        const hidedFields = queryBuilderProperties.hidedFields;
+        return this._getFilteredFieldData(selectedStoreId, hidedFields);
+    },
+
+    _getSelectedSortFieldData(selectedStoreId) {
+        const queryBuilderProperties = this._queryBuilderProperties;
+        const hidedSortFields = queryBuilderProperties.hidedSortFields;
+        return this._getFilteredFieldData(selectedStoreId, hidedSortFields);
+    },
+
+    _getFilteredFieldData(selectedStoreId, hidedSortFields) {
         const storeId = selectedStoreId || this.selectedStoreId;
         const store = this.getSelectedStoreObj(storeId);
         if (!store) {
             return;
         }
         return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) => {
-            const queryBuilderProperties = this._queryBuilderProperties;
-            const hidedFields = queryBuilderProperties.hidedFields;
-            return fieldData.filter((field) => !hidedFields.includes(field.id));
+            return fieldData.filter((field) => !hidedSortFields.includes(field.id));
         });
     },
 

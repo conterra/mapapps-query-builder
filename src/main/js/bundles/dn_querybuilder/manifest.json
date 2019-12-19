@@ -250,6 +250,11 @@
                     "objectid",
                     "OBJECTID",
                     "shape"
+                ],
+                "hidedSortFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
                 ]
             }
         },

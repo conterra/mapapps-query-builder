@@ -90,7 +90,7 @@
                             <v-select
                                 ref="selectedSortFieldNameSelect"
                                 v-model="selectedSortFieldName"
-                                :items="fieldData"
+                                :items="sortFieldData"
                                 :disabled="editable"
                                 item-value="id"
                                 single-line
@@ -271,7 +271,7 @@
                 },
                 locale: "en",
                 storeData: [],
-                fieldData: [],
+                sortFieldData: [],
                 editable: false,
                 selectedStoreId: "",
                 selectedSortFieldName: "",
