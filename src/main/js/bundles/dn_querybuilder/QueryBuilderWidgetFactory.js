@@ -69,7 +69,8 @@ export default class QueryBuilderWidgetFactory {
             spatialInputActionService.getById(id).trigger().then((geometry) => {
                 vm.activeSpatialInputAction = null;
                 model.geometry = geometry;
-                return geometry;
+            }, (error)=>{
+                vm.activeSpatialInputAction = null;
             });
         });
 
