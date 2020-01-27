@@ -18,7 +18,8 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import Binding from "apprt-binding/Binding";
 
-const _binding = Symbol("_binding");
+const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
+const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
 
 export default class QueryBuilderWidgetFactory {
 
@@ -27,8 +28,10 @@ export default class QueryBuilderWidgetFactory {
     }
 
     deactivate() {
-        this[_binding].unbind();
-        this[_binding] = undefined;
+        this[_mapWidgetModelBinding].unbind();
+        this[_mapWidgetModelBinding] = undefined;
+        this[_spatialInputActionServiceBinding].unbind();
+        this[_spatialInputActionServiceBinding] = undefined;
     }
 
     createInstance() {
@@ -63,21 +66,21 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData(selectedStoreId);
         });
         vm.$on('selectSpatialInputAction', (id) => {
-            const action = spatialInputActionService.getById(id).trigger().then((geometry) => {
+            spatialInputActionService.getById(id).trigger().then((geometry) => {
                 vm.activeSpatialInputAction = null;
                 model.geometry = geometry;
                 return geometry;
             });
         });
 
-        this[_binding] = Binding.for(vm, model)
-            .syncAll("locale", "storeData", "selectedStoreId", "sortFieldData", "selectedSortFieldName",
-                "sortDescending", "linkOperator", "spatialRelation", "showSpatialInputActions",
-                "allowNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode", "activeTool")
+        this[_mapWidgetModelBinding] = Binding.for(vm, model)
+            .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation")
+            .syncAllToLeft("locale", "storeData", "sortFieldData", "showSpatialInputActions",
+                "showSortSelectInUserMode", "allowNegation", "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();
 
-        const binding = Binding.for(vm, spatialInputActionService)
+        this[_spatialInputActionServiceBinding] = Binding.for(vm, spatialInputActionService)
             .syncToLeft("actions", "spatialInputActions",
                 (actions) => {
                     return actions.map(({id, title, description, iconClass}) => {
