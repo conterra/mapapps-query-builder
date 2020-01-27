@@ -28,3 +28,12 @@
 .ctAppRoot .querybuilder-window .center .v-chip .v-chip__content .v-icon {
     font-size: 18px;
 }
+
+.ctAppRoot .querybuilder-window .v-btn-toggle {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ctAppRoot .querybuilder-window .v-btn-toggle .v-btn {
+    flex: 1 1 auto
+}

@@ -20,6 +20,7 @@ import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
+import Graphic from "esri/Graphic";
 
 export default declare({
 
@@ -38,6 +39,7 @@ export default declare({
     processing: false,
     showSortSelectInUserMode: false,
     activeTool: false,
+    geometry: null,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -49,6 +51,7 @@ export default declare({
         this.getStoreData();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
+        this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
         this.fieldQueries = [];
@@ -57,11 +60,21 @@ export default declare({
         connect.connect(this._tool, "onActivate", () => {
             this.activeTool = true;
             this.getStoreData();
+            if (this.geometry) {
+                this.addGraphicToView(this.geometry);
+            }
         });
         connect.connect(this._tool, "onDeactivate", () => {
             this.activeTool = false;
             this.loading = false;
             this.processing = false;
+            this.removeGraphicFromView();
+        });
+        this.watch("geometry", (evt) => {
+            this.removeGraphicFromView();
+            if (evt.value) {
+                this.addGraphicToView(evt.value);
+            }
         });
     },
 
@@ -196,7 +209,11 @@ export default declare({
 
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
         const complexQuery = {};
-        if (spatialRelation === "current_extent") {
+        if (this.geometry) {
+            complexQuery.geometry = {
+                $intersects: this.geometry
+            };
+        } else if (spatialRelation === "current_extent") {
             const extent = this._mapWidgetModel.get("extent");
             complexQuery.geometry = {
                 $intersects: extent
@@ -242,6 +259,35 @@ export default declare({
     removeFieldQueries() {
         while (this.fieldQueries.length > 0) {
             this.fieldQueries.pop();
+        }
+    },
+
+    addGraphicToView(geometry) {
+        this.removeGraphicFromView();
+        const view = this._mapWidgetModel.get("view");
+        const symbol = this.getGraphicSymbol(geometry.type);
+        const graphic = this.graphic = new Graphic({
+            geometry: geometry,
+            symbol: symbol
+        });
+        view.graphics.add(graphic);
+    },
+
+    removeGraphicFromView() {
+        if (this.graphic) {
+            const view = this._mapWidgetModel.get("view");
+            view.graphics.remove(this.graphic);
+        }
+    },
+
+    getGraphicSymbol(type) {
+        const queryBuilderProperties = this._queryBuilderProperties;
+        switch (type) {
+            case "polygon":
+            case "extent":
+                return queryBuilderProperties.symbols.polygon;
+            case "point":
+                return queryBuilderProperties.symbols.point;
         }
     },
 

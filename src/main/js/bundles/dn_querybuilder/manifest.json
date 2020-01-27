@@ -16,6 +16,7 @@
         "apprt-vuetify": "^4.2.0",
         "resultcenter": "^4.2.0",
         "agssearch": "^4.2.0",
+        "selection-services": "^4.2.0",
         "coordinatetransformer": "^4.2.0",
         "dn_queryplaceholder": "^4.0.0"
     },
@@ -209,6 +210,10 @@
                 {
                     "name": "_queryBuilderWidgetModel",
                     "providing": "dn_querybuilder.QueryBuilderWidgetModel"
+                },
+                {
+                    "name": "_spatialInputActionService",
+                    "providing": "selection-services.SpatialInputActionService"
                 }
             ]
         },
@@ -240,6 +245,7 @@
                 "enableDistinctValues": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
+                "showSpatialInputActions": false,
                 "useMemorySelectionStore": false,
                 "useUserExtent": false,
                 "allowNegation": false,
@@ -255,7 +261,48 @@
                     "objectid",
                     "OBJECTID",
                     "shape"
-                ]
+                ],
+                "symbols": {
+                    "point": {
+                        "type": "simple-marker",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            0.25
+                        ],
+                        "style": "circle",
+                        "outline": {
+                            "color": [
+                                255,
+                                0,
+                                0,
+                                1
+                            ],
+                            "width": 2
+                        },
+                        "size": 10
+                    },
+                    "polygon": {
+                        "type": "simple-fill",
+                        "color": [
+                            255,
+                            0,
+                            0,
+                            0.25
+                        ],
+                        "style": "solid",
+                        "outline": {
+                            "color": [
+                                255,
+                                0,
+                                0,
+                                1
+                            ],
+                            "width": "2px"
+                        }
+                    }
+                }
             }
         },
         {

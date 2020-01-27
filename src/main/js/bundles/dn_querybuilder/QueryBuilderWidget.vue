@@ -58,8 +58,22 @@
                         v-if="showQuerySettings"
                         :class="getClass()"
                     >
-                        <div>
-                            <div>{{ i18n.spatialRelation }}</div>
+                        <div>{{ i18n.spatialRelation }}</div>
+                        <div v-if="showSpatialInputActions">
+                            <v-container pa-1>
+                                <v-btn-toggle v-model="activeSpatialInputAction">
+                                    <v-btn
+                                        v-for="spatialInputAction in spatialInputActions"
+                                        :key="spatialInputAction.id"
+                                        :value="spatialInputAction.id"
+                                    >
+                                        <v-icon>{{ spatialInputAction.iconClass }}</v-icon>
+                                        <span class="ml-2">{{ spatialInputAction.title }}</span>
+                                    </v-btn>
+                                </v-btn-toggle>
+                            </v-container>
+                        </div>
+                        <div v-else>
                             <v-radio-group
                                 v-model="spatialRelation"
                                 class="pt-0"
@@ -281,13 +295,16 @@
                 linkOperator: "$and",
                 disableLinkOperatorRadio: false,
                 spatialRelation: "everywhere",
+                showSpatialInputActions: false,
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
                 allowNegation: false,
                 loading: false,
                 processing: false,
                 showSortSelectInUserMode: false,
-                activeTool: false
+                activeTool: false,
+                spatialInputActions: [],
+                activeSpatialInputAction: null
             };
         },
         watch: {
@@ -299,6 +316,11 @@
                     if (this.$refs.selectedSortFieldNameSelect) {
                         this.$refs.selectedSortFieldNameSelect.isMenuActive = false;
                     }
+                }
+            },
+            activeSpatialInputAction: function (id) {
+                if (id) {
+                    this.$emit("selectSpatialInputAction", id);
                 }
             }
         },

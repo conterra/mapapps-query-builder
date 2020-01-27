@@ -40,6 +40,7 @@ export default class QueryBuilderWidgetFactory {
     _initComponent() {
         const vm = this.queryBuilderWidget = new Vue(QueryBuilderWidget);
         const model = this._queryBuilderWidgetModel;
+        const spatialInputActionService = this._spatialInputActionService;
         vm.i18n = this._i18n.get().ui;
 
         // listen to view model methods
@@ -61,11 +62,33 @@ export default class QueryBuilderWidgetFactory {
             model.addFieldQuery(selectedStoreId);
             model.getFieldData(selectedStoreId);
         });
+        vm.$on('selectSpatialInputAction', (id) => {
+            const action = spatialInputActionService.getById(id).trigger().then((geometry) => {
+                vm.activeSpatialInputAction = null;
+                model.geometry = geometry;
+                return geometry;
+            });
+        });
 
         this[_binding] = Binding.for(vm, model)
-            .syncAll("locale", "storeData", "selectedStoreId", "sortFieldData", "selectedSortFieldName", "sortDescending",
-                "linkOperator", "spatialRelation", "allowNegation", "fieldQueries", "loading", "processing",
-                "showSortSelectInUserMode", "activeTool")
+            .syncAll("locale", "storeData", "selectedStoreId", "sortFieldData", "selectedSortFieldName",
+                "sortDescending", "linkOperator", "spatialRelation", "showSpatialInputActions",
+                "allowNegation", "fieldQueries", "loading", "processing", "showSortSelectInUserMode", "activeTool")
+            .enable()
+            .syncToLeftNow();
+
+        const binding = Binding.for(vm, spatialInputActionService)
+            .syncToLeft("actions", "spatialInputActions",
+                (actions) => {
+                    return actions.map(({id, title, description, iconClass}) => {
+                        return {
+                            id,
+                            title,
+                            description,
+                            iconClass
+                        }
+                    });
+                })
             .enable()
             .syncToLeftNow();
     }
