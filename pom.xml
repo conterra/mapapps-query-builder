@@ -87,7 +87,11 @@
             <version>${ct.jsrt-test.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>de.conterra.devnet</groupId>
+            <artifactId>mapapps-selection-actions</artifactId>
+            <version>${selectionactions.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -442,7 +446,7 @@
                                     <!-- remove bundleLocations from app.json -->
                                     <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
                                     </token>
-                                    <value />
+                                    <value/>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -542,6 +546,8 @@
         <ct.jsregistry.version>1.3.4</ct.jsregistry.version>
         <ct.jsrt-test.version>1.1.5</ct.jsrt-test.version>
 
+        <selectionactions.version>1.5.0</selectionactions.version>
+
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
 
@@ -550,10 +556,10 @@
             *://*:*/**;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
-        <proxy.use.rules />
+        <proxy.use.rules/>
         <jetty.port>9090</jetty.port>
         <mvn.cmd>mvn</mvn.cmd>
-        <gulp.task />
+        <gulp.task/>
 
         <!-- required for release build -->
         <scm.push>false</scm.push>
@@ -621,7 +627,9 @@
                                     <goal>gulp</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run-browser-tests --tests http://localhost:${jetty.server.port}/js/tests/runTests.html</arguments>
+                                    <arguments>run-browser-tests --tests
+                                        http://localhost:${jetty.server.port}/js/tests/runTests.html
+                                    </arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -770,7 +778,8 @@
                                     <async>true</async>
                                     <executable>${maven.home}/bin/${mvn.cmd}</executable>
                                     <arguments>
-                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes</argument>
+                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes
+                                        </argument>
                                     </arguments>
                                 </configuration>
                             </execution>
