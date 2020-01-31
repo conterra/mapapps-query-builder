@@ -66,7 +66,7 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData(selectedStoreId);
         });
         vm.$on('selectSpatialInputAction', (id) => {
-            spatialInputActionService.getById(id).trigger().then((geometry) => {
+            spatialInputActionService.getById(id).trigger({queryBuilderSelection: true}).then((geometry) => {
                 vm.activeSpatialInputAction = null;
                 model.geometry = geometry;
             }, (error)=>{
