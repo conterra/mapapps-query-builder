@@ -301,8 +301,8 @@
                     "providing": "resultcenter.DataModel"
                 },
                 {
-                    "name": "_queryBuilderResultsFetcher",
-                    "providing": "sf_querybuilder.QueryBuilderResultsFetcher",
+                    "name": "_smartfinderComplexQueryHandler",
+                    "providing": "sf_querybuilder.ComplexQueryHandler",
                     "cardinality": "0..1"
                 },
                 {
