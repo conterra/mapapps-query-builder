@@ -66,11 +66,15 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData(selectedStoreId);
         });
         vm.$on('selectSpatialInputAction', (id) => {
-            spatialInputActionService.getById(id).trigger({queryBuilderSelection: true}).then((geometry) => {
+            const spatialInputAction = spatialInputActionService.getById(id);
+            vm.activeSpatialInputActionDescription = spatialInputAction.description;
+            spatialInputAction.trigger({queryBuilderSelection: true}).then((geometry) => {
                 vm.activeSpatialInputAction = null;
+                vm.activeSpatialInputActionDescription = null;
                 model.geometry = geometry;
-            }, (error)=>{
+            }, (error) => {
                 vm.activeSpatialInputAction = null;
+                vm.activeSpatialInputActionDescription = null;
             });
         });
 

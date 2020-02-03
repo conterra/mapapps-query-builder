@@ -71,6 +71,12 @@
                                         <span class="ml-2">{{ spatialInputAction.title }}</span>
                                     </v-btn>
                                 </v-btn-toggle>
+                                <div
+                                    v-if="activeSpatialInputActionDescription"
+                                    class="ct-message ct-message--info mt-2"
+                                >
+                                    {{ activeSpatialInputActionDescription }}
+                                </div>
                             </v-container>
                         </div>
                         <div v-else>
@@ -304,7 +310,8 @@
                 showSortSelectInUserMode: false,
                 activeTool: false,
                 spatialInputActions: [],
-                activeSpatialInputAction: null
+                activeSpatialInputAction: null,
+                activeSpatialInputActionDescription: null
             };
         },
         watch: {
