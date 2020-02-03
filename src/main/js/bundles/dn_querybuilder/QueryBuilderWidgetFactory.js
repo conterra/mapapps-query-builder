@@ -18,7 +18,7 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import Binding from "apprt-binding/Binding";
 
-const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
+const _queryBuilderWidgetModelBinding = Symbol("_queryBuilderWidgetModelBinding");
 
 export default class QueryBuilderWidgetFactory {
 
@@ -27,8 +27,8 @@ export default class QueryBuilderWidgetFactory {
     }
 
     deactivate() {
-        this[_mapWidgetModelBinding].unbind();
-        this[_mapWidgetModelBinding] = undefined;
+        this[_queryBuilderWidgetModelBinding].unbind();
+        this[_queryBuilderWidgetModelBinding] = undefined;
     }
 
     createInstance() {
@@ -65,7 +65,7 @@ export default class QueryBuilderWidgetFactory {
             model.selectSpatialInputAction(id);
         });
 
-        this[_mapWidgetModelBinding] = Binding.for(vm, model)
+        this[_queryBuilderWidgetModelBinding] = Binding.for(vm, model)
             .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "activeSpatialInputAction")
             .syncAllToLeft("locale", "storeData", "sortFieldData", "showSpatialInputActions", "spatialInputActions",
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode", "allowNegation", "loading", "processing", "activeTool")
