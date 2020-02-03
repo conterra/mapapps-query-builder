@@ -229,6 +229,10 @@
                     "cardinality": "0..1"
                 },
                 {
+                    "name": "_spatialInputActionService",
+                    "providing": "selection-services.SpatialInputActionService"
+                },
+                {
                     "name": "_queryBuilderProperties",
                     "providing": "dn_querybuilder.QueryBuilderProperties"
                 }

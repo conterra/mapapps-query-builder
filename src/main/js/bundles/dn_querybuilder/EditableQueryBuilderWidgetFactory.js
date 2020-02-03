@@ -16,12 +16,21 @@
 import QueryBuilderWidget from "./QueryBuilderWidget.vue";
 import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
+import Binding from "apprt-binding/Binding";
+
+const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
 
 export default class EditableQueryBuilderWidgetFactory {
+
+    deactivate() {
+        this[_spatialInputActionServiceBinding].unbind();
+        this[_spatialInputActionServiceBinding] = undefined;
+    }
 
     getWidget(properties, queryController, tool) {
         const queryBuilderProperties = this._queryBuilderProperties;
         const model = this._queryBuilderWidgetModel;
+        const spatialInputActionService = this._spatialInputActionService;
         this.tool = tool;
         const complexQuery = properties.complexQuery;
         const editOptions = properties.options.editOptions;
@@ -45,6 +54,7 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.selectedStoreId = properties.storeId;
         vm.title = properties.title;
         vm.showQuerySettings = queryBuilderProperties.showQuerySettingsInEditableMode;
+        vm.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         vm.linkOperator = linkOperator;
         vm.disableLinkOperatorRadio = !editOptions.linkOperator;
         vm.spatialRelation = spatialRelation;
@@ -56,6 +66,28 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.$on('search', () => {
             model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, this.tool);
         });
+
+        vm.$on('selectSpatialInputAction', (id) => {
+            spatialInputActionService.getById(id).trigger({queryBuilderSelection: true}).then((geometry) => {
+                vm.activeSpatialInputAction = null;
+                model.geometry = geometry;
+            }, (error) => {
+                vm.activeSpatialInputAction = null;
+            });
+        });
+
+        this[_spatialInputActionServiceBinding] = Binding.for(vm, spatialInputActionService)
+            .syncToLeft("actions", "spatialInputActions",
+                (actions) => actions.map(({id, title, description, iconClass}) => {
+                    return {
+                        id,
+                        title,
+                        description,
+                        iconClass
+                    }
+                }))
+            .enable()
+            .syncToLeftNow();
 
         return VueDijit(vm);
     }
