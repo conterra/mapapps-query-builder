@@ -87,16 +87,14 @@ export default class QueryBuilderWidgetFactory {
 
         this[_spatialInputActionServiceBinding] = Binding.for(vm, spatialInputActionService)
             .syncToLeft("actions", "spatialInputActions",
-                (actions) => {
-                    return actions.map(({id, title, description, iconClass}) => {
-                        return {
-                            id,
-                            title,
-                            description,
-                            iconClass
-                        }
-                    });
-                })
+                (actions) => actions.map(({id, title, description, iconClass}) => {
+                    return {
+                        id,
+                        title,
+                        description,
+                        iconClass
+                    }
+                }))
             .enable()
             .syncToLeftNow();
     }
