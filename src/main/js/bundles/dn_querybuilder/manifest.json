@@ -188,6 +188,10 @@
                     "filter": "(id=queryBuilderToggleTool)"
                 },
                 {
+                    "name": "_spatialInputActionService",
+                    "providing": "selection-services.SpatialInputActionService"
+                },
+                {
                     "name": "_metadataAnalyzer",
                     "providing": "dn_querybuilder.MetadataAnalyzer"
                 },

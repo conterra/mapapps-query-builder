@@ -21,6 +21,10 @@ import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import Graphic from "esri/Graphic";
+import Binding from "apprt-binding/Binding";
+
+const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
+const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
 
 export default declare({
 
@@ -40,6 +44,10 @@ export default declare({
     showSortSelectInUserMode: false,
     activeTool: false,
     geometry: null,
+    spatialInputActions: [],
+    activeSpatialInputAction: null,
+    activeSpatialInputActionDescription: null,
+
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -69,6 +77,11 @@ export default declare({
             this.loading = false;
             this.processing = false;
             this.removeGraphicFromView();
+            const oldSpatialInputAction = this[_spatialInputActionPromise];
+            if (oldSpatialInputAction) {
+                oldSpatialInputAction.cancel();
+                this[_spatialInputActionPromise] = null;
+            }
         });
         this.watch("geometry", (evt) => {
             this.removeGraphicFromView();
@@ -76,11 +89,49 @@ export default declare({
                 this.addGraphicToView(evt.value);
             }
         });
+
+        const spatialInputActionService = this._spatialInputActionService;
+        this[_spatialInputActionServiceBinding] = Binding.for(this, spatialInputActionService)
+            .syncToLeft("actions", "spatialInputActions",
+                (actions) => actions.map(({id, title, description, iconClass}) => {
+                    return {
+                        id,
+                        title,
+                        description,
+                        iconClass
+                    }
+                }))
+            .enable()
+            .syncToLeftNow();
     },
 
-    deactivcate() {
+    deactivate() {
         this.locale = null;
         this.connect.disconnect();
+        this[_spatialInputActionServiceBinding].unbind();
+        this[_spatialInputActionServiceBinding] = undefined;
+        const oldSpatialInputAction = this[_spatialInputActionPromise];
+        if (oldSpatialInputAction) {
+            oldSpatialInputAction.cancel();
+            this[_spatialInputActionPromise] = null;
+        }
+    },
+
+    selectSpatialInputAction(id) {
+        const spatialInputActionService = this._spatialInputActionService;
+        const oldSpatialInputAction = this[_spatialInputActionPromise];
+        if (oldSpatialInputAction) {
+            oldSpatialInputAction.cancel();
+            this[_spatialInputActionPromise] = null;
+        }
+        const spatialInputAction = spatialInputActionService.getById(id);
+        const promise = this[_spatialInputActionPromise] = spatialInputAction.trigger({queryBuilderSelection: true});
+        promise.then((geometry) => {
+            this.activeSpatialInputAction = null;
+            this.activeSpatialInputActionDescription = null;
+            this.geometry = geometry;
+        });
+        this.activeSpatialInputActionDescription = spatialInputAction.description;
     },
 
     getStoreData() {
