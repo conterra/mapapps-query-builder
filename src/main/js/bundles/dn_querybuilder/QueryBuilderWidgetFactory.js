@@ -20,6 +20,7 @@ import Binding from "apprt-binding/Binding";
 
 const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
+const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
 
 export default class QueryBuilderWidgetFactory {
 
@@ -66,9 +67,15 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData(selectedStoreId);
         });
         vm.$on('selectSpatialInputAction', (id) => {
+            const oldSpatialInputAction = this[_spatialInputActionPromise];
+            if (oldSpatialInputAction) {
+                oldSpatialInputAction.cancel();
+                this[_spatialInputActionPromise] = null;
+            }
             const spatialInputAction = spatialInputActionService.getById(id);
             vm.activeSpatialInputActionDescription = spatialInputAction.description;
-            spatialInputAction.trigger({queryBuilderSelection: true}).then((geometry) => {
+            const promise = this[_spatialInputActionPromise] = spatialInputAction.trigger({queryBuilderSelection: true});
+            promise.then((geometry) => {
                 vm.activeSpatialInputAction = null;
                 vm.activeSpatialInputActionDescription = null;
                 model.geometry = geometry;
