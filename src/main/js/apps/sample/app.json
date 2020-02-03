@@ -24,6 +24,7 @@
             "wizard",
             "authentication",
             "viewmodeswitcher",
+            "dn_selectionactions",
             "dn_querybuilder"
         ],
         "require": [
@@ -39,6 +40,7 @@
                 "enableDistinctValues": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
+                "showSpatialInputActions": true,
                 "useMemorySelectionStore": false,
                 "useUserExtent": false,
                 "allowNegation": true,
