@@ -126,13 +126,23 @@ export default declare({
         this.loading = true;
         const fieldData = this._getSelectedFieldData(selectedStoreId);
         apprt_when(fieldData, (fields) => {
-            this.fieldQueries.push({
+            const firstField = fields[0];
+            const addedFieldQuery = {
                 fields: fields,
                 not: false,
-                selectedFieldId: fields[0].id,
+                selectedFieldId: firstField.id,
                 relationalOperator: "$eq",
-                value: (fields[0].codedValues[0] && fields[0].codedValues[0].code) || fields[0].distinctValues[0] || ""
-            });
+                value: (firstField.codedValues[0] && firstField.codedValues[0].code) || firstField.distinctValues[0] || ""
+            }
+            this.fieldQueries.push(addedFieldQuery);
+            if (firstField.loading) {
+                const watcher = firstField.watch("loading", (loading) => {
+                    if (!loading.value) {
+                        addedFieldQuery.value = (firstField.codedValues[0] && firstField.codedValues[0].code) || firstField.distinctValues[0] || "";
+                        watcher.remove();
+                    }
+                });
+            }
             this.loading = false;
         }, this);
     },

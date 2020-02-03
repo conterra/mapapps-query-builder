@@ -18,6 +18,7 @@ import ServiceResolver from "apprt/ServiceResolver";
 import Promise from "apprt-core/Promise";
 import QueryTask from "esri/tasks/QueryTask";
 import Query from "esri/tasks/support/Query";
+import {declare} from "apprt-core/Mutable";
 
 export default class MetadataAnalyzer {
     activate(componentContext) {
@@ -54,13 +55,15 @@ export default class MetadataAnalyzer {
                             if (queryBuilderProperties.showFieldType) {
                                 text = title + " (" + field.type + ") " + codedValueString;
                             }
-                            storeData.push({
+                            const StoreData = declare({
                                 id: field.name,
                                 text: text,
                                 type: field.type,
                                 codedValues: codedValues,
-                                distinctValues: []
+                                distinctValues: [],
+                                loading: false
                             });
+                            storeData.push(new StoreData());
                         }
                     });
                     if (queryBuilderProperties.enableDistinctValues) {
