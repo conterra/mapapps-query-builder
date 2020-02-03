@@ -92,7 +92,9 @@ export default declare({
                 data = this._metadataAnalyzer.getStoreData(stores);
             }
             this.storeData = data;
-            this.selectedStoreId = data[0].id;
+            if (!this.selectedStoreId) {
+                this.selectedStoreId = data[0].id;
+            }
             this.getFieldData();
         });
     },
