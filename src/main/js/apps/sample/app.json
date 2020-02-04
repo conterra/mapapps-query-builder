@@ -40,13 +40,16 @@
                 "enableDistinctValues": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
-                "showSpatialInputActions": true,
                 "useMemorySelectionStore": false,
                 "useUserExtent": false,
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
                 "showFieldType": true,
+                "showSpatialInputActions": true,
+                "spatialInputActions": [
+                    "point"
+                ],
                 "hidedFields": [
                     "objectid",
                     "OBJECTID",

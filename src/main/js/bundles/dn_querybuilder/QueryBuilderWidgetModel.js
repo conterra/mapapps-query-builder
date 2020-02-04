@@ -93,7 +93,7 @@ export default declare({
         const spatialInputActionService = this._spatialInputActionService;
         this[_spatialInputActionServiceBinding] = Binding.for(this, spatialInputActionService)
             .syncToLeft("actions", "spatialInputActions",
-                (actions) => actions.map(({id, title, description, iconClass}) => {
+                (actions) => actions.filter(this.getActionFilter()).map(({id, title, description, iconClass}) => {
                     return {
                         id,
                         title,
@@ -132,6 +132,17 @@ export default declare({
             this.geometry = geometry;
         });
         this.activeSpatialInputActionDescription = spatialInputAction.description;
+    },
+
+    getActionFilter() {
+        const allowedMethods = this._queryBuilderProperties.spatialInputActions;
+        const all = !allowedMethods || allowedMethods[0] === "*";
+        if (all) {
+            return () => true;
+        }
+        const actionIdLookup = {};
+        allowedMethods.forEach((id) => actionIdLookup[id] = true);
+        return ({id}) => actionIdLookup[id];
     },
 
     getStoreData() {
