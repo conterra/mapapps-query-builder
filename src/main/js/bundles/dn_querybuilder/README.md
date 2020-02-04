@@ -95,6 +95,10 @@ No further configuration is required, default values will be used.
     "showQuerySettingsInEditableMode": true,
     "showSortSelectInUserMode": false,
     "showFieldType": true,
+    "showSpatialInputActions": false,
+    "spatialInputActions": [
+        "*"
+    ],
     "hidedFields": [
         "objectid",
         "OBJECTID",
@@ -104,7 +108,48 @@ No further configuration is required, default values will be used.
         "objectid",
         "OBJECTID",
         "shape"
-    ]
+    ],
+    "symbols": {
+        "point": {
+            "type": "simple-marker",
+            "color": [
+                255,
+                0,
+                0,
+                0.25
+            ],
+            "style": "circle",
+            "outline": {
+                "color": [
+                    255,
+                    0,
+                    0,
+                    1
+                ],
+                "width": 2
+            },
+            "size": 10
+        },
+        "polygon": {
+            "type": "simple-fill",
+            "color": [
+                255,
+                0,
+                0,
+                0.25
+            ],
+            "style": "solid",
+            "outline": {
+                "color": [
+                    255,
+                    0,
+                    0,
+                    1
+                ],
+                "width": "2px"
+            }
+        }
+    }
 }
 ```
 
@@ -119,11 +164,14 @@ No further configuration is required, default values will be used.
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the query settings for editable queries.                                                                                  |
 | showSortSelectInUserMode        | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Show or hide the sort field select in user mode.                                                                                       |
 | showFieldType                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                                       |
-| hidedFields                     | Array   |                                                                       | ```true```                  | Names of fields that should be hided in the field select                                                                               |
-| hidedSortFields                 | Array   |                                                                       | ```true```                  | Names of fields that should be hided in the sort field select                                                                          |
+| showSpatialInputActions         | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show spatial input actions of the selection-ui bundle.                                                                                 |
+| spatialInputActions             | Array   |                                                                       | ```["*"]```                 | IDs of allowed spatial input actions.                                                                                                  |
+| hidedFields                     | Array   |                                                                       | ```[]```                    | Names of fields that should be hided in the field select                                                                               |
+| hidedSortFields                 | Array   |                                                                       | ```[]```                    | Names of fields that should be hided in the sort field select                                                                          |
+| symbols                         | Object  |                                                                       |                             | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                          |
 
 ### QueryBuilderWidgetModel:
-List of store ids that should be available in the QueryBuilderWidget
+List of store IDs that should be available in the QueryBuilderWidget
 ```json
 "QueryBuilderWidgetModel": {
     "storeIds": [
