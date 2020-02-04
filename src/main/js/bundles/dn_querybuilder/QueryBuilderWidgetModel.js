@@ -124,6 +124,11 @@ export default declare({
             oldSpatialInputAction.cancel();
             this[_spatialInputActionPromise] = null;
         }
+        if (!id) {
+            this.activeSpatialInputAction = null;
+            this.activeSpatialInputActionDescription = null;
+            return;
+        }
         const spatialInputAction = spatialInputActionService.getById(id);
         const promise = this[_spatialInputActionPromise] = spatialInputAction.trigger({queryBuilderSelection: true});
         promise.then((geometry) => {

@@ -326,9 +326,7 @@
                 }
             },
             activeSpatialInputAction: function (id) {
-                if (id) {
-                    this.$emit("selectSpatialInputAction", id);
-                }
+                this.$emit("selectSpatialInputAction", id);
             }
         },
         mounted: function () {
