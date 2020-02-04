@@ -48,7 +48,7 @@
                 "showFieldType": true,
                 "showSpatialInputActions": true,
                 "spatialInputActions": [
-                    "point"
+                    "*"
                 ],
                 "hidedFields": [
                     "objectid",
