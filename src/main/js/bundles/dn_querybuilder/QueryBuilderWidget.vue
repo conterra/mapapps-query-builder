@@ -37,28 +37,29 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings && storeData.length > 1"
-                        :class="getClass()"
+                        xs12
+                        md12
                     >
-                        <div>
-                            <div>{{ i18n.selectStore }}</div>
-                            <v-select
-                                ref="selectedStoreIdSelect"
-                                v-model="selectedStoreId"
-                                :items="storeData"
-                                :disabled="editable"
-                                :loading="loading"
-                                item-value="id"
-                                single-line
-                                hide-details
-                                @change="$emit('storeChanged', $event)"
-                            />
-                        </div>
+                        <div class="caption">{{ i18n.selectStore }}</div>
+                        <v-select
+                            ref="selectedStoreIdSelect"
+                            v-model="selectedStoreId"
+                            :items="storeData"
+                            :disabled="editable"
+                            :loading="loading"
+                            item-value="id"
+                            class="pa-0"
+                            single-line
+                            hide-details
+                            @change="$emit('storeChanged', $event)"
+                        />
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
-                        :class="getClass()"
+                        xs12
+                        md12
                     >
-                        <div>{{ i18n.spatialRelation }}</div>
+                        <div class="caption">{{ i18n.spatialRelation }}</div>
                         <div v-if="showSpatialInputActions">
                             <v-container pa-1>
                                 <v-btn-toggle v-model="activeSpatialInputAction">
@@ -82,7 +83,9 @@
                         <div v-else>
                             <v-radio-group
                                 v-model="spatialRelation"
-                                class="pt-0"
+                                class="pa-0 mt-1"
+                                row
+                                hide-details
                             >
                                 <v-radio
                                     :label="i18n.everywhere"
@@ -103,53 +106,77 @@
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings && showSortSelectInUserMode"
-                        :class="getClass()"
+                        xs12
+                        md12
                     >
-                        <div>
-                            <div>{{ i18n.sortOptions }}</div>
-                            <v-select
-                                ref="selectedSortFieldNameSelect"
-                                v-model="selectedSortFieldName"
-                                :items="sortFieldData"
-                                :disabled="editable"
-                                item-value="id"
-                                single-line
-                                hide-details
-                            />
-                            <v-btn
-                                flat
-                                class="mx-0"
-                                color="primary"
-                                @click="sortDescending=!sortDescending"
-                            >
-                                <v-icon
-                                    v-if="sortDescending"
-                                    left
+                        <div class="caption">{{ i18n.sortOptions }}</div>
+                        <v-layout
+                            row
+                            align-center>
+                            <v-flex grow>
+                                <v-select
+                                    ref="selectedSortFieldNameSelect"
+                                    v-model="selectedSortFieldName"
+                                    :items="sortFieldData"
+                                    :disabled="editable"
+                                    item-value="id"
+                                    class="pa-0"
+                                    single-line
+                                    hide-details
+                                />
+                            </v-flex>
+                            <v-flex shrink>
+                                <v-btn
+                                    flat
+                                    small
+                                    class="ma-0"
+                                    color="primary"
+                                    @click="sortDescending=!sortDescending"
                                 >
-                                    arrow_downward
-                                </v-icon>
-                                <v-icon
-                                    v-else
-                                    left
-                                >
-                                    arrow_upward
-                                </v-icon>
-                                {{ i18n.sorting }}
-                            </v-btn>
-                        </div>
+                                    <v-icon
+                                        v-if="sortDescending"
+                                        left
+                                    >
+                                        arrow_downward
+                                    </v-icon>
+                                    <v-icon
+                                        v-else
+                                        left
+                                    >
+                                        arrow_upward
+                                    </v-icon>
+                                    {{ i18n.sorting }}
+                                </v-btn>
+                            </v-flex>
+                        </v-layout>
                     </v-flex>
                     <v-flex
-                        v-if="showQuerySettings"
-                        :class="getClass()"
+                        xs12
+                        md12
                     >
-                        <v-fade-transition>
-                            <div
-                                v-if="fieldQueries.length > 1"
-                            >
-                                <div>{{ i18n.linkOperator }}</div>
+                        <v-layout
+                            row
+                            align-center>
+                            <v-flex
+                                class="pr-5 subheading"
+                                shrink>
+                                {{ i18n.searchParameter }}
+                            </v-flex>
+                            <v-flex
+                                v-if="showQuerySettings"
+                                class="caption"
+                                shrink>
+                                {{ i18n.linkOperator }}
+                            </v-flex>
+                            <v-flex
+                                v-if="showQuerySettings"
+                                shrink>
                                 <v-radio-group
                                     v-model="linkOperator"
-                                    class="pt-0"
+                                    class="pa-0 ma-0"
+                                    :disabled="fieldQueries.length < 2"
+                                    row
+                                    hide-details
                                 >
                                     <v-radio
                                         :label="i18n.and"
@@ -166,14 +193,9 @@
                                         color="primary"
                                     />
                                 </v-radio-group>
-                            </div>
-                        </v-fade-transition>
-                    </v-flex>
-                    <v-flex
-                        xs12
-                        md12
-                    >
-                        <div>{{ i18n.searchParameter }}</div>
+                            </v-flex>
+                        </v-layout>
+                        <v-divider class="mt-1"></v-divider>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -412,21 +434,6 @@
                             {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
                         ];
                 }
-            },
-            getClass() {
-                let cssClass = "md3 xs6";
-                if (!this.showSortSelectInUserMode) {
-                    cssClass = "md4 xs6";
-                }
-                // eslint-disable-next-line no-magic-numbers
-                if (this.storeData.length < 2) {
-                    cssClass = "md4 xs6";
-                }
-                // eslint-disable-next-line no-magic-numbers
-                if (!this.showSortSelectInUserMode && this.storeData.length < 2) {
-                    cssClass = "md6 xs6";
-                }
-                return cssClass;
             }
         }
     };

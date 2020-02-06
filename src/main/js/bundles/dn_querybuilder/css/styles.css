@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 .ctAppRoot .querybuilder-window .vue-base {
     height: 100%;
 }
@@ -36,4 +37,11 @@
 
 .ctAppRoot .querybuilder-window .v-btn-toggle .v-btn {
     flex: 1 1 auto
+}
+
+.ctAppRoot .querybuilder-window .v-text-field--single-line .v-select__selection {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

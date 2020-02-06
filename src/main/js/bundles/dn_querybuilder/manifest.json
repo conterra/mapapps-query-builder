@@ -42,12 +42,12 @@
                 "minimizeOnClose": true,
                 "resizable": true,
                 "marginBox": {
-                    "w": 800,
+                    "w": 600,
                     "h": 400
                 },
                 "minSize": {
                     "w": 600,
-                    "h": 300
+                    "h": 400
                 },
                 "windowClass": "querybuilder-window"
             }
@@ -67,9 +67,8 @@
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
-                    "w": "100%",
-                    "h": "50%",
-                    "t": 0
+                    "w": 600,
+                    "h": 400
                 },
                 "windowClass": "querybuilder-window"
             }
@@ -109,12 +108,12 @@
                 "minimizeOnClose": false,
                 "resizable": true,
                 "marginBox": {
-                    "w": 800,
+                    "w": 600,
                     "h": 400
                 },
                 "minSize": {
                     "w": 600,
-                    "h": 300
+                    "h": 400
                 },
                 "windowClass": "querybuilder-window"
             }

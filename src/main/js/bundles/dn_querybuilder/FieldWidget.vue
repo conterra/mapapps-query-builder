@@ -72,7 +72,7 @@
                             v-model="fieldQuery.selectedFieldId"
                             :items="fieldQuery.fields"
                             :disabled="fieldQuery.disableField"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             item-value="id"
                             single-line
                             hide-details
@@ -88,7 +88,7 @@
                             v-model="fieldQuery.relationalOperator"
                             :items="$root.getRelationalOperators($root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId))"
                             :disabled="fieldQuery.disableRelationalOperator"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             single-line
                             hide-details
                             @change="$root.relationalOperatorChanged($event, fieldQuery)"
@@ -115,7 +115,7 @@
                                     v-model="dateString"
                                     :disabled="fieldQuery.disableValue"
                                     :placeholder="i18n.enterValue"
-                                    class="pa-0"
+                                    class="pa-0 ma-0"
                                     required
                                     hide-details
                                     readonly
@@ -135,7 +135,7 @@
                             v-model="fieldQuery.value"
                             :items="$root.getBooleanItems()"
                             :disabled="fieldQuery.disableValue"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             single-line
                             hide-details
                         />
@@ -145,7 +145,7 @@
                             v-model="fieldQuery.value"
                             :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues"
                             :disabled="fieldQuery.disableValue"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             item-value="code"
                             item-text="name"
                             single-line
@@ -160,7 +160,7 @@
                             :rules="[rules.required, rules.number]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             required
                             single-line
                             hide-details
@@ -175,7 +175,7 @@
                             :rules="[rules.required]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             required
                             single-line
                             hide-details
@@ -188,7 +188,7 @@
                             :rules="[rules.required, rules.number]"
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             required
                             hide-details
                             clearable
@@ -200,7 +200,7 @@
                             :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
                             :placeholder="i18n.enterValue"
                             :rules="[rules.required]"
-                            class="pa-0"
+                            class="pa-0 ma-0"
                             required
                             hide-details
                             clearable
@@ -215,7 +215,9 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length > 1"
                                 :disabled="$root.editable"
+                                class="ma-0"
                                 icon
+                                small
                                 @click="$root.$emit('remove', fieldQuery)"
                             >
                                 <v-icon>delete</v-icon>
@@ -231,7 +233,9 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length === index + 1"
                                 :disabled="$root.editable"
+                                class="ma-0"
                                 icon
+                                small
                                 @click="$root.$emit('add', {})"
                             >
                                 <v-icon>add</v-icon>
