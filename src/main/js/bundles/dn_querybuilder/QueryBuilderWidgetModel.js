@@ -174,20 +174,20 @@ export default declare({
         });
     },
 
-    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
+    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options) {
         const properties = this._queryBuilderProperties;
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
             spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
-        const options = Object.assign(properties.defaultQueryOptions || {}, {
+        const opts = Object.assign({}, properties.defaultQueryOptions || {}, options || {}, {
             suggestContains: false
         });
         if (properties.showSortSelectInUserMode) {
             sortOptions = this.getSortOptions();
-            options.sort = sortOptions;
+            opts.sort = sortOptions;
         }
-        this._queryController.query(selectedStore, complexQuery, options, tool || this._tool, this);
+        this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this);
     },
 
     addFieldQuery(selectedStoreId) {

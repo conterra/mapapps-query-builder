@@ -38,6 +38,15 @@ export default class EditableQueryBuilderWidgetFactory {
             linkOperator = "$or";
         }
 
+        const options = {};
+        const count = properties.options.count;
+        if (count >= 0) {
+            options.count = count;
+        }
+        options.ignoreCase = properties.options.ignoreCase;
+        options.locale = properties.options.locale;
+        options.sort = properties.options.sort || [];
+
         const vm = new Vue(QueryBuilderWidget);
         vm.i18n = this._i18n.get().ui;
         vm.editable = true;
@@ -54,7 +63,7 @@ export default class EditableQueryBuilderWidgetFactory {
 
         // listen to view model methods
         vm.$on('search', () => {
-            model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, this.tool);
+            model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, this.tool, options);
         });
 
         return VueDijit(vm);
