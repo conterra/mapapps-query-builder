@@ -175,14 +175,15 @@ export default declare({
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool) {
+        const properties = this._queryBuilderProperties;
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
             spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
-        const options = {
+        const options = Object.assign(properties.defaultQueryOptions || {}, {
             suggestContains: false
-        };
-        if (this._queryBuilderProperties.showSortSelectInUserMode) {
+        });
+        if (properties.showSortSelectInUserMode) {
             sortOptions = this.getSortOptions();
             options.sort = sortOptions;
         }
