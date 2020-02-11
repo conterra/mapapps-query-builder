@@ -168,8 +168,8 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.6</version>
                     <configuration>
-                        <nodeVersion>v10.15.3</nodeVersion>
-                        <npmVersion>6.9.0</npmVersion>
+                        <nodeVersion>v12.13.0</nodeVersion>
+                        <npmVersion>6.12.0</npmVersion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -446,7 +446,7 @@
                                     <!-- remove bundleLocations from app.json -->
                                     <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
                                     </token>
-                                    <value />
+                                    <value/>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -556,10 +556,10 @@
             *://*:*/**;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
-        <proxy.use.rules />
+        <proxy.use.rules></proxy.use.rules>
         <jetty.port>9090</jetty.port>
         <mvn.cmd>mvn</mvn.cmd>
-        <gulp.task />
+        <gulp.task></gulp.task>
 
         <!-- required for release build -->
         <scm.push>false</scm.push>
@@ -789,28 +789,6 @@
             </build>
         </profile>
         <profile>
-            <id>windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <properties>
-                <mvn.cmd>mvn.cmd</mvn.cmd>
-            </properties>
-        </profile>
-        <profile>
-            <id>unix</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                </os>
-            </activation>
-            <properties>
-                <mvn.cmd>mvn</mvn.cmd>
-            </properties>
-        </profile>
-        <profile>
             <id>github-release</id>
             <build>
                 <plugins>
@@ -1011,6 +989,28 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <mvn.cmd>mvn.cmd</mvn.cmd>
+            </properties>
+        </profile>
+        <profile>
+            <id>unix</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+                <mvn.cmd>mvn</mvn.cmd>
+            </properties>
         </profile>
     </profiles>
 </project>
