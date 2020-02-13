@@ -38,7 +38,7 @@ export default class QueryController {
         } else {
             this.defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
         }
-        this._eventService.postEvent("dn_querybuilder/QUERY", complexQuery);
+        this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
     }
 
     memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
