@@ -5,9 +5,8 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 ## Usage
 
 1. First, you need to add the bundles "agssearch" and "dn_querybuilder" to your app.
-2. After that, add a service to your app (Content -> Services Management).
-3. Now you can add the new service to the Search&Selection bundle. Don't forget to enable the selection checkbox. (Search&Selection -> ArcGIS for Server Search&Selection)
-4. Finally you can create a new Query Tool. (Tools -> Query Builder Config)
+2. After that, add some stores to your app.
+3. Finally you can create a new Query Tool. (Tools -> Query Builder Config)
 
 The Query Builder uses the Complex Query Language: https://docs.conterra.de/en/mapapps/latest/developersguide/concepts/complex-query.html#_complex_query_language
 
