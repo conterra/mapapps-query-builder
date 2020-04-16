@@ -184,7 +184,7 @@ List of store IDs that should be available in the QueryBuilderWidget
 ```
 
 ### QueryTools:
-```json
+```
 "QueryTools": [
     // list of query tools
 ]
