@@ -35,7 +35,7 @@ To add a toolset to your app that contains the Query Tools, copy the following c
                 "windowType": "dropdown",
                 "position": {
                     "rel_l": 20,
-                    "rel_t": 20
+                    "rel_t": 100
                 },
                 "tools": [
                     "querybuilder_*"
@@ -66,7 +66,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
                 "windowType": "dropdown",
                 "position": {
                      "rel_l": 20,
-                     "rel_t": 20
+                     "rel_t": 100
                 },
                 "tools": [
                     "querybuilder_*",
