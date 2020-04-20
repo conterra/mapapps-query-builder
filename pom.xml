@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2019 con terra GmbH (info@conterra.de)
+    Copyright (C) 2020 con terra GmbH (info@conterra.de)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -401,7 +401,7 @@
                     <properties>
                         <owner>con terra GmbH</owner>
                         <email>info@conterra.de</email>
-                        <project.inceptionYear>2019</project.inceptionYear>
+                        <project.inceptionYear>2020</project.inceptionYear>
                     </properties>
                     <includes>
                         <include>src/main/js/**/*.js</include>
