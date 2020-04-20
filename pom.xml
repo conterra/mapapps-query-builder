@@ -405,6 +405,7 @@
                     </properties>
                     <includes>
                         <include>src/main/js/**/*.js</include>
+                        <include>src/main/js/**/*.ts</include>
                         <include>src/main/js/**/*.vue</include>
                         <include>src/main/js/**/*.css</include>
                         <include>src/main/config/assembly.xml</include>
@@ -539,7 +540,7 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.8.2</mapapps.version>
+        <mapapps.version>4.8.3</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
@@ -672,7 +673,7 @@
                 </dependency>
                 <dependency>
                     <groupId>de.conterra.js</groupId>
-                    <artifactId>babel-polyfill</artifactId>
+                    <artifactId>apprt-polyfill</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
