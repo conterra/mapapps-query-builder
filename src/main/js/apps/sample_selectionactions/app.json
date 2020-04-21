@@ -46,7 +46,16 @@
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
                 "showFieldType": true,
-                "showSpatialInputActions": false,
+                "showSpatialInputActions": true,
+                "spatialInputActions": [
+                    "point",
+                    "rectangle",
+                    "polygon",
+                    "current_extent",
+                    "full_extent",
+                    "area_select",
+                    "circle"
+                ],
                 "hidedFields": [
                     "objectid",
                     "OBJECTID",
@@ -291,6 +300,9 @@
                 }
             ]
         },
+        "dn_selectionactions": {
+
+        },
         "banner": {
             "BannerWidget": {
                 "label": "Developer Network",
@@ -387,7 +399,8 @@
                     "description": "Countries of the world",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
                     "useIn": [
-                        "selection"
+                        "selection",
+                        "selection-actions-area"
                     ]
                 },
                 {
@@ -517,7 +530,7 @@
                                 "window": {
                                     "marginBox": {
                                         "w": 600,
-                                        "h": 400,
+                                        "h": 500,
                                         "l": 20,
                                         "t": 120
                                     }
@@ -532,7 +545,7 @@
                                 "window": {
                                     "marginBox": {
                                         "w": 600,
-                                        "h": 400,
+                                        "h": 500,
                                         "l": 20,
                                         "t": 120
                                     }
