@@ -21,6 +21,7 @@ import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import Graphic from "esri/Graphic";
+import geometryEngine from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
 
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
@@ -47,6 +48,7 @@ export default declare({
     spatialInputActions: [],
     activeSpatialInputAction: null,
     activeSpatialInputActionDescription: null,
+    allowMultipleSpatialInputs: true,
 
 
     activate(componentContext) {
@@ -62,6 +64,7 @@ export default declare({
         this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
+        this.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
         this.fieldQueries = [];
 
         const connect = this.connect = new Connect();
@@ -134,9 +137,19 @@ export default declare({
         promise.then((geometry) => {
             this.activeSpatialInputAction = null;
             this.activeSpatialInputActionDescription = null;
-            this.geometry = geometry;
+            if (this.allowMultipleSpatialInputs && this.geometry) {
+                this.geometry = geometryEngine.union([geometry, this.geometry])
+            } else {
+                this.geometry = geometry;
+            }
         });
         this.activeSpatialInputActionDescription = spatialInputAction.description;
+    },
+
+    resetSpatialInput() {
+        this.geometry = null;
+        this.activeSpatialInputAction = null;
+        this.activeSpatialInputActionDescription = null;
     },
 
     getActionFilter() {

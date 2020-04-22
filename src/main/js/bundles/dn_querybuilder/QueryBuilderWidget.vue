@@ -61,7 +61,7 @@
                     >
                         <div class="caption">{{ i18n.spatialRelation }}</div>
                         <div v-if="showSpatialInputActions">
-                            <v-container pa-1>
+                            <v-container class="pa-0 mt-1">
                                 <v-btn-toggle v-model="activeSpatialInputAction">
                                     <v-btn
                                         v-for="spatialInputAction in spatialInputActions"
@@ -104,6 +104,36 @@
                             </v-radio-group>
                         </div>
                     </v-flex>
+                    <v-flex
+                        v-if="showSpatialInputActions"
+                        xs12
+                        md12
+                    >
+                        <v-btn
+                            small
+                            block
+                            class="ma-0"
+                            @click="$emit('resetSpatialInput')"
+                        >
+                            <v-icon left>
+                                delete
+                            </v-icon>
+                            {{ i18n.resetSpatialInput }}
+                        </v-btn>
+                    </v-flex>
+                    <!--<v-flex
+                        v-if="showSpatialInputActions"
+                        xs6
+                        md6
+                    >
+                        <v-switch
+                            v-model="allowMultipleSpatialInputs"
+                            :label="i18n.multipleSpatialInputs"
+                            class="ma-0"
+                            color="primary"
+                            hide-details>
+                        </v-switch>
+                    </v-flex>-->
                     <v-flex
                         v-if="showQuerySettings && showSortSelectInUserMode"
                         xs12
@@ -333,7 +363,8 @@
                 activeTool: false,
                 spatialInputActions: [],
                 activeSpatialInputAction: null,
-                activeSpatialInputActionDescription: null
+                activeSpatialInputActionDescription: null,
+                allowMultipleSpatialInputs: true
             };
         },
         watch: {

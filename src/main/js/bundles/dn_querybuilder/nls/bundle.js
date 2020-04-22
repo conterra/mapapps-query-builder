@@ -41,6 +41,8 @@ module.exports = {
             and: "and",
             or: "or",
             enterValue: "enter value",
+            multipleSpatialInputs: "Select multiple geometries",
+            resetSpatialInput: "Reset selected geometry",
             relationalOperators: {
                 is: "is",
                 exists: "exists",

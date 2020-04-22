@@ -56,6 +56,7 @@
                     "area_select",
                     "circle"
                 ],
+                "allowMultipleSpatialInputs": true,
                 "hidedFields": [
                     "objectid",
                     "OBJECTID",

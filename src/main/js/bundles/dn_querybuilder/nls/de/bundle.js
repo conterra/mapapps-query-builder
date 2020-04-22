@@ -20,7 +20,7 @@ module.exports = {
     editableWindowTitle: "Editierbare Query",
     tool: {
         title: "Eigene Query erstellen",
-        tooltip: "Bauen Sie Ihre eigene Query",
+        tooltip: "Bauen Sie Ihre eigene Query"
     },
     ui: {
         selectStore: "Was suchen?",
@@ -40,6 +40,8 @@ module.exports = {
         and: "und",
         or: "oder",
         enterValue: "Wert eingeben",
+        multipleSpatialInputs: "Mehrere Geometrien ausw\u00e4hlen",
+        resetSpatialInput: "Ausgewählte Geometrie entfernen",
         relationalOperators: {
             is: "ist gleich",
             exists: "ist vorhanden",

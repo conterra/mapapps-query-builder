@@ -262,6 +262,7 @@
                 "spatialInputActions": [
                     "*"
                 ],
+                "allowMultipleSpatialInputs": true,
                 "defaultQueryOptions": {
                     "count": -1,
                     "ignoreCase": false

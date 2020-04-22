@@ -64,9 +64,12 @@ export default class QueryBuilderWidgetFactory {
         vm.$on('selectSpatialInputAction', (id) => {
             model.selectSpatialInputAction(id);
         });
+        vm.$on('resetSpatialInput', () => {
+            model.resetSpatialInput();
+        });
 
         this[_queryBuilderWidgetModelBinding] = Binding.for(vm, model)
-            .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "activeSpatialInputAction")
+            .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "activeSpatialInputAction", "allowMultipleSpatialInputs")
             .syncAllToLeft("locale", "storeData", "sortFieldData", "showSpatialInputActions", "spatialInputActions",
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode", "allowNegation", "loading", "processing", "activeTool")
             .enable()
