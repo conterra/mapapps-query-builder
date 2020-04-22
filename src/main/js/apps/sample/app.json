@@ -510,7 +510,6 @@
                         "widgets": [
                             {
                                 "widgetRole": "queryBuilderWidget",
-                                "template": "seasons",
                                 "sublayout": [
                                     "desktop"
                                 ],
@@ -525,7 +524,6 @@
                             },
                             {
                                 "widgetRole": "editableQueryBuilderWidget",
-                                "template": "seasons",
                                 "sublayout": [
                                     "desktop"
                                 ],

@@ -302,7 +302,6 @@
             ]
         },
         "dn_selectionactions": {
-
         },
         "banner": {
             "BannerWidget": {
@@ -524,7 +523,6 @@
                         "widgets": [
                             {
                                 "widgetRole": "queryBuilderWidget",
-                                "template": "seasons",
                                 "sublayout": [
                                     "desktop"
                                 ],
@@ -539,7 +537,6 @@
                             },
                             {
                                 "widgetRole": "editableQueryBuilderWidget",
-                                "template": "seasons",
                                 "sublayout": [
                                     "desktop"
                                 ],
@@ -549,6 +546,28 @@
                                         "h": 500,
                                         "l": 20,
                                         "t": 120
+                                    }
+                                }
+                            },
+                            {
+                                "widgetRole": "circleSpatialInputWidget",
+                                "window": {
+                                    "marginBox": {
+                                        "w": 400,
+                                        "h": 230,
+                                        "t": 120,
+                                        "l": 620
+                                    }
+                                }
+                            },
+                            {
+                                "widgetRole": "areaSelectSpatialInputWidget",
+                                "window": {
+                                    "marginBox": {
+                                        "w": 300,
+                                        "h": 130,
+                                        "t": 120,
+                                        "l": 620
                                     }
                                 }
                             }
