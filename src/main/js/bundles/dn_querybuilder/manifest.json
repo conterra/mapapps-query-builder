@@ -460,7 +460,15 @@
                 "rules": {
                     "noGroup": true
                 }
-            }
+            },
+            "references": [
+                {
+                    "name": "stores",
+                    "providing": "ct.api.Store",
+                    "cardinality": "1..n",
+                    "filter": "(useIn=selection)"
+                }
+            ]
         }
     ]
 }
