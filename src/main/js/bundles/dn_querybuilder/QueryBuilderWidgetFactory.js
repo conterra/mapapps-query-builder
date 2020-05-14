@@ -19,16 +19,20 @@ import VueDijit from "apprt-vue/VueDijit";
 import Binding from "apprt-binding/Binding";
 
 const _queryBuilderWidgetModelBinding = Symbol("_queryBuilderWidgetModelBinding");
+const _storeCountToToggleToolBinding = Symbol("_storeCountToToggleToolBinding");
 
 export default class QueryBuilderWidgetFactory {
 
     activate() {
         this._initComponent();
+        this[_storeCountToToggleToolBinding] = this.bindStoreCountToToggleTool();
     }
 
     deactivate() {
         this[_queryBuilderWidgetModelBinding].unbind();
         this[_queryBuilderWidgetModelBinding] = undefined;
+        this[_storeCountToToggleToolBinding].unbind();
+        this[_storeCountToToggleToolBinding] = undefined;
     }
 
     createInstance() {
@@ -74,5 +78,15 @@ export default class QueryBuilderWidgetFactory {
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode", "allowNegation", "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();
+    }
+
+    bindStoreCountToToggleTool() {
+        const model = this._queryBuilderWidgetModel;
+        const tool = this._tool;
+        const binding = Binding.create()
+            .syncToRight("stores", "enabled", (stores) => {
+                return !!stores.length;
+            });
+        return binding.bindTo(model, tool).enable().syncToRightNow();
     }
 }

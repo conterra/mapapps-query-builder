@@ -195,9 +195,9 @@
                     "providing": "dn_querybuilder.MetadataAnalyzer"
                 },
                 {
-                    "name": "stores",
+                    "name": "store",
                     "providing": "ct.api.Store",
-                    "cardinality": "1..n",
+                    "cardinality": "0..n",
                     "filter": "(useIn=selection)"
                 }
             ]
@@ -217,6 +217,11 @@
                 {
                     "name": "_spatialInputActionService",
                     "providing": "selection-services.SpatialInputActionService"
+                },
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=queryBuilderToggleTool)"
                 }
             ]
         },
@@ -457,18 +462,11 @@
                 "iconClass": "icon-custom-info-help",
                 "toolRole": "toolset",
                 "togglable": true,
+                "enabled": false,
                 "rules": {
                     "noGroup": true
                 }
-            },
-            "references": [
-                {
-                    "name": "stores",
-                    "providing": "ct.api.Store",
-                    "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
-                }
-            ]
+            }
         }
     ]
 }

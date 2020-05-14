@@ -50,7 +50,6 @@ export default declare({
     activeSpatialInputActionDescription: null,
     allowMultipleSpatialInputs: true,
 
-
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
         const serviceResolver = this.serviceResolver = new ServiceResolver();
@@ -384,13 +383,41 @@ export default declare({
         }
     },
 
-    addStores(store) {
-        this.stores.push(store);
+    addStore(store, properties) {
+        properties = properties || {};
+        const id = store && store.id;
+        if (!id) {
+            console.debug("Store has no id and will be ignored!");
+            return;
+        }
+        const newStores = this.stores.slice(0);
+        const index = newStores.findIndex((s) => s.id === id);
+        if (index >= 0) {
+            console.warn(`Store with id '${id}' was already registered! It is replaced by the new store.`);
+            newStores.splice(index, 1);
+        }
+        newStores.push({
+            id: id,
+            title: store.title || properties.title || id,
+            description: store.description || properties.description || ""
+        });
+        this.stores = newStores;
         this.getStoreData();
     },
 
-    removeStores(store) {
-        this.stores.splice(this.stores.indexOf(store), 1);
+    removeStore(store) {
+        const id = store && store.id;
+        if (!id) {
+            return;
+        }
+        const stores = this.stores;
+        const index = stores.findIndex((s) => s.id === id);
+        if (index < 0) {
+            return;
+        }
+        const newStores = stores.slice(0);
+        newStores.splice(index, 1);
+        this.stores = newStores;
         this.getStoreData();
     }
 });
