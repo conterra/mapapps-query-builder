@@ -62,6 +62,13 @@
                         <div class="caption">{{ i18n.spatialRelation }}</div>
                         <div v-if="showSpatialInputActions">
                             <v-container class="pa-0 mt-1">
+                                <v-checkbox
+                                    v-model="negateSpatialInput"
+                                    class="pa-0 mt-2 mb-2"
+                                    hide-details
+                                    color="primary"
+                                    :label="i18n.negateSpatialInput"
+                                ></v-checkbox>
                                 <v-btn-toggle v-model="activeSpatialInputAction">
                                     <v-btn
                                         v-for="spatialInputAction in spatialInputActions"
@@ -364,7 +371,8 @@
                 spatialInputActions: [],
                 activeSpatialInputAction: null,
                 activeSpatialInputActionDescription: null,
-                allowMultipleSpatialInputs: true
+                allowMultipleSpatialInputs: true,
+                negateSpatialInput: false
             };
         },
         watch: {

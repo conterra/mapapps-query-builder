@@ -41,7 +41,8 @@ module.exports = {
         or: "oder",
         enterValue: "Wert eingeben",
         multipleSpatialInputs: "Mehrere Geometrien ausw\u00e4hlen",
-        resetSpatialInput: "Ausgewählte Geometrie entfernen",
+        resetSpatialInput: "Ausgew\u00e4hlte Geometrie entfernen",
+        negateSpatialInput: "Außerhalb der ausgew\u00e4hlten Geometrie suchen",
         relationalOperators: {
             is: "ist gleich",
             exists: "ist vorhanden",

@@ -43,6 +43,7 @@ module.exports = {
             enterValue: "enter value",
             multipleSpatialInputs: "Select multiple geometries",
             resetSpatialInput: "Reset selected geometry",
+            negateSpatialInput: "Search outside of selected geometry",
             relationalOperators: {
                 is: "is",
                 exists: "exists",

@@ -21,8 +21,10 @@ import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import Graphic from "esri/Graphic";
+import Extent from "esri/geometry/Extent";
 import geometryEngine from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
+import ProjectParameters from "esri/tasks/support/ProjectParameters";
 
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
@@ -48,6 +50,7 @@ export default declare({
     spatialInputActions: [],
     activeSpatialInputAction: null,
     activeSpatialInputActionDescription: null,
+    negateSpatialInput: false,
     allowMultipleSpatialInputs: true,
 
     activate(componentContext) {
@@ -90,6 +93,9 @@ export default declare({
             if (evt.value) {
                 this.addGraphicToView(evt.value);
             }
+        });
+        this.watch("negateSpatialInput", () => {
+            this.resetSpatialInput();
         });
 
         const spatialInputActionService = this._spatialInputActionService;
@@ -136,13 +142,41 @@ export default declare({
         promise.then((geometry) => {
             this.activeSpatialInputAction = null;
             this.activeSpatialInputActionDescription = null;
-            if (this.allowMultipleSpatialInputs && this.geometry) {
-                this.geometry = geometryEngine.union([geometry, this.geometry])
+            if (this.negateSpatialInput) {
+                if (this.allowMultipleSpatialInputs && this.geometry) {
+                    this.geometry = geometryEngine.difference(this.geometry, geometry)
+                } else {
+                    this.negateGeometry(geometry).then((g) => {
+                        this.geometry = g;
+                    });
+                }
             } else {
-                this.geometry = geometry;
+                if (this.allowMultipleSpatialInputs && this.geometry) {
+                    this.geometry = geometryEngine.union([geometry, this.geometry])
+                } else {
+                    this.geometry = geometry;
+                }
             }
         });
         this.activeSpatialInputActionDescription = spatialInputAction.description;
+    },
+
+    negateGeometry(geometry) {
+        const worldExtent = new Extent({
+            xmin: -180,
+            ymin: -90,
+            xmax: 180,
+            ymax: 90,
+            spatialReference: 4326
+        });
+        const params = new ProjectParameters();
+        params.geometries = [worldExtent];
+        params.outSpatialReference = geometry.spatialReference;
+        const geometryService = this._geometryService;
+        const promise = geometryService.project(params)
+        return promise.then((projectedGeometries) => {
+            return geometryEngine.difference(projectedGeometries[0], geometry);
+        });
     },
 
     resetSpatialInput() {
