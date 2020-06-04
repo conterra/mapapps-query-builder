@@ -236,6 +236,10 @@ export default declare({
         this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this);
     },
 
+    cancelSearch() {
+        this._queryController.cancelQuery();
+    },
+
     addFieldQuery(selectedStoreId) {
         this.loading = true;
         const fieldData = this._getSelectedFieldData(selectedStoreId);

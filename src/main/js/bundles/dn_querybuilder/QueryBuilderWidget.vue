@@ -267,22 +267,34 @@
                     justify-center
                 >
                     <v-flex md12>
-                        <v-card
-                            class="elevation-6"
+                        <v-progress-linear
+                            v-if="processing"
+                            :indeterminate="true">
+                        </v-progress-linear>
+                        <v-btn
+                            v-if="!processing"
+                            block
+                            ripple
+                            color="primary"
+                            @click="$emit('search', {})"
                         >
-                            <v-btn
-                                :loading="processing"
-                                block
-                                ripple
-                                color="primary"
-                                @click="$emit('search', {})"
-                            >
-                                <v-icon left>
-                                    search
-                                </v-icon>
-                                {{ i18n.search }}
-                            </v-btn>
-                        </v-card>
+                            <v-icon left>
+                                search
+                            </v-icon>
+                            {{ i18n.search }}
+                        </v-btn>
+                        <v-btn
+                            v-else
+                            block
+                            ripple
+                            color="primary"
+                            @click="$emit('cancel-search', {})"
+                        >
+                            <v-icon left>
+                                cancel
+                            </v-icon>
+                            {{ i18n.cancelSearch }}
+                        </v-btn>
                     </v-flex>
                 </v-layout>
             </v-container>

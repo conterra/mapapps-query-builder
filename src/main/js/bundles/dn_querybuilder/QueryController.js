@@ -19,6 +19,8 @@ import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
 
+const _query = Symbol("_query");
+
 const DELAY = 500;
 
 export default class QueryController {
@@ -41,10 +43,19 @@ export default class QueryController {
         this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
     }
 
+    cancelQuery() {
+        const query = this[_query];
+        if (query && query.cancel) {
+            query.cancel();
+        }
+        this._dataModel.setDatasource();
+    }
+
     memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         options.fields = {geometry: 1};
-        apprt_when(store.query(complexQuery, options), (result) => {
+        const query = this[_query] = store.query(complexQuery, options);
+        return apprt_when(query, (result) => {
             if (result.total) {
                 const mapWidgetModel = this._mapWidgetModel;
                 const spatialReference = mapWidgetModel.get("spatialReference");
@@ -89,7 +100,8 @@ export default class QueryController {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
-        apprt_when(countFilter.query({}, {count: 0}).total, (total) => {
+        const query = this[_query] = countFilter.query({}, {count: 0});
+        return apprt_when(query.total, (total) => {
             if (total) {
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);

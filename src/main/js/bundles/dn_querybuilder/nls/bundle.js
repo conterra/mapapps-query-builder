@@ -33,6 +33,7 @@ module.exports = {
             currentExtent: "current extent",
             delete: "Delete",
             search: "Search",
+            cancelSearch: "Cancel search",
             searchParameter: "Search parameter",
             negated: "negated",
             typeInValue: "type in value",

@@ -32,6 +32,7 @@ module.exports = {
         currentExtent: "Aktueller Kartenausschnitt",
         delete: "Löschen",
         search: "Suche starten",
+        cancelSearch: "Suche abbrechen",
         searchParameter: "Suchparameter",
         negated: "negiert",
         typeInValue: "Wert eingeben",
