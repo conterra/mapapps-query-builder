@@ -16,7 +16,8 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.conterra.devnet</groupId>
     <artifactId>mapapps-query-builder</artifactId>
@@ -55,8 +56,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>de.conterra.mapapps</groupId>
-            <artifactId>ct-mapapps-proxy</artifactId>
+            <groupId>de.conterra.ct-proxy</groupId>
+            <artifactId>ct-proxy-servlet</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- include for vue-devtools support -->
@@ -117,12 +118,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.2.0</version>
                     <configuration>
                         <classesDirectory>${js.build.outputPath}</classesDirectory>
                         <includes>
@@ -136,7 +137,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.2.3</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -166,16 +167,16 @@
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
-                    <version>1.6</version>
+                    <version>1.10.0</version>
                     <configuration>
-                        <nodeVersion>v12.13.0</nodeVersion>
-                        <npmVersion>6.12.0</npmVersion>
+                        <nodeVersion>v12.16.1</nodeVersion>
+                        <npmVersion>6.13.4</npmVersion>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
@@ -447,7 +448,7 @@
                                     <!-- remove bundleLocations from app.json -->
                                     <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
                                     </token>
-                                    <value />
+                                    <value/>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -540,11 +541,11 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.8.3</mapapps.version>
+        <mapapps.version>4.8.4</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.3.6</ct.jsregistry.version>
+        <ct.jsregistry.version>1.3.7</ct.jsregistry.version>
         <ct.jsrt-test.version>1.1.5</ct.jsrt-test.version>
 
         <selectionactions.version>1.8.0</selectionactions.version>
@@ -557,10 +558,10 @@
             *://*:*/**;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
-        <proxy.use.rules />
+        <proxy.use.rules></proxy.use.rules>
         <jetty.port>9090</jetty.port>
         <mvn.cmd>mvn</mvn.cmd>
-        <gulp.task />
+        <gulp.task></gulp.task>
 
         <!-- required for release build -->
         <scm.push>false</scm.push>
