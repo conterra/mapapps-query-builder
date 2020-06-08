@@ -17,7 +17,9 @@
 -->
 <template>
     <div class="ct-flex-container ct-flex-container--column fullHeight">
-        <div class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
+        <div
+            v-if="!processing"
+            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container
                 grid-list-md
                 fluid
@@ -239,12 +241,22 @@
         </div>
         <div class="center ct-flex-item overflowAuto">
             <v-container
+                align-center
+                justify-center
+                :fill-height="processing"
                 grid-list-md
                 fluid
                 class="pa-1"
             >
+                <v-progress-circular
+                    v-if="processing"
+                    :size="100"
+                    color="primary"
+                    indeterminate
+                ></v-progress-circular>
                 <field-widget
                     v-for="(fieldQuery, index) in fieldQueries"
+                    v-else
                     :key="index"
                     :locale="locale"
                     :field-query="fieldQuery"
@@ -268,10 +280,6 @@
                     justify-center
                 >
                     <v-flex md12>
-                        <v-progress-linear
-                            v-if="processing"
-                            :indeterminate="true">
-                        </v-progress-linear>
                         <v-btn
                             v-if="!processing"
                             block
