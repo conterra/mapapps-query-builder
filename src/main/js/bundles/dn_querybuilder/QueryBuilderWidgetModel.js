@@ -52,6 +52,7 @@ export default declare({
     activeSpatialInputActionDescription: null,
     negateSpatialInput: false,
     allowMultipleSpatialInputs: true,
+    enableDistinctValues: true,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -67,6 +68,7 @@ export default declare({
         this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
         this.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
+        this.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
         this.fieldQueries = [];
 
         const connect = this.connect = new Connect();
@@ -250,13 +252,13 @@ export default declare({
                 not: false,
                 selectedFieldId: firstField.id,
                 relationalOperator: "$eq",
-                value: (firstField.codedValues[0] && firstField.codedValues[0].code) || firstField.distinctValues[0] || ""
+                value: (firstField.codedValues[0] && firstField.codedValues[0].code) || ""
             }
             this.fieldQueries.push(addedFieldQuery);
             if (firstField.loading) {
                 const watcher = firstField.watch("loading", (loading) => {
                     if (!loading.value) {
-                        addedFieldQuery.value = (firstField.codedValues[0] && firstField.codedValues[0].code) || firstField.distinctValues[0] || "";
+                        addedFieldQuery.value = (firstField.codedValues[0] && firstField.codedValues[0].code) || "";
                         watcher.remove();
                     }
                 });
@@ -308,6 +310,13 @@ export default declare({
                 this.loading = false;
             }, this);
         }, this);
+    },
+
+    getDistinctValues(value, fieldData, selectedStoreId) {
+        const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
+        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore), (distinctValues) => {
+            return distinctValues;
+        });
     },
 
     _getSelectedFieldData(selectedStoreId) {

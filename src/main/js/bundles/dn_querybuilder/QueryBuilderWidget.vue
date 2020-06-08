@@ -251,6 +251,7 @@
                     :index="index"
                     :allow-negation="allowNegation"
                     :active-tool="activeTool"
+                    :enable-distinct-values="enableDistinctValues"
                     :i18n="i18n"
                 />
             </v-container>
@@ -303,7 +304,6 @@
 </template>
 <script>
     import Bindable from "apprt-vue/mixins/Bindable";
-    import ct_array from "ct/array";
 
     import FieldWidget from "./FieldWidget.vue";
 
@@ -384,7 +384,8 @@
                 activeSpatialInputAction: null,
                 activeSpatialInputActionDescription: null,
                 allowMultipleSpatialInputs: true,
-                negateSpatialInput: false
+                negateSpatialInput: false,
+                enableDistinctValues: true
             };
         },
         watch: {
@@ -404,88 +405,6 @@
         },
         mounted: function () {
             this.$emit('startup');
-        },
-        methods: {
-            fieldChanged: function (selectedFieldId, fieldQuery) {
-                const selectedField = this.getSelectedField(fieldQuery.fields, selectedFieldId);
-                if (selectedField.type === "date") {
-                    fieldQuery.value = null;
-                    fieldQuery.relationalOperator = "$lte";
-                } else {
-                    fieldQuery.value = (selectedField.codedValues[0]
-                        && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
-                    fieldQuery.relationalOperator = "$eq";
-                }
-                if (fieldQuery.relationalOperator === "$exists") {
-                    fieldQuery.value = true;
-                }
-            },
-            relationalOperatorChanged: function (relationalOperator, fieldQuery) {
-                const selectedField = this.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId);
-                if (relationalOperator === "$exists") {
-                    fieldQuery.value = true;
-                } else {
-                    if (selectedField.type === "date") {
-                        fieldQuery.value = "";
-                    } else {
-                        fieldQuery.value = (selectedField.codedValues[0]
-                            && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
-                    }
-                }
-            },
-            getSelectedField: function (fields, selectedFieldId) {
-                return ct_array.arraySearchFirst(fields, {id: selectedFieldId});
-            },
-            getBooleanItems: function () {
-                return [
-                    {value: true, text: this.$data.i18n.yes},
-                    {value: false, text: this.$data.i18n.no}
-                ]
-            },
-            getRelationalOperators: function (field) {
-                if (!field) {
-                    return [];
-                }
-                const type = field.type;
-                switch (type) {
-                    case "codedvalue":
-                        return [
-                            {value: "$eq", text: this.$data.i18n.relationalOperators.is},
-                            {value: "$gt", text: this.$data.i18n.relationalOperators.is_greater_than},
-                            {value: "$gte", text: this.$data.i18n.relationalOperators.is_greater_or_equal},
-                            {value: "$lt", text: this.$data.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.$data.i18n.relationalOperators.is_less_or_equal},
-                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
-                        ];
-                    case "boolean":
-                        return [
-                            {value: "$eq", text: this.$data.i18n.relationalOperators.is},
-                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
-                        ];
-                    case "string":
-                        return [
-                            {value: "$eq", text: this.$data.i18n.relationalOperators.is},
-                            {value: "$eqw", text: this.$data.i18n.relationalOperators.eqw},
-                            {value: "$suggest", text: this.$data.i18n.relationalOperators.suggest},
-                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
-                        ];
-                    case "number":
-                        return [
-                            {value: "$eq", text: this.$data.i18n.relationalOperators.is},
-                            {value: "$gt", text: this.$data.i18n.relationalOperators.is_greater_than},
-                            {value: "$gte", text: this.$data.i18n.relationalOperators.is_greater_or_equal},
-                            {value: "$lt", text: this.$data.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.$data.i18n.relationalOperators.is_less_or_equal},
-                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
-                        ];
-                    case "date":
-                        return [
-                            {value: "$lte", text: this.$data.i18n.relationalOperators.before},
-                            {value: "$gte", text: this.$data.i18n.relationalOperators.after},
-                            {value: "$exists", text: this.$data.i18n.relationalOperators.exists}
-                        ];
-                }
-            }
         }
     };
 </script>

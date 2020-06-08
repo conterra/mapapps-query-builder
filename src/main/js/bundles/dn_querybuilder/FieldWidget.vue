@@ -76,7 +76,7 @@
                             item-value="id"
                             single-line
                             hide-details
-                            @change="$root.fieldChanged($event, fieldQuery)"
+                            @change="fieldChanged($event, fieldQuery)"
                         />
                     </v-flex>
                     <v-flex
@@ -86,12 +86,12 @@
                         <v-select
                             ref="relationalOperatorSelect"
                             v-model="fieldQuery.relationalOperator"
-                            :items="$root.getRelationalOperators($root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId))"
+                            :items="getRelationalOperators(selectedField)"
                             :disabled="fieldQuery.disableRelationalOperator"
                             class="pa-0 ma-0"
                             single-line
                             hide-details
-                            @change="$root.relationalOperatorChanged($event, fieldQuery)"
+                            @change="relationalOperatorChanged($event, fieldQuery)"
                         />
                     </v-flex>
                     <v-flex
@@ -100,7 +100,7 @@
                         md3
                     >
                         <v-menu
-                            v-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'date' && fieldQuery.relationalOperator !== '$exists'"
+                            v-if="selectedField && selectedField.type === 'date' && fieldQuery.relationalOperator !== '$exists'"
                             ref="dateMenu"
                             :close-on-content-click="false"
                             transition="scale-transition"
@@ -130,20 +130,20 @@
                             />
                         </v-menu>
                         <v-select
-                            v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'boolean' || fieldQuery.relationalOperator === '$exists'"
+                            v-else-if="selectedField && selectedField.type === 'boolean' || fieldQuery.relationalOperator === '$exists'"
                             ref="valueBooleanSelect"
                             v-model="fieldQuery.value"
-                            :items="$root.getBooleanItems()"
+                            :items="getBooleanItems()"
                             :disabled="fieldQuery.disableValue"
                             class="pa-0 ma-0"
                             single-line
                             hide-details
                         />
                         <v-select
-                            v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues.length > 0"
+                            v-else-if="selectedField && selectedField.codedValues.length > 0"
                             ref="valueCodedValueSelect"
                             v-model="fieldQuery.value"
-                            :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).codedValues"
+                            :items="selectedField && selectedField.codedValues"
                             :disabled="fieldQuery.disableValue"
                             class="pa-0 ma-0"
                             item-value="code"
@@ -152,41 +152,45 @@
                             hide-details
                         />
                         <v-combobox
-                            v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
+                            v-else-if="selectedField && enableDistinctValues && selectedField.type === 'number'"
                             v-model="fieldQuery.value"
                             ref="valueNumberDistinctValuesCombobox"
-                            :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
+                            :items="selectedField.distinctValues"
                             :disabled="fieldQuery.disableValue"
                             :rules="[rules.required, rules.number]"
-                            :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
+                            :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
                             class="pa-0 ma-0"
                             required
                             single-line
                             hide-details
+                            hide-no-data
                             clearable
+                            :search-input.sync="search"
                         />
                         <v-combobox
-                            v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues.length > 0 && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'string'"
+                            v-else-if="selectedField && enableDistinctValues && selectedField.type === 'string'"
                             v-model="fieldQuery.value"
                             ref="valueStringDistinctValuesCombobox"
-                            :items="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId) && $root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).distinctValues"
+                            :items="selectedField.distinctValues"
                             :disabled="fieldQuery.disableValue"
                             :rules="[rules.required]"
-                            :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
+                            :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
                             class="pa-0 ma-0"
                             required
                             single-line
                             hide-details
+                            hide-no-data
                             clearable
+                            :search-input.sync="search"
                         />
                         <v-text-field
-                            v-else-if="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).type === 'number'"
+                            v-else-if="selectedField && selectedField.type === 'number'"
                             v-model="fieldQuery.value"
                             :disabled="fieldQuery.disableValue"
                             :rules="[rules.required, rules.number]"
-                            :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
+                            :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
                             class="pa-0 ma-0"
                             required
@@ -197,7 +201,7 @@
                             v-else
                             v-model="fieldQuery.value"
                             :disabled="fieldQuery.disableValue"
-                            :loading="$root.getSelectedField(fieldQuery.fields, fieldQuery.selectedFieldId).loading"
+                            :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
                             :rules="[rules.required]"
                             class="pa-0 ma-0"
@@ -248,6 +252,8 @@
     </v-scroll-y-transition>
 </template>
 <script>
+    import ct_array from "ct/array";
+
     export default {
         props: {
             i18n: {
@@ -277,6 +283,14 @@
             activeTool: {
                 type: Boolean,
                 default: false
+            },
+            enableDistinctValues: {
+                type: Boolean,
+                default: true
+            },
+            search: {
+                type: String,
+                default: ""
             }
         },
         data() {
@@ -289,7 +303,16 @@
                 }
             }
         },
+        computed: {
+            selectedField() {
+                return ct_array.arraySearchFirst(this.fieldQuery.fields, {id: this.fieldQuery.selectedFieldId});
+            }
+        },
         watch: {
+            search: function (value) {
+                const selectedField = this.selectedField;
+                this.getDistinctValues(value, selectedField);
+            },
             dateString: function (value) {
                 this.fieldQuery.value = new Date(value);
             },
@@ -319,7 +342,7 @@
         methods: {
             getDateString() {
                 const dateObj = new Date(this.fieldQuery.value);
-                if(!isNaN(dateObj.getTime())) {
+                if (!isNaN(dateObj.getTime())) {
                     const month = dateObj.getUTCMonth() + 1; //months from 1-12
                     const day = dateObj.getUTCDate();
                     const year = dateObj.getUTCFullYear();
@@ -327,6 +350,86 @@
                 } else {
                     return null;
                 }
+            },
+            fieldChanged: function (selectedFieldId, fieldQuery) {
+                const selectedField = this.selectedField;
+                if (selectedField.type === "date") {
+                    fieldQuery.value = null;
+                    fieldQuery.relationalOperator = "$lte";
+                } else {
+                    fieldQuery.value = (selectedField.codedValues[0]
+                        && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                    fieldQuery.relationalOperator = "$eq";
+                }
+                if (fieldQuery.relationalOperator === "$exists") {
+                    fieldQuery.value = true;
+                }
+            },
+            relationalOperatorChanged: function (relationalOperator, fieldQuery) {
+                const selectedField = this.selectedField;
+                if (relationalOperator === "$exists") {
+                    fieldQuery.value = true;
+                } else {
+                    if (selectedField.type === "date") {
+                        fieldQuery.value = "";
+                    } else {
+                        fieldQuery.value = (selectedField.codedValues[0]
+                            && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                    }
+                }
+            },
+            getBooleanItems: function () {
+                return [
+                    {value: true, text: this.i18n.yes},
+                    {value: false, text: this.i18n.no}
+                ]
+            },
+            getRelationalOperators: function (field) {
+                if (!field) {
+                    return [];
+                }
+                const type = field.type;
+                switch (type) {
+                    case "codedvalue":
+                        return [
+                            {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
+                            {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
+                            {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
+                            {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                        ];
+                    case "boolean":
+                        return [
+                            {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                        ];
+                    case "string":
+                        return [
+                            {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "$eqw", text: this.i18n.relationalOperators.eqw},
+                            {value: "$suggest", text: this.i18n.relationalOperators.suggest},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                        ];
+                    case "number":
+                        return [
+                            {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
+                            {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
+                            {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
+                            {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                        ];
+                    case "date":
+                        return [
+                            {value: "$lte", text: this.i18n.relationalOperators.before},
+                            {value: "$gte", text: this.i18n.relationalOperators.after},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                        ];
+                }
+            },
+            getDistinctValues(value, fieldQuery) {
+                this.$root.$emit("getDistinctValues", {value, fieldQuery});
             }
         }
     }

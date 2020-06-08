@@ -57,6 +57,9 @@ export default class QueryBuilderWidgetFactory {
         vm.$on('cancel-search', () => {
             model.cancelSearch();
         });
+        vm.$on('getDistinctValues', (args) => {
+            model.getDistinctValues(args.value, args.fieldQuery);
+        });
         vm.$on('add', () => {
             model.addFieldQuery()
         });
@@ -77,7 +80,7 @@ export default class QueryBuilderWidgetFactory {
 
         this[_queryBuilderWidgetModelBinding] = Binding.for(vm, model)
             .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput")
-            .syncAllToLeft("locale", "storeData", "sortFieldData", "showSpatialInputActions", "spatialInputActions",
+            .syncAllToLeft("locale", "storeData", "sortFieldData", "showSpatialInputActions", "spatialInputActions", "enableDistinctValues",
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode", "allowNegation", "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();

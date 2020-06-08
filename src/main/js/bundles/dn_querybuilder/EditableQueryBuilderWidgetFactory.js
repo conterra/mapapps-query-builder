@@ -65,6 +65,12 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.$on('search', () => {
             model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, this.tool, options);
         });
+        vm.$on('cancel-search', () => {
+            model.cancelSearch();
+        });
+        vm.$on('getDistinctValues', (args) => {
+            model.getDistinctValues(args.value, args.fieldQuery, vm.selectedStoreId);
+        });
 
         return VueDijit(vm);
     }

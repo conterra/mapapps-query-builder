@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import apprt_when from "apprt-core/when";
-import ServiceResolver from "apprt/ServiceResolver";
 import Promise from "apprt-core/Promise";
-import QueryTask from "esri/tasks/QueryTask";
-import Query from "esri/tasks/support/Query";
-import {declare} from "apprt-core/Mutable";
+import ServiceResolver from "apprt/ServiceResolver";
+import apprt_request from "apprt-request";
+
+const _distinctValueQuery = Symbol("_distinctValueQuery");
 
 export default class MetadataAnalyzer {
     activate(componentContext) {
@@ -55,7 +55,7 @@ export default class MetadataAnalyzer {
                             if (queryBuilderProperties.showFieldType) {
                                 text = title + " (" + field.type + ") " + codedValueString;
                             }
-                            const StoreData = declare({
+                            storeData.push({
                                 id: field.name,
                                 text: text,
                                 type: field.type,
@@ -63,12 +63,8 @@ export default class MetadataAnalyzer {
                                 distinctValues: [],
                                 loading: false
                             });
-                            storeData.push(new StoreData());
                         }
                     });
-                    if (queryBuilderProperties.enableDistinctValues) {
-                        this.getDistinctValues(store, storeData);
-                    }
                     resolve(storeData);
                 }, this);
             } catch (e) {
@@ -80,39 +76,62 @@ export default class MetadataAnalyzer {
         });
     }
 
-    getDistinctValues(store, storeData) {
-        const metadata = store.getMetadata();
-        return apprt_when(metadata, (metadata) => {
-            const supportsDistincts = metadata.advancedQueryCapabilities
-                && metadata.advancedQueryCapabilities.supportsDistinct;
-            if (supportsDistincts) {
-                storeData.forEach((data) => {
-                    data.loading = true;
-                    const queryTask = new QueryTask({
-                        url: store.target
-                    });
-                    const query = new Query();
-                    query.where = "1=1";
-                    query.outFields = [data.id];
-                    query.orderByFields = [data.id];
-                    query.returnGeometry = false;
-                    query.returnDistinctValues = true;
-                    queryTask.execute(query).then((result) => {
+    getDistinctValues(value, fieldData, store) {
+        if (this[_distinctValueQuery]) {
+            this[_distinctValueQuery].cancel();
+            this[_distinctValueQuery] = null;
+        }
+        const queryBuilderProperties = this._queryBuilderProperties;
+        return new Promise((resolve) => {
+            if (!value || !queryBuilderProperties.enableDistinctValues) {
+                resolve();
+                return;
+            }
+            if (fieldData.type === "number" && fieldData.distinctValues.length) {
+                resolve();
+                return;
+            }
+            const metadata = store.getMetadata();
+            return apprt_when(metadata, (metadata) => {
+                const supportsDistincts = metadata.advancedQueryCapabilities
+                    && metadata.advancedQueryCapabilities.supportsDistinct;
+                if (supportsDistincts) {
+                    fieldData.loading = true;
+                    const query = {
+                        outFields: fieldData.id,
+                        orderByFields: fieldData.id,
+                        returnDistinctValues: true,
+                        returnGeometry: false,
+                        f: 'json'
+                    };
+                    if (fieldData.type === "string") {
+                        query.where = "LOWER(" + [fieldData.id] + ") LIKE '%" + value + "%'";
+                    } else if (fieldData.type === "number") {
+                        query.where = "1=1";
+                    }
+                    this[_distinctValueQuery] = apprt_request(store.target + "/query", {
+                        query: query,
+                        handleAs: 'json'
+                    }).then((result) => {
                         const distinctValues = [];
                         result.features.forEach((feature) => {
-                            const value = feature.attributes[data.id];
+                            const value = feature.attributes[fieldData.id];
                             if (value !== null && value !== "") {
                                 distinctValues.push(value);
                             }
                         });
-                        data.distinctValues = distinctValues;
-                        data.loading = false;
+                        fieldData.distinctValues = distinctValues;
+                        fieldData.loading = false;
+                        this[_distinctValueQuery] = null;
+                        resolve();
                     }, (error) => {
-                        data.distinctValues = [];
-                        data.loading = false;
+                        fieldData.distinctValues = [];
+                        fieldData.loading = false;
+                        this[_distinctValueQuery] = null;
+                        resolve();
                     });
-                });
-            }
+                }
+            });
         });
     }
 
