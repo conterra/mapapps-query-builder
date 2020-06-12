@@ -287,10 +287,6 @@
             enableDistinctValues: {
                 type: Boolean,
                 default: true
-            },
-            search: {
-                type: String,
-                default: ""
             }
         },
         data() {
@@ -300,7 +296,8 @@
                     required: (value) => !!value || this.i18n.rules.required,
                     number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
                     string: (value) => typeof value === "string" || this.i18n.rules.string
-                }
+                },
+                search: ""
             }
         },
         computed: {
