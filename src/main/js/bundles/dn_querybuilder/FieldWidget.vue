@@ -189,9 +189,10 @@
                             v-else-if="selectedField && selectedField.type === 'number'"
                             v-model="fieldQuery.value"
                             :disabled="fieldQuery.disableValue"
-                            :rules="[rules.required, rules.number]"
+                            :rules="[rules.required]"
                             :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
+                            type="number"
                             class="pa-0 ma-0"
                             required
                             hide-details

@@ -363,7 +363,13 @@ export default declare({
             const fieldId = fieldQuery.selectedFieldId;
             const relationalOperator = fieldQuery.relationalOperator;
             const not = fieldQuery.not;
-            const value = fieldQuery.value;
+            let value = fieldQuery.value;
+            const field = fieldQuery.fields.find((field) => {
+                return field.id === fieldId;
+            });
+            if(field.type === "number") {
+                value = parseFloat(value);
+            }
             if (value === "" || value === null) {
                 return;
             }
