@@ -105,6 +105,7 @@ export default class MetadataAnalyzer {
                         f: 'json'
                     };
                     if (fieldData.type === "string") {
+                        value = value.toLowerCase();
                         query.where = "LOWER(" + [fieldData.id] + ") LIKE '%" + value + "%'";
                     } else if (fieldData.type === "number") {
                         query.where = "1=1";
