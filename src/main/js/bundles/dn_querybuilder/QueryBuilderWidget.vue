@@ -285,7 +285,7 @@
                             block
                             ripple
                             color="primary"
-                            @click="$emit('search', {})"
+                            @click="emitSearch"
                         >
                             <v-icon left>
                                 search
@@ -413,6 +413,17 @@
         },
         mounted: function () {
             this.$emit('startup');
+        },
+        methods: {
+            emitSearch: function () {
+                this.$nextTick(() => {
+                    // use setTimeout to be sure that combobox value is set before search gets started
+                    // https://github.com/vuetifyjs/vuetify/issues/4679
+                    setTimeout(()=>{
+                        this.$emit('search', {});
+                    })
+                });
+            }
         }
     };
 </script>
