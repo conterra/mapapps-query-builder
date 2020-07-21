@@ -453,6 +453,12 @@ export default declare({
             description: store.description || properties.description || ""
         });
         this.stores = newStores;
+        if (newStores.length === 1) {
+            const selectedStoreId = this.selectedStoreId = newStores[0].id;
+            this.removeFieldQueries();
+            this.addFieldQuery(selectedStoreId);
+            this.getFieldData(selectedStoreId);
+        }
         this.getStoreData();
     },
 
@@ -469,6 +475,16 @@ export default declare({
         const newStores = stores.slice(0);
         newStores.splice(index, 1);
         this.stores = newStores;
+        if (!this._selectedStoreStillAvailable(newStores) && newStores.length) {
+            const selectedStoreId = this.selectedStoreId = newStores[0].id;
+            this.removeFieldQueries();
+            this.addFieldQuery(selectedStoreId);
+            this.getFieldData(selectedStoreId);
+        }
         this.getStoreData();
+    },
+
+    _selectedStoreStillAvailable(stores) {
+        return stores.find((store) => store.id === this.selectedStoreId);
     }
 });
