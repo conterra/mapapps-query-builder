@@ -38,12 +38,12 @@
                         <div>{{ title }}</div>
                     </v-flex>
                     <v-flex
-                        v-if="showQuerySettings && storeData.length > 1"
                         xs12
                         md12
                     >
                         <div class="caption">{{ i18n.selectStore }}</div>
                         <v-select
+                            v-if="showQuerySettings && storeData.length > 1"
                             ref="selectedStoreIdSelect"
                             v-model="selectedStoreId"
                             :items="storeData"
@@ -55,6 +55,11 @@
                             hide-details
                             @change="$emit('storeChanged', $event)"
                         />
+                        <div
+                            v-else-if="storeData[0]"
+                            class="single-store">
+                            {{ storeData[0].text }}
+                        </div>
                     </v-flex>
                     <v-flex
                         v-if="showQuerySettings"
@@ -419,7 +424,7 @@
                 this.$nextTick(() => {
                     // use setTimeout to be sure that combobox value is set before search gets started
                     // https://github.com/vuetifyjs/vuetify/issues/4679
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         this.$emit('search', {});
                     })
                 });
