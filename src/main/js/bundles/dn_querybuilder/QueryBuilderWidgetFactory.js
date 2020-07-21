@@ -68,9 +68,7 @@ export default class QueryBuilderWidgetFactory {
             model.removeFieldQuery(fieldQuery);
         });
         vm.$on('storeChanged', (selectedStoreId) => {
-            model.removeFieldQueries();
-            model.addFieldQuery(selectedStoreId);
-            model.getFieldData(selectedStoreId);
+            model.set("selectedStoreId", selectedStoreId);
         });
         vm.$on('selectSpatialInputAction', (id) => {
             model.selectSpatialInputAction(id);

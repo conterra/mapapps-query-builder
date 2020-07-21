@@ -99,6 +99,11 @@ export default declare({
         this.watch("negateSpatialInput", () => {
             this.resetSpatialInput();
         });
+        this.watch("selectedStoreId", (evt) => {
+            this.removeFieldQueries();
+            this.addFieldQuery(evt.value);
+            this.getFieldData(evt.value);
+        });
 
         const spatialInputActionService = this._spatialInputActionService;
         this[_spatialInputActionServiceBinding] = Binding.for(this, spatialInputActionService)
@@ -454,10 +459,7 @@ export default declare({
         });
         this.stores = newStores;
         if (newStores.length === 1) {
-            const selectedStoreId = this.selectedStoreId = newStores[0].id;
-            this.removeFieldQueries();
-            this.addFieldQuery(selectedStoreId);
-            this.getFieldData(selectedStoreId);
+            this.selectedStoreId = newStores[0].id;
         }
         this.getStoreData();
     },
@@ -476,10 +478,7 @@ export default declare({
         newStores.splice(index, 1);
         this.stores = newStores;
         if (!this._selectedStoreStillAvailable(newStores) && newStores.length) {
-            const selectedStoreId = this.selectedStoreId = newStores[0].id;
-            this.removeFieldQueries();
-            this.addFieldQuery(selectedStoreId);
-            this.getFieldData(selectedStoreId);
+            this.selectedStoreId = newStores[0].id;
         }
         this.getStoreData();
     },
