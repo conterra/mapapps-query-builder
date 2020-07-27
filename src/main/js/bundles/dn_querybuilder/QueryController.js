@@ -54,75 +54,91 @@ export default class QueryController {
     memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         options.fields = {geometry: 1};
-        const query = this[_query] = store.query(complexQuery, options);
-        return apprt_when(query, (result) => {
-            if (result.total) {
-                const mapWidgetModel = this._mapWidgetModel;
-                const spatialReference = mapWidgetModel.get("spatialReference");
-                const wkid = spatialReference.latestWkid || spatialReference.wkid;
-                const geometries = result.map((item) => item.geometry);
+        try {
+            const query = this[_query] = store.query(complexQuery, options);
+            return apprt_when(query, (result) => {
+                if (result.total) {
+                    const mapWidgetModel = this._mapWidgetModel;
+                    const spatialReference = mapWidgetModel.get("spatialReference");
+                    const wkid = spatialReference.latestWkid || spatialReference.wkid;
+                    const geometries = result.map((item) => item.geometry);
 
-                if (geometries[0]) {
-                    apprt_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {
-                        transformedGeometries.forEach((tg, index) => {
-                            result[index].geometry = tg;
-                        });
-                    }, this);
+                    if (geometries[0]) {
+                        apprt_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {
+                            transformedGeometries.forEach((tg, index) => {
+                                result[index].geometry = tg;
+                            });
+                        }, this);
+                    }
+
+                    const memorySelectionStore = new MemorySelectionStore({
+                        id: "querybuilder_" + store.id,
+                        idProperty: store.idProperty,
+                        masterStore: store,
+                        data: result
+                    });
+
+                    this._dataModel.setDatasource(memorySelectionStore);
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
+
+                } else {
+                    this._logService.warn({
+                        id: 0,
+                        message: this.i18n.errors.noResultsError
+                    });
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
                 }
-
-                const memorySelectionStore = new MemorySelectionStore({
-                    id: "querybuilder_" + store.id,
-                    idProperty: store.idProperty,
-                    masterStore: store,
-                    data: result
-                });
-
-                this._dataModel.setDatasource(memorySelectionStore);
-                this._setProcessing(tool, false, queryBuilderWidgetModel);
-
-            } else {
-                this._logService.warn({
-                    id: 0,
-                    message: this.i18n.errors.noResultsError
+            }, (e) => {
+                this._logService.error({
+                    id: e.code,
+                    message: e
                 });
                 this._setProcessing(tool, false, queryBuilderWidgetModel);
-            }
-        }, (e) => {
+            });
+        } catch (e) {
             this._logService.error({
                 id: e.code,
                 message: e
             });
             this._setProcessing(tool, false, queryBuilderWidgetModel);
-        });
+        }
     }
 
     defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
-        const query = this[_query] = countFilter.query({}, {count: 0});
-        return apprt_when(query.total, (total) => {
-            if (total) {
-                if (this._smartfinderComplexQueryHandler && store.coreName) {
-                    this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
+        try {
+            const query = this[_query] = countFilter.query({}, {count: 0});
+            return apprt_when(query.total, (total) => {
+                if (total) {
+                    if (this._smartfinderComplexQueryHandler && store.coreName) {
+                        this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
+                    } else {
+                        this._dataModel.setDatasource(filter);
+                    }
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
                 } else {
-                    this._dataModel.setDatasource(filter);
+                    this._logService.warn({
+                        id: 0,
+                        message: this.i18n.errors.noResultsError
+                    });
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
                 }
+            }, (e) => {
                 this._setProcessing(tool, false, queryBuilderWidgetModel);
-            } else {
-                this._logService.warn({
-                    id: 0,
-                    message: this.i18n.errors.noResultsError
+                this._logService.error({
+                    id: e.code,
+                    message: e
                 });
-                this._setProcessing(tool, false, queryBuilderWidgetModel);
-            }
-        }, (e) => {
+            });
+        } catch (e) {
             this._setProcessing(tool, false, queryBuilderWidgetModel);
             this._logService.error({
                 id: e.code,
                 message: e
             });
-        });
+        }
     }
 
     searchReplacer(o) {
