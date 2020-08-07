@@ -16,6 +16,7 @@
         "apprt-vuetify": "^4.2.0",
         "resultcenter": "^4.2.0",
         "agssearch": "^4.2.0",
+        "map-init": "^4.2.0",
         "selection-services": "^4.2.0",
         "coordinatetransformer": "^4.2.0",
         "dn_queryplaceholder": "^4.0.0"
