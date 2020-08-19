@@ -22,7 +22,7 @@ import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import Graphic from "esri/Graphic";
 import Extent from "esri/geometry/Extent";
-import geometryEngine from "esri/geometry/geometryEngine";
+import { union, difference } from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
 import ProjectParameters from "esri/tasks/support/ProjectParameters";
 
@@ -151,7 +151,7 @@ export default declare({
             this.activeSpatialInputActionDescription = null;
             if (this.negateSpatialInput) {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = geometryEngine.difference(this.geometry, geometry)
+                    this.geometry = difference(this.geometry, geometry)
                 } else {
                     this.negateGeometry(geometry).then((g) => {
                         this.geometry = g;
@@ -159,7 +159,7 @@ export default declare({
                 }
             } else {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = geometryEngine.union([geometry, this.geometry])
+                    this.geometry = union([geometry, this.geometry])
                 } else {
                     this.geometry = geometry;
                 }
@@ -182,7 +182,7 @@ export default declare({
         const geometryService = this._geometryService;
         const promise = geometryService.project(params)
         return promise.then((projectedGeometries) => {
-            return geometryEngine.difference(projectedGeometries[0], geometry);
+            return difference(projectedGeometries[0], geometry);
         });
     },
 
