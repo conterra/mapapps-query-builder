@@ -52,7 +52,7 @@
                     "OBJECTID",
                     "shape"
                 ],
-                "hidedSortFields": [
+                "hiddenSortFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"

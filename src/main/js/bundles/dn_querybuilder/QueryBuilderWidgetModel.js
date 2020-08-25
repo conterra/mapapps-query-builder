@@ -330,7 +330,7 @@ export default declare({
         if (queryBuilderProperties.hidedFields) {
             hiddenFields = queryBuilderProperties.hidedFields;
         } else if (queryBuilderProperties.hiddenFields) {
-            hiddenFields = queryBuilderProperties.hiddenFields
+            hiddenFields = queryBuilderProperties.hiddenFields;
         } else {
             hiddenFields = [];
         }
@@ -339,18 +339,25 @@ export default declare({
 
     _getSelectedSortFieldData(selectedStoreId) {
         const queryBuilderProperties = this._queryBuilderProperties;
-        const hidedSortFields = queryBuilderProperties.hidedSortFields;
-        return this._getFilteredFieldData(selectedStoreId, hidedSortFields);
+        let hiddenSortFields = null;
+        if (queryBuilderProperties.hidedSortFields) {
+            hiddenSortFields = queryBuilderProperties.hidedSortFields;
+        } else if (queryBuilderProperties.hiddenSortFields) {
+            hiddenSortFields = queryBuilderProperties.hiddenSortFields;
+        } else {
+            hiddenSortFields = [];
+        }
+        return this._getFilteredFieldData(selectedStoreId, hiddenSortFields);
     },
 
-    _getFilteredFieldData(selectedStoreId, hidedSortFields) {
+    _getFilteredFieldData(selectedStoreId, hiddenSortFields) {
         const storeId = selectedStoreId || this.selectedStoreId;
         const store = this.getSelectedStoreObj(storeId);
         if (!store) {
             return;
         }
         return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) => {
-            return fieldData.filter((field) => !hidedSortFields.includes(field.id));
+            return fieldData.filter((field) => !hiddenSortFields.includes(field.id));
         });
     },
 
