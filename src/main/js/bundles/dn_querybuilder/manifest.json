@@ -276,7 +276,7 @@
                 "defaultQueryOptions": {
                     "ignoreCase": false
                 },
-                "hidedFields": [
+                "hiddenFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"

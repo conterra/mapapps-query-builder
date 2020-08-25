@@ -47,7 +47,7 @@
                 "showSortSelectInUserMode": false,
                 "showFieldType": true,
                 "showSpatialInputActions": false,
-                "hidedFields": [
+                "hiddenFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"

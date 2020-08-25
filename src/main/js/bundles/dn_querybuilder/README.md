@@ -99,7 +99,7 @@ No further configuration is required, default values will be used.
         "*"
     ],
     "allowMultipleSpatialInputs": true,
-    "hidedFields": [
+    "hiddenFields": [
         "objectid",
         "OBJECTID",
         "shape"
@@ -167,7 +167,7 @@ No further configuration is required, default values will be used.
 | showSpatialInputActions         | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show spatial input actions of the selection-ui bundle.                                                                                                  |
 | spatialInputActions             | Array   | ```point``` &#124; ```rectangle``` &#124; ```polygon```               | ```["*"]```                 | IDs of allowed spatial input actions. More actions are available in the selection-actions bundle: https://github.com/conterra/mapapps-selection-actions |
 | allowMultipleSpatialInputs      | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Allow multiple selection of geometries via the selection actions.                                                                                       |
-| hidedFields                     | Array   |                                                                       | ```[]```                    | Names of fields that should be hided in the field select                                                                                                |
+| hiddenFields                    | Array   |                                                                       | ```[]```                    | Names of fields that should be hidden in the field select                                                                                                |
 | hidedSortFields                 | Array   |                                                                       | ```[]```                    | Names of fields that should be hided in the sort field select                                                                                           |
 | symbols                         | Object  |                                                                       |                             | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
 

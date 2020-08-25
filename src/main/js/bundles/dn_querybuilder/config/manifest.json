@@ -82,7 +82,7 @@
                     "showQuerySettingsInEditableMode": true,
                     "showSortSelectInUserMode": false,
                     "showFieldType": true,
-                    "hidedFields": [
+                    "hiddenFields": [
                         "objectid",
                         "OBJECTID",
                         "shape"

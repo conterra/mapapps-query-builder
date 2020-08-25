@@ -57,7 +57,7 @@
                     "circle"
                 ],
                 "allowMultipleSpatialInputs": true,
-                "hidedFields": [
+                "hiddenFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"

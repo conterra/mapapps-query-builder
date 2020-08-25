@@ -22,7 +22,7 @@ import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import Graphic from "esri/Graphic";
 import Extent from "esri/geometry/Extent";
-import { union, difference } from "esri/geometry/geometryEngine";
+import {union, difference} from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
 import ProjectParameters from "esri/tasks/support/ProjectParameters";
 
@@ -326,8 +326,15 @@ export default declare({
 
     _getSelectedFieldData(selectedStoreId) {
         const queryBuilderProperties = this._queryBuilderProperties;
-        const hidedFields = queryBuilderProperties.hidedFields;
-        return this._getFilteredFieldData(selectedStoreId, hidedFields);
+        let hiddenFields = null;
+        if (queryBuilderProperties.hidedFields) {
+            hiddenFields = queryBuilderProperties.hidedFields;
+        } else if (queryBuilderProperties.hiddenFields) {
+            hiddenFields = queryBuilderProperties.hiddenFields
+        } else {
+            hiddenFields = [];
+        }
+        return this._getFilteredFieldData(selectedStoreId, hiddenFields);
     },
 
     _getSelectedSortFieldData(selectedStoreId) {
