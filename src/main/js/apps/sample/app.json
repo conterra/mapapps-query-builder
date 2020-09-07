@@ -24,6 +24,7 @@
             "wizard",
             "authentication",
             "viewmodeswitcher",
+            "popups-default",
             "dn_selectionactions",
             "dn_querybuilder"
         ],
@@ -307,7 +308,8 @@
                 "centerSelected": true,
                 "zoomAfterDeletion": false,
                 "zoomToClicked": false,
-                "centerClicked": false
+                "centerClicked": false,
+                "openPopup": true
             },
             "FeatureMapVisualizer": {
                 "useDataViewPaging": true
@@ -339,6 +341,7 @@
                     "description": "Airtraffic",
                     "idProperty": "OBJECTID",
                     "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+                    "popupEnabled": true,
                     "useIn": [
                         "selection"
                     ],
@@ -386,6 +389,7 @@
                     "title": "Countries",
                     "description": "Countries of the world",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
+                    "popupEnabled": true,
                     "useIn": [
                         "selection"
                     ]
@@ -395,6 +399,7 @@
                     "title": "Baumkataster",
                     "description": "Baumkataster",
                     "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
+                    "popupEnabled": true,
                     "useIn": [
                         "selection"
                     ]
@@ -405,6 +410,7 @@
                     "description": "Störungen",
                     "idProperty": "objectid",
                     "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
+                    "popupEnabled": true,
                     "useIn": [
                         "selection"
                     ]
@@ -415,6 +421,7 @@
                     "description": "Wahlkreise 2017 - Strukturdaten",
                     "idProperty": "OBJECTID",
                     "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+                    "popupEnabled": true,
                     "useIn": [
                         "selection"
                     ]
