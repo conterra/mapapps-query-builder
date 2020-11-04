@@ -472,9 +472,6 @@ export default declare({
             description: store.description || properties.description || ""
         });
         this.stores = newStores;
-        if (newStores.length === 1) {
-            this.selectedStoreId = newStores[0].id;
-        }
         this.getStoreData();
     },
 
@@ -492,7 +489,7 @@ export default declare({
         newStores.splice(index, 1);
         this.stores = newStores;
         if (!this._selectedStoreStillAvailable(newStores) && newStores.length) {
-            this.selectedStoreId = newStores[0].id;
+            this.selectedStoreId = null;
         }
         this.getStoreData();
     },
