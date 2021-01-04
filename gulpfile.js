@@ -38,3 +38,31 @@ gulp.task("default",
         gulp.parallel("js-transpile", "themes-compile")
     )
 );
+
+gulp.task("compress",
+    gulp.series(
+        "copy-resources",
+        "themes-copy",
+        gulp.parallel(
+            "js-transpile",
+            gulp.series(
+                "themes-compile",
+                "themes-compress"
+            )
+        )
+    )
+);
+
+gulp.task("run-js-tests", function (done) {
+    const initialWait = 10000;
+    setTimeout(() => {
+        const trigger = gulp.series("run-browser-tests");
+        trigger(done);
+    }, initialWait);
+});
+
+gulp.task("skip", function (done) {
+    setTimeout(() => {
+        done();
+    }, 1);
+});

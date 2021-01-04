@@ -107,6 +107,10 @@
                     <version>${ct.jsregistry.version}</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.1.0</version>
@@ -168,8 +172,8 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.10.0</version>
                     <configuration>
-                        <nodeVersion>v12.16.1</nodeVersion>
-                        <npmVersion>6.13.4</npmVersion>
+                        <nodeVersion>v14.15.1</nodeVersion>
+                        <npmVersion>6.14.9</npmVersion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -184,7 +188,7 @@
                 <plugin>
                     <groupId>de.jutzig</groupId>
                     <artifactId>github-release-plugin</artifactId>
-                    <version>1.1.1</version>
+                    <version>1.4.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -207,7 +211,12 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-scm-plugin</artifactId>
-                    <version>1.9.5</version>
+                    <version>1.10.0</version>
+                    <configuration>
+                        <tag>${project.version}</tag>
+                        <username>${scm.username}</username>
+                        <password>${scm.password}</password>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -447,7 +456,7 @@
                                     <!-- remove bundleLocations from app.json -->
                                     <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
                                     </token>
-                                    <value />
+                                    <value/>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -524,14 +533,14 @@
     </scm>
     <distributionManagement>
         <repository>
-            <id>ct-dist-releases-file</id>
             <name>repository for sdi.suite releases</name>
-            <url>${release.deployment.url}</url>
+            <id>${dist.releases.id}</id>
+            <url>${dist.releases.url}</url>
         </repository>
         <snapshotRepository>
-            <id>ct-dist-snapshots-file</id>
             <name>repository for sdi.suite snapshots</name>
-            <url>${snapshot.deployment.url}</url>
+            <id>${dist.snapshots.id}</id>
+            <url>${dist.snapshots.url}</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
@@ -540,11 +549,11 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.9.2</mapapps.version>
+        <mapapps.version>4.10.0</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.3.8</ct.jsregistry.version>
+        <ct.jsregistry.version>1.3.10</ct.jsregistry.version>
         <ct.jsrt-test.version>1.1.5</ct.jsrt-test.version>
 
         <selectionactions.version>1.9.1</selectionactions.version>
@@ -557,15 +566,15 @@
             *://*:*/**;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
-        <proxy.use.rules />
+        <proxy.use.rules/>
         <jetty.port>9090</jetty.port>
         <mvn.cmd>mvn</mvn.cmd>
-        <gulp.task />
+        <gulp.task/>
 
         <!-- required for release build -->
         <scm.push>false</scm.push>
-        <scm.username>${env.USER_NAME}</scm.username>
-        <scm.password>${env.USER_PW}</scm.password>
+        <scm.username>${env.GITHUB_USER_NAME}</scm.username>
+        <scm.password>${env.GITHUB_USER_PW}</scm.password>
     </properties>
     <profiles>
         <profile>
@@ -628,9 +637,7 @@
                                     <goal>gulp</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run-browser-tests --tests
-                                        http://localhost:${jetty.server.port}/js/tests/runTests.html
-                                    </arguments>
+                                    <arguments>run-js-tests --tests "http://localhost:${jetty.server.port}/resources/jsregistry/root/intern/latest/runner.html?boot=/js/tests/test-init.js&amp;test=dn_querybuilder/tests/all"</arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -873,36 +880,18 @@
             </build>
         </profile>
         <profile>
-            <id>commit-release-versions</id>
+            <id>compress</id>
+            <properties>
+                <gulp.task>compress</gulp.task>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-scm-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>checkin</goal>
-                                </goals>
-                                <configuration>
-                                    <message>[update-bundle-package-versions] from ${replace.source.version} to
-                                        ${replace.target.version}
-                                    </message>
-                                    <basedir>${basedir}/src/main/js</basedir>
-                                    <pushChanges>${scm.push}</pushChanges>
-                                    <username>${scm.username}</username>
-                                    <password>${scm.password}</password>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <updateReleaseInfo>true</updateReleaseInfo>
+                        </configuration>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>compress</id>
-            <build>
-                <plugins>
                     <plugin>
                         <groupId>de.conterra.jsregistry</groupId>
                         <artifactId>ct-jsregistry-maven-plugin</artifactId>
@@ -928,23 +917,6 @@
                                             <exclude>**/tests/**</exclude>
                                         </excludes>
                                     </jsFiles>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>optimize CSS</id>
-                                <goals>
-                                    <goal>optimizeCSS</goal>
-                                </goals>
-                                <phase>compile</phase>
-                                <configuration>
-                                    <cssFiles>
-                                        <includes>
-                                            <include>bundles/*/*/*.css</include>
-                                        </includes>
-                                        <excludes>
-                                            <exclude>**/themeSettings.css</exclude>
-                                        </excludes>
-                                    </cssFiles>
                                 </configuration>
                             </execution>
                         </executions>
