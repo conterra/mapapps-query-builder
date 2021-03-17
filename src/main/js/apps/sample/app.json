@@ -26,8 +26,7 @@
             "viewmodeswitcher",
             "popups-default",
             "dn_selectionactions",
-            "dn_querybuilder",
-            "toc"
+            "dn_querybuilder"
         ],
         "require": [
             "${app}.app"
@@ -62,6 +61,11 @@
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
+                    "airtraffic",
+                    "countries",
+                    "baumkataster",
+                    "stoerungen",
+                    "wahlkreise_strukturdaten"
                 ]
             },
             "QueryTools": [
@@ -328,8 +332,101 @@
         },
         "agssearch": {
             "AutoStoreRegistration": {
-                "componentEnabled": true
-            }
+                "componentEnabled": false
+            },
+            "AGSStore": [
+                {
+                    "id": "airtraffic",
+                    "title": "Airtraffic",
+                    "description": "Airtraffic",
+                    "idProperty": "OBJECTID",
+                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "selection"
+                    ],
+                    "filterOptions": {
+                        "metadata": {
+                            "fields": [
+                                {
+                                    "name": "OBJECTID",
+                                    "title": "ID"
+                                },
+                                {
+                                    "name": "aeroway",
+                                    "title": "AEROWAY"
+                                },
+                                {
+                                    "name": "OSMID",
+                                    "title": "OSM ID"
+                                },
+                                {
+                                    "name": "osm_name",
+                                    "title": "NAME"
+                                },
+                                {
+                                    "name": "osm_ref",
+                                    "title": "REF"
+                                },
+                                {
+                                    "name": "osm_type",
+                                    "title": "TYPE"
+                                },
+                                {
+                                    "name": "osm_operator",
+                                    "title": "OPERATOR"
+                                },
+                                {
+                                    "name": "osm_website",
+                                    "title": "WEBSITE"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": "countries",
+                    "title": "Countries",
+                    "description": "Countries of the world",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "baumkataster",
+                    "title": "Baumkataster",
+                    "description": "Baumkataster",
+                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "stoerungen",
+                    "title": "Störungen",
+                    "description": "Störungen",
+                    "idProperty": "objectid",
+                    "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "selection"
+                    ]
+                },
+                {
+                    "id": "wahlkreise_strukturdaten",
+                    "title": "Wahlkreise 2017 - Strukturdaten",
+                    "description": "Wahlkreise 2017 - Strukturdaten",
+                    "idProperty": "OBJECTID",
+                    "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "selection"
+                    ]
+                }
+            ]
         },
         "coordinateviewer": {
             "Config": {
@@ -394,312 +491,7 @@
                     }
                 ],
                 "map": {
-                    "layers": [
-                        {
-                            "id": "koeln2",
-                            "title": "${map.koeln2.title}",
-                            "description": "${map.koeln2.description}",
-                            "type": "GROUP",
-                            "layers": [
-                                {
-                                    "title": "${map.koeln2.libraries.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/1",
-                                    "type": "AGS_FEATURE",
-                                    "visible": true,
-                                    "popupTemplate": {
-                                        "title": "{NAME_LANG}",
-                                        "content": [
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "NAME_LANG",
-                                                        "label": "${common.name}"
-                                                    },
-                                                    {
-                                                        "fieldName": "ADRESSE",
-                                                        "label": "${common.address}"
-                                                    },
-                                                    {
-                                                        "fieldName": "PLZ",
-                                                        "label": "${common.zip}"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "title": "${map.koeln2.museums.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/2",
-                                    "type": "AGS_FEATURE",
-                                    "visible": true,
-                                    "popupTemplate": {
-                                        "title": "Museum",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln2.museums.text}"
-                                            },
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "ADRESSE",
-                                                        "label": "${common.address}"
-                                                    },
-                                                    {
-                                                        "fieldName": "STADTBEZIR",
-                                                        "label": "${common.precint}"
-                                                    },
-                                                    {
-                                                        "fieldName": "HYPERLINK",
-                                                        "label": "${common.furtherinfo}"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "schools",
-                                    "title": "${map.koeln2.schools.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/3",
-                                    "type": "AGS_FEATURE",
-                                    "visible": false,
-                                    "popupTemplate": {
-                                        "title": "{NAME}",
-                                        "content": [
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "SCHULNAME",
-                                                        "label": "${common.name}"
-                                                    },
-                                                    {
-                                                        "fieldName": "ADRESSE",
-                                                        "label": "${common.address}"
-                                                    },
-                                                    {
-                                                        "fieldName": "SCHULART",
-                                                        "label": "${common.type}"
-                                                    },
-                                                    {
-                                                        "fieldName": "TRAEGER",
-                                                        "label": "${common.provider}"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "koeln3",
-                            "title": "${map.koeln3.title}",
-                            "type": "GROUP",
-                            "visible": false,
-                            "layers": [
-                                {
-                                    "title": "${map.koeln3.sights.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/4",
-                                    "type": "AGS_FEATURE",
-                                    "popupTemplate": {
-                                        "title": "${map.koeln3.sights.titleSingle}",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln3.sights.text}"
-                                            },
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "ADRESSE",
-                                                        "label": "${common.address}"
-                                                    },
-                                                    {
-                                                        "fieldName": "STADTBEZIRK",
-                                                        "label": "${common.precint}"
-                                                    },
-                                                    {
-                                                        "fieldName": "HYPERLINK",
-                                                        "label": "${common.furtherinfo}"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "title": "${map.koeln3.playgrounds.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/5",
-                                    "type": "AGS_FEATURE",
-                                    "visible": false,
-                                    "popupTemplate": {
-                                        "title": "{Typ}",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln3.playgrounds.text}"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "title": "${map.koeln3.places.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/9",
-                                    "type": "AGS_FEATURE",
-                                    "popupTemplate": {
-                                        "title": "${map.koeln3.places.titleSingle}",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln3.places.text}"
-                                            },
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "ADRESSE",
-                                                        "label": "${common.address}"
-                                                    },
-                                                    {
-                                                        "fieldName": "STADTVIERT",
-                                                        "label": "${common.district}"
-                                                    },
-                                                    {
-                                                        "fieldName": "HYPERLINK",
-                                                        "label": "${common.furtherinfo}"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "koeln1",
-                            "title": "${map.koeln1.title}",
-                            "type": "GROUP",
-                            "visible": false,
-                            "layers": [
-                                {
-                                    "title": "${map.koeln1.districts.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/8",
-                                    "type": "AGS_FEATURE",
-                                    "visible": false,
-                                    "opacity": 0.5,
-                                    "popupTemplate": {
-                                        "title": "{STV_NAME}",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln1.districts.text}"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "title": "${map.koeln1.boroughs.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/7",
-                                    "type": "AGS_FEATURE",
-                                    "opacity": 0.5,
-                                    "minScale": 80000,
-                                    "popupTemplate": {
-                                        "title": "{NAME}",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln1.boroughs.text}"
-                                            },
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "expression/area",
-                                                        "format": {
-                                                            "places": 2,
-                                                            "digitSeparator": true
-                                                        }
-                                                    },
-                                                    {
-                                                        "fieldName": "expression/area-rel",
-                                                        "format": {
-                                                            "places": 2,
-                                                            "digitSeparator": true
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "expressionInfos": [
-                                            {
-                                                "name": "area",
-                                                "title": "${common.area}",
-                                                "expression": "$feature.FLAECHE / 10000"
-                                            },
-                                            {
-                                                "name": "area-rel",
-                                                "title": "${common.totalArea}",
-                                                "expression": "Round(($feature.FLAECHE / 405020000)*100,2)"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "title": "${map.koeln1.precints.title}",
-                                    "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/6",
-                                    "type": "AGS_FEATURE",
-                                    "opacity": 0.5,
-                                    "maxScale": 80000,
-                                    "popupTemplate": {
-                                        "title": "{NAME}",
-                                        "content": [
-                                            {
-                                                "type": "text",
-                                                "text": "${map.koeln1.precints.text}"
-                                            },
-                                            {
-                                                "type": "fields",
-                                                "fieldInfos": [
-                                                    {
-                                                        "fieldName": "expression/area",
-                                                        "format": {
-                                                            "places": 2,
-                                                            "digitSeparator": true
-                                                        }
-                                                    },
-                                                    {
-                                                        "fieldName": "expression/area-rel",
-                                                        "format": {
-                                                            "places": 2,
-                                                            "digitSeparator": true
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "expressionInfos": [
-                                            {
-                                                "name": "area",
-                                                "title": "${common.area}",
-                                                "expression": "$feature.FLAECHE / 10000"
-                                            },
-                                            {
-                                                "name": "area-rel",
-                                                "title": "${common.totalArea}",
-                                                "expression": "Round(($feature.FLAECHE / 405020000)*100,2)"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
-                    ],
+                    "layers": [],
                     "ground": {
                         "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
                         "type": "ELEVATION"
