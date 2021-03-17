@@ -25,7 +25,6 @@
             "authentication",
             "viewmodeswitcher",
             "popups-default",
-            "dn_selectionactions",
             "dn_querybuilder"
         ],
         "require": [
