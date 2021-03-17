@@ -71,9 +71,7 @@
         <dependency>
             <groupId>org.vuetifyjs</groupId>
             <artifactId>vuetify</artifactId>
-            <classifier>d
-
-                ev</classifier>
+            <classifier>dev</classifier>
             <scope>test</scope>
         </dependency>
 
