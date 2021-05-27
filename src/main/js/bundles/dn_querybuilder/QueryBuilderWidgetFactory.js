@@ -18,28 +18,29 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import Binding from "apprt-binding/Binding";
 
-const _queryBuilderWidgetModelBinding = Symbol("_queryBuilderWidgetModelBinding");
-const _storeCountToToggleToolBinding = Symbol("_storeCountToToggleToolBinding");
-
 export default class QueryBuilderWidgetFactory {
+
+    #vm = undefined;
+    #queryBuilderWidgetModelBinding = undefined;
+    #storeCountToToggleToolBinding = undefined;
 
     activate() {
         this._initComponent();
-        this[_storeCountToToggleToolBinding] = this.bindStoreCountToToggleTool();
+        this.#storeCountToToggleToolBinding = this.bindStoreCountToToggleTool();
     }
 
     deactivate() {
-        this[_queryBuilderWidgetModelBinding].unbind();
-        this[_queryBuilderWidgetModelBinding] = undefined;
-        this[_storeCountToToggleToolBinding].unbind();
-        this[_storeCountToToggleToolBinding] = undefined;
+        this.#queryBuilderWidgetModelBinding.unbind();
+        this.#queryBuilderWidgetModelBinding = undefined;
+        this.#storeCountToToggleToolBinding.unbind();
+        this.#storeCountToToggleToolBinding = undefined;
     }
 
     createInstance() {
         const model = this._queryBuilderWidgetModel;
         model.activeTool = true;
-        const vm = this.queryBuilderWidget;
-        const widget = VueDijit(this.queryBuilderWidget);
+        const vm = this.#vm;
+        const widget = VueDijit(this.#vm);
         widget.own({
             remove() {
                 vm.$off();
@@ -49,7 +50,7 @@ export default class QueryBuilderWidgetFactory {
     }
 
     _initComponent() {
-        const vm = this.queryBuilderWidget = new Vue(QueryBuilderWidget);
+        const vm = this.#vm = new Vue(QueryBuilderWidget);
         const model = this._queryBuilderWidgetModel;
         vm.i18n = this._i18n.get().ui;
 
@@ -84,10 +85,14 @@ export default class QueryBuilderWidgetFactory {
             model.resetSpatialInput();
         });
 
-        this[_queryBuilderWidgetModelBinding] = Binding.for(vm, model)
-            .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName", "sortDescending", "linkOperator", "spatialRelation", "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput")
-            .syncAllToLeft("locale", "storeData", "sortFieldData", "showSpatialInputActions", "spatialInputActions", "enableDistinctValues",
-                "activeSpatialInputActionDescription", "showSortSelectInUserMode", "allowNegation", "loading", "processing", "activeTool")
+        this.#queryBuilderWidgetModelBinding = Binding.for(vm, model)
+            .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName",
+                "sortDescending", "linkOperator", "spatialRelation",
+                "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput")
+            .syncAllToLeft("locale", "storeData", "sortFieldData",
+                "showSpatialInputActions", "spatialInputActions", "enableDistinctValues",
+                "activeSpatialInputActionDescription", "showSortSelectInUserMode",
+                "allowNegation", "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();
     }
@@ -96,9 +101,7 @@ export default class QueryBuilderWidgetFactory {
         const model = this._queryBuilderWidgetModel;
         const tool = this._tool;
         const binding = Binding.create()
-            .syncToRight("stores", "enabled", (stores) => {
-                return !!stores.length;
-            });
+            .syncToRight("stores", "enabled", (stores) => !!stores.length);
         return binding.bindTo(model, tool).enable().syncToRightNow();
     }
 }
