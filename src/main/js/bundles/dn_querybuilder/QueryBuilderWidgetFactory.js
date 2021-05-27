@@ -38,7 +38,14 @@ export default class QueryBuilderWidgetFactory {
     createInstance() {
         const model = this._queryBuilderWidgetModel;
         model.activeTool = true;
-        return VueDijit(this.queryBuilderWidget);
+        const vm = this.queryBuilderWidget;
+        const widget = VueDijit(this.queryBuilderWidget);
+        widget.own({
+            remove() {
+                vm.$off();
+            }
+        });
+        return widget;
     }
 
     _initComponent() {
