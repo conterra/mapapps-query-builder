@@ -19,17 +19,22 @@ import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
 
-const _query = Symbol("_query");
 
 const DELAY = 500;
 
 export default class QueryController {
-    activate(componentContext) {
-        this.i18n = this._i18n.get().ui;
+
+    #i18n = undefined;
+    #query = undefined;
+
+    activate() {
+        this.#i18n = this._i18n.get().ui;
     }
 
     deactivate() {
-        this.i18n = {};
+        this.cancelQuery();
+        this.#query = undefined;
+        this.#i18n = undefined;
     }
 
     query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
@@ -44,7 +49,7 @@ export default class QueryController {
     }
 
     cancelQuery() {
-        const query = this[_query];
+        const query = this.#query;
         if (query && query.cancel) {
             query.cancel();
         }
@@ -55,7 +60,7 @@ export default class QueryController {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         options.fields = {geometry: 1};
         try {
-            const query = this[_query] = store.query(complexQuery, options);
+            const query = this.#query = store.query(complexQuery, options);
             return apprt_when(query, (result) => {
                 if (result.total) {
                     const mapWidgetModel = this._mapWidgetModel;
@@ -84,7 +89,7 @@ export default class QueryController {
                 } else {
                     this._logService.warn({
                         id: 0,
-                        message: this.i18n.errors.noResultsError
+                        message: this.#i18n.errors.noResultsError
                     });
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
                 }
@@ -109,7 +114,7 @@ export default class QueryController {
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
         try {
-            const query = this[_query] = countFilter.query({}, {count: 0});
+            const query = this.#query = countFilter.query({}, {count: 0});
             return apprt_when(query.total, (total) => {
                 if (total) {
                     if (this._smartfinderComplexQueryHandler && store.coreName) {
@@ -121,7 +126,7 @@ export default class QueryController {
                 } else {
                     this._logService.warn({
                         id: 0,
-                        message: this.i18n.errors.noResultsError
+                        message: this.#i18n.errors.noResultsError
                     });
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
                 }
