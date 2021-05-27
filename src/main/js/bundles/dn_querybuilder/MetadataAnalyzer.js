@@ -18,17 +18,19 @@ import Promise from "apprt-core/Promise";
 import ServiceResolver from "apprt/ServiceResolver";
 import apprt_request from "apprt-request";
 
-const _distinctValueQuery = Symbol("_distinctValueQuery");
-
 export default class MetadataAnalyzer {
+
+    #serviceResolver = undefined;
+    #distinctValueQuery = undefined;
+
     activate(componentContext) {
-        const serviceResolver = this.serviceResolver = new ServiceResolver();
+        const serviceResolver = this.#serviceResolver = new ServiceResolver();
         const bundleCtx = componentContext.getBundleContext();
         serviceResolver.setBundleCtx(bundleCtx);
     }
 
     deactivate() {
-        this.serviceResolver = null;
+        this.#serviceResolver = undefined;
     }
 
     getFields(store) {
@@ -77,9 +79,9 @@ export default class MetadataAnalyzer {
     }
 
     getDistinctValues(value, fieldData, store) {
-        if (this[_distinctValueQuery]) {
-            this[_distinctValueQuery].cancel();
-            this[_distinctValueQuery] = null;
+        if (this.#distinctValueQuery) {
+            this.#distinctValueQuery.cancel();
+            this.#distinctValueQuery = null;
         }
         const queryBuilderProperties = this._queryBuilderProperties;
         return new Promise((resolve) => {
@@ -110,7 +112,7 @@ export default class MetadataAnalyzer {
                     } else if (fieldData.type === "number") {
                         query.where = "1=1";
                     }
-                    this[_distinctValueQuery] = apprt_request(store.target + "/query", {
+                    this.#distinctValueQuery = apprt_request(store.target + "/query", {
                         query: query,
                         handleAs: 'json'
                     }).then((result) => {
@@ -123,12 +125,12 @@ export default class MetadataAnalyzer {
                         });
                         fieldData.distinctValues = distinctValues;
                         fieldData.loading = false;
-                        this[_distinctValueQuery] = null;
+                        this.#distinctValueQuery = null;
                         resolve();
                     }, (error) => {
                         fieldData.distinctValues = [];
                         fieldData.loading = false;
-                        this[_distinctValueQuery] = null;
+                        this.#distinctValueQuery = null;
                         resolve();
                     });
                 }
@@ -162,7 +164,7 @@ export default class MetadataAnalyzer {
     }
 
     getStoreProperties(idOrStore) {
-        const resolver = this.serviceResolver;
+        const resolver = this.#serviceResolver;
         if (typeof (idOrStore) === "string") {
             return resolver.getServiceProperties("ct.api.Store", "(id=" + idOrStore + ")");
         }
