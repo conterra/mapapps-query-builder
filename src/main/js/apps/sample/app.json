@@ -9,6 +9,7 @@
         ],
         "allowedBundles": [
             "system",
+            "console",
             "splashscreen",
             "templatelayout",
             "template-seasons",
