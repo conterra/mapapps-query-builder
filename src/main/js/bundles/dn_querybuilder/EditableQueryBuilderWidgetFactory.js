@@ -19,10 +19,9 @@ import VueDijit from "apprt-vue/VueDijit";
 
 export default class EditableQueryBuilderWidgetFactory {
 
-    getWidget(properties, queryController, tool) {
+    getWidget(properties, tool) {
         const queryBuilderProperties = this._queryBuilderProperties;
         const model = this._queryBuilderWidgetModel;
-        this.tool = tool;
         const complexQuery = properties.complexQuery;
         const editOptions = properties.options.editOptions;
         let linkOperator;
@@ -63,7 +62,7 @@ export default class EditableQueryBuilderWidgetFactory {
 
         // listen to view model methods
         vm.$on('search', () => {
-            model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, this.tool, options);
+            model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, tool, options);
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();
