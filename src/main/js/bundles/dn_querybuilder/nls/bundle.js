@@ -45,6 +45,7 @@ module.exports = {
             multipleSpatialInputs: "Select multiple geometries",
             resetSpatialInput: "Reset selected geometry",
             negateSpatialInput: "Search outside of selected geometry",
+            tempStoreTitle: "Results of the previous search",
             relationalOperators: {
                 is: "is",
                 exists: "exists",

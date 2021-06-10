@@ -19,15 +19,17 @@ import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
 import MemorySelectionStore from "./MemorySelectionStore";
 
-
 const DELAY = 500;
 
 export default class QueryController {
 
     #i18n = undefined;
     #query = undefined;
+    #bundleContext = undefined;
+    #serviceregistration = undefined;
 
-    activate() {
+    activate(componentContext) {
+        this.#bundleContext = componentContext.getBundleContext();
         this.#i18n = this._i18n.get().ui;
     }
 
@@ -85,6 +87,7 @@ export default class QueryController {
 
                     this._dataModel.setDatasource(memorySelectionStore);
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
+                    this._registerTempStore(memorySelectionStore, queryBuilderWidgetModel);
 
                 } else {
                     this._logService.warn({
@@ -120,6 +123,7 @@ export default class QueryController {
                     if (this._smartfinderComplexQueryHandler && store.coreName) {
                         this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
                     } else {
+                        this._registerTempStore(filter, queryBuilderWidgetModel);
                         this._dataModel.setDatasource(filter);
                     }
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
@@ -156,6 +160,30 @@ export default class QueryController {
                 that.searchReplacer(value);
             }
         });
+    }
+
+    _registerTempStore(store, queryBuilderWidgetModel) {
+        if (store.id === "querybuilder_temp") {
+            return;
+        }
+        const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
+        store.id = "querybuilder_temp";
+        if (this.#serviceregistration) {
+            const registration = this.#serviceregistration;
+            // clear the reference
+            this.#serviceregistration = null;
+            if (registration) {
+                // call unregister
+                registration.unregister();
+            }
+        }
+        const serviceProperties = {
+            id: "querybuilder_temp",
+            title: this.#i18n.tempStoreTitle + " (" + storeTitle + ")",
+            useIn: ["selection"]
+        };
+        const interfaces = ["ct.api.Store"];
+        this.#serviceregistration = this.#bundleContext.registerService(interfaces, store, serviceProperties);
     }
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {
