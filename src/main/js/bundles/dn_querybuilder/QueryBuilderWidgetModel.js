@@ -61,7 +61,7 @@ export default declare({
         serviceResolver.setBundleCtx(bundleCtx);
 
         const queryBuilderProperties = this._queryBuilderProperties;
-        this.getStoreData();
+        this.getStoreDataFromMetadata();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
         this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
@@ -74,7 +74,7 @@ export default declare({
         const connect = this.connect = new Connect();
         connect.connect(this._tool, "onActivate", () => {
             this.activeTool = true;
-            this.getStoreData();
+            this.getStoreDataFromMetadata();
             if (this.geometry) {
                 this.addGraphicToView(this.geometry);
             }
@@ -203,7 +203,7 @@ export default declare({
         return ({id}) => actionIdLookup[id];
     },
 
-    getStoreData() {
+    getStoreDataFromMetadata() {
         const stores = this.stores;
         const storeIds = this._properties.storeIds;
         const storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
@@ -476,7 +476,7 @@ export default declare({
             description: store.description || properties.description || ""
         });
         this.stores = newStores;
-        this.getStoreData();
+        this.getStoreDataFromMetadata();
     },
 
     removeStore(store) {
@@ -495,7 +495,7 @@ export default declare({
         if (!this._selectedStoreStillAvailable(newStores) && newStores.length) {
             this.selectedStoreId = null;
         }
-        this.getStoreData();
+        this.getStoreDataFromMetadata();
     },
 
     _selectedStoreStillAvailable(stores) {
