@@ -22,18 +22,18 @@ export default class QueryBuilderWidgetFactory {
 
     #vm = undefined;
     #queryBuilderWidgetModelBinding = undefined;
-    #storeCountToToggleToolBinding = undefined;
+    #storeDataCountToToggleToolBinding = undefined;
 
     activate() {
         this._initComponent();
-        this.#storeCountToToggleToolBinding = this.bindStoreCountToToggleTool();
+        this.#storeDataCountToToggleToolBinding = this.bindStoreDataCountToToggleTool();
     }
 
     deactivate() {
         this.#queryBuilderWidgetModelBinding.unbind();
         this.#queryBuilderWidgetModelBinding = undefined;
-        this.#storeCountToToggleToolBinding.unbind();
-        this.#storeCountToToggleToolBinding = undefined;
+        this.#storeDataCountToToggleToolBinding.unbind();
+        this.#storeDataCountToToggleToolBinding = undefined;
     }
 
     createInstance() {
@@ -97,11 +97,11 @@ export default class QueryBuilderWidgetFactory {
             .syncToLeftNow();
     }
 
-    bindStoreCountToToggleTool() {
+    bindStoreDataCountToToggleTool() {
         const model = this._queryBuilderWidgetModel;
         const tool = this._tool;
         const binding = Binding.create()
-            .syncToRight("stores", "enabled", (stores) => !!stores.length);
+            .syncToRight("storeData", "enabled", (storeData) => !!storeData.length);
         return binding.bindTo(model, tool).enable().syncToRightNow();
     }
 }
