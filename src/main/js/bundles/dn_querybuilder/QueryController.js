@@ -26,7 +26,7 @@ export default class QueryController {
     #i18n = undefined;
     #query = undefined;
     #bundleContext = undefined;
-    #serviceregistration = undefined;
+    #serviceRegistration = undefined;
 
     activate(componentContext) {
         this.#bundleContext = componentContext.getBundleContext();
@@ -151,10 +151,10 @@ export default class QueryController {
         }
         const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
         store.id = "querybuilder_temp";
-        if (this.#serviceregistration) {
-            const registration = this.#serviceregistration;
+        if (this.#serviceRegistration) {
+            const registration = this.#serviceRegistration;
             // clear the reference
-            this.#serviceregistration = null;
+            this.#serviceRegistration = null;
             if (registration) {
                 // call unregister
                 registration.unregister();
@@ -166,7 +166,7 @@ export default class QueryController {
             useIn: ["selection"]
         };
         const interfaces = ["ct.api.Store"];
-        this.#serviceregistration = this.#bundleContext.registerService(interfaces, store, serviceProperties);
+        this.#serviceRegistration = this.#bundleContext.registerService(interfaces, store, serviceProperties);
     }
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {
