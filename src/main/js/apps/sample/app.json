@@ -26,6 +26,7 @@
             "authentication",
             "viewmodeswitcher",
             "popups-default",
+            "toc",
             "dn_querybuilder"
         ],
         "require": [
@@ -61,6 +62,8 @@
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
+                    "koeln",
+                    "standorte",
                     "airtraffic",
                     "countries",
                     "baumkataster",
@@ -332,7 +335,7 @@
         },
         "agssearch": {
             "AutoStoreRegistration": {
-                "componentEnabled": false
+                "componentEnabled": true
             },
             "AGSStore": [
                 {
@@ -491,7 +494,18 @@
                     }
                 ],
                 "map": {
-                    "layers": [],
+                    "layers": [
+                        {
+                            "id": "koeln",
+                            "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/6",
+                            "type": "AGS_FEATURE"
+                        },
+                        {
+                            "id": "standorte",
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
+                            "type": "AGS_FEATURE"
+                        }
+                    ],
                     "ground": {
                         "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
                         "type": "ELEVATION"
