@@ -71,6 +71,9 @@ export default declare({
         this.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
         this.fieldQueries = [];
 
+        const properties = this._properties;
+        properties.storeIds.push("querybuilder_temp");
+
         const connect = this.connect = new Connect();
         connect.connect(this._tool, "onActivate", () => {
             this.activeTool = true;
@@ -208,7 +211,7 @@ export default declare({
         const storeIds = this._properties.storeIds;
         const storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
         apprt_when(storeData, (data) => {
-            if (data.length === 0) {
+            if (storeIds.length <= 1) {
                 data = this._metadataAnalyzer.getStoreData(stores);
             }
             this.storeData = data;

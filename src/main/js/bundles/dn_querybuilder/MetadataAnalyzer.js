@@ -148,7 +148,6 @@ export default class MetadataAnalyzer {
 
     getStoreDataByIds(storeIds) {
         const storeData = [];
-        storeIds.push("querybuilder_temp");
         storeIds.forEach((storeId) => {
             const storeProperties = this.getStoreProperties(storeId);
             if (storeProperties) {
