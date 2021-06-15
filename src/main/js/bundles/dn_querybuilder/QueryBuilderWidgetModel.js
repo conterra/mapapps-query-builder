@@ -390,7 +390,7 @@ export default declare({
             if (field.type === "number") {
                 value = parseFloat(value);
             }
-            if (value === "" || value === null || value === undefined) {
+            if (value === "" || value === null || value === undefined || value.length === 0) {
                 return;
             }
             const obj1 = {};

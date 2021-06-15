@@ -150,6 +150,7 @@
                             item-text="name"
                             single-line
                             hide-details
+                            :multiple="fieldQuery.relationalOperator==='$in'"
                         />
                         <v-combobox
                             v-else-if="selectedField && enableDistinctValues && selectedField.type === 'number'"
@@ -167,6 +168,7 @@
                             hide-no-data
                             clearable
                             :search-input.sync="search"
+                            :multiple="fieldQuery.relationalOperator==='$in'"
                         />
                         <v-combobox
                             v-else-if="selectedField && enableDistinctValues && selectedField.type === 'string'"
@@ -184,6 +186,7 @@
                             hide-no-data
                             clearable
                             :search-input.sync="search"
+                            :multiple="fieldQuery.relationalOperator==='$in'"
                         />
                         <v-text-field
                             v-else-if="selectedField && selectedField.type === 'number'"
@@ -367,6 +370,8 @@
                 const selectedField = this.selectedField;
                 if (relationalOperator === "$exists") {
                     fieldQuery.value = true;
+                } else if (relationalOperator === "$in") {
+                    fieldQuery.value = [];
                 } else {
                     if (selectedField.type === "date") {
                         fieldQuery.value = "";
@@ -407,7 +412,8 @@
                             {value: "$eq", text: this.i18n.relationalOperators.is},
                             {value: "$eqw", text: this.i18n.relationalOperators.eqw},
                             {value: "$suggest", text: this.i18n.relationalOperators.suggest},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                            {value: "$exists", text: this.i18n.relationalOperators.exists},
+                            {value: "$in", text: this.i18n.relationalOperators.in}
                         ];
                     case "number":
                         return [
@@ -415,7 +421,8 @@
                             {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
                             {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
                             {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal}
+                            {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal},
+                            {value: "$in", text: this.i18n.relationalOperators.in}
                         ];
                     case "date":
                         return [
