@@ -64,7 +64,6 @@
                 "storeIds": [
                     "koeln",
                     "standorte",
-                    "airtraffic",
                     "countries",
                     "baumkataster",
                     "stoerungen",
@@ -118,31 +117,6 @@
                             }
                         ]
                     }
-                },
-                {
-                    "id": "querybuilder_1469615816195",
-                    "title": "Where are Germany's airports?",
-                    "iconClass": "icon-custom-info",
-                    "customquery": {
-                        "$and": [
-                            {
-                                "OBJECTID": {
-                                    "$gt": 0
-                                }
-                            }
-                        ]
-                    },
-                    "options": {
-                        "mode": "builder",
-                        "editable": false,
-                        "count": -1,
-                        "ignoreCase": false,
-                        "locale": {
-                            "language": "en",
-                            "country": "EN"
-                        }
-                    },
-                    "storeId": "airtraffic"
                 },
                 {
                     "id": "querybuilder_1540467316530",
@@ -339,11 +313,10 @@
             },
             "AGSStore": [
                 {
-                    "id": "airtraffic",
-                    "title": "Airtraffic",
-                    "description": "Airtraffic",
-                    "idProperty": "OBJECTID",
-                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/airtraffic/MapServer/1",
+                    "id": "countries",
+                    "title": "Countries",
+                    "description": "Countries of the world",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
                     "popupEnabled": true,
                     "useIn": [
                         "selection"
@@ -352,50 +325,20 @@
                         "metadata": {
                             "fields": [
                                 {
-                                    "name": "OBJECTID",
+                                    "name": "objectid",
                                     "title": "ID"
                                 },
                                 {
-                                    "name": "aeroway",
-                                    "title": "AEROWAY"
+                                    "name": "placename",
+                                    "title": "Name"
                                 },
                                 {
-                                    "name": "OSMID",
-                                    "title": "OSM ID"
-                                },
-                                {
-                                    "name": "osm_name",
-                                    "title": "NAME"
-                                },
-                                {
-                                    "name": "osm_ref",
-                                    "title": "REF"
-                                },
-                                {
-                                    "name": "osm_type",
-                                    "title": "TYPE"
-                                },
-                                {
-                                    "name": "osm_operator",
-                                    "title": "OPERATOR"
-                                },
-                                {
-                                    "name": "osm_website",
-                                    "title": "WEBSITE"
+                                    "name": "code",
+                                    "title": "Code"
                                 }
                             ]
                         }
                     }
-                },
-                {
-                    "id": "countries",
-                    "title": "Countries",
-                    "description": "Countries of the world",
-                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
-                    "popupEnabled": true,
-                    "useIn": [
-                        "selection"
-                    ]
                 },
                 {
                     "id": "baumkataster",
@@ -405,7 +348,45 @@
                     "popupEnabled": true,
                     "useIn": [
                         "selection"
-                    ]
+                    ],
+                    "filterOptions": {
+                        "metadata": {
+                            "fields": [
+                                {
+                                    "name": "objectid",
+                                    "title": "Object ID"
+                                },
+                                {
+                                    "name": "id",
+                                    "title": "ID"
+                                },
+                                {
+                                    "name": "anlage",
+                                    "title": "Anlage"
+                                },
+                                {
+                                    "name": "gattung",
+                                    "title": "Gattung"
+                                },
+                                {
+                                    "name": "pflanzjahr",
+                                    "title": "Pflanzjahr"
+                                },
+                                {
+                                    "name": "status",
+                                    "title": "Status"
+                                },
+                                {
+                                    "name": "hoehe",
+                                    "title": "Höhe"
+                                },
+                                {
+                                    "name": "stammdurchmesser",
+                                    "title": "Stammdurchmesser"
+                                }
+                            ]
+                        }
+                    }
                 },
                 {
                     "id": "stoerungen",
