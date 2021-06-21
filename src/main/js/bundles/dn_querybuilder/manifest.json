@@ -260,6 +260,7 @@
             "propertiesConstructor": true,
             "properties": {
                 "enableDistinctValues": true,
+                "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useMemorySelectionStore": false,

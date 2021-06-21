@@ -353,7 +353,9 @@
                 }
             },
             fieldChanged: function (selectedFieldId, fieldQuery) {
+                const value = this.search;
                 const selectedField = this.selectedField;
+                this.getDistinctValues(value, selectedField);
                 if (selectedField.type === "date") {
                     fieldQuery.value = null;
                     fieldQuery.relationalOperator = "$lte";

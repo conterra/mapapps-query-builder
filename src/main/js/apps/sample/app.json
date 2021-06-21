@@ -40,6 +40,7 @@
         "dn_querybuilder": {
             "QueryBuilderProperties": {
                 "enableDistinctValues": true,
+                "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useMemorySelectionStore": false,

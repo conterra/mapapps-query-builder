@@ -85,7 +85,8 @@ export default class MetadataAnalyzer {
         }
         const queryBuilderProperties = this._queryBuilderProperties;
         return new Promise((resolve) => {
-            if (!value || !queryBuilderProperties.enableDistinctValues) {
+            if ((!value && !queryBuilderProperties.enableInitialDistinctValues)
+                || !queryBuilderProperties.enableDistinctValues) {
                 resolve();
                 return;
             }
@@ -106,7 +107,9 @@ export default class MetadataAnalyzer {
                         returnGeometry: false,
                         f: 'json'
                     };
-                    if (fieldData.type === "string") {
+                    if (!value) {
+                        query.where = "1=1";
+                    } else if (fieldData.type === "string") {
                         value = value.toLowerCase();
                         query.where = "LOWER(" + [fieldData.id] + ") LIKE '%" + value + "%'";
                     } else if (fieldData.type === "number") {

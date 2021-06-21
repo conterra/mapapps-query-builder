@@ -86,6 +86,7 @@ No further configuration is required, default values will be used.
 ```json
 "QueryBuilderProperties": {
     "enableDistinctValues": true,
+    "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",
     "defaultSpatialRelation": "everywhere",
     "useMemorySelectionStore": false,
@@ -156,6 +157,7 @@ No further configuration is required, default values will be used.
 | Property                        | Type    | Possible Values                                                       | Default                     | Description                                                                                                                                             |
 |---------------------------------|---------|-----------------------------------------------------------------------|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | enableDistinctValues            | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Distinct values are queried by the service.                                                                                                             |
+| enableInitialDistinctValues     | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Distinct values are queried after a new field was selected.                                                                                                             |
 | defaultLinkOperator             | String  | ```or``` &#124; ```and```                                             | ```or```                    | Defines the default link operator.                                                                                                                      |
 | defaultSpatialRelation          | String  | ```everywhere``` &#124; ```current_extent```                          | ```everywhere```            | Defines the default spatial relation.                                                                                                                   |
 | useMemorySelectionStore         | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use MemorySelectionStore to save the results.                                                                                                           |
