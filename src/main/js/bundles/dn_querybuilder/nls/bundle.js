@@ -61,6 +61,7 @@ module.exports = {
                 is_less_or_equal: "is less or equal",
                 before: "before",
                 after: "after",
+                in: "is in"
             },
             rules: {
                 required: "required",

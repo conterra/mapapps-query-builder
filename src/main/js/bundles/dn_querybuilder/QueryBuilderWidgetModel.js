@@ -388,9 +388,12 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                value = parseFloat(value);
+                if(Array.isArray(value))
+                    value = value.map(subvalue => parseFloat(subvalue));
+                else
+                    value = parseFloat(value);
             }
-            if (value === "" || value === null || value === undefined) {
+            if (value === "" || value === null || value === undefined || value.length === 0) {
                 return;
             }
             const obj1 = {};

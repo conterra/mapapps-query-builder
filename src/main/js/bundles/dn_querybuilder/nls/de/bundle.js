@@ -59,7 +59,8 @@ module.exports = {
             is_less_than: "ist kleiner",
             is_less_or_equal: "ist kleiner / gleich",
             before: "vor",
-            after: "nach"
+            after: "nach",
+            in: "ist in"
         },
         rules: {
             required: "Wert wird ben\u00f6tigt",
