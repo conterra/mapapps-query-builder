@@ -99,7 +99,7 @@ export default class QueryToolController {
                 options.suggestContains = true;
             }
 
-            this._queryController.query(store, complexQuery, options, tool);
+            this._queryController.query(store, complexQuery, options, tool, this._queryBuilderWidgetModel);
         }
     }
 }

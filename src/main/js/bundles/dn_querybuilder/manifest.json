@@ -427,6 +427,11 @@
                     "providing": "dn_querybuilder.QueryController"
                 },
                 {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
+                },
+                {
                     "name": "_mapWidgetModel",
                     "providing": "map-widget.MapWidgetModel"
                 },
