@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import {declare} from "apprt-core/Mutable";
-import ct_array from "ct/array";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import ServiceResolver from "apprt/ServiceResolver";
@@ -421,7 +420,7 @@ export default declare({
     },
 
     removeFieldQuery(fieldQuery) {
-        ct_array.arrayRemove(this.fieldQueries, fieldQuery);
+        this.fieldQueries.remove(fieldQuery);
     },
 
     removeFieldQueries() {

@@ -20,7 +20,6 @@ import d_array from "dojo/_base/array";
 import d_registry from "dijit/registry";
 
 import _Connect from "ct/_Connect";
-import ct_array from "ct/array";
 import apprt_when from "apprt-core/when";
 import ComplexMemoryStore from "ct/store/ComplexMemory";
 
@@ -208,9 +207,7 @@ export default declare([_Connect], {
     _getConfiguration(pid) {
         const properties = this._properties.widgetProperties;
         const data = this._configAdminService.getFactoryConfigurations(properties.pid, properties.bid);
-        return ct_array.arraySearchFirst(data, {
-            pid: pid
-        });
+        return data.find((d) => d.pid === pid);
     },
 
     _onCreateQueryTool(event) {

@@ -256,8 +256,6 @@
     </v-scroll-y-transition>
 </template>
 <script>
-    import ct_array from "ct/array";
-
     export default {
         props: {
             i18n: {
@@ -306,7 +304,7 @@
         },
         computed: {
             selectedField() {
-                return ct_array.arraySearchFirst(this.fieldQuery.fields, {id: this.fieldQuery.selectedFieldId});
+                return this.fieldQuery.fields.find((field) => field.id === this.fieldQuery.selectedFieldId);
             }
         },
         watch: {

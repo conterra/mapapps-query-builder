@@ -24,7 +24,6 @@ import Memory from "dojo/store/Memory";
 import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
-import ct_array from "ct/array";
 import ct_css from "ct/util/css";
 import ComplexMemoryStore from "ct/store/ComplexMemory";
 import DataViewModel from "dataview/DataViewModel";
@@ -304,7 +303,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         }
     },
     _getSelectedStoreObj(id) {
-        return ct_array.arraySearchFirst(this.stores, {id: id});
+        return this.stores.find((store) => store.id === id)
     },
     _addDataField(field, editFields) {
         let fieldId;
