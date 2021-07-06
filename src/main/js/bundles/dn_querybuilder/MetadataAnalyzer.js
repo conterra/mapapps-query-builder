@@ -39,15 +39,26 @@ export default class MetadataAnalyzer {
                 const queryBuilderProperties = this._queryBuilderProperties;
                 const metadata = store.getMetadata();
                 apprt_when(metadata, (metadata) => {
+                    const types = metadata.types;
+                    const domainsFromTypes = {};
+                    types && types.forEach(type => {
+                        if (type.domains) {
+                            for (const [key, value] of Object.entries(type.domains)) {
+                                if (domainsFromTypes[key]) {
+                                    domainsFromTypes[key].concat(value.codedValues);
+                                } else {
+                                    domainsFromTypes[key] = value.codedValues;
+                                }
+                            }
+                        }
+                    })
+
                     const fields = metadata.fields;
                     const storeData = [];
                     fields.forEach((field) => {
-                        let codedValues = [];
-                        let codedValueString = "";
-                        if (field.domain && field.domain.codedValues) {
-                            codedValues = field.domain.codedValues;
-                            codedValueString = "[CV]";
-                        }
+                        const codedValues = (field.domain && field.domain.codedValues)
+                            || domainsFromTypes[field.name] || [];
+                        const codedValueString = codedValues.length > 0 ? "[CV]" : "";
                         if (field.type !== "geometry") {
                             let title = field.title;
                             if (!title || title === "") {
