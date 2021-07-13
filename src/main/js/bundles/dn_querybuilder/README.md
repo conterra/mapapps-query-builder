@@ -78,7 +78,7 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 }
 ```
 
-No further configuration is required, default values will be used.
+No further configuration required, default values will be used.
 
 ## Configuration Reference
 
