@@ -59,7 +59,7 @@ export default class QueryToolController {
             this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
             setTimeout(() => {
                 const window = ct_util.findEnclosingWindow(widget);
-                window.on("Close", () => {
+                window?.on("Close", () => {
                     this.hideWindow();
                     widget.destroyRecursive();
                 });
