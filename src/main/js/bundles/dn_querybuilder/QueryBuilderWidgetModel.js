@@ -461,7 +461,8 @@ export default declare({
     },
 
     getSelectedStoreTitle(selectedStoreId) {
-        return this.storeData.find((data) => data.id === selectedStoreId).text;
+        const storeData = this.storeData.find((data) => data.id === selectedStoreId)
+        return storeData?.text || null;
     },
 
     addStore(store, properties) {

@@ -160,9 +160,10 @@ export default class QueryController {
                 registration.unregister();
             }
         }
+        const title = storeTitle ? this.#i18n.tempStoreTitle + " (" + storeTitle + ")" : this.#i18n.tempStoreTitle;
         const serviceProperties = {
             id: "querybuilder_temp",
-            title: this.#i18n.tempStoreTitle + " (" + storeTitle + ")",
+            title: title,
             useIn: ["selection"]
         };
         const interfaces = ["ct.api.Store"];
