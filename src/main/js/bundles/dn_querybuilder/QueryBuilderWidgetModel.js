@@ -301,7 +301,7 @@ export default declare({
                 });
             }
             this.loading = true;
-            const fieldData = this._getSelectedFieldData(selectedStoreId);
+            const fieldData = this._getSelectedFieldData(selectedStoreId, true);
             apprt_when(fieldData, (fields) => {
                 fieldQueries.push({
                     fields: fields,
@@ -326,10 +326,12 @@ export default declare({
         });
     },
 
-    _getSelectedFieldData(selectedStoreId) {
+    _getSelectedFieldData(selectedStoreId, editable) {
         const queryBuilderProperties = this._queryBuilderProperties;
         let hiddenFields = null;
-        if (queryBuilderProperties.hidedFields) {
+        if (editable) {
+            hiddenFields = [];
+        } else if (queryBuilderProperties.hidedFields) {
             hiddenFields = queryBuilderProperties.hidedFields;
         } else if (queryBuilderProperties.hiddenFields) {
             hiddenFields = queryBuilderProperties.hiddenFields;
@@ -387,7 +389,7 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                if(Array.isArray(value))
+                if (Array.isArray(value))
                     value = value.map(subvalue => parseFloat(subvalue));
                 else
                     value = parseFloat(value);
