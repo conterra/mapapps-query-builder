@@ -229,7 +229,7 @@ export default declare({
         });
     },
 
-    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options) {
+    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable) {
         const properties = this._queryBuilderProperties;
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
@@ -238,7 +238,7 @@ export default declare({
         const opts = Object.assign({}, properties.defaultQueryOptions || {}, options || {}, {
             suggestContains: false
         });
-        if (properties.showSortSelectInUserMode) {
+        if (properties.showSortSelectInUserMode && !editable) {
             sortOptions = this.getSortOptions();
             opts.sort = sortOptions;
         }
