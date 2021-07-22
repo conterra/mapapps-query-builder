@@ -422,7 +422,10 @@ export default declare({
     },
 
     removeFieldQuery(fieldQuery) {
-        this.fieldQueries.remove(fieldQuery);
+        const index = this.fieldQueries.indexOf(fieldQuery);
+        if (index > -1) {
+            this.fieldQueries.splice(index, 1);
+        }
     },
 
     removeFieldQueries() {
