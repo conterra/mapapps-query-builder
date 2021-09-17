@@ -89,7 +89,6 @@ No further configuration required, default values will be used.
     "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",
     "defaultSpatialRelation": "everywhere",
-    "useMemorySelectionStore": false,
     "useUserExtent": false,
     "allowNegation": true,
     "showQuerySettingsInEditableMode": true,
@@ -160,7 +159,6 @@ No further configuration required, default values will be used.
 | enableInitialDistinctValues     | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Distinct values are queried after a new field was selected.                                                                                                             |
 | defaultLinkOperator             | String  | ```or``` &#124; ```and```                                             | ```or```                    | Defines the default link operator.                                                                                                                      |
 | defaultSpatialRelation          | String  | ```everywhere``` &#124; ```current_extent```                          | ```everywhere```            | Defines the default spatial relation.                                                                                                                   |
-| useMemorySelectionStore         | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use MemorySelectionStore to save the results.                                                                                                           |
 | useUserExtent                   | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Use the current user extent to filter predefined queries.                                                                                               |
 | allowNegation                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Allows the user to negate the different parts of the queries.                                                                                           |
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the query settings for editable queries.                                                                                                   |

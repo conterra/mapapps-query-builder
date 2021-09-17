@@ -17,7 +17,8 @@ import apprt_when from "apprt-core/when";
 import async from "apprt-core/async";
 import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
-import MemorySelectionStore from "./MemorySelectionStore";
+import {MemoryStore} from "./MemoryStore";
+import CachingStore from "./CachingStore";
 
 const DELAY = 500;
 
@@ -41,12 +42,7 @@ export default class QueryController {
 
     query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this.searchReplacer(complexQuery);
-        const queryBuilderProperties = this._queryBuilderProperties;
-        if (queryBuilderProperties.useMemorySelectionStore) {
-            this.memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
-        } else {
-            this.defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel);
-        }
+        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel);
         this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
     }
 
@@ -58,66 +54,39 @@ export default class QueryController {
         this._dataModel.setDatasource();
     }
 
-    memorySelectionQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
-        this._setProcessing(tool, true, queryBuilderWidgetModel);
-        options.fields = {geometry: 1};
-        const query = this.#query = store.query(complexQuery, options);
-        return apprt_when(query, (result) => {
-            if (result.total) {
-                const mapWidgetModel = this._mapWidgetModel;
-                const spatialReference = mapWidgetModel.get("spatialReference");
-                const wkid = spatialReference.latestWkid || spatialReference.wkid;
-                const geometries = result.map((item) => item.geometry);
-
-                if (geometries[0]) {
-                    apprt_when(this._coordinateTransformer.transform(geometries, wkid), (transformedGeometries) => {
-                        transformedGeometries.forEach((tg, index) => {
-                            result[index].geometry = tg;
-                        });
-                    }, this);
-                }
-
-                const memorySelectionStore = new MemorySelectionStore({
-                    id: "querybuilder_" + store.id,
-                    idProperty: store.idProperty,
-                    masterStore: store,
-                    data: result
-                });
-
-                this._dataModel.setDatasource(memorySelectionStore);
-                this._setProcessing(tool, false, queryBuilderWidgetModel);
-                this._registerTempStore(memorySelectionStore, queryBuilderWidgetModel);
-
-            } else {
-                this._logService.warn({
-                    id: 0,
-                    message: this.#i18n.errors.noResultsError
-                });
-                this._setProcessing(tool, false, queryBuilderWidgetModel);
-            }
-        }, (e) => {
-            this._logService.error({
-                id: e.name,
-                message: e.message
-            });
-            this._setProcessing(tool, false, queryBuilderWidgetModel);
-        });
-    }
-
-    defaultQuery(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
-        const query = this.#query = countFilter.query({}, {count: 0});
+        const idProperty = store.idProperty;
+        let opts = null;
+        if (idProperty) {
+            opts = Object.assign({}, options);;
+            const fields = opts.fields = {};
+            fields[idProperty] = true;
+        }
+        let query = this.#query = countFilter.query({}, {count: 0});
         return apprt_when(query.total, (total) => {
             if (total) {
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
                 } else {
-                    this._registerTempStore(filter, queryBuilderWidgetModel);
-                    this._dataModel.setDatasource(filter);
+                    query = this.#query = store.query(complexQuery, opts || options);
+                    return apprt_when(query, (result) => {
+                        this._setProcessing(tool, false, queryBuilderWidgetModel);
+                        let resultStore;
+                        const idList = result ? result.map(item => item[idProperty]) : [];
+                        if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
+                            resultStore = this._createResultReferenceStore(idList, store, 1000);
+                        } else {
+                            resultStore = this._createFullItemResultStore(idList, result, store);
+                        }
+
+                        this._registerTempStore(filter, queryBuilderWidgetModel);
+                        this._dataModel.setDatasource(resultStore);
+                    });
                 }
-                this._setProcessing(tool, false, queryBuilderWidgetModel);
             } else {
                 this._logService.warn({
                     message: this.#i18n.errors.noResultsError
@@ -130,6 +99,24 @@ export default class QueryController {
                 id: e.name,
                 message: e.message
             });
+        });
+    }
+
+    _createFullItemResultStore(idList, result, masterStore) {
+        return new MemoryStore({
+            masterStore: masterStore,
+            data: result,
+            idProperty: masterStore.idProperty,
+            // TODO: remove id list
+            idList: idList
+        });
+    }
+
+    _createResultReferenceStore(idList, masterStore, maxServerFeaturesLimit) {
+        return new CachingStore({
+            masterStore: masterStore,
+            idList: idList,
+            maxFeaturesLimit: maxServerFeaturesLimit
         });
     }
 

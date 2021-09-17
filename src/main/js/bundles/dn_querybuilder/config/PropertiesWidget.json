@@ -57,11 +57,6 @@
         },
         {
             "type": "checkbox",
-            "label": "${propertiesWidget.useMemorySelectionStore}",
-            "field": "useMemorySelectionStore"
-        },
-        {
-            "type": "checkbox",
             "label": "${propertiesWidget.useUserExtent}",
             "field": "useUserExtent"
         },

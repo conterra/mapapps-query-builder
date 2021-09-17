@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import declare from "dojo/_base/declare";
-import ComplexMemoryStore from "ct/store/ComplexMemory";
+import { AsyncWritableInMemoryStore } from "store-api/InMemoryStore";
+import "store-api/SpatialQuery";
 
-export default declare([ComplexMemoryStore], {
-    masterStore: null,
-
-    getMetadata: function () {
+export class MemoryStore extends AsyncWritableInMemoryStore {
+    constructor(opts) {
+        super(opts);
+        this.masterStore = opts.masterStore;
+        this.idList = opts.idList;
+    }
+    async getMetadata() {
         return this.masterStore.getMetadata();
     }
-});
+}

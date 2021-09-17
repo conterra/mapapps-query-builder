@@ -24,7 +24,6 @@ module.exports = {
         enableDistinctValues: "Distinct Values vorschlagen",
         defaultLinkOperator: "Standard-Vergleichsoperator",
         defaultSpatialRelation: "Standard-R\u00E4umlicher-Vergleichsoperator",
-        useMemorySelectionStore: "Memory Selection Store verwenden",
         useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
         allowNegation: "Negation eines Feldes erlauben",
         showQuerySettingsInEditableMode: "Sucheinstellungen im Editiermodus anzeigen",

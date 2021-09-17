@@ -263,7 +263,6 @@
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
-                "useMemorySelectionStore": false,
                 "useUserExtent": false,
                 "allowNegation": false,
                 "showQuerySettingsInEditableMode": true,
