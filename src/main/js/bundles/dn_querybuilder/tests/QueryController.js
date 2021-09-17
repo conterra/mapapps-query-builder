@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import registerSuite from "intern!object";
-import assert from "intern/chai!assert";
+import { assert } from "chai";
 import module from "module";
 import QueryController from "../QueryController";
 import Replacer from "dn_queryplaceholder/Replacer";
 
-registerSuite({
-    name: module.id,
-    "SearchReplacer": function () {
+describe(module.id, function(){
+    it("SearchReplacer", function () {
         const object = {"$or": [{"aeroway": {"$eq": "${current_app_name}"}}]};
         const queryController = new QueryController();
         const replacer = new Replacer();
@@ -39,5 +37,5 @@ registerSuite({
         queryController._replacer = replacer;
         queryController.searchReplacer(object);
         assert.equal(object["$or"][0].aeroway["$eq"], "Peter", 'the replacement failed.');
-    }
+    });
 });
