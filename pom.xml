@@ -40,7 +40,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <!-- import dependencies management from mapapps -->
                 <groupId>de.conterra.mapapps</groupId>
                 <artifactId>ct-mapapps</artifactId>
                 <version>${mapapps.version}</version>
@@ -67,7 +66,6 @@
             <classifier>dev</classifier>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.vuetifyjs</groupId>
             <artifactId>vuetify</artifactId>
@@ -187,11 +185,6 @@
                     <version>2.5.3</version>
                 </plugin>
                 <plugin>
-                    <groupId>de.jutzig</groupId>
-                    <artifactId>github-release-plugin</artifactId>
-                    <version>1.4.0</version>
-                </plugin>
-                <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
@@ -254,7 +247,7 @@
             <plugin>
                 <groupId>de.conterra.maven</groupId>
                 <artifactId>setproperties-maven-plugin</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3</version>
                 <executions>
                     <execution>
                         <goals>
@@ -418,6 +411,10 @@
                         <include>src/main/js/**/*.ts</include>
                         <include>src/main/js/**/*.vue</include>
                         <include>src/main/js/**/*.css</include>
+                        <include>src/test/**/*.js</include>
+                        <include>src/test/**/*.html</include>
+                        <include>src/test/**/*.css</include>
+                        <include>src/test/**/application.properties</include>
                         <include>src/main/config/assembly.xml</include>
                         <include>**/build.properties</include>
                         <include>**/gulpfile.js</include>
@@ -469,6 +466,13 @@
                 <artifactId>mapapps-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <!-- used to create .zip files containing the apps during the build -->
+                        <id>create-app-zips</id>
+                        <goals>
+                            <goal>deployApps</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>build-app-template</id>
                         <phase>prepare-package</phase>
                         <goals>
@@ -488,8 +492,11 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <!-- only build zip files -->
                     <skipDeploy>true</skipDeploy>
                     <createApp>false</createApp>
+                    <sourceDirectory>${js.build.outputPath}/apps</sourceDirectory>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -516,12 +523,8 @@
                 <configuration>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                     <preparationGoals>clean</preparationGoals>
-                    <releaseProfiles>compress,github-release</releaseProfiles>
+                    <releaseProfiles>compress</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <!-- for git release plugin-->
-                    <arguments>-Dusername=${scm.username} -Dpassword=${scm.password}</arguments>
-                    <username>${scm.username}</username>
-                    <password>${scm.password}</password>
                 </configuration>
             </plugin>
         </plugins>
@@ -534,12 +537,10 @@
     </scm>
     <distributionManagement>
         <repository>
-            <name>repository for sdi.suite releases</name>
             <id>${dist.releases.id}</id>
             <url>${dist.releases.url}</url>
         </repository>
         <snapshotRepository>
-            <name>repository for sdi.suite snapshots</name>
             <id>${dist.snapshots.id}</id>
             <url>${dist.snapshots.url}</url>
         </snapshotRepository>
@@ -550,12 +551,12 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.11.1</mapapps.version>
+        <mapapps.version>4.12.0</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.4.1</ct.jsregistry.version>
-        <ct.jsrt-test.version>2.0.0</ct.jsrt-test.version>
+        <ct.jsregistry.version>1.4.3</ct.jsregistry.version>
+        <ct.jsrt-test.version>2.0.2</ct.jsrt-test.version>
 
         <selectionactions.version>1.9.1</selectionactions.version>
 
@@ -567,10 +568,19 @@
             *://*:*/**;
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
-        <proxy.use.rules/>
+        <proxy.use.rules></proxy.use.rules>
         <jetty.port>9090</jetty.port>
         <mvn.cmd>mvn</mvn.cmd>
-        <gulp.task/>
+        <gulp.task></gulp.task>
+
+        <mapapps.user><!-- set correct username for map.apps remote installation--></mapapps.user>
+        <mapapps.pw><!-- set correct password for map.apps remote installation--></mapapps.pw>
+        <!-- set to false if map.apps is configured behind integrated windows authentication is required -->
+        <mapapps.useChunkedRequestEncoding>true</mapapps.useChunkedRequestEncoding>
+        <!-- enable this if "upload" profile should only deploy bundles -->
+        <skip.apps.upload>false</skip.apps.upload>
+        <!-- enable this if "upload" profile should pre-optimize apps -->
+        <triggerPreOptimization>false</triggerPreOptimization>
 
         <!-- required for release build -->
         <scm.push>false</scm.push>
@@ -591,7 +601,7 @@
                                 <goals>
                                     <goal>reserve-network-port</goal>
                                 </goals>
-                                <phase>process-test-classes</phase>
+                                <phase>process-test-resources</phase>
                                 <configuration>
                                     <portNames>
                                         <portName>jetty.server.port</portName>
@@ -638,7 +648,7 @@
                                     <goal>gulp</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run-js-tests --tests "http://localhost:${jetty.server.port}/resources/jsregistry/root/intern/latest/runner.html?boot=/js/tests/test-init.js&amp;test=dn_querybuilder/tests/all"</arguments>
+                                    <arguments>run-browser-tests --tests http://localhost:${jetty.server.port}/resources/jsregistry/root/@conterra/mapapps-mocha-runner/latest/mocha.html?boot=/js/tests/test-init.js&amp;timeout=5000&amp;test=dn_querybuilder/tests/all&amp;reporter=tap</arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -787,45 +797,8 @@
                                     <async>true</async>
                                     <executable>${maven.home}/bin/${mvn.cmd}</executable>
                                     <arguments>
-                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes
-                                        </argument>
+                                        <argument>com.github.eirslett:frontend-maven-plugin:gulp@watch-changes</argument>
                                     </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>github-release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>de.jutzig</groupId>
-                        <artifactId>github-release-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>github-upload</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>release</goal>
-                                </goals>
-                                <configuration>
-                                    <tag>${project.version}</tag>
-                                    <artifact>${project.build.directory}/${project.artifactId}-${project.version}.jar
-                                    </artifact>
-                                    <fileSets>
-                                        <fileSet>
-                                            <directory>${project.build.directory}</directory>
-                                            <includes>
-                                                <include>${project.artifactId}-bundle.zip</include>
-                                                <include>${project.artifactId}-sample-app.zip</include>
-                                                <!--<include>${project.artifactId}*.tar.gz</include>-->
-                                                <include>${project.artifactId}*.zip</include>
-                                            </includes>
-                                        </fileSet>
-                                    </fileSets>
                                 </configuration>
                             </execution>
                         </executions>
@@ -933,15 +906,16 @@
                         <groupId>de.conterra.mapapps</groupId>
                         <artifactId>mapapps-maven-plugin</artifactId>
                         <configuration>
-                            <!-- enable deploy options -->
-                            <skipDeploy>false</skipDeploy>
+                            <skipDeploy>${skip.apps.upload}</skipDeploy>
                             <deployAsApp>true</deployAsApp>
                             <appName>${project.artifactId}</appName>
                             <appTitle>${project.artifactId}-${project.version}</appTitle>
                             <appEditorState>PUBLISHED</appEditorState>
                             <serverResourcesEndpoint>${mapapps.remote.base}/resources</serverResourcesEndpoint>
-                            <username>admin</username>
-                            <password>admin</password>
+                            <username>${mapapps.user}</username>
+                            <password>${mapapps.pw}</password>
+                            <useChunkedRequestEncoding>${mapapps.useChunkedRequestEncoding}</useChunkedRequestEncoding>
+                            <triggerPreOptimization>${triggerPreOptimization}</triggerPreOptimization>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -955,8 +929,9 @@
                                 </goals>
                                 <configuration>
                                     <registryEndpoint>${mapapps.remote.base}/resources/jsregistry</registryEndpoint>
-                                    <username>admin</username>
-                                    <password>admin</password>
+                                    <username>${mapapps.user}</username>
+                                    <password>${mapapps.pw}</password>
+                                    <useChunkedRequestEncoding>${mapapps.useChunkedRequestEncoding}</useChunkedRequestEncoding>
                                 </configuration>
                             </execution>
                         </executions>
