@@ -23,7 +23,7 @@ import Graphic from "esri/Graphic";
 import Extent from "esri/geometry/Extent";
 import {union, difference} from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
-import ProjectParameters from "esri/tasks/support/ProjectParameters";
+import ProjectParameters from "esri/rest/support/ProjectParameters";
 
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
