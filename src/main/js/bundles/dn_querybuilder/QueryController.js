@@ -40,9 +40,9 @@ export default class QueryController {
         this.#i18n = undefined;
     }
 
-    query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+    query(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition) {
         this.searchReplacer(complexQuery);
-        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel);
+        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition);
         this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
     }
 
@@ -54,14 +54,14 @@ export default class QueryController {
         this._dataModel.setDatasource();
     }
 
-    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
         const idProperty = store.idProperty;
         let opts = null;
         if (idProperty) {
-            opts = Object.assign({}, options);;
+            opts = Object.assign({}, options);
             const fields = opts.fields = {};
             fields[idProperty] = true;
         }
@@ -77,14 +77,20 @@ export default class QueryController {
                         this._setProcessing(tool, false, queryBuilderWidgetModel);
                         let resultStore;
                         const idList = result ? result.map(item => item[idProperty]) : [];
-                        if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
-                            resultStore = this._createResultReferenceStore(idList, store, 1000);
-                        } else {
-                            resultStore = this._createFullItemResultStore(idList, result, store);
-                        }
 
-                        this._registerTempStore(filter, queryBuilderWidgetModel);
-                        this._dataModel.setDatasource(resultStore);
+                        const layer = queryBuilderWidgetModel.layer;
+                        if (setLayerDefinition && layer) {
+                            layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
+                        } else {
+                            if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
+                                resultStore = this._createResultReferenceStore(idList, store, 1000);
+                            } else {
+                                resultStore = this._createFullItemResultStore(idList, result, store);
+                            }
+
+                            this._registerTempStore(filter, queryBuilderWidgetModel);
+                            this._dataModel.setDatasource(resultStore);
+                        }
                     });
                 }
             } else {

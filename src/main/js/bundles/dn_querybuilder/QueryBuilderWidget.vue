@@ -280,6 +280,7 @@
                 class="pa-1"
             >
                 <v-layout
+                    v-if="!showSetLayerDefinition || !layerAvailable"
                     row
                     wrap
                     justify-center
@@ -308,6 +309,53 @@
                                 cancel
                             </v-icon>
                             {{ i18n.cancelSearch }}
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-layout
+                    v-else
+                    row
+                    wrap
+                    justify-center
+                >
+                    <v-flex md6>
+                        <v-btn
+                            v-if="!processing"
+                            block
+                            ripple
+                            color="primary"
+                            @click="emitSearch"
+                        >
+                            <v-icon left>
+                                search
+                            </v-icon>
+                            {{ i18n.search }}
+                        </v-btn>
+                        <v-btn
+                            v-else
+                            block
+                            ripple
+                            color="primary"
+                            @click="$emit('cancel-search', {})"
+                        >
+                            <v-icon left>
+                                cancel
+                            </v-icon>
+                            {{ i18n.cancelSearch }}
+                        </v-btn>
+                    </v-flex>
+                    <v-flex md6>
+                        <v-btn
+                            block
+                            ripple
+                            color="primary"
+                            :loading="processing"
+                            @click="emitLayerDefinition"
+                        >
+                            <v-icon left>
+                                filter_alt
+                            </v-icon>
+                            {{ i18n.setLayerDefinition }}
                         </v-btn>
                     </v-flex>
                 </v-layout>
@@ -398,7 +446,9 @@
                 activeSpatialInputActionDescription: null,
                 allowMultipleSpatialInputs: true,
                 negateSpatialInput: false,
-                enableDistinctValues: true
+                enableDistinctValues: true,
+                showSetLayerDefinition: false,
+                layerAvailable: false
             };
         },
         watch: {
@@ -426,6 +476,15 @@
                     // https://github.com/vuetifyjs/vuetify/issues/4679
                     setTimeout(() => {
                         this.$emit('search', {});
+                    })
+                });
+            },
+            emitLayerDefinition: function () {
+                this.$nextTick(() => {
+                    // use setTimeout to be sure that combobox value is set before search gets started
+                    // https://github.com/vuetifyjs/vuetify/issues/4679
+                    setTimeout(() => {
+                        this.$emit('set-layer-definition', {});
                     })
                 });
             }

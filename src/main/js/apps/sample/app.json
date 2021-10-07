@@ -48,6 +48,7 @@
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
+                "showSetLayerDefinition": true,
                 "showFieldType": true,
                 "showSpatialInputActions": false,
                 "hiddenFields": [

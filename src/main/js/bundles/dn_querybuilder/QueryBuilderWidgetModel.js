@@ -52,6 +52,9 @@ export default declare({
     negateSpatialInput: false,
     allowMultipleSpatialInputs: true,
     enableDistinctValues: true,
+    showSetLayerDefinition: false,
+    layer: null,
+    layerAvailable: false,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -66,6 +69,7 @@ export default declare({
         this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
+        this.showSetLayerDefinition = queryBuilderProperties.showSetLayerDefinition;
         this.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
         this.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
         this.fieldQueries = [];
@@ -105,6 +109,10 @@ export default declare({
             this.removeFieldQueries();
             this.addFieldQuery(evt.value);
             this.getFieldData(evt.value);
+            this.searchForConnectedLayer(evt.value);
+        });
+        this.watch("layer", (evt) => {
+            this.layerAvailable = !!evt.value;
         });
 
         const spatialInputActionService = this._spatialInputActionService;
@@ -229,7 +237,7 @@ export default declare({
         });
     },
 
-    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable) {
+    search(setLayerDefinition, selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable) {
         const properties = this._queryBuilderProperties;
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
@@ -242,7 +250,7 @@ export default declare({
             sortOptions = this.getSortOptions();
             opts.sort = sortOptions;
         }
-        this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this);
+        this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this, setLayerDefinition);
     },
 
     cancelSearch() {
@@ -511,5 +519,38 @@ export default declare({
 
     _selectedStoreStillAvailable(stores) {
         return stores.find((store) => store.id === this.selectedStoreId);
+    },
+
+    searchForConnectedLayer(storeId) {
+        const store = this.getSelectedStoreObj(storeId);
+        if (!store) {
+            return;
+        }
+        const layerId = store.layerId;
+        this.layer = this._getLayer(layerId);
+    },
+
+    _getLayer(layerId) {
+        const mapWidgetModel = this._mapWidgetModel;
+        if (!layerId) {
+            return null;
+        }
+        if (!mapWidgetModel) {
+            return null;
+        }
+        const lastIndexOfSlash = layerId.lastIndexOf("/");
+        const parsedId = lastIndexOfSlash > -1 ? {
+            parentId: layerId.substring(0, lastIndexOfSlash),
+            subLayerId: Number.parseInt(layerId.substring(lastIndexOfSlash + 1))
+        } : {
+            parentId: layerId
+        };
+        const matchingLayer = mapWidgetModel.map.findLayerById(parsedId.parentId);
+        if (matchingLayer && parsedId.subLayerId === undefined) {
+            return matchingLayer;
+        }
+        if (matchingLayer.findSublayerById) {
+            return matchingLayer.findSublayerById(parsedId.subLayerId);
+        }
     }
 });

@@ -61,10 +61,13 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData();
         });
         vm.$on('search', () => {
-            model.search();
+            model.search(false);
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();
+        });
+        vm.$on('set-layer-definition', () => {
+            model.search(true);
         });
         vm.$on('getDistinctValues', (args) => {
             model.getDistinctValues(args.value, args.fieldQuery);
@@ -92,7 +95,7 @@ export default class QueryBuilderWidgetFactory {
             .syncAllToLeft("locale", "storeData", "sortFieldData",
                 "showSpatialInputActions", "spatialInputActions", "enableDistinctValues",
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode",
-                "allowNegation", "loading", "processing", "activeTool")
+                "allowNegation", "loading", "processing", "activeTool", "showSetLayerDefinition", "layerAvailable")
             .enable()
             .syncToLeftNow();
     }

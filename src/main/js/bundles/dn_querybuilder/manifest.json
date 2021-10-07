@@ -267,6 +267,7 @@
                 "allowNegation": false,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
+                "showSetLayerDefinition": false,
                 "showFieldType": true,
                 "showSpatialInputActions": false,
                 "spatialInputActions": [
