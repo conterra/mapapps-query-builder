@@ -61,7 +61,7 @@ export default class QueryController {
         const idProperty = store.idProperty;
         let opts = null;
         if (idProperty) {
-            opts = Object.assign({}, options);;
+            opts = Object.assign({}, options);
             const fields = opts.fields = {};
             fields[idProperty] = true;
         }
