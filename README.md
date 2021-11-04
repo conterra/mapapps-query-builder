@@ -6,6 +6,9 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 The Query Builder 3 for Linie 3 can be found in the 3.x branch:
 https://github.com/conterra/mapapps-query-builder/tree/3.x
 
+## Build Status
+[![devnet-bundle-snapshot](https://github.com/conterra/mapapps-query-builder/actions/workflows/devnet-bundle-snapshot.yml/badge.svg)](https://github.com/conterra/mapapps-query-builder/actions/workflows/devnet-bundle-snapshot.yml)
+
 ## Sample App
 https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder4/index.html
 
