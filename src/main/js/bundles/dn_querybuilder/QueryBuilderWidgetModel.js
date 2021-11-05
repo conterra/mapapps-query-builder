@@ -52,6 +52,9 @@ export default declare({
     negateSpatialInput: false,
     allowMultipleSpatialInputs: true,
     enableDistinctValues: true,
+    savedQueries: [],
+    _localStorageKey: "devnet-mapapps-query-builder",
+    _localStorage: window.localStorage,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -61,6 +64,7 @@ export default declare({
 
         const queryBuilderProperties = this._queryBuilderProperties;
         this.getStoreDataFromMetadata();
+        this._readQueriesFromLocalStorage();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
         this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
@@ -511,5 +515,44 @@ export default declare({
 
     _selectedStoreStillAvailable(stores) {
         return stores.find((store) => store.id === this.selectedStoreId);
+    },
+
+    showSavedQueriesWidget() {
+        this._savedQueriesWidgetFactory.showSavedQueriesWidget();
+    },
+
+    saveQuery(title) {
+        const date = new Date();
+        const query = {
+            id: "querybuilder_" + date.getTime(),
+            title: title || this.selectedStoreId + "_" + date.getTime(),
+            selectedStoreId: this.selectedStoreId,
+            linkOperator: this.linkOperator,
+            fieldQueries: this.fieldQueries
+        }
+        this.savedQueries = [...this.savedQueries, ...[query]];
+        this._storeQueriesInLocalStorage();
+    },
+
+    loadQuery(query) {
+        this.selectedStoreId = query.selectedStoreId;
+        this.fieldQueries = query.fieldQueries;
+        this.linkOperator = query.linkOperator;
+    },
+
+    _storeQueriesInLocalStorage() {
+        try {
+            const queriesString = JSON.stringify(this.savedQueries);
+            this._localStorage.setItem(this._localStorageKey, queriesString);
+        } catch (exception) {
+            console.error(exception);
+        }
+    },
+
+    _readQueriesFromLocalStorage() {
+        const queriesString = this._localStorage.getItem(this._localStorageKey);
+        if (queriesString !== null) {
+            this.savedQueries = JSON.parse(queriesString);
+        }
     }
 });

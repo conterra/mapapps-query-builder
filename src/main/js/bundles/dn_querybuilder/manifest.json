@@ -32,6 +32,24 @@
     ],
     "layout-widgets": [
         {
+            "widgetRole": "savedQueriesWidget",
+            "window": {
+                "title": "${windowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": false,
+                "resizable": true,
+                "marginBox": {
+                    "w": 600,
+                    "h": 400
+                },
+                "minSize": {
+                    "w": 600,
+                    "h": 400
+                }
+            }
+        },
+        {
             "widgetRole": "queryBuilderWidget",
             "sublayout": [
                 "desktop"
@@ -178,6 +196,10 @@
                 {
                     "name": "_queryBuilderProperties",
                     "providing": "dn_querybuilder.QueryBuilderProperties"
+                },
+                {
+                    "name": "_savedQueriesWidgetFactory",
+                    "providing": "dn_querybuilder.SavedQueriesWidgetFactory"
                 },
                 {
                     "name": "_mapWidgetModel",
@@ -456,6 +478,19 @@
                 {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
+                }
+            ]
+        },
+        {
+            "name": "SavedQueriesWidgetFactory",
+            "provides": [
+                "dn_querybuilder.SavedQueriesWidgetFactory"
+            ],
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
                 }
             ]
         },

@@ -31,6 +31,12 @@
                     justify-space-between
                 >
                     <v-flex
+                        xs12
+                        md12
+                    >
+                        <div>{{ title }}</div>
+                    </v-flex>
+                    <v-flex
                         v-if="editable && title"
                         xs12
                         md12
@@ -284,6 +290,32 @@
                     wrap
                     justify-center
                 >
+                    <v-flex md6>
+                        <v-btn
+                            block
+                            ripple
+                            color="primary"
+                            @click="$emit('load-query')"
+                        >
+                            <v-icon left>
+                                unarchive
+                            </v-icon>
+                            {{ i18n.save }}
+                        </v-btn>
+                    </v-flex>
+                    <v-flex md6>
+                        <v-btn
+                            block
+                            ripple
+                            color="primary"
+                            @click="$emit('save-query')"
+                        >
+                            <v-icon left>
+                                archive
+                            </v-icon>
+                            {{ i18n.save }}
+                        </v-btn>
+                    </v-flex>
                     <v-flex md12>
                         <v-btn
                             v-if="!processing"
@@ -302,7 +334,7 @@
                             block
                             ripple
                             color="primary"
-                            @click="$emit('cancel-search', {})"
+                            @click="$emit('cancel-search')"
                         >
                             <v-icon left>
                                 cancel

@@ -66,6 +66,12 @@ export default class QueryBuilderWidgetFactory {
         vm.$on('cancel-search', () => {
             model.cancelSearch();
         });
+        vm.$on('load-query', () => {
+            model.showSavedQueriesWidget();
+        });
+        vm.$on('save-query', () => {
+            model.saveQuery();
+        });
         vm.$on('getDistinctValues', (args) => {
             model.getDistinctValues(args.value, args.fieldQuery);
         });
