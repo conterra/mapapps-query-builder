@@ -82,6 +82,7 @@ export default class QueryController {
                         } else {
                             resultStore = this._createFullItemResultStore(idList, result, store);
                         }
+                        resultStore.id = store.id;
 
                         this._registerTempStore(filter, queryBuilderWidgetModel);
                         this._dataModel.setDatasource(resultStore);
