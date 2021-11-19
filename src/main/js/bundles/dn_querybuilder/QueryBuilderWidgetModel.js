@@ -394,6 +394,9 @@ export default declare({
                 else
                     value = parseFloat(value);
             }
+            if (field.type === "date" && typeof value === "string") {
+                value = new Date(value);
+            }
             if (value === "" || value === null || value === undefined || value.length === 0) {
                 return;
             }
