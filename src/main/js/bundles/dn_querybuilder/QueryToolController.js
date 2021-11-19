@@ -60,8 +60,8 @@ export default class QueryToolController {
             setTimeout(() => {
                 const window = ct_util.findEnclosingWindow(widget);
                 window?.on("Close", () => {
-                    this.hideWindow();
                     widget.destroyRecursive();
+                    this.hideWindow();
                 });
             }, DELAY);
         } else {
