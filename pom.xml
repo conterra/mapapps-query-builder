@@ -558,6 +558,8 @@
         <ct.jsregistry.version>1.4.4</ct.jsregistry.version>
         <ct.jsrt-test.version>2.0.2</ct.jsrt-test.version>
 
+        <selectionactions.version>1.10.2</selectionactions.version>
+
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
 
