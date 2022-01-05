@@ -204,7 +204,7 @@
                     "name": "store",
                     "providing": "ct.api.Store",
                     "cardinality": "0..n",
-                    "filter": "(useIn=selection)"
+                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
                 }
             ]
         },

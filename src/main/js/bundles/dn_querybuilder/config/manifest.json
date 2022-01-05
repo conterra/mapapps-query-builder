@@ -132,7 +132,7 @@
                     "name": "store",
                     "providing": "ct.api.Store",
                     "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
+                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
                 }
             ]
         },
@@ -196,7 +196,7 @@
                     "name": "_stores",
                     "providing": "ct.api.Store",
                     "cardinality": "1..n",
-                    "filter": "(useIn=selection)"
+                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
                 }
             ]
         },
