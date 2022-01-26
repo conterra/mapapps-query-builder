@@ -26,5 +26,17 @@ module.exports = {
                 link: "Internet:"
             }
         }
+    },
+    queries: {
+        "q_street_damage": "Bisher nicht reparierte Straßenschäden in Münster suchen",
+        "q_constituency_density_1000": "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+        "q_constituency_income_20000": "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+        "q_constituency_inhabitants_increasing": "Wahlkreise deren Bevölkerung zunimmt",
+        "q_find_tree_species": "Baumart suchen",
+        "q_find_disturbances": "Störungen suchen"
+    },
+    toolset: {
+        "toolset_title": "Fragen und Antworten",
+        "toolset_hover": "Liste vordefinierter Fragen, klicken um Antworten zu sehen"
     }
 };
