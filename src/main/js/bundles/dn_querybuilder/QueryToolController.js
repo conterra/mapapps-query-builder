@@ -94,7 +94,9 @@ export default class QueryToolController {
                     "language": "en",
                     "country": "EN"
                 };
-                options.sort = event.options.sort || [];
+                if (event.options.sort) {
+                    options.sort = event.options.sort;
+                }
                 options.suggestContains = true;
             }
 
