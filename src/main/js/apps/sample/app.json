@@ -471,7 +471,7 @@
                     {
                         "id": "dark_gray",
                         "title": "Dark Gray",
-                        "basemap": "dark-gray",
+                        "basemap": "dark-gray-vector",
                         "selected": true
                     }
                 ],
