@@ -116,7 +116,7 @@ export default declare({
                         title,
                         description,
                         iconClass
-                    }
+                    };
                 }))
             .enable()
             .syncToLeftNow();
@@ -153,7 +153,7 @@ export default declare({
             this.activeSpatialInputActionDescription = null;
             if (this.negateSpatialInput) {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = difference(this.geometry, geometry)
+                    this.geometry = difference(this.geometry, geometry);
                 } else {
                     this.negateGeometry(geometry).then((g) => {
                         this.geometry = g;
@@ -161,7 +161,7 @@ export default declare({
                 }
             } else {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = union([geometry, this.geometry])
+                    this.geometry = union([geometry, this.geometry]);
                 } else {
                     this.geometry = geometry;
                 }
@@ -182,10 +182,8 @@ export default declare({
         params.geometries = [worldExtent];
         params.outSpatialReference = geometry.spatialReference;
         const geometryService = this._geometryService;
-        const promise = geometryService.project(params)
-        return promise.then((projectedGeometries) => {
-            return difference(projectedGeometries[0], geometry);
-        });
+        const promise = geometryService.project(params);
+        return promise.then((projectedGeometries) => difference(projectedGeometries[0], geometry));
     },
 
     resetSpatialInput() {
@@ -321,9 +319,8 @@ export default declare({
 
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore), (distinctValues) => {
-            return distinctValues;
-        });
+        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
+            (distinctValues) => distinctValues);
     },
 
     _getSelectedFieldData(selectedStoreId, editable) {
@@ -360,9 +357,8 @@ export default declare({
         if (!store) {
             return;
         }
-        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) => {
-            return fieldData.filter((field) => !hiddenSortFields.includes(field.id));
-        });
+        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) =>
+            fieldData.filter((field) => !hiddenSortFields.includes(field.id)));
     },
 
     getSelectedStoreObj(id) {
@@ -467,7 +463,7 @@ export default declare({
     },
 
     getSelectedStoreTitle(selectedStoreId) {
-        const storeData = this.storeData.find((data) => data.id === selectedStoreId)
+        const storeData = this.storeData.find((data) => data.id === selectedStoreId);
         return storeData?.text || null;
     },
 
