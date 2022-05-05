@@ -138,7 +138,6 @@ export default class QueryController {
             return;
         }
         const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
-        store.id = "querybuilder_temp";
         if (this.#serviceRegistration) {
             const registration = this.#serviceRegistration;
             // clear the reference
