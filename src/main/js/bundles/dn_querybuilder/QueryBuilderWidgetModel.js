@@ -124,7 +124,7 @@ export default declare({
                         title,
                         description,
                         iconClass
-                    }
+                    };
                 }))
             .enable()
             .syncToLeftNow();
@@ -161,7 +161,7 @@ export default declare({
             this.activeSpatialInputActionDescription = null;
             if (this.negateSpatialInput) {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = difference(this.geometry, geometry)
+                    this.geometry = difference(this.geometry, geometry);
                 } else {
                     this.negateGeometry(geometry).then((g) => {
                         this.geometry = g;
@@ -169,7 +169,7 @@ export default declare({
                 }
             } else {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = union([geometry, this.geometry])
+                    this.geometry = union([geometry, this.geometry]);
                 } else {
                     this.geometry = geometry;
                 }
@@ -190,10 +190,8 @@ export default declare({
         params.geometries = [worldExtent];
         params.outSpatialReference = geometry.spatialReference;
         const geometryService = this._geometryService;
-        const promise = geometryService.project(params)
-        return promise.then((projectedGeometries) => {
-            return difference(projectedGeometries[0], geometry);
-        });
+        const promise = geometryService.project(params);
+        return promise.then((projectedGeometries) => difference(projectedGeometries[0], geometry));
     },
 
     resetSpatialInput() {
@@ -233,7 +231,7 @@ export default declare({
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
         apprt_when(sortFieldData, (data) => {
             this.sortFieldData = data;
-            this.selectedSortFieldName = data[0].id;
+            this.selectedSortFieldName = data.length ? data[0].id: undefined;
         });
     },
 
@@ -329,9 +327,8 @@ export default declare({
 
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore), (distinctValues) => {
-            return distinctValues;
-        });
+        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
+            (distinctValues) => distinctValues);
     },
 
     _getSelectedFieldData(selectedStoreId, editable) {
@@ -368,9 +365,8 @@ export default declare({
         if (!store) {
             return;
         }
-        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) => {
-            return fieldData.filter((field) => !hiddenSortFields.includes(field.id));
-        });
+        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) =>
+            fieldData.filter((field) => !hiddenSortFields.includes(field.id)));
     },
 
     getSelectedStoreObj(id) {
@@ -401,6 +397,9 @@ export default declare({
                     value = value.map(subvalue => parseFloat(subvalue));
                 else
                     value = parseFloat(value);
+            }
+            if (field.type === "date" && typeof value === "string") {
+                value = new Date(value);
             }
             if (value === "" || value === null || value === undefined || value.length === 0) {
                 return;
@@ -472,7 +471,7 @@ export default declare({
     },
 
     getSelectedStoreTitle(selectedStoreId) {
-        const storeData = this.storeData.find((data) => data.id === selectedStoreId)
+        const storeData = this.storeData.find((data) => data.id === selectedStoreId);
         return storeData?.text || null;
     },
 

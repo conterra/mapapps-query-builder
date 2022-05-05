@@ -75,7 +75,7 @@
             "QueryTools": [
                 {
                     "id": "querybuilder_1441021732534",
-                    "title": "Show reported street damages that are not yet fixed in Münster",
+                    "title": "${queries.q_street_damage}",
                     "iconClass": "icon-toolcase",
                     "storeId": "stoerungen",
                     "complexQuery": {
@@ -122,7 +122,7 @@
                 },
                 {
                     "id": "querybuilder_1540467316530",
-                    "title": "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+                    "title": "${queries.q_constituency_density_1000}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -147,7 +147,7 @@
                 },
                 {
                     "id": "querybuilder_1540467904227",
-                    "title": "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+                    "title": "${queries.q_constituency_income_20000}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -172,7 +172,7 @@
                 },
                 {
                     "id": "querybuilder_1540468225267",
-                    "title": "Wahlkreise deren Bevölkerung zunimmt",
+                    "title": "${queries.q_constituency_inhabitants_increasing}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -197,7 +197,7 @@
                 },
                 {
                     "id": "querybuilder_1550577927595",
-                    "title": "Baumart suchen",
+                    "title": "${queries.q_find_tree_species}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -234,7 +234,7 @@
                 },
                 {
                     "id": "querybuilder_1572005863861",
-                    "title": "Störungen suchen",
+                    "title": "${queries.q_find_disturbances}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -321,7 +321,7 @@
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
                     "popupEnabled": true,
                     "useIn": [
-                        "selection"
+                        "querybuilder"
                     ],
                     "filterOptions": {
                         "metadata": {
@@ -349,7 +349,7 @@
                     "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
                     "popupEnabled": true,
                     "useIn": [
-                        "selection"
+                        "querybuilder"
                     ],
                     "filterOptions": {
                         "metadata": {
@@ -398,7 +398,7 @@
                     "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
                     "popupEnabled": true,
                     "useIn": [
-                        "selection"
+                        "querybuilder"
                     ]
                 },
                 {
@@ -409,7 +409,7 @@
                     "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
                     "popupEnabled": true,
                     "useIn": [
-                        "selection"
+                        "querybuilder"
                     ]
                 }
             ]
@@ -445,12 +445,12 @@
                     },
                     {
                         "id": "questions",
-                        "title": "Questions And Answers",
+                        "title": "${toolset.toolset_title}",
                         "container": "map",
                         "window": {
                             "closable": true
                         },
-                        "tooltip": "List of predefined questions, click to see the answer",
+                        "tooltip": "${toolset.toolset_hover}",
                         "cssClass": "ctWDYWBtn ctPrimaryInput",
                         "max_horizontal": 1,
                         "windowType": "dropdown",
@@ -472,7 +472,7 @@
                     {
                         "id": "dark_gray",
                         "title": "Dark Gray",
-                        "basemap": "dark-gray",
+                        "basemap": "dark-gray-vector",
                         "selected": true
                     }
                 ],

@@ -293,7 +293,6 @@
         },
         data() {
             return {
-                dateString: this.getDateString(),
                 rules: {
                     required: (value) => !!value || this.i18n.rules.required,
                     number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
@@ -305,15 +304,30 @@
         computed: {
             selectedField() {
                 return this.fieldQuery.fields.find((field) => field.id === this.fieldQuery.selectedFieldId);
+            },
+            dateString: {
+                get: function () {
+                    let dateObj;
+                    if (this.fieldQuery.value) {
+                        dateObj = new Date(this.fieldQuery.value);
+                    } else {
+                        dateObj = new Date();
+                    }
+                    if (!isNaN(dateObj.getTime())) {
+                        return dateObj.toISOString().substr(0, 10)
+                    } else {
+                        return null;
+                    }
+                },
+                set: function (value) {
+                    this.fieldQuery.value = new Date(value);
+                }
             }
         },
         watch: {
             search: function (value) {
                 const selectedField = this.selectedField;
                 this.getDistinctValues(value, selectedField);
-            },
-            dateString: function (value) {
-                this.fieldQuery.value = new Date(value);
             },
             activeTool: function (value) {
                 if (!value) {
@@ -339,17 +353,6 @@
             }
         },
         methods: {
-            getDateString() {
-                const dateObj = new Date(this.fieldQuery.value);
-                if (!isNaN(dateObj.getTime())) {
-                    const month = dateObj.getUTCMonth() + 1; //months from 1-12
-                    const day = dateObj.getUTCDate();
-                    const year = dateObj.getUTCFullYear();
-                    return year + "-" + month + "-" + day;
-                } else {
-                    return null;
-                }
-            },
             fieldChanged: function (selectedFieldId, fieldQuery) {
                 const value = this.search;
                 const selectedField = this.selectedField;

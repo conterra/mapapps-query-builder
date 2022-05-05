@@ -1,6 +1,6 @@
 {
     "name": "dn_querybuilder",
-    "version": "4.11.0-SNAPSHOT",
+    "version": "4.11.1-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -204,7 +204,7 @@
                     "name": "store",
                     "providing": "ct.api.Store",
                     "cardinality": "0..n",
-                    "filter": "(useIn=selection)"
+                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
                 }
             ]
         },

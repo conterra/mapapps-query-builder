@@ -1,54 +1,54 @@
 {
-  "name": "dn_queryplaceholder",
-    "version": "4.11.0-SNAPSHOT",
-  "title": "QueryBuilder Placeholder",
-  "description": "Replaces placeholder in the QueryBuilder bundle",
-  "vendor": "con terra GmbH",
-  "productName": "devnet-mapapps-query-builder",
-  "main": "",
-  "Bundle-Localization": [],
-  "components": [
-    {
-      "name": "Replacer",
-      "provides": [
-        "dn_queryplaceholder.Replacer"
-      ],
-      "propertiesConstructor": true,
-      "properties": {
-        "placeholder": {
-        }
-      },
-      "references": [
+    "name": "dn_queryplaceholder",
+    "version": "4.11.1-SNAPSHOT",
+    "title": "QueryBuilder Placeholder",
+    "description": "Replaces placeholder in the QueryBuilder bundle",
+    "vendor": "con terra GmbH",
+    "productName": "devnet-mapapps-query-builder",
+    "main": "",
+    "Bundle-Localization": [],
+    "components": [
         {
-          "name": "placeholderProvider",
-          "providing": "dn_queryplaceholder.PlaceholderProvider",
-          "cardinality": "1..n"
-        }
-      ]
-    },
-    {
-      "name": "AuthenticationPlaceholderProvider",
-      "provides": "dn_queryplaceholder.PlaceholderProvider",
-      "references": [
+            "name": "Replacer",
+            "provides": [
+                "dn_queryplaceholder.Replacer"
+            ],
+            "propertiesConstructor": true,
+            "properties": {
+                "placeholder": {
+                }
+            },
+            "references": [
+                {
+                    "name": "placeholderProvider",
+                    "providing": "dn_queryplaceholder.PlaceholderProvider",
+                    "cardinality": "1..n"
+                }
+            ]
+        },
         {
-          "name": "_userAdminService",
-          "providing": "ct.framework.api.UserAdmin"
-        }
-      ]
-    },
-    {
-      "name": "DatePlaceholderProvider",
-      "provides": "dn_queryplaceholder.PlaceholderProvider"
-    },
-    {
-      "name": "AppNamePlaceholderProvider",
-      "provides": "dn_queryplaceholder.PlaceholderProvider",
-      "references": [
+            "name": "AuthenticationPlaceholderProvider",
+            "provides": "dn_queryplaceholder.PlaceholderProvider",
+            "references": [
+                {
+                    "name": "_userAdminService",
+                    "providing": "ct.framework.api.UserAdmin"
+                }
+            ]
+        },
         {
-          "name": "_appCtx",
-          "providing": "ct.framework.api.ApplicationContext"
+            "name": "DatePlaceholderProvider",
+            "provides": "dn_queryplaceholder.PlaceholderProvider"
+        },
+        {
+            "name": "AppNamePlaceholderProvider",
+            "provides": "dn_queryplaceholder.PlaceholderProvider",
+            "references": [
+                {
+                    "name": "_appCtx",
+                    "providing": "ct.framework.api.ApplicationContext"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

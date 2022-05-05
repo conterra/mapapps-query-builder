@@ -44,7 +44,7 @@ export default class EditableQueryBuilderWidgetFactory {
         }
         options.ignoreCase = properties.options.ignoreCase;
         options.locale = properties.options.locale;
-        options.sort = properties.options.sort || [];
+        options.sort = properties.options.sort || undefined;
 
         const vm = new Vue(QueryBuilderWidget);
         vm.i18n = this._i18n.get().ui;

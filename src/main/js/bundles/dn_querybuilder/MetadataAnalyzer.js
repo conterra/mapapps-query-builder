@@ -107,9 +107,10 @@ export default class MetadataAnalyzer {
             }
             const metadata = store.getMetadata();
             return apprt_when(metadata, (metadata) => {
-                const supportsDistincts = metadata.advancedQueryCapabilities
-                    && metadata.advancedQueryCapabilities.supportsDistinct;
-                if (supportsDistincts) {
+                const metadataSupportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
+                const layerSupportsDistinct = store.layer?.capabilities?.query?.supportsDistinct;
+                const supportsDistinct = metadataSupportsDistinct || layerSupportsDistinct;
+                if (supportsDistinct) {
                     fieldData.loading = true;
                     const query = {
                         outFields: fieldData.id,

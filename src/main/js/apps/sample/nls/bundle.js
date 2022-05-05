@@ -27,6 +27,18 @@ module.exports = {
                     link: "Internet:"
                 }
             }
+        },
+        queries: {
+            "q_street_damage": "Show reported street damages that are not yet fixed in Münster",
+            "q_constituency_density_1000": "Constituencies with population densities exceeding 1000 inhabitants/km²",
+            "q_constituency_income_20000": "Constituencies with mean available disposable income of more than 20000€",
+            "q_constituency_inhabitants_increasing": "Constituencies with increasing population",
+            "q_find_tree_species": "Search tree species",
+            "q_find_disturbances": "Search disturbances"
+        },
+        toolset: {
+            "toolset_title": "Questions and Answers",
+            "toolset_hover": "List of predefined questions, click to see the answer"
         }
     },
     "de": true
