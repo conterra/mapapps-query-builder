@@ -149,7 +149,7 @@
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.4.44.v20210927</version>
+                    <version>10.0.8</version>
                     <configuration>
                         <supportedPackagings>
                             <supportedPackaging>jar</supportedPackaging>
@@ -169,10 +169,10 @@
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
-                    <version>1.10.0</version>
+                    <version>1.12.1</version>
                     <configuration>
-                        <nodeVersion>v14.15.1</nodeVersion>
-                        <npmVersion>6.14.9</npmVersion>
+                        <nodeVersion>v16.14.0</nodeVersion>
+                        <npmVersion>8.3.1</npmVersion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -202,15 +202,6 @@
                     <groupId>de.conterra.jsrt</groupId>
                     <artifactId>ct-jsrt-test-maven-plugin</artifactId>
                     <version>${ct.jsrt-test.version}</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-scm-plugin</artifactId>
-                    <version>1.10.0</version>
-                    <configuration>
-                        <tag>${project.version}</tag>
-                        <username>${scm.username}</username>
-                        <password>${scm.password}</password>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -349,24 +340,21 @@
                     <stopPort>9966</stopPort>
                     <stopKey>jetty-stop</stopKey>
                     <stopWait>60000</stopWait>
-                    <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <reload>manual</reload>
+                    <scan>0</scan>
                     <webXml>${basedir}/src/test/webapp/WEB-INF/web.xml</webXml>
                     <useTestScope>true</useTestScope>
-                    <webAppConfig>
+                    <webApp>
                         <contextPath>/</contextPath>
-                        <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                            <resourcesAsCSV>${root.build.outputPath},${basedir}/src/test/webapp</resourcesAsCSV>
-                        </baseResource>
+                        <resourceBases>
+                            <resourceBase>${root.build.outputPath}</resourceBase>
+                            <resourceBase>${basedir}/src/test/webapp</resourceBase>
+                        </resourceBases>
                         <!-- include ct-jsregistry-embedded-<version>.jar as web-fragment provider -->
                         <webInfIncludeJarPattern>.*/ct-jsregistry-embedded-[^/]*\.jar$</webInfIncludeJarPattern>
-                    </webAppConfig>
+                    </webApp>
                     <systemProperties>
-                        <systemProperty>
-                            <!-- set catalina base, so that log files are created in the target directory-->
-                            <name>catalina.base</name>
-                            <value>${project.build.directory}</value>
-                        </systemProperty>
+                        <!-- set catalina base, so that log files are created in the target directory-->
+                        <catalina.base>${project.build.directory}</catalina.base>
                     </systemProperties>
                 </configuration>
             </plugin>
@@ -551,7 +539,7 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.12.3</mapapps.version>
+        <mapapps.version>4.13.1</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
@@ -573,19 +561,21 @@
         <mvn.cmd>mvn</mvn.cmd>
         <gulp.task></gulp.task>
 
-        <mapapps.user><!-- set correct username for map.apps remote installation--></mapapps.user>
-        <mapapps.pw><!-- set correct password for map.apps remote installation--></mapapps.pw>
+        <mapapps.user>
+            <!-- set correct username for map.apps remote installation-->
+        </mapapps.user>
+        <mapapps.pw>
+            <!-- set correct password for map.apps remote installation-->
+        </mapapps.pw>
+        <mapapps.token>
+            <!-- set correct token for map.apps remote installation-->
+        </mapapps.token>
         <!-- set to false if map.apps is configured behind integrated windows authentication is required -->
         <mapapps.useChunkedRequestEncoding>true</mapapps.useChunkedRequestEncoding>
         <!-- enable this if "upload" profile should only deploy bundles -->
         <skip.apps.upload>false</skip.apps.upload>
         <!-- enable this if "upload" profile should pre-optimize apps -->
         <triggerPreOptimization>false</triggerPreOptimization>
-
-        <!-- required for release build -->
-        <scm.push>false</scm.push>
-        <scm.username>${env.GITHUB_USER_NAME}</scm.username>
-        <scm.password>${env.GITHUB_USER_PW}</scm.password>
     </properties>
     <profiles>
         <profile>
@@ -882,6 +872,8 @@
                                     <goal>optimizeJS</goal>
                                 </goals>
                                 <configuration>
+                                    <sourceLanguageLevel>ESNEXT</sourceLanguageLevel>
+                                    <targetLanguageLevel>ESNEXT</targetLanguageLevel>
                                     <hasFeatures>
                                         <ct-debug>false</ct-debug>
                                     </hasFeatures>
@@ -914,6 +906,7 @@
                             <serverResourcesEndpoint>${mapapps.remote.base}/resources</serverResourcesEndpoint>
                             <username>${mapapps.user}</username>
                             <password>${mapapps.pw}</password>
+                            <token>${mapapps.token}</token>
                             <useChunkedRequestEncoding>${mapapps.useChunkedRequestEncoding}</useChunkedRequestEncoding>
                             <triggerPreOptimization>${triggerPreOptimization}</triggerPreOptimization>
                         </configuration>
@@ -923,7 +916,7 @@
                         <artifactId>ct-jsregistry-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>deploy bundles</id>
+                                <id>deploy-bundles</id>
                                 <goals>
                                     <goal>deployJSPackage</goal>
                                 </goals>
@@ -931,6 +924,7 @@
                                     <registryEndpoint>${mapapps.remote.base}/resources/jsregistry</registryEndpoint>
                                     <username>${mapapps.user}</username>
                                     <password>${mapapps.pw}</password>
+                                    <token>${mapapps.token}</token>
                                     <useChunkedRequestEncoding>${mapapps.useChunkedRequestEncoding}</useChunkedRequestEncoding>
                                 </configuration>
                             </execution>
