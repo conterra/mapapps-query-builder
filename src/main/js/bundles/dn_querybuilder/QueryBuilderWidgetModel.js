@@ -320,7 +320,21 @@ export default declare({
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
-            (distinctValues) => distinctValues);
+            (distinctValues) => {
+                const lang = Locale.getCurrent().getLanguage();
+                const type = fieldData.type;
+                const dValues = fieldData.distinctValues;
+                if (lang === "de" && type === "number" && dValues && dValues.length){
+                    fieldData.distinctValues = dValues.map(distinctValue => {
+                        if(typeof distinctValue === "number" && !Number.isInteger(distinctValue)){
+                            return distinctValue.toString().replace(".", ",");
+                        } else {
+                            return distinctValue;
+                        }
+                    });
+                }
+                return distinctValues;
+            });
     },
 
     _getSelectedFieldData(selectedStoreId, editable) {
