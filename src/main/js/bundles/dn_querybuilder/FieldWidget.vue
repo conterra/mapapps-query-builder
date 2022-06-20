@@ -371,16 +371,18 @@
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
                 const selectedField = this.selectedField;
-                if (relationalOperator === "$exists") {
-                    fieldQuery.value = true;
-                } else if (relationalOperator === "$in") {
-                    fieldQuery.value = [];
-                } else {
-                    if (selectedField.type === "date") {
-                        fieldQuery.value = "";
+                if (fieldQuery.value === null || fieldQuery.value === ""){ /* only if no value was selected*/
+                    if (relationalOperator === "$exists") {
+                        fieldQuery.value = true;
+                    } else if (relationalOperator === "$in") {
+                        fieldQuery.value = [];
                     } else {
-                        fieldQuery.value = (selectedField.codedValues[0]
-                            && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        if (selectedField.type === "date") {
+                            fieldQuery.value = "";
+                        } else {
+                            fieldQuery.value = (selectedField.codedValues[0]
+                                && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        }
                     }
                 }
             },
