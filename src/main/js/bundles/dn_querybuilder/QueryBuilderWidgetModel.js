@@ -365,6 +365,9 @@ export default declare({
         return this.serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
     },
 
+    checkDecimalSeparator(value){
+        return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
+    },
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
         const complexQuery = {};
         if (this.geometry) {
@@ -385,10 +388,16 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                if (Array.isArray(value))
-                    value = value.map(subvalue => parseFloat(subvalue));
-                else
+                if (Array.isArray(value)) {
+                    value = value.map(subvalue => {
+                        subvalue = this.checkDecimalSeparator(subvalue);
+                        return parseFloat(subvalue);
+                    });
+                }
+                else {
+                    value = this.checkDecimalSeparator(value);
                     value = parseFloat(value);
+                }
             }
             if (field.type === "date" && typeof value === "string") {
                 value = new Date(value);
