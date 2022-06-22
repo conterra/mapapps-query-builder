@@ -134,7 +134,7 @@ export default class QueryController {
     }
 
     _registerTempStore(store, queryBuilderWidgetModel) {
-        if (store.id === "querybuilder_temp") {
+        if (store.id !== "querybuilder_temp") {
             return;
         }
         const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
