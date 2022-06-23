@@ -70,6 +70,11 @@ module.exports = {
             },
             errors: {
                 noResultsError: "No results found for your query!"
+            },
+            aria: {
+                "add": "add field query",
+                "remove": "remove field query",
+                "negate": "Search outside of selected geometry"
             }
         }
     }),

@@ -69,6 +69,11 @@ module.exports = {
         },
         errors: {
             noResultsError: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!"
+        },
+        aria: {
+            "add": "add field query",
+            "remove": "remove field query",
+            "negate": "Außerhalb der ausgew\u00e4hlten Geometrie suchen"
         }
     }
 };

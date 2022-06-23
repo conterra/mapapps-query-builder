@@ -60,6 +60,7 @@
                             class="pa-0 ma-0"
                             color="red"
                             hide-details
+                            :aria-label="i18n.aria.negate"
                         />
                     </v-flex>
                     <v-flex
@@ -223,6 +224,7 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length > 1"
                                 :disabled="$root.editable"
+                                :aria-label="i18n.aria.remove"
                                 class="ma-0"
                                 icon
                                 small
@@ -241,6 +243,7 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length === index + 1"
                                 :disabled="$root.editable"
+                                :aria-label="i18n.aria.add"
                                 class="ma-0"
                                 icon
                                 small
