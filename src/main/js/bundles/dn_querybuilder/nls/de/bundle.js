@@ -71,9 +71,10 @@ module.exports = {
             noResultsError: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!"
         },
         aria: {
-            "add": "add field query",
-            "remove": "remove field query",
-            "negate": "Außerhalb der ausgew\u00e4hlten Geometrie suchen"
+            "add": "Neuen Ausdruck hinzufügen",
+            "remove": "Aktuellen Ausdruck entfernen",
+            "negate": "Aktuellen Ausdruck negieren",
+            "selectLayer": "Layer auswählen"
         }
     }
 };
