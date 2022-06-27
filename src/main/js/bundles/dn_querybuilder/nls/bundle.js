@@ -75,7 +75,10 @@ module.exports = {
                 "add": "add new field query",
                 "remove": "remove current field query",
                 "negate": "negate current statement",
-                "selectLayer": "select layer"
+                "selectLayer": "select layer",
+                "sortingField": "select sort field name",
+                "linkOperatorsEnabled": "Link operators are active.",
+                "linkOperatorsDisabled": "Link operators are inactive."
             }
         }
     }),

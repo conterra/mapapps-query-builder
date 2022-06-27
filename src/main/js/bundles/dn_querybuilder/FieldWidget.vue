@@ -228,7 +228,7 @@
                                 class="ma-0"
                                 icon
                                 small
-                                @click="$root.$emit('remove', fieldQuery)"
+                                @click="emitEventsForRemove"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -247,7 +247,7 @@
                                 class="ma-0"
                                 icon
                                 small
-                                @click="$root.$emit('add', {})"
+                                @click="emitEventsForAdd"
                             >
                                 <v-icon>add</v-icon>
                             </v-btn>
@@ -442,6 +442,14 @@
             },
             getDistinctValues(value, fieldQuery) {
                 this.$root.$emit("getDistinctValues", {value, fieldQuery});
+            },
+            emitEventsForAdd(){
+                this.$root.$emit('add', {});
+                this.$emit("addEvent");
+            },
+            emitEventsForRemove(){
+                this.$root.$emit('remove', this.fieldQuery);
+                this.$emit("removeEvent");
             }
         }
     }

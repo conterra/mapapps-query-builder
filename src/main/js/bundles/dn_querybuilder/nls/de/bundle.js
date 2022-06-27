@@ -74,7 +74,10 @@ module.exports = {
             "add": "Neuen Ausdruck hinzufügen",
             "remove": "Aktuellen Ausdruck entfernen",
             "negate": "Aktuellen Ausdruck negieren",
-            "selectLayer": "Layer auswählen"
+            "selectLayer": "Layer auswählen",
+            "sortingField": "Sortierfeldname auswählen",
+            "linkOperatorsEnabled": "Verknüpfungsoperatoren sind aktiv.",
+            "linkOperatorsDisabled": "Verknüpfungsoperatoren sind nicht aktiv."
         }
     }
 };
