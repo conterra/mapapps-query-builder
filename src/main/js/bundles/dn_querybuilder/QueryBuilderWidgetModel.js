@@ -320,7 +320,21 @@ export default declare({
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
-            (distinctValues) => distinctValues);
+            (distinctValues) => {
+                const lang = Locale.getCurrent().getLanguage();
+                const type = fieldData.type;
+                const dValues = fieldData.distinctValues;
+                if (lang === "de" && type === "number" && dValues && dValues.length){
+                    fieldData.distinctValues = dValues.map(distinctValue => {
+                        if(typeof distinctValue === "number" && !Number.isInteger(distinctValue)){
+                            return distinctValue.toString().replace(".", ",");
+                        } else {
+                            return distinctValue;
+                        }
+                    });
+                }
+                return distinctValues;
+            });
     },
 
     _getSelectedFieldData(selectedStoreId, editable) {
@@ -365,6 +379,9 @@ export default declare({
         return this.serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
     },
 
+    checkDecimalSeparator(value){
+        return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
+    },
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
         const complexQuery = {};
         if (this.geometry) {
@@ -385,10 +402,16 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                if (Array.isArray(value))
-                    value = value.map(subvalue => parseFloat(subvalue));
-                else
+                if (Array.isArray(value)) {
+                    value = value.map(subvalue => {
+                        subvalue = this.checkDecimalSeparator(subvalue);
+                        return parseFloat(subvalue);
+                    });
+                }
+                else {
+                    value = this.checkDecimalSeparator(value);
                     value = parseFloat(value);
+                }
             }
             if (field.type === "date" && typeof value === "string") {
                 value = new Date(value);

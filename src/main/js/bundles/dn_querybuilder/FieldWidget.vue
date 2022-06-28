@@ -60,6 +60,7 @@
                             class="pa-0 ma-0"
                             color="red"
                             hide-details
+                            :aria-label="i18n.aria.negate"
                         />
                     </v-flex>
                     <v-flex
@@ -223,10 +224,11 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length > 1"
                                 :disabled="$root.editable"
+                                :aria-label="i18n.aria.remove"
                                 class="ma-0"
                                 icon
                                 small
-                                @click="$root.$emit('remove', fieldQuery)"
+                                @click="emitEventsForRemove"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -241,10 +243,11 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length === index + 1"
                                 :disabled="$root.editable"
+                                :aria-label="i18n.aria.add"
                                 class="ma-0"
                                 icon
                                 small
-                                @click="$root.$emit('add', {})"
+                                @click="emitEventsForAdd"
                             >
                                 <v-icon>add</v-icon>
                             </v-btn>
@@ -371,16 +374,18 @@
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
                 const selectedField = this.selectedField;
-                if (relationalOperator === "$exists") {
-                    fieldQuery.value = true;
-                } else if (relationalOperator === "$in") {
-                    fieldQuery.value = [];
-                } else {
-                    if (selectedField.type === "date") {
-                        fieldQuery.value = "";
+                if (fieldQuery.value === null || fieldQuery.value === ""){ /* only if no value was selected*/
+                    if (relationalOperator === "$exists") {
+                        fieldQuery.value = true;
+                    } else if (relationalOperator === "$in") {
+                        fieldQuery.value = [];
                     } else {
-                        fieldQuery.value = (selectedField.codedValues[0]
-                            && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        if (selectedField.type === "date") {
+                            fieldQuery.value = "";
+                        } else {
+                            fieldQuery.value = (selectedField.codedValues[0]
+                                && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        }
                     }
                 }
             },
@@ -437,6 +442,14 @@
             },
             getDistinctValues(value, fieldQuery) {
                 this.$root.$emit("getDistinctValues", {value, fieldQuery});
+            },
+            emitEventsForAdd(){
+                this.$root.$emit('add', {});
+                this.$emit("addEvent");
+            },
+            emitEventsForRemove(){
+                this.$root.$emit('remove', this.fieldQuery);
+                this.$emit("removeEvent");
             }
         }
     }
