@@ -279,8 +279,8 @@
                         :active-tool="activeTool"
                         :enable-distinct-values="enableDistinctValues"
                         :i18n="i18n"
-                        @addEvent="handleLinkOperatorsAriaLabel"
-                        @removeEvent="handleLinkOperatorsAriaLabel"
+                        @add-event="handleLinkOperatorsAriaLabel"
+                        @remove-event="handleLinkOperatorsAriaLabel"
                     />
                 </v-container>
             </div>
@@ -459,24 +459,24 @@
                     })
                 });
             },
-            handleLinkOperatorsAriaLabel(){
+            handleLinkOperatorsAriaLabel() {
                 /*Here, the expected behaviour is that the event emitted from the child component is triggered before the fieldQueries array is updated*/
-                if (this.fieldQueries.length < 2){
+                if (this.fieldQueries.length < 2) {
                     this.linkOperatorsEnabled = true;
                     this.linkOperatorsDisabled = false;
                 }
-                if (this.linkOperatorsDisabled && this.fieldQueries.length === 2){
+                if (this.linkOperatorsDisabled && this.fieldQueries.length === 2) {
                     this.linkOperatorsDisabled = false;
                 }
             },
-            addAriaLabel(element, message){
+            addAriaLabel(element, message) {
                 element.setAttribute("role", "alert");
                 element.setAttribute("aria-label", message);
             },
-            removeAriaLabel(element){
+            removeAriaLabel(element) {
                 element.removeAttribute("role");
                 element.removeAttribute("aria-label");
-                this.ariaLabelAdded  = false;
+                this.ariaLabelAdded = false;
             }
         }
     };

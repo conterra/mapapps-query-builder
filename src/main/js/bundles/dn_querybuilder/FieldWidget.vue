@@ -445,11 +445,11 @@
             },
             emitEventsForAdd(){
                 this.$root.$emit('add', {});
-                this.$emit("addEvent");
+                this.$emit("add-event");
             },
             emitEventsForRemove(){
                 this.$root.$emit('remove', this.fieldQuery);
-                this.$emit("removeEvent");
+                this.$emit("remove-event");
             }
         }
     }
