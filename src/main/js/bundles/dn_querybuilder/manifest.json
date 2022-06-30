@@ -262,6 +262,7 @@
             "properties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
+                "enableTempStore": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useUserExtent": false,

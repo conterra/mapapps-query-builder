@@ -13,7 +13,7 @@
             "splashscreen",
             "templatelayout",
             "template-seasons",
-            "theme-everlasting",
+            "theme-autumn",
             "toolset",
             "map-init",
             "map-preload-2D",
@@ -41,6 +41,7 @@
             "QueryBuilderProperties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
+                "enableTempStore": false,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useMemorySelectionStore": false,
