@@ -213,7 +213,7 @@ export default declare({
             }
             this.storeData = data;
             if (!this.selectedStoreId) {
-                this.selectedStoreId = data[0].id;
+                this.selectedStoreId = data.length ? data[0].id : null;
             }
             this.getFieldData();
         });
@@ -223,7 +223,7 @@ export default declare({
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
         apprt_when(sortFieldData, (data) => {
             this.sortFieldData = data;
-            this.selectedSortFieldName = data.length ? data[0].id: undefined;
+            this.selectedSortFieldName = data.length ? data[0].id : undefined;
         });
     },
 
@@ -324,9 +324,9 @@ export default declare({
                 const lang = Locale.getCurrent().getLanguage();
                 const type = fieldData.type;
                 const dValues = fieldData.distinctValues;
-                if (lang === "de" && type === "number" && dValues && dValues.length){
+                if (lang === "de" && type === "number" && dValues && dValues.length) {
                     fieldData.distinctValues = dValues.map(distinctValue => {
-                        if(typeof distinctValue === "number" && !Number.isInteger(distinctValue)){
+                        if (typeof distinctValue === "number" && !Number.isInteger(distinctValue)) {
                             return distinctValue.toString().replace(".", ",");
                         } else {
                             return distinctValue;
@@ -379,7 +379,7 @@ export default declare({
         return this.serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
     },
 
-    checkDecimalSeparator(value){
+    checkDecimalSeparator(value) {
         return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
     },
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
@@ -407,8 +407,7 @@ export default declare({
                         subvalue = this.checkDecimalSeparator(subvalue);
                         return parseFloat(subvalue);
                     });
-                }
-                else {
+                } else {
                     value = this.checkDecimalSeparator(value);
                     value = parseFloat(value);
                 }
