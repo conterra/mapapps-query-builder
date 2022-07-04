@@ -222,8 +222,10 @@ export default declare({
     getFieldData(selectedStoreId) {
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
         apprt_when(sortFieldData, (data) => {
-            this.sortFieldData = data;
-            this.selectedSortFieldName = data.length ? data[0].id : undefined;
+            if (data) {
+                this.sortFieldData = data;
+                this.selectedSortFieldName = data[0].id;
+            }
         });
     },
 
