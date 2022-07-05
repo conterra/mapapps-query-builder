@@ -17,10 +17,6 @@
     height: 100%;
 }
 
-.ctAppRoot .querybuilder-window .overflowAuto {
-    overflow: auto;
-}
-
 .ctAppRoot .querybuilder-window .center .v-chip .v-chip__content {
     height: 26px;
 }
