@@ -88,6 +88,7 @@ export default class QueryController {
                             this._registerTempStore(filter, queryBuilderWidgetModel);
                         }
                         this._dataModel.setDatasource(resultStore);
+                        this._resultcenterToggleTool.set("active", true);
                     });
                 }
             } else {

@@ -401,6 +401,11 @@
                 {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
+                },
+                {
+                    "name": "_resultcenterToggleTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=resultcenterToggleTool)"
                 }
             ]
         },
