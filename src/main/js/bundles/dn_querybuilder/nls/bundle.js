@@ -78,7 +78,8 @@ module.exports = {
                 "selectLayer": "select layer",
                 "sortingField": "select sort field name",
                 "linkOperatorsEnabled": "Link operators are active.",
-                "linkOperatorsDisabled": "Link operators are inactive."
+                "linkOperatorsDisabled": "Link operators are inactive.",
+                "selectRelationalOperators": "Select relational operators"
             }
         }
     }),
