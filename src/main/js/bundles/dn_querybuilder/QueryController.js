@@ -82,9 +82,13 @@ export default class QueryController {
                         } else {
                             resultStore = this._createFullItemResultStore(idList, result, store);
                         }
+                        resultStore.id = store.id;
 
-                        this._registerTempStore(filter, queryBuilderWidgetModel);
+                        if(this._queryBuilderProperties.enableTempStore) {
+                            this._registerTempStore(filter, queryBuilderWidgetModel);
+                        }
                         this._dataModel.setDatasource(resultStore);
+                        this._resultcenterToggleTool.set("active", true);
                     });
                 }
             } else {
@@ -137,7 +141,6 @@ export default class QueryController {
             return;
         }
         const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
-        store.id = "querybuilder_temp";
         if (this.#serviceRegistration) {
             const registration = this.#serviceRegistration;
             // clear the reference

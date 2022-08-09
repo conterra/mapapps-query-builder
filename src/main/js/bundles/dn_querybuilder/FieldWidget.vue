@@ -60,6 +60,7 @@
                             class="pa-0 ma-0"
                             color="red"
                             hide-details
+                            :aria-label="i18n.aria.negate"
                         />
                     </v-flex>
                     <v-flex
@@ -223,10 +224,11 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length > 1"
                                 :disabled="$root.editable"
+                                :aria-label="i18n.aria.remove"
                                 class="ma-0"
                                 icon
                                 small
-                                @click="$root.$emit('remove', fieldQuery)"
+                                @click="emitEventsForRemove"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -241,10 +243,11 @@
                             <v-btn
                                 v-if="$root.fieldQueries.length === index + 1"
                                 :disabled="$root.editable"
+                                :aria-label="i18n.aria.add"
                                 class="ma-0"
                                 icon
                                 small
-                                @click="$root.$emit('add', {})"
+                                @click="emitEventsForAdd"
                             >
                                 <v-icon>add</v-icon>
                             </v-btn>
@@ -293,7 +296,6 @@
         },
         data() {
             return {
-                dateString: this.getDateString(),
                 rules: {
                     required: (value) => !!value || this.i18n.rules.required,
                     number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
@@ -305,15 +307,30 @@
         computed: {
             selectedField() {
                 return this.fieldQuery.fields.find((field) => field.id === this.fieldQuery.selectedFieldId);
+            },
+            dateString: {
+                get: function () {
+                    let dateObj;
+                    if (this.fieldQuery.value) {
+                        dateObj = new Date(this.fieldQuery.value);
+                    } else {
+                        dateObj = new Date();
+                    }
+                    if (!isNaN(dateObj.getTime())) {
+                        return dateObj.toISOString().substr(0, 10)
+                    } else {
+                        return null;
+                    }
+                },
+                set: function (value) {
+                    this.fieldQuery.value = new Date(value);
+                }
             }
         },
         watch: {
             search: function (value) {
                 const selectedField = this.selectedField;
                 this.getDistinctValues(value, selectedField);
-            },
-            dateString: function (value) {
-                this.fieldQuery.value = new Date(value);
             },
             activeTool: function (value) {
                 if (!value) {
@@ -339,17 +356,6 @@
             }
         },
         methods: {
-            getDateString() {
-                const dateObj = new Date(this.fieldQuery.value);
-                if (!isNaN(dateObj.getTime())) {
-                    const month = dateObj.getUTCMonth() + 1; //months from 1-12
-                    const day = dateObj.getUTCDate();
-                    const year = dateObj.getUTCFullYear();
-                    return year + "-" + month + "-" + day;
-                } else {
-                    return null;
-                }
-            },
             fieldChanged: function (selectedFieldId, fieldQuery) {
                 const value = this.search;
                 const selectedField = this.selectedField;
@@ -368,16 +374,18 @@
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
                 const selectedField = this.selectedField;
-                if (relationalOperator === "$exists") {
-                    fieldQuery.value = true;
-                } else if (relationalOperator === "$in") {
-                    fieldQuery.value = [];
-                } else {
-                    if (selectedField.type === "date") {
-                        fieldQuery.value = "";
+                if (fieldQuery.value === null || fieldQuery.value === ""){ /* only if no value was selected*/
+                    if (relationalOperator === "$exists") {
+                        fieldQuery.value = true;
+                    } else if (relationalOperator === "$in") {
+                        fieldQuery.value = [];
                     } else {
-                        fieldQuery.value = (selectedField.codedValues[0]
-                            && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        if (selectedField.type === "date") {
+                            fieldQuery.value = "";
+                        } else {
+                            fieldQuery.value = (selectedField.codedValues[0]
+                                && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
+                        }
                     }
                 }
             },
@@ -434,6 +442,14 @@
             },
             getDistinctValues(value, fieldQuery) {
                 this.$root.$emit("getDistinctValues", {value, fieldQuery});
+            },
+            emitEventsForAdd(){
+                this.$root.$emit('add', {});
+                this.$emit("add-event");
+            },
+            emitEventsForRemove(){
+                this.$root.$emit('remove', this.fieldQuery);
+                this.$emit("remove-event");
             }
         }
     }

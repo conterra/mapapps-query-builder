@@ -1,6 +1,6 @@
 {
     "name": "dn_querybuilder",
-    "version": "4.11.0-SNAPSHOT",
+    "version": "4.12.3-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -226,7 +226,7 @@
                     "name": "store",
                     "providing": "ct.api.Store",
                     "cardinality": "0..n",
-                    "filter": "(useIn=selection)"
+                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
                 }
             ]
         },
@@ -284,6 +284,7 @@
             "properties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
+                "enableTempStore": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useUserExtent": false,
@@ -422,6 +423,11 @@
                 {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
+                },
+                {
+                    "name": "_resultcenterToggleTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=resultcenterToggleTool)"
                 }
             ]
         },

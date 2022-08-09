@@ -91,7 +91,7 @@ export default class MetadataAnalyzer {
 
     getDistinctValues(value, fieldData, store) {
         if (this.#distinctValueQuery) {
-            this.#distinctValueQuery.cancel();
+            this.#distinctValueQuery.cancel && this.#distinctValueQuery.cancel();
             this.#distinctValueQuery = null;
         }
         const queryBuilderProperties = this._queryBuilderProperties;
@@ -107,9 +107,10 @@ export default class MetadataAnalyzer {
             }
             const metadata = store.getMetadata();
             return apprt_when(metadata, (metadata) => {
-                const supportsDistincts = metadata.advancedQueryCapabilities
-                    && metadata.advancedQueryCapabilities.supportsDistinct;
-                if (supportsDistincts) {
+                const metadataSupportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
+                const layerSupportsDistinct = store.layer?.capabilities?.query?.supportsDistinct;
+                const supportsDistinct = metadataSupportsDistinct || layerSupportsDistinct;
+                if (supportsDistinct) {
                     fieldData.loading = true;
                     const query = {
                         outFields: fieldData.id,
@@ -131,7 +132,7 @@ export default class MetadataAnalyzer {
                         handleAs: 'json'
                     }).then((result) => {
                         const distinctValues = [];
-                        result.features.forEach((feature) => {
+                        result.features?.forEach((feature) => {
                             const value = feature.attributes[fieldData.id];
                             if (value !== null && value !== "") {
                                 distinctValues.push(value);

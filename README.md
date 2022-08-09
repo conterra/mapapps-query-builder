@@ -13,7 +13,7 @@ https://github.com/conterra/mapapps-query-builder/tree/3.x
 https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder4/index.html
 
 ## Installation Guide
-**Requirement: map.apps 4.12.0**
+⚠️**Requirement: map.apps 4.12.0**
 
 [dn_querybuilder Documentation](https://github.com/conterra/mapapps-query-builder/tree/master/src/main/js/bundles/dn_querybuilder)
 

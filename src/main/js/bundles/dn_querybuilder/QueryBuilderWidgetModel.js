@@ -120,7 +120,7 @@ export default declare({
                         title,
                         description,
                         iconClass
-                    }
+                    };
                 }))
             .enable()
             .syncToLeftNow();
@@ -157,7 +157,7 @@ export default declare({
             this.activeSpatialInputActionDescription = null;
             if (this.negateSpatialInput) {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = difference(this.geometry, geometry)
+                    this.geometry = difference(this.geometry, geometry);
                 } else {
                     this.negateGeometry(geometry).then((g) => {
                         this.geometry = g;
@@ -165,7 +165,7 @@ export default declare({
                 }
             } else {
                 if (this.allowMultipleSpatialInputs && this.geometry) {
-                    this.geometry = union([geometry, this.geometry])
+                    this.geometry = union([geometry, this.geometry]);
                 } else {
                     this.geometry = geometry;
                 }
@@ -186,10 +186,8 @@ export default declare({
         params.geometries = [worldExtent];
         params.outSpatialReference = geometry.spatialReference;
         const geometryService = this._geometryService;
-        const promise = geometryService.project(params)
-        return promise.then((projectedGeometries) => {
-            return difference(projectedGeometries[0], geometry);
-        });
+        const promise = geometryService.project(params);
+        return promise.then((projectedGeometries) => difference(projectedGeometries[0], geometry));
     },
 
     resetSpatialInput() {
@@ -219,7 +217,7 @@ export default declare({
             }
             this.storeData = data;
             if (!this.selectedStoreId) {
-                this.selectedStoreId = data[0].id;
+                this.selectedStoreId = data.length ? data[0].id : null;
             }
             this.getFieldData();
         });
@@ -228,8 +226,10 @@ export default declare({
     getFieldData(selectedStoreId) {
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
         apprt_when(sortFieldData, (data) => {
-            this.sortFieldData = data;
-            this.selectedSortFieldName = data[0].id;
+            if (data) {
+                this.sortFieldData = data;
+                this.selectedSortFieldName = data[0].id;
+            }
         });
     },
 
@@ -325,9 +325,22 @@ export default declare({
 
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore), (distinctValues) => {
-            return distinctValues;
-        });
+        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
+            (distinctValues) => {
+                const lang = Locale.getCurrent().getLanguage();
+                const type = fieldData.type;
+                const dValues = fieldData.distinctValues;
+                if (lang === "de" && type === "number" && dValues && dValues.length) {
+                    fieldData.distinctValues = dValues.map(distinctValue => {
+                        if (typeof distinctValue === "number" && !Number.isInteger(distinctValue)) {
+                            return distinctValue.toString().replace(".", ",");
+                        } else {
+                            return distinctValue;
+                        }
+                    });
+                }
+                return distinctValues;
+            });
     },
 
     _getSelectedFieldData(selectedStoreId, editable) {
@@ -364,15 +377,17 @@ export default declare({
         if (!store) {
             return;
         }
-        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) => {
-            return fieldData.filter((field) => !hiddenSortFields.includes(field.id));
-        });
+        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) =>
+            fieldData.filter((field) => !hiddenSortFields.includes(field.id)));
     },
 
     getSelectedStoreObj(id) {
         return this.serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
     },
 
+    checkDecimalSeparator(value) {
+        return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
+    },
     getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
         const complexQuery = {};
         if (this.geometry) {
@@ -393,10 +408,18 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                if (Array.isArray(value))
-                    value = value.map(subvalue => parseFloat(subvalue));
-                else
+                if (Array.isArray(value)) {
+                    value = value.map(subvalue => {
+                        subvalue = this.checkDecimalSeparator(subvalue);
+                        return parseFloat(subvalue);
+                    });
+                } else {
+                    value = this.checkDecimalSeparator(value);
                     value = parseFloat(value);
+                }
+            }
+            if (field.type === "date" && typeof value === "string") {
+                value = new Date(value);
             }
             if (value === "" || value === null || value === undefined || value.length === 0) {
                 return;
@@ -468,13 +491,16 @@ export default declare({
     },
 
     getSelectedStoreTitle(selectedStoreId) {
-        const storeData = this.storeData.find((data) => data.id === selectedStoreId)
+        const storeData = this.storeData.find((data) => data.id === selectedStoreId);
         return storeData?.text || null;
     },
 
     addStore(store, properties) {
         properties = properties || {};
-        const id = store && store.id;
+        let id = store?.id;
+        if (properties.id === "querybuilder_temp") {
+            id = "querybuilder_temp";
+        }
         if (!id) {
             console.debug("Store has no id and will be ignored!");
             return;
@@ -494,8 +520,12 @@ export default declare({
         this.getStoreDataFromMetadata();
     },
 
-    removeStore(store) {
-        const id = store && store.id;
+    removeStore(store, properties) {
+        properties = properties || {};
+        let id = store?.id;
+        if (properties.id === "querybuilder_temp") {
+            id = "querybuilder_temp";
+        }
         if (!id) {
             return;
         }
