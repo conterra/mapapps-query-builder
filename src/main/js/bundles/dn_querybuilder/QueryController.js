@@ -89,8 +89,11 @@ export default class QueryController {
                             }
                             resultStore.id = store.id;
 
-                            this._registerTempStore(filter, queryBuilderWidgetModel);
+                            if(this._queryBuilderProperties.enableTempStore) {
+                                this._registerTempStore(filter, queryBuilderWidgetModel);
+                            }
                             this._dataModel.setDatasource(resultStore);
+                            this._resultcenterToggleTool.set("active", true);
                         }
                     });
                 }

@@ -71,6 +71,15 @@ module.exports = {
             },
             errors: {
                 noResultsError: "No results found for your query!"
+            },
+            aria: {
+                "add": "add new field query",
+                "remove": "remove current field query",
+                "negate": "negate current statement",
+                "selectLayer": "select layer",
+                "sortingField": "select sort field name",
+                "linkOperatorsEnabled": "Link operators are active.",
+                "linkOperatorsDisabled": "Link operators are inactive."
             }
         }
     }),

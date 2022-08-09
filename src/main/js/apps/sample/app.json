@@ -13,7 +13,7 @@
             "splashscreen",
             "templatelayout",
             "template-seasons",
-            "theme-everlasting",
+            "theme-autumn",
             "toolset",
             "map-init",
             "map-preload-2D",
@@ -41,9 +41,9 @@
             "QueryBuilderProperties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
+                "enableTempStore": false,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
-                "useMemorySelectionStore": false,
                 "useUserExtent": false,
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
@@ -69,7 +69,8 @@
                     "countries",
                     "baumkataster",
                     "stoerungen",
-                    "wahlkreise_strukturdaten"
+                    "wahlkreise_strukturdaten",
+                    "gemeinden"
                 ]
             },
             "QueryTools": [
@@ -407,6 +408,17 @@
                     "description": "Wahlkreise 2017 - Strukturdaten",
                     "idProperty": "OBJECTID",
                     "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "querybuilder"
+                    ]
+                },
+                {
+                    "id": "gemeinden",
+                    "title": "Gemeinden",
+                    "description": "Gemeinden",
+                    "idProperty": "objectid",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/FeatureServer/0",
                     "popupEnabled": true,
                     "useIn": [
                         "querybuilder"
