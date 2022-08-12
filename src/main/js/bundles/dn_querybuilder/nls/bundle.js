@@ -15,9 +15,9 @@
  */
 module.exports = {
     root: ({
-        bundleName: "QueryBuilder",
+        bundleName: "Query Builder",
         bundleDescription: "Bundle to build custom query tools",
-        windowTitle: "QueryBuilder",
+        windowTitle: "Query Builder",
         editableWindowTitle: "Editable Query",
         tool: {
             title: "Build Query",
@@ -72,14 +72,14 @@ module.exports = {
                 noResultsError: "No results found for your query!"
             },
             aria: {
-                "add": "add new field query",
-                "remove": "remove current field query",
-                "negate": "negate current statement",
-                "selectLayer": "select layer",
-                "sortingField": "select sort field name",
-                "linkOperatorsEnabled": "Link operators are active.",
-                "linkOperatorsDisabled": "Link operators are inactive.",
-                "selectRelationalOperators": "Select relational operators"
+                add: "add new field query",
+                remove: "remove current field query",
+                negate: "negate current statement",
+                selectLayer: "select layer",
+                sortingField: "select sort field name",
+                linkOperatorsEnabled: "Link operators are active.",
+                linkOperatorsDisabled: "Link operators are inactive.",
+                selectRelationalOperators: "Select relational operators"
             }
         }
     }),
