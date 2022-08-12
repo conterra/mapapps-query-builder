@@ -404,7 +404,9 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                if (Array.isArray(value)) {
+                if (typeof value === "boolean") {
+                    // do nothing
+                } else if (Array.isArray(value)) {
                     value = value.map(subvalue => {
                         subvalue = this.checkDecimalSeparator(subvalue);
                         return parseFloat(subvalue);

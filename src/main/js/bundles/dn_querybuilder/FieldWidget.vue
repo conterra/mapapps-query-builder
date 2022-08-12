@@ -430,6 +430,7 @@
                             {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
                             {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
                             {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists},
                             {value: "$in", text: this.i18n.relationalOperators.in}
                         ];
                     case "date":
