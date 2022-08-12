@@ -253,6 +253,9 @@ export default declare({
         this.loading = true;
         const fieldData = this._getSelectedFieldData(selectedStoreId);
         apprt_when(fieldData, (fields) => {
+            if (!fields) {
+                return;
+            }
             const firstField = fields[0];
             const addedFieldQuery = {
                 fields: fields,
@@ -535,7 +538,7 @@ export default declare({
         const newStores = stores.slice(0);
         newStores.splice(index, 1);
         this.stores = newStores;
-        if (!this._selectedStoreStillAvailable(newStores) && newStores.length) {
+        if (!this._selectedStoreStillAvailable(newStores)) {
             this.selectedStoreId = null;
         }
         this.getStoreDataFromMetadata();
