@@ -17,7 +17,7 @@
 -->
 <template>
     <v-scroll-y-transition hide-on-leave>
-        <v-card
+        <v-card :id="getId"
             v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             raised
             class="mb-2"
@@ -54,6 +54,7 @@
                         md1
                     >
                         <v-switch
+                            :id = "'negator'+index"
                             v-model="fieldQuery.not"
                             :value="fieldQuery.not"
                             :disabled="fieldQuery.disableNot"
@@ -69,6 +70,7 @@
                         md3
                     >
                         <v-select
+                            :id="'firstSelect'+index"
                             ref="selectedFieldIdSelect"
                             v-model="fieldQuery.selectedFieldId"
                             :items="fieldQuery.fields"
@@ -77,6 +79,7 @@
                             item-value="id"
                             single-line
                             hide-details
+                            :aria-label="firstSelectAria"
                             @change="fieldChanged($event, fieldQuery)"
                         />
                     </v-flex>
@@ -92,6 +95,7 @@
                             class="pa-0 ma-0"
                             single-line
                             hide-details
+                            :aria-label="relationalOperatorAria"
                             @change="relationalOperatorChanged($event, fieldQuery)"
                         />
                     </v-flex>
@@ -119,6 +123,7 @@
                                     class="pa-0 ma-0"
                                     required
                                     hide-details
+                                    :aria-label="i18n.enterValue"
                                     readonly
                                     v-on="on"
                                 />
@@ -196,6 +201,7 @@
                             :rules="[rules.required]"
                             :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
+                            :aria-label="i18n.enterValue"
                             type="number"
                             class="pa-0 ma-0"
                             required
@@ -208,6 +214,7 @@
                             :disabled="fieldQuery.disableValue"
                             :loading="selectedField.loading"
                             :placeholder="i18n.enterValue"
+                            :aria-label="i18n.enterValue"
                             :rules="[rules.required]"
                             class="pa-0 ma-0"
                             required
@@ -304,6 +311,18 @@
                 search: ""
             }
         },
+        mounted(){
+            if (this.index > 0){
+                let focusId;
+                if (this.allowNegation){
+                    focusId = "negator" + this.index;
+                } else {
+                    focusId = "firstSelect" + this.index
+                }
+                const el = document.getElementById(focusId);
+                el.focus();
+            }
+        },
         computed: {
             selectedField() {
                 return this.fieldQuery.fields.find((field) => field.id === this.fieldQuery.selectedFieldId);
@@ -325,6 +344,19 @@
                 set: function (value) {
                     this.fieldQuery.value = new Date(value);
                 }
+            },
+            getId(){
+                return 'fieldQuery'+ (this.index + 1);
+            },
+            firstSelectAria(){
+                return this.fieldQuery.selectedFieldId
+            },
+            relationalOperatorAria(){
+                const relOperators = this.getRelationalOperators(this.selectedField);
+                const relOpInfo = relOperators.find(ro=>ro.value === this.fieldQuery.relationalOperator);
+                const relOpText = relOpInfo && relOpInfo["text"];
+                const ariaLabel = this.i18n.aria.selectRelationalOperators
+                return relOpText ? ariaLabel + " " + relOpText : ariaLabel;
             }
         },
         watch: {
@@ -451,6 +483,19 @@
             emitEventsForRemove(){
                 this.$root.$emit('remove', this.fieldQuery);
                 this.$emit("remove-event");
+                let index = this.index;
+                const idSubstr = this.allowNegation ? "negator" : "firstSelect";
+                const nextElement = document.getElementById(idSubstr + (index + 1));
+                this.$nextTick(()=>{
+                    let focusIndex;
+                    if (nextElement){
+                        focusIndex = index;
+                    } else {
+                        focusIndex = index - 1;
+                    }
+                    const focusEl = document.getElementById(idSubstr + focusIndex);
+                    focusEl.focus();
+                });
             }
         }
     }

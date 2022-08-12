@@ -19,7 +19,8 @@
     <v-form class="ct-flex-container ct-flex-container--column fullHeight">
         <div
             v-if="!processing"
-            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
+            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink"
+        >
             <v-container
                 grid-list-md
                 fluid
@@ -227,7 +228,6 @@
                                         :disabled="fieldQueries.length < 2"
                                         row
                                         hide-details
-                                        id="linkOperatorsRadioGroup"
                                     >
                                         <v-radio
                                             :label="i18n.and"
@@ -283,7 +283,7 @@
                 />
             </v-container>
         </div>
-        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
+        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink" id="query-builder-search">
             <v-container
                 grid-list-md
                 fluid
@@ -431,7 +431,8 @@
             fieldQueries: {
                 deep: true,
                 handler(){
-                    const element = document.getElementById("linkOperatorsRadioGroup");
+                    this.addAlertMessageHolderElement();
+                    const element = document.getElementById("qbAlertMessageHolder");
                     if (this.linkOperatorsEnabled && this.fieldQueries.length === 2 && !this.ariaLabelAdded){
                         this.addAriaLabel(element, this.i18n.aria.linkOperatorsEnabled);
                         this.ariaLabelAdded = true;
@@ -475,7 +476,19 @@
                 element.removeAttribute("role");
                 element.removeAttribute("aria-label");
                 this.ariaLabelAdded = false;
+            },
+            addAlertMessageHolderElement(){
+                const element = document.getElementById("qbAlertMessageHolder");
+                const containerDiv = document.getElementById("query-builder-search");
+                if (!element && containerDiv){
+                    const div = document.createElement("div");
+                    const span = document.createElement("span");
+                    span.setAttribute("id", "qbAlertMessageHolder");
+                    div.appendChild(span);
+                    containerDiv.appendChild(div);
+                }
             }
+
         }
     };
 </script>

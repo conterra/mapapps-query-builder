@@ -77,7 +77,8 @@ module.exports = {
             "selectLayer": "Layer auswählen",
             "sortingField": "Sortierfeldname auswählen",
             "linkOperatorsEnabled": "Verknüpfungsoperatoren sind aktiv.",
-            "linkOperatorsDisabled": "Verknüpfungsoperatoren sind nicht aktiv."
+            "linkOperatorsDisabled": "Verknüpfungsoperatoren sind nicht aktiv.",
+            "selectRelationalOperators": "Vergleichsoperatoren auswählen"
         }
     }
 };
