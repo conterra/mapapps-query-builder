@@ -261,6 +261,9 @@ export default declare({
         this.loading = true;
         const fieldData = this._getSelectedFieldData(selectedStoreId);
         apprt_when(fieldData, (fields) => {
+            if (!fields) {
+                return;
+            }
             const firstField = fields[0];
             const addedFieldQuery = {
                 fields: fields,
@@ -412,7 +415,9 @@ export default declare({
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
-                if (Array.isArray(value)) {
+                if (typeof value === "boolean") {
+                    // do nothing
+                } else if (Array.isArray(value)) {
                     value = value.map(subvalue => {
                         subvalue = this.checkDecimalSeparator(subvalue);
                         return parseFloat(subvalue);
@@ -541,7 +546,7 @@ export default declare({
         const newStores = stores.slice(0);
         newStores.splice(index, 1);
         this.stores = newStores;
-        if (!this._selectedStoreStillAvailable(newStores) && newStores.length) {
+        if (!this._selectedStoreStillAvailable(newStores)) {
             this.selectedStoreId = null;
         }
         this.getStoreDataFromMetadata();

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 module.exports = {
-    bundleName: "QueryBuilder",
+    bundleName: "Query Builder",
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
-    windowTitle: "QueryBuilder",
-    editableWindowTitle: "Editierbare Query",
+    windowTitle: "Abfrage erstellen",
+    editableWindowTitle: "Bearbeitbare Abfrage",
     tool: {
-        title: "Eigene Query erstellen",
-        tooltip: "Bauen Sie Ihre eigene Query"
+        title: "Eigene Abfrage erstellen",
+        tooltip: "Bauen Sie Ihre eigene Abfrage"
     },
     ui: {
         selectStore: "Was suchen?",
@@ -72,13 +72,14 @@ module.exports = {
             noResultsError: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!"
         },
         aria: {
-            "add": "Neuen Ausdruck hinzufügen",
-            "remove": "Aktuellen Ausdruck entfernen",
-            "negate": "Aktuellen Ausdruck negieren",
-            "selectLayer": "Layer auswählen",
-            "sortingField": "Sortierfeldname auswählen",
-            "linkOperatorsEnabled": "Verknüpfungsoperatoren sind aktiv.",
-            "linkOperatorsDisabled": "Verknüpfungsoperatoren sind nicht aktiv."
+            add: "Neuen Ausdruck hinzufügen",
+            remove: "Aktuellen Ausdruck entfernen",
+            negate: "Aktuellen Ausdruck negieren",
+            selectLayer: "Layer auswählen",
+            sortingField: "Sortierfeldname auswählen",
+            linkOperatorsEnabled: "Verknüpfungsoperatoren sind aktiv.",
+            linkOperatorsDisabled: "Verknüpfungsoperatoren sind nicht aktiv.",
+            selectRelationalOperators: "Vergleichsoperatoren auswählen"
         }
     }
 };
