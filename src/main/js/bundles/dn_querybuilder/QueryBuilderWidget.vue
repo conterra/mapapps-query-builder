@@ -328,7 +328,29 @@
                     wrap
                     justify-center
                 >
-                    <v-flex md6>
+                    <v-flex md12>
+                        <div>
+                            <v-checkbox
+                            v-model="setLayerDefinitionActivated"
+                            :label="i18n.setLayerDefinition"
+                            color="primary"
+                            style="height:30px;"
+                        >
+<!--                                v-message noch auf hidden setzen-->
+                        </v-checkbox>
+                        </div>
+
+                        <div
+                            @click="$emit('deactivate-current-definition-expression', {})"
+                            class="v-label"
+                            style="cursor: pointer"
+                        >
+                            <v-icon left>
+                                close
+                            </v-icon>
+                            {{ i18n.resetLayerDefinition }}
+                        </div>
+
                         <v-btn
                             v-if="!processing"
                             block
@@ -354,20 +376,21 @@
                             {{ i18n.cancelSearch }}
                         </v-btn>
                     </v-flex>
-                    <v-flex md6>
-                        <v-btn
-                            block
-                            ripple
-                            color="primary"
-                            :loading="processing"
-                            @click="emitLayerDefinition"
-                        >
-                            <v-icon left>
-                                filter_alt
-                            </v-icon>
-                            {{ i18n.setLayerDefinition }}
-                        </v-btn>
-                    </v-flex>
+                        <!-- Layer Definition Button-->
+<!--                    <v-flex md6>-->
+<!--                        <v-btn-->
+<!--                            block-->
+<!--                            ripple-->
+<!--                            color="primary"-->
+<!--                            :loading="processing"-->
+<!--                            @click="emitLayerDefinition"-->
+<!--                        >-->
+<!--                            <v-icon left>-->
+<!--                                filter_alt-->
+<!--                            </v-icon>-->
+<!--                            {{ i18n.setLayerDefinition }}-->
+<!--                        </v-btn>-->
+<!--                    </v-flex>-->
                 </v-layout>
             </v-container>
         </div>
@@ -461,6 +484,7 @@
                 linkOperatorsDisabled: true,
                 ariaLabelAdded: false,
                 showSetLayerDefinition: false,
+                setLayerDefinitionActivated: false,
                 layerAvailable: false
             };
         },
@@ -504,19 +528,19 @@
                     // use setTimeout to be sure that combobox value is set before search gets started
                     // https://github.com/vuetifyjs/vuetify/issues/4679
                     setTimeout(() => {
-                        this.$emit('search', {});
+                        this.$emit('search', {setLayerDefinitionActivated: this.setLayerDefinitionActivated});
                     })
                 });
             },
-            emitLayerDefinition: function () {
-                this.$nextTick(() => {
-                    // use setTimeout to be sure that combobox value is set before search gets started
-                    // https://github.com/vuetifyjs/vuetify/issues/4679
-                    setTimeout(() => {
-                        this.$emit('set-layer-definition', {});
-                    })
-                });
-            },
+            // emitLayerDefinition: function () {
+            //     this.$nextTick(() => {
+            //         // use setTimeout to be sure that combobox value is set before search gets started
+            //         // https://github.com/vuetifyjs/vuetify/issues/4679
+            //         setTimeout(() => {
+            //             this.$emit('set-layer-definition', {});
+            //         })
+            //     });
+            // },
             handleLinkOperatorsAriaLabel() {
                 /*Here, the expected behaviour is that the event emitted from the child component is triggered before the fieldQueries array is updated*/
                 if (this.fieldQueries.length < 2) {

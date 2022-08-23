@@ -72,13 +72,19 @@ export default class QueryController {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
                 } else {
+                    const layer = queryBuilderWidgetModel.layer;
+
+                    // reset previously applied defEx to allow filtering the entire layer
+                    if (layer.definitionExpression) {
+                        layer.definitionExpression = null;
+                    }
+
                     query = this.#query = store.query(complexQuery, opts || options);
                     return apprt_when(query, (result) => {
                         this._setProcessing(tool, false, queryBuilderWidgetModel);
                         let resultStore;
                         const idList = result ? result.map(item => item[idProperty]) : [];
 
-                        const layer = queryBuilderWidgetModel.layer;
                         if (setLayerDefinition && layer) {
                             layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
                         } else {
