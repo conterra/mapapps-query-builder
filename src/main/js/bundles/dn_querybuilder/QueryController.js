@@ -28,6 +28,7 @@ export default class QueryController {
     #query = undefined;
     #bundleContext = undefined;
     #serviceRegistration = undefined;
+    #definitionExpressionStorage = [];
 
     activate(componentContext) {
         this.#bundleContext = componentContext.getBundleContext();
@@ -76,6 +77,17 @@ export default class QueryController {
 
                     // reset previously applied defEx to allow filtering the entire layer
                     if (layer.definitionExpression) {
+                        // const previousDefinitionState = {
+                        //     layerId: layer.id,
+                        //     definitionExpression: layer.definitionExpression
+                        // };
+                        // const layerStorageIndex = this.#definitionExpressionStorage.findIndex(entry => entry.layerId === layer.id);
+                        //
+                        // if (layerStorageIndex >= 0) {
+                        //     this.#definitionExpressionStorage[layerStorageIndex] = previousDefinitionState;
+                        // } else {
+                        //     this.#definitionExpressionStorage.push(previousDefinitionState);
+                        // }
                         layer.definitionExpression = null;
                     }
 
@@ -95,7 +107,7 @@ export default class QueryController {
                             }
                             resultStore.id = store.id;
 
-                            if(this._queryBuilderProperties.enableTempStore) {
+                            if (this._queryBuilderProperties.enableTempStore) {
                                 this._registerTempStore(filter, queryBuilderWidgetModel);
                             }
                             this._dataModel.setDatasource(resultStore);
