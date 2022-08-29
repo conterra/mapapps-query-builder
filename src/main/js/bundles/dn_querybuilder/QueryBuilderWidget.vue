@@ -376,6 +376,21 @@
                             {{ i18n.cancelSearch }}
                         </v-btn>
                     </v-flex>
+                        <!-- Layer Definition Button-->
+<!--                    <v-flex md6>-->
+<!--                        <v-btn-->
+<!--                            block-->
+<!--                            ripple-->
+<!--                            color="primary"-->
+<!--                            :loading="processing"-->
+<!--                            @click="emitLayerDefinition"-->
+<!--                        >-->
+<!--                            <v-icon left>-->
+<!--                                filter_alt-->
+<!--                            </v-icon>-->
+<!--                            {{ i18n.setLayerDefinition }}-->
+<!--                        </v-btn>-->
+<!--                    </v-flex>-->
                 </v-layout>
             </v-container>
         </div>
@@ -517,6 +532,15 @@
                     })
                 });
             },
+            // emitLayerDefinition: function () {
+            //     this.$nextTick(() => {
+            //         // use setTimeout to be sure that combobox value is set before search gets started
+            //         // https://github.com/vuetifyjs/vuetify/issues/4679
+            //         setTimeout(() => {
+            //             this.$emit('set-layer-definition', {});
+            //         })
+            //     });
+            // },
             handleLinkOperatorsAriaLabel() {
                 /*Here, the expected behaviour is that the event emitted from the child component is triggered before the fieldQueries array is updated*/
                 if (this.fieldQueries.length < 2) {
