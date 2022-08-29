@@ -70,9 +70,6 @@ export default class QueryBuilderWidgetFactory {
         vm.$on('deactivate-current-definition-expression', () => {
             model.layer.definitionExpression = null;
         });
-        // vm.$on('set-layer-definition', () => {
-        //     model.search(true);
-        // });
         vm.$on('getDistinctValues', (args) => {
             model.getDistinctValues(args.value, args.fieldQuery);
         });
