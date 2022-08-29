@@ -329,28 +329,36 @@
                     justify-center
                 >
                     <v-flex md12>
-                        <div>
-                            <v-checkbox
-                            v-model="setLayerDefinitionActivated"
-                            :label="i18n.setLayerDefinition"
-                            color="primary"
-                            style="height:30px;"
+                        <v-layout
+                            row
+                            wrap
                         >
-<!--                                v-message noch auf hidden setzen-->
-                        </v-checkbox>
-                        </div>
-
-                        <div
-                            @click="$emit('reset-layer-definition', {})"
-                            class="v-label"
-                            style="cursor: pointer"
-                        >
-                            <v-icon left>
-                                close
-                            </v-icon>
-                            {{ i18n.resetLayerDefinition }}
-                        </div>
-
+                            <div>
+                                <v-checkbox
+                                    v-model="setLayerDefinitionActivated"
+                                    :label="i18n.setLayerDefinition"
+                                    color="primary"
+                                    class="pa-0 mt-2"
+                                    hide-details
+                                >
+                                </v-checkbox>
+                            </div>
+                            <div>
+                                <v-btn
+                                    flat
+                                    icon
+                                    class="pa-0 pl-2 ma-1"
+                                    color="primary"
+                                    @click="$emit('reset-layer-definition')"
+                                >
+                                    <v-icon>
+                                        restore
+                                    </v-icon>
+                                </v-btn>
+                            </div>
+                        </v-layout>
+                    </v-flex>
+                    <v-flex md12>
                         <v-btn
                             v-if="!processing"
                             block
@@ -376,21 +384,6 @@
                             {{ i18n.cancelSearch }}
                         </v-btn>
                     </v-flex>
-                        <!-- Layer Definition Button-->
-<!--                    <v-flex md6>-->
-<!--                        <v-btn-->
-<!--                            block-->
-<!--                            ripple-->
-<!--                            color="primary"-->
-<!--                            :loading="processing"-->
-<!--                            @click="emitLayerDefinition"-->
-<!--                        >-->
-<!--                            <v-icon left>-->
-<!--                                filter_alt-->
-<!--                            </v-icon>-->
-<!--                            {{ i18n.setLayerDefinition }}-->
-<!--                        </v-btn>-->
-<!--                    </v-flex>-->
                 </v-layout>
             </v-container>
         </div>
