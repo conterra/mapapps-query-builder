@@ -61,18 +61,17 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData();
         });
         vm.$on('search', (param) => {
-            const setLayerDefinition = param.setLayerDefinitionActivated;
-            model.search(setLayerDefinition);
+            model.search(false);
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();
         });
-        vm.$on('deactivate-current-definition-expression', () => {
+        vm.$on('reset-layer-definition', () => {
             model.layer.definitionExpression = null;
         });
-        // vm.$on('set-layer-definition', () => {
-        //     model.search(true);
-        // });
+        vm.$on('set-layer-definition', () => {
+            model.search(true);
+        });
         vm.$on('getDistinctValues', (args) => {
             model.getDistinctValues(args.value, args.fieldQuery);
         });

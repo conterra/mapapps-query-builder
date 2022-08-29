@@ -341,7 +341,7 @@
                         </div>
 
                         <div
-                            @click="$emit('deactivate-current-definition-expression', {})"
+                            @click="$emit('reset-layer-definition', {})"
                             class="v-label"
                             style="cursor: pointer"
                         >
@@ -528,19 +528,14 @@
                     // use setTimeout to be sure that combobox value is set before search gets started
                     // https://github.com/vuetifyjs/vuetify/issues/4679
                     setTimeout(() => {
-                        this.$emit('search', {setLayerDefinitionActivated: this.setLayerDefinitionActivated});
-                    })
+                        if(this.setLayerDefinitionActivated) {
+                            this.$emit('set-layer-definition', {});
+                        } else {
+                            this.$emit('search', {setLayerDefinitionActivated: this.setLayerDefinitionActivated});
+                        }
+                    });
                 });
             },
-            // emitLayerDefinition: function () {
-            //     this.$nextTick(() => {
-            //         // use setTimeout to be sure that combobox value is set before search gets started
-            //         // https://github.com/vuetifyjs/vuetify/issues/4679
-            //         setTimeout(() => {
-            //             this.$emit('set-layer-definition', {});
-            //         })
-            //     });
-            // },
             handleLinkOperatorsAriaLabel() {
                 /*Here, the expected behaviour is that the event emitted from the child component is triggered before the fieldQueries array is updated*/
                 if (this.fieldQueries.length < 2) {
