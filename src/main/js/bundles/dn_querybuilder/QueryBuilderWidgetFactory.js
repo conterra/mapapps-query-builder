@@ -67,7 +67,7 @@ export default class QueryBuilderWidgetFactory {
             model.cancelSearch();
         });
         vm.$on('reset-layer-definition', () => {
-            model.layer.definitionExpression = null;
+            model.revertToInitialDefinitionExpression();
         });
         vm.$on('set-layer-definition', () => {
             model.search(true);

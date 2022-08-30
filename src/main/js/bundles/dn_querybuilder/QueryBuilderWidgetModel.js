@@ -587,5 +587,20 @@ export default declare({
         if (matchingLayer.findSublayerById) {
             return matchingLayer.findSublayerById(parsedId.subLayerId);
         }
+    },
+
+    /**
+     * revertToInitialDefinitionExpression()
+     *
+     * Function used to apply layer._initialDefinitionExpression as current definitionExpression
+     * The _initialDefinitionExpression is accessed and saved by QueryController.queryStore()
+     */
+    revertToInitialDefinitionExpression() {
+        const currentLayer = this.layer;
+        if (currentLayer._initialDefinitionExpression && currentLayer._initialDefinitionExpression !== "none") {
+            currentLayer.definitionExpression = currentLayer._initialDefinitionExpression;
+        } else {
+            currentLayer.definitionExpression = null;
+        }
     }
 });
