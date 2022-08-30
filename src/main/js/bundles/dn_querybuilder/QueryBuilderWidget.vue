@@ -76,7 +76,7 @@
                             <div class="caption">
                                 {{ i18n.spatialRelation }}
                             </div>
-                            <template v-if="showSpatialInputActions">
+                            <div v-if="showSpatialInputActions">
                                 <v-container class="pa-0 mt-1">
                                     <v-checkbox
                                         v-model="negateSpatialInput"
@@ -102,8 +102,8 @@
                                         {{ activeSpatialInputActionDescription }}
                                     </div>
                                 </v-container>
-                            </template>
-                            <template v-else>
+                            </div>
+                            <div v-else>
                                 <v-radio-group
                                     v-model="spatialRelation"
                                     class="pa-0 mt-1"
@@ -125,7 +125,7 @@
                                         color="primary"
                                     />
                                 </v-radio-group>
-                            </template>
+                            </div>
                         </div>
                     </v-flex>
                     <v-flex
