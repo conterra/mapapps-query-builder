@@ -69,8 +69,13 @@
                         xs12
                         md12
                     >
-                        <fieldset>
-                            <legend class="caption">{{ i18n.spatialRelation }}</legend>
+                        <div
+                            :aria-label="i18n.spatialRelation"
+                            role="group"
+                        >
+                            <div class="caption">
+                                {{ i18n.spatialRelation }}
+                            </div>
                             <template v-if="showSpatialInputActions">
                                 <v-container class="pa-0 mt-1">
                                     <v-checkbox
@@ -121,7 +126,7 @@
                                     />
                                 </v-radio-group>
                             </template>
-                        </fieldset>
+                        </div>
                     </v-flex>
                     <v-flex
                         v-if="showSpatialInputActions"
@@ -206,22 +211,27 @@
                     >
                         <v-layout
                             row
-                            align-center>
-                            <v-flex
-                                class="pr-5 subheading"
-                                shrink>
-                                {{ i18n.searchParameter }}
-                            </v-flex>
-                            <fieldset>
-                                <legend style="float:left"
-                                        v-if="showQuerySettings"
-                                        class="flex caption shrink pt-2">
+                        >
+                            <div
+                                :aria-label="i18n.linkOperator"
+                                role="group"
+                            >
+                                <v-flex
+                                    class="pr-5 subheading"
+                                    shrink
+                                >
+                                    {{ i18n.searchParameter }}
+                                </v-flex>
+                                <v-flex
+                                    v-if="showQuerySettings"
+                                    class="flex caption shrink pt-2"
+                                >
                                     {{ i18n.linkOperator }}
-                                </legend>
-                                <v-flex style="float:left"
-                                        v-if="showQuerySettings"
-                                        shrink>
-
+                                </v-flex>
+                                <v-flex
+                                    v-if="showQuerySettings"
+                                    shrink
+                                >
                                     <v-radio-group
                                         v-model="linkOperator"
                                         class="pa-0 ma-0"
@@ -245,7 +255,7 @@
                                         />
                                     </v-radio-group>
                                 </v-flex>
-                            </fieldset>
+                            </div>
                         </v-layout>
                         <v-divider class="mt-1"></v-divider>
                     </v-flex>
@@ -290,6 +300,7 @@
                 class="pa-1"
             >
                 <v-layout
+                    v-if="!showSetLayerDefinition || !layerAvailable"
                     row
                     wrap
                     justify-center
