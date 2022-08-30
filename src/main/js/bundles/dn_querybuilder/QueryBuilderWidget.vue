@@ -300,7 +300,6 @@
                 class="pa-1"
             >
                 <v-layout
-                    v-if="!showSetLayerDefinition || !layerAvailable"
                     row
                     wrap
                     justify-center
