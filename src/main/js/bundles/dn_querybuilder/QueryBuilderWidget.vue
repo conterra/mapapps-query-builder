@@ -235,7 +235,7 @@
                                     <v-radio-group
                                         v-model="linkOperator"
                                         class="pa-0 ma-0"
-                                        :disabled="fieldQueries.length < 2"
+                                        :disabled="fieldQueriesLength < 2"
                                         row
                                         hide-details
                                     >
@@ -288,12 +288,10 @@
                     :active-tool="activeTool"
                     :enable-distinct-values="enableDistinctValues"
                     :i18n="i18n"
-                    @add-event="handleLinkOperatorsAriaLabel"
-                    @remove-event="handleLinkOperatorsAriaLabel"
                 />
             </v-container>
         </div>
-        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink" id="query-builder-search">
+        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container
                 grid-list-md
                 fluid
@@ -333,6 +331,11 @@
                 </v-layout>
             </v-container>
         </div>
+        <div
+            aria-live="assertive"
+            aria-relevant="additions"
+            :aria-label="textToRead"
+        />
     </v-form>
 </template>
 <script>
@@ -419,10 +422,13 @@
                 allowMultipleSpatialInputs: true,
                 negateSpatialInput: false,
                 enableDistinctValues: true,
-                linkOperatorsEnabled: false,
-                linkOperatorsDisabled: true,
-                ariaLabelAdded: false
+                textToRead: ""
             };
+        },
+        computed: {
+            fieldQueriesLength() {
+                return this.fieldQueries.length;
+            }
         },
         watch: {
             activeTool: function (value) {
@@ -438,20 +444,11 @@
             activeSpatialInputAction: function (id) {
                 this.$emit("selectSpatialInputAction", id);
             },
-            fieldQueries: {
-                deep: true,
-                handler(){
-                    this.addAlertMessageHolderElement();
-                    const element = document.getElementById("qbAlertMessageHolder");
-                    if (this.linkOperatorsEnabled && this.fieldQueries.length === 2 && !this.ariaLabelAdded){
-                        this.addAriaLabel(element, this.i18n.aria.linkOperatorsEnabled);
-                        this.ariaLabelAdded = true;
-                    }
-                    if (!this.linkOperatorsDisabled && this.fieldQueries.length < 2){
-                        this.ariaLabelAdded && this.removeAriaLabel(element);
-                        this.addAriaLabel(element, this.i18n.aria.linkOperatorsDisabled);
-                        this.linkOperatorsEnabled = false;
-                    }
+            fieldQueriesLength: function (length) {
+                if (length > 1) {
+                    this.say(this.i18n.aria.linkOperatorsEnabled);
+                } else {
+                    this.say(this.i18n.aria.linkOperatorsDisabled);
                 }
             }
         },
@@ -468,37 +465,9 @@
                     })
                 });
             },
-            handleLinkOperatorsAriaLabel() {
-                /*Here, the expected behaviour is that the event emitted from the child component is triggered before the fieldQueries array is updated*/
-                if (this.fieldQueries.length < 2) {
-                    this.linkOperatorsEnabled = true;
-                    this.linkOperatorsDisabled = false;
-                }
-                if (this.linkOperatorsDisabled && this.fieldQueries.length === 2) {
-                    this.linkOperatorsDisabled = false;
-                }
-            },
-            addAriaLabel(element, message) {
-                element.setAttribute("role", "alert");
-                element.setAttribute("aria-label", message);
-            },
-            removeAriaLabel(element) {
-                element.removeAttribute("role");
-                element.removeAttribute("aria-label");
-                this.ariaLabelAdded = false;
-            },
-            addAlertMessageHolderElement(){
-                const element = document.getElementById("qbAlertMessageHolder");
-                const containerDiv = document.getElementById("query-builder-search");
-                if (!element && containerDiv){
-                    const div = document.createElement("div");
-                    const span = document.createElement("span");
-                    span.setAttribute("id", "qbAlertMessageHolder");
-                    div.appendChild(span);
-                    containerDiv.appendChild(div);
-                }
+            say(text) {
+                this.textToRead = text;
             }
-
         }
     };
 </script>

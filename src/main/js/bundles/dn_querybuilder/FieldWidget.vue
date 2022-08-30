@@ -478,11 +478,9 @@
             },
             emitEventsForAdd(){
                 this.$root.$emit('add', {});
-                this.$emit("add-event");
             },
             emitEventsForRemove(){
                 this.$root.$emit('remove', this.fieldQuery);
-                this.$emit("remove-event");
                 let index = this.index;
                 const idSubstr = this.allowNegation ? "negator" : "firstSelect";
                 const nextElement = document.getElementById(idSubstr + (index + 1));
