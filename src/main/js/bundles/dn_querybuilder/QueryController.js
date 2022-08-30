@@ -28,7 +28,6 @@ export default class QueryController {
     #query = undefined;
     #bundleContext = undefined;
     #serviceRegistration = undefined;
-    #definitionExpressionStorage = [];
 
     activate(componentContext) {
         this.#bundleContext = componentContext.getBundleContext();
@@ -66,6 +65,22 @@ export default class QueryController {
             const fields = opts.fields = {};
             fields[idProperty] = true;
         }
+
+        const layer = queryBuilderWidgetModel.layer;
+
+        // reset previously applied or initial definitionExpression to allow filtering the entire layer
+        // save initial definitionExpression to enable reversion to initial state
+        if (!layer.definitionExpression) {
+            layer._initialDefinitionExpression = "none";
+        }
+        if (layer.definitionExpression) {
+            if (!layer._initialDefinitionExpression) {
+                layer._initialDefinitionExpression = layer.definitionExpression;
+            }
+
+            layer.definitionExpression = null;
+        }
+
         let query = this.#query = countFilter.query({}, {count: 0});
         return apprt_when(query.total, (total) => {
             if (total) {
@@ -73,24 +88,6 @@ export default class QueryController {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
                 } else {
-                    const layer = queryBuilderWidgetModel.layer;
-
-                    // reset previously applied defEx to allow filtering the entire layer
-                    if (layer.definitionExpression) {
-                        // const previousDefinitionState = {
-                        //     layerId: layer.id,
-                        //     definitionExpression: layer.definitionExpression
-                        // };
-                        // const layerStorageIndex = this.#definitionExpressionStorage.findIndex(entry => entry.layerId === layer.id);
-                        //
-                        // if (layerStorageIndex >= 0) {
-                        //     this.#definitionExpressionStorage[layerStorageIndex] = previousDefinitionState;
-                        // } else {
-                        //     this.#definitionExpressionStorage.push(previousDefinitionState);
-                        // }
-                        layer.definitionExpression = null;
-                    }
-
                     query = this.#query = store.query(complexQuery, opts || options);
                     return apprt_when(query, (result) => {
                         this._setProcessing(tool, false, queryBuilderWidgetModel);
