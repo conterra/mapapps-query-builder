@@ -65,6 +65,7 @@
             "QueryBuilderWidgetModel": {
                 "storeIds": [
                     "koeln",
+                    "koeln2",
                     "standorte",
                     "countries",
                     "baumkataster",
@@ -494,6 +495,12 @@
                             "id": "koeln",
                             "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/6",
                             "type": "AGS_FEATURE"
+                        },
+                        {
+                            "id": "koeln2",
+                            "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/6",
+                            "type": "AGS_FEATURE",
+                            "definitionExpression": "OBJECTID IN(3,7)"
                         },
                         {
                             "id": "standorte",
