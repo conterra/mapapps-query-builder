@@ -17,7 +17,7 @@
 -->
 <template>
     <v-scroll-y-transition hide-on-leave>
-        <v-card :id="getId"
+        <v-card
             v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             raised
             class="mb-2"
@@ -54,7 +54,8 @@
                         md1
                     >
                         <v-switch
-                            :id = "'negator'+index"
+                            :id="'notSwitch' + index"
+                            ref="notSwitch"
                             v-model="fieldQuery.not"
                             :value="fieldQuery.not"
                             :disabled="fieldQuery.disableNot"
@@ -62,6 +63,7 @@
                             color="red"
                             hide-details
                             :aria-label="i18n.aria.negate"
+                            @blur.self="console.log('blur')"
                         />
                     </v-flex>
                     <v-flex
@@ -70,7 +72,7 @@
                         md3
                     >
                         <v-select
-                            :id="'firstSelect'+index"
+                            :id="'selectedFieldId' + index"
                             ref="selectedFieldIdSelect"
                             v-model="fieldQuery.selectedFieldId"
                             :items="fieldQuery.fields"
@@ -235,7 +237,7 @@
                                 class="ma-0"
                                 icon
                                 small
-                                @click="emitEventsForRemove"
+                                @click="$emit('remove', fieldQuery)"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -254,7 +256,7 @@
                                 class="ma-0"
                                 icon
                                 small
-                                @click="emitEventsForAdd"
+                                @click="$emit('add')"
                             >
                                 <v-icon>add</v-icon>
                             </v-btn>
@@ -312,16 +314,7 @@
             }
         },
         mounted(){
-            if (this.index > 0){
-                let focusId;
-                if (this.allowNegation){
-                    focusId = "negator" + this.index;
-                } else {
-                    focusId = "firstSelect" + this.index
-                }
-                const el = document.getElementById(focusId);
-                el.focus();
-            }
+            this.focus();
         },
         computed: {
             selectedField() {
@@ -344,9 +337,6 @@
                 set: function (value) {
                     this.fieldQuery.value = new Date(value);
                 }
-            },
-            getId(){
-                return 'fieldQuery'+ (this.index + 1);
             },
             firstSelectAria(){
                 return this.fieldQuery.selectedFieldId
@@ -388,6 +378,22 @@
             }
         },
         methods: {
+            focus: function () {
+                // TODO: Focus should be possible via ref
+                // const focusElement = this.allowNegation ? this.$refs.notSwitch : this.$refs.selectedFieldIdSelect;
+                // this.$nextTick(() => {
+                //     setTimeout(() => {
+                //         focusElement.$el.focus();
+                //     },100)
+                // });
+
+                const index = this.index;
+                const idSubstr = this.allowNegation ? "notSwitch" : "selectedFieldIdSelect";
+                const focusElement = document.getElementById(idSubstr + index);
+                this.$nextTick(()=>{
+                    focusElement.focus();
+                });
+            },
             fieldChanged: function (selectedFieldId, fieldQuery) {
                 const value = this.search;
                 const selectedField = this.selectedField;
@@ -475,25 +481,6 @@
             },
             getDistinctValues(value, fieldQuery) {
                 this.$root.$emit("getDistinctValues", {value, fieldQuery});
-            },
-            emitEventsForAdd(){
-                this.$root.$emit('add', {});
-            },
-            emitEventsForRemove(){
-                this.$root.$emit('remove', this.fieldQuery);
-                let index = this.index;
-                const idSubstr = this.allowNegation ? "negator" : "firstSelect";
-                const nextElement = document.getElementById(idSubstr + (index + 1));
-                this.$nextTick(()=>{
-                    let focusIndex;
-                    if (nextElement){
-                        focusIndex = index;
-                    } else {
-                        focusIndex = index - 1;
-                    }
-                    const focusEl = document.getElementById(idSubstr + focusIndex);
-                    focusEl.focus();
-                });
             }
         }
     }

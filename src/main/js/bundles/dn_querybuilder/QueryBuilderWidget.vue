@@ -264,6 +264,7 @@
         </div>
         <div class="center ct-flex-item overflow--auto">
             <v-container
+                ref="searchBtn"
                 align-center
                 justify-center
                 :fill-height="processing"
@@ -280,6 +281,7 @@
                 <field-widget
                     v-for="(fieldQuery, index) in fieldQueries"
                     v-else
+                    :ref="'fieldWidget_' + index"
                     :key="index"
                     :locale="locale"
                     :field-query="fieldQuery"
@@ -288,6 +290,8 @@
                     :active-tool="activeTool"
                     :enable-distinct-values="enableDistinctValues"
                     :i18n="i18n"
+                    @remove="removeField"
+                    @add="addField"
                 />
             </v-container>
         </div>
@@ -467,6 +471,18 @@
             },
             say(text) {
                 this.textToRead = text;
+            },
+            setFocusToLastFieldWidget() {
+                const id = "fieldWidget_" + (this.fieldQueries.length - 1);
+                const lastFieldWidget = this.$refs[id];
+                lastFieldWidget[0].focus();
+            },
+            addField: function () {
+                this.$emit("add");
+            },
+            removeField: function (fieldQuery) {
+                this.$emit("remove", fieldQuery);
+                this.setFocusToLastFieldWidget();
             }
         }
     };
