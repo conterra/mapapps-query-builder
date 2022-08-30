@@ -81,7 +81,7 @@
                             item-value="id"
                             single-line
                             hide-details
-                            :aria-label="firstSelectAria"
+                            :aria-label="firstSelectAriaLabel"
                             @change="fieldChanged($event, fieldQuery)"
                         />
                     </v-flex>
@@ -97,7 +97,7 @@
                             class="pa-0 ma-0"
                             single-line
                             hide-details
-                            :aria-label="relationalOperatorAria"
+                            :aria-label="relationalOperatorAriaLabel"
                             @change="relationalOperatorChanged($event, fieldQuery)"
                         />
                     </v-flex>
@@ -311,10 +311,7 @@
                     string: (value) => typeof value === "string" || this.i18n.rules.string
                 },
                 search: ""
-            }
-        },
-        mounted(){
-            this.focus();
+            };
         },
         computed: {
             selectedField() {
@@ -329,7 +326,7 @@
                         dateObj = new Date();
                     }
                     if (!isNaN(dateObj.getTime())) {
-                        return dateObj.toISOString().substr(0, 10)
+                        return dateObj.toISOString().substr(0, 10);
                     } else {
                         return null;
                     }
@@ -338,14 +335,15 @@
                     this.fieldQuery.value = new Date(value);
                 }
             },
-            firstSelectAria(){
-                return this.fieldQuery.selectedFieldId
+            firstSelectAriaLabel() {
+                debugger
+                return this.fieldQuery.selectedFieldId;
             },
-            relationalOperatorAria(){
+            relationalOperatorAriaLabel() {
                 const relOperators = this.getRelationalOperators(this.selectedField);
-                const relOpInfo = relOperators.find(ro=>ro.value === this.fieldQuery.relationalOperator);
+                const relOpInfo = relOperators.find(ro => ro.value === this.fieldQuery.relationalOperator);
                 const relOpText = relOpInfo && relOpInfo["text"];
-                const ariaLabel = this.i18n.aria.selectRelationalOperators
+                const ariaLabel = this.i18n.aria.selectRelationalOperators;
                 return relOpText ? ariaLabel + " " + relOpText : ariaLabel;
             }
         },
@@ -377,6 +375,9 @@
                 }
             }
         },
+        mounted() {
+            this.focus();
+        },
         methods: {
             focus: function () {
                 // TODO: Focus should be possible via ref
@@ -390,7 +391,7 @@
                 const index = this.index;
                 const idSubstr = this.allowNegation ? "notSwitch" : "selectedFieldIdSelect";
                 const focusElement = document.getElementById(idSubstr + index);
-                this.$nextTick(()=>{
+                this.$nextTick(() => {
                     focusElement.focus();
                 });
             },
@@ -412,7 +413,7 @@
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
                 const selectedField = this.selectedField;
-                if (fieldQuery.value === null || fieldQuery.value === ""){ /* only if no value was selected*/
+                if (fieldQuery.value === null || fieldQuery.value === "") { /* only if no value was selected*/
                     if (relationalOperator === "$exists") {
                         fieldQuery.value = true;
                     } else if (relationalOperator === "$in") {
@@ -431,7 +432,7 @@
                 return [
                     {value: true, text: this.i18n.yes},
                     {value: false, text: this.i18n.no}
-                ]
+                ];
             },
             getRelationalOperators: function (field) {
                 if (!field) {
@@ -483,5 +484,5 @@
                 this.$root.$emit("getDistinctValues", {value, fieldQuery});
             }
         }
-    }
+    };
 </script>
