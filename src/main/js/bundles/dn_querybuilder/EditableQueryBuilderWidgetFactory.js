@@ -62,7 +62,8 @@ export default class EditableQueryBuilderWidgetFactory {
 
         // listen to view model methods
         vm.$on('search', () => {
-            model.search(vm.selectedStoreId, vm.linkOperator, vm.spatialRelation, vm.fieldQueries, tool, options, true);
+            model.search(false, vm.selectedStoreId, vm.linkOperator,
+                vm.spatialRelation, vm.fieldQueries, tool, options, true);
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();

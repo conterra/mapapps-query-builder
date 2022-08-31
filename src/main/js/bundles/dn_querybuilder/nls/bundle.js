@@ -34,6 +34,8 @@ module.exports = {
             delete: "Delete",
             search: "Search",
             cancelSearch: "Cancel search",
+            setLayerDefinition: "Set layer definition",
+            resetLayerDefinition: "Reset layer definition",
             searchParameter: "Search parameter",
             negated: "negated",
             typeInValue: "type in value",

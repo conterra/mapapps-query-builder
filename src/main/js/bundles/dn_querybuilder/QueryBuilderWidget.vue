@@ -302,10 +302,74 @@
                 class="pa-1"
             >
                 <v-layout
+                    v-if="!showSetLayerDefinition || !layerAvailable"
                     row
                     wrap
                     justify-center
                 >
+                    <v-flex md12>
+                        <v-btn
+                            v-if="!processing"
+                            block
+                            ripple
+                            color="primary"
+                            @click="emitSearch"
+                        >
+                            <v-icon left>
+                                search
+                            </v-icon>
+                            {{ i18n.search }}
+                        </v-btn>
+                        <v-btn
+                            v-else
+                            block
+                            ripple
+                            color="primary"
+                            @click="$emit('cancel-search', {})"
+                        >
+                            <v-icon left>
+                                cancel
+                            </v-icon>
+                            {{ i18n.cancelSearch }}
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-layout
+                    v-else
+                    row
+                    wrap
+                    justify-center
+                >
+                    <v-flex md12>
+                        <v-layout
+                            row
+                            wrap
+                        >
+                            <div>
+                                <v-checkbox
+                                    v-model="setLayerDefinitionActivated"
+                                    :label="i18n.setLayerDefinition"
+                                    color="primary"
+                                    class="pa-0 mt-2"
+                                    hide-details
+                                >
+                                </v-checkbox>
+                            </div>
+                            <div>
+                                <v-btn
+                                    flat
+                                    icon
+                                    class="pa-0 pl-2 ma-1"
+                                    color="primary"
+                                    @click="$emit('reset-layer-definition')"
+                                >
+                                    <v-icon>
+                                        restore
+                                    </v-icon>
+                                </v-btn>
+                            </div>
+                        </v-layout>
+                    </v-flex>
                     <v-flex md12>
                         <v-btn
                             v-if="!processing"
@@ -426,7 +490,14 @@
                 allowMultipleSpatialInputs: true,
                 negateSpatialInput: false,
                 enableDistinctValues: true,
+                linkOperatorsEnabled: false,
+                linkOperatorsDisabled: true,
+                ariaLabelAdded: false,
+                showSetLayerDefinition: false,
+                setLayerDefinitionActivated: false,
+                layerAvailable: false,
                 textToRead: ""
+
             };
         },
         computed: {
@@ -465,8 +536,12 @@
                     // use setTimeout to be sure that combobox value is set before search gets started
                     // https://github.com/vuetifyjs/vuetify/issues/4679
                     setTimeout(() => {
-                        this.$emit('search', {});
-                    })
+                        if(this.setLayerDefinitionActivated) {
+                            this.$emit('set-layer-definition', {});
+                        } else {
+                            this.$emit('search', {setLayerDefinitionActivated: this.setLayerDefinitionActivated});
+                        }
+                    });
                 });
             },
             say(text) {

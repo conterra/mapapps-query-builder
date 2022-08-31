@@ -40,9 +40,9 @@ export default class QueryController {
         this.#i18n = undefined;
     }
 
-    query(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+    query(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition) {
         this.searchReplacer(complexQuery);
-        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel);
+        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition);
         this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
     }
 
@@ -54,7 +54,7 @@ export default class QueryController {
         this._dataModel.setDatasource();
     }
 
-    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel) {
+    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
@@ -65,6 +65,22 @@ export default class QueryController {
             const fields = opts.fields = {};
             fields[idProperty] = true;
         }
+
+        const layer = queryBuilderWidgetModel.layer;
+
+        // reset previously applied or initial definitionExpression to allow filtering the entire layer
+        // save initial definitionExpression to enable reversion to initial state
+        if (!layer.definitionExpression) {
+            layer._initialDefinitionExpression = "none";
+        }
+        if (layer.definitionExpression) {
+            if (!layer._initialDefinitionExpression) {
+                layer._initialDefinitionExpression = layer.definitionExpression;
+            }
+
+            layer.definitionExpression = null;
+        }
+
         let query = this.#query = countFilter.query({}, {count: 0});
         return apprt_when(query.total, (total) => {
             if (total) {
@@ -77,18 +93,23 @@ export default class QueryController {
                         this._setProcessing(tool, false, queryBuilderWidgetModel);
                         let resultStore;
                         const idList = result ? result.map(item => item[idProperty]) : [];
-                        if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
-                            resultStore = this._createResultReferenceStore(idList, store, 1000);
-                        } else {
-                            resultStore = this._createFullItemResultStore(idList, result, store);
-                        }
-                        resultStore.id = store.id;
 
-                        if(this._queryBuilderProperties.enableTempStore) {
-                            this._registerTempStore(filter, queryBuilderWidgetModel);
+                        if (setLayerDefinition && layer) {
+                            layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
+                        } else {
+                            if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
+                                resultStore = this._createResultReferenceStore(idList, store, 1000);
+                            } else {
+                                resultStore = this._createFullItemResultStore(idList, result, store);
+                            }
+                            resultStore.id = store.id;
+
+                            if (this._queryBuilderProperties.enableTempStore) {
+                                this._registerTempStore(filter, queryBuilderWidgetModel);
+                            }
+                            this._dataModel.setDatasource(resultStore);
+                            this._resultcenterToggleTool.set("active", true);
                         }
-                        this._dataModel.setDatasource(resultStore);
-                        this._resultcenterToggleTool.set("active", true);
                     });
                 }
             } else {
