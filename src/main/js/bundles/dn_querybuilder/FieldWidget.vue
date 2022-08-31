@@ -17,7 +17,7 @@
 -->
 <template>
     <v-scroll-y-transition hide-on-leave>
-        <v-card :id="getId"
+        <v-card
             v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             raised
             class="mb-2"
@@ -54,7 +54,8 @@
                         md1
                     >
                         <v-switch
-                            :id = "'negator'+index"
+                            :id="'notSwitch' + index"
+                            ref="notSwitch"
                             v-model="fieldQuery.not"
                             :value="fieldQuery.not"
                             :disabled="fieldQuery.disableNot"
@@ -62,6 +63,7 @@
                             color="red"
                             hide-details
                             :aria-label="i18n.aria.negate"
+                            @blur.self="console.log('blur')"
                         />
                     </v-flex>
                     <v-flex
@@ -70,7 +72,7 @@
                         md3
                     >
                         <v-select
-                            :id="'firstSelect'+index"
+                            :id="'selectedFieldId' + index"
                             ref="selectedFieldIdSelect"
                             v-model="fieldQuery.selectedFieldId"
                             :items="fieldQuery.fields"
@@ -79,7 +81,7 @@
                             item-value="id"
                             single-line
                             hide-details
-                            :aria-label="firstSelectAria"
+                            :aria-label="firstSelectAriaLabel"
                             @change="fieldChanged($event, fieldQuery)"
                         />
                     </v-flex>
@@ -95,7 +97,7 @@
                             class="pa-0 ma-0"
                             single-line
                             hide-details
-                            :aria-label="relationalOperatorAria"
+                            :aria-label="relationalOperatorAriaLabel"
                             @change="relationalOperatorChanged($event, fieldQuery)"
                         />
                     </v-flex>
@@ -235,7 +237,7 @@
                                 class="ma-0"
                                 icon
                                 small
-                                @click="emitEventsForRemove"
+                                @click="$emit('remove', fieldQuery)"
                             >
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -254,7 +256,7 @@
                                 class="ma-0"
                                 icon
                                 small
-                                @click="emitEventsForAdd"
+                                @click="$emit('add')"
                             >
                                 <v-icon>add</v-icon>
                             </v-btn>
@@ -309,19 +311,7 @@
                     string: (value) => typeof value === "string" || this.i18n.rules.string
                 },
                 search: ""
-            }
-        },
-        mounted(){
-            if (this.index > 0){
-                let focusId;
-                if (this.allowNegation){
-                    focusId = "negator" + this.index;
-                } else {
-                    focusId = "firstSelect" + this.index
-                }
-                const el = document.getElementById(focusId);
-                el.focus();
-            }
+            };
         },
         computed: {
             selectedField() {
@@ -336,7 +326,7 @@
                         dateObj = new Date();
                     }
                     if (!isNaN(dateObj.getTime())) {
-                        return dateObj.toISOString().substr(0, 10)
+                        return dateObj.toISOString().substr(0, 10);
                     } else {
                         return null;
                     }
@@ -345,17 +335,15 @@
                     this.fieldQuery.value = new Date(value);
                 }
             },
-            getId(){
-                return 'fieldQuery'+ (this.index + 1);
+            firstSelectAriaLabel() {
+                debugger
+                return this.fieldQuery.selectedFieldId;
             },
-            firstSelectAria(){
-                return this.fieldQuery.selectedFieldId
-            },
-            relationalOperatorAria(){
+            relationalOperatorAriaLabel() {
                 const relOperators = this.getRelationalOperators(this.selectedField);
-                const relOpInfo = relOperators.find(ro=>ro.value === this.fieldQuery.relationalOperator);
+                const relOpInfo = relOperators.find(ro => ro.value === this.fieldQuery.relationalOperator);
                 const relOpText = relOpInfo && relOpInfo["text"];
-                const ariaLabel = this.i18n.aria.selectRelationalOperators
+                const ariaLabel = this.i18n.aria.selectRelationalOperators;
                 return relOpText ? ariaLabel + " " + relOpText : ariaLabel;
             }
         },
@@ -387,7 +375,26 @@
                 }
             }
         },
+        mounted() {
+            this.focus();
+        },
         methods: {
+            focus: function () {
+                // TODO: Focus should be possible via ref
+                // const focusElement = this.allowNegation ? this.$refs.notSwitch : this.$refs.selectedFieldIdSelect;
+                // this.$nextTick(() => {
+                //     setTimeout(() => {
+                //         focusElement.$el.focus();
+                //     },100)
+                // });
+
+                const index = this.index;
+                const idSubstr = this.allowNegation ? "notSwitch" : "selectedFieldIdSelect";
+                const focusElement = document.getElementById(idSubstr + index);
+                this.$nextTick(() => {
+                    focusElement.focus();
+                });
+            },
             fieldChanged: function (selectedFieldId, fieldQuery) {
                 const value = this.search;
                 const selectedField = this.selectedField;
@@ -406,7 +413,7 @@
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
                 const selectedField = this.selectedField;
-                if (fieldQuery.value === null || fieldQuery.value === ""){ /* only if no value was selected*/
+                if (fieldQuery.value === null || fieldQuery.value === "") { /* only if no value was selected*/
                     if (relationalOperator === "$exists") {
                         fieldQuery.value = true;
                     } else if (relationalOperator === "$in") {
@@ -425,7 +432,7 @@
                 return [
                     {value: true, text: this.i18n.yes},
                     {value: false, text: this.i18n.no}
-                ]
+                ];
             },
             getRelationalOperators: function (field) {
                 if (!field) {
@@ -475,28 +482,7 @@
             },
             getDistinctValues(value, fieldQuery) {
                 this.$root.$emit("getDistinctValues", {value, fieldQuery});
-            },
-            emitEventsForAdd(){
-                this.$root.$emit('add', {});
-                this.$emit("add-event");
-            },
-            emitEventsForRemove(){
-                this.$root.$emit('remove', this.fieldQuery);
-                this.$emit("remove-event");
-                let index = this.index;
-                const idSubstr = this.allowNegation ? "negator" : "firstSelect";
-                const nextElement = document.getElementById(idSubstr + (index + 1));
-                this.$nextTick(()=>{
-                    let focusIndex;
-                    if (nextElement){
-                        focusIndex = index;
-                    } else {
-                        focusIndex = index - 1;
-                    }
-                    const focusEl = document.getElementById(idSubstr + focusIndex);
-                    focusEl.focus();
-                });
             }
         }
-    }
+    };
 </script>

@@ -69,9 +69,14 @@
                         xs12
                         md12
                     >
-                        <fieldset>
-                            <legend class="caption">{{ i18n.spatialRelation }}</legend>
-                            <template v-if="showSpatialInputActions">
+                        <div
+                            :aria-label="i18n.spatialRelation"
+                            role="group"
+                        >
+                            <div class="caption">
+                                {{ i18n.spatialRelation }}
+                            </div>
+                            <div v-if="showSpatialInputActions">
                                 <v-container class="pa-0 mt-1">
                                     <v-checkbox
                                         v-model="negateSpatialInput"
@@ -97,8 +102,8 @@
                                         {{ activeSpatialInputActionDescription }}
                                     </div>
                                 </v-container>
-                            </template>
-                            <template v-else>
+                            </div>
+                            <div v-else>
                                 <v-radio-group
                                     v-model="spatialRelation"
                                     class="pa-0 mt-1"
@@ -120,8 +125,8 @@
                                         color="primary"
                                     />
                                 </v-radio-group>
-                            </template>
-                        </fieldset>
+                            </div>
+                        </div>
                     </v-flex>
                     <v-flex
                         v-if="showSpatialInputActions"
@@ -206,26 +211,31 @@
                     >
                         <v-layout
                             row
-                            align-center>
-                            <v-flex
-                                class="pr-5 subheading"
-                                shrink>
-                                {{ i18n.searchParameter }}
-                            </v-flex>
-                            <fieldset>
-                                <legend style="float:left"
-                                        v-if="showQuerySettings"
-                                        class="flex caption shrink pt-2">
+                        >
+                            <div
+                                :aria-label="i18n.linkOperator"
+                                role="group"
+                            >
+                                <v-flex
+                                    class="pr-5 subheading"
+                                    shrink
+                                >
+                                    {{ i18n.searchParameter }}
+                                </v-flex>
+                                <v-flex
+                                    v-if="showQuerySettings"
+                                    class="flex caption shrink pt-2"
+                                >
                                     {{ i18n.linkOperator }}
-                                </legend>
-                                <v-flex style="float:left"
-                                        v-if="showQuerySettings"
-                                        shrink>
-
+                                </v-flex>
+                                <v-flex
+                                    v-if="showQuerySettings"
+                                    shrink
+                                >
                                     <v-radio-group
                                         v-model="linkOperator"
                                         class="pa-0 ma-0"
-                                        :disabled="fieldQueries.length < 2"
+                                        :disabled="fieldQueriesLength < 2"
                                         row
                                         hide-details
                                     >
@@ -245,7 +255,7 @@
                                         />
                                     </v-radio-group>
                                 </v-flex>
-                            </fieldset>
+                            </div>
                         </v-layout>
                         <v-divider class="mt-1"></v-divider>
                     </v-flex>
@@ -254,6 +264,7 @@
         </div>
         <div class="center ct-flex-item overflow--auto">
             <v-container
+                ref="searchBtn"
                 align-center
                 justify-center
                 :fill-height="processing"
@@ -270,6 +281,7 @@
                 <field-widget
                     v-for="(fieldQuery, index) in fieldQueries"
                     v-else
+                    :ref="'fieldWidget_' + index"
                     :key="index"
                     :locale="locale"
                     :field-query="fieldQuery"
@@ -278,12 +290,12 @@
                     :active-tool="activeTool"
                     :enable-distinct-values="enableDistinctValues"
                     :i18n="i18n"
-                    @add-event="handleLinkOperatorsAriaLabel"
-                    @remove-event="handleLinkOperatorsAriaLabel"
+                    @remove="removeField"
+                    @add="addField"
                 />
             </v-container>
         </div>
-        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink" id="query-builder-search">
+        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <v-container
                 grid-list-md
                 fluid
@@ -387,6 +399,11 @@
                 </v-layout>
             </v-container>
         </div>
+        <div
+            aria-live="assertive"
+            aria-relevant="additions"
+            :aria-label="textToRead"
+        />
     </v-form>
 </template>
 <script>
@@ -478,8 +495,15 @@
                 ariaLabelAdded: false,
                 showSetLayerDefinition: false,
                 setLayerDefinitionActivated: false,
-                layerAvailable: false
+                layerAvailable: false,
+                textToRead: ""
+
             };
+        },
+        computed: {
+            fieldQueriesLength() {
+                return this.fieldQueries.length;
+            }
         },
         watch: {
             activeTool: function (value) {
@@ -495,20 +519,11 @@
             activeSpatialInputAction: function (id) {
                 this.$emit("selectSpatialInputAction", id);
             },
-            fieldQueries: {
-                deep: true,
-                handler(){
-                    this.addAlertMessageHolderElement();
-                    const element = document.getElementById("qbAlertMessageHolder");
-                    if (this.linkOperatorsEnabled && this.fieldQueries.length === 2 && !this.ariaLabelAdded){
-                        this.addAriaLabel(element, this.i18n.aria.linkOperatorsEnabled);
-                        this.ariaLabelAdded = true;
-                    }
-                    if (!this.linkOperatorsDisabled && this.fieldQueries.length < 2){
-                        this.ariaLabelAdded && this.removeAriaLabel(element);
-                        this.addAriaLabel(element, this.i18n.aria.linkOperatorsDisabled);
-                        this.linkOperatorsEnabled = false;
-                    }
+            fieldQueriesLength: function (length) {
+                if (length > 1) {
+                    this.say(this.i18n.aria.linkOperatorsEnabled);
+                } else {
+                    this.say(this.i18n.aria.linkOperatorsDisabled);
                 }
             }
         },
@@ -529,37 +544,21 @@
                     });
                 });
             },
-            handleLinkOperatorsAriaLabel() {
-                /*Here, the expected behaviour is that the event emitted from the child component is triggered before the fieldQueries array is updated*/
-                if (this.fieldQueries.length < 2) {
-                    this.linkOperatorsEnabled = true;
-                    this.linkOperatorsDisabled = false;
-                }
-                if (this.linkOperatorsDisabled && this.fieldQueries.length === 2) {
-                    this.linkOperatorsDisabled = false;
-                }
+            say(text) {
+                this.textToRead = text;
             },
-            addAriaLabel(element, message) {
-                element.setAttribute("role", "alert");
-                element.setAttribute("aria-label", message);
+            setFocusToLastFieldWidget() {
+                const id = "fieldWidget_" + (this.fieldQueries.length - 1);
+                const lastFieldWidget = this.$refs[id];
+                lastFieldWidget[0].focus();
             },
-            removeAriaLabel(element) {
-                element.removeAttribute("role");
-                element.removeAttribute("aria-label");
-                this.ariaLabelAdded = false;
+            addField: function () {
+                this.$emit("add");
             },
-            addAlertMessageHolderElement(){
-                const element = document.getElementById("qbAlertMessageHolder");
-                const containerDiv = document.getElementById("query-builder-search");
-                if (!element && containerDiv){
-                    const div = document.createElement("div");
-                    const span = document.createElement("span");
-                    span.setAttribute("id", "qbAlertMessageHolder");
-                    div.appendChild(span);
-                    containerDiv.appendChild(div);
-                }
+            removeField: function (fieldQuery) {
+                this.$emit("remove", fieldQuery);
+                this.setFocusToLastFieldWidget();
             }
-
         }
     };
 </script>
