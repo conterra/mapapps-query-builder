@@ -336,7 +336,6 @@
                 }
             },
             firstSelectAriaLabel() {
-                debugger
                 return this.fieldQuery.selectedFieldId;
             },
             relationalOperatorAriaLabel() {
