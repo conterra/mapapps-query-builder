@@ -363,6 +363,7 @@
                                     color="primary"
                                     @click="$emit('reset-layer-definition')"
                                 >
+                                    {{ i18n.resetLayerDefinition }}
                                     <v-icon>
                                         restore
                                     </v-icon>
