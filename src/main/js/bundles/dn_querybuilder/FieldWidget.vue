@@ -391,7 +391,7 @@
                 const idSubstr = this.allowNegation ? "notSwitch" : "selectedFieldIdSelect";
                 const focusElement = document.getElementById(idSubstr + index);
                 this.$nextTick(() => {
-                    focusElement.focus();
+                    focusElement?.focus();
                 });
             },
             fieldChanged: function (selectedFieldId, fieldQuery) {
