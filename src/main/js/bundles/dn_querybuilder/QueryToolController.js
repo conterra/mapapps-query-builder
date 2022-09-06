@@ -46,7 +46,7 @@ export default class QueryToolController {
             // ignore
             return;
         }
-        const complexQuery = event.complexQuery;
+        const complexQuery = Object.assign({}, event.complexQuery);
         const tool = this.tool = event.tool;
 
         if (event.options && event.options.editable === true) {
