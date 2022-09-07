@@ -360,6 +360,7 @@
                                     flat
                                     class="pa-0 pl-2 ma-1"
                                     color="primary"
+                                    :disabled="disableResetLayerDefinitionButton"
                                     @click="$emit('reset-layer-definition')"
                                 >
                                     <v-icon left>
@@ -496,8 +497,8 @@
                 showSetLayerDefinition: false,
                 setLayerDefinitionActivated: false,
                 layerAvailable: false,
+                disableResetLayerDefinitionButton: true,
                 textToRead: ""
-
             };
         },
         computed: {

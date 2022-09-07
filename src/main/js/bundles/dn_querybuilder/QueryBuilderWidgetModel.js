@@ -55,6 +55,7 @@ export default declare({
     showSetLayerDefinition: false,
     layer: null,
     layerAvailable: false,
+    disableResetLayerDefinitionButton: true,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -110,6 +111,7 @@ export default declare({
             this.addFieldQuery(evt.value);
             this.getFieldData(evt.value);
             this.searchForConnectedLayer(evt.value);
+            this.manageResetButtonVisibility(evt.value);
         });
         this.watch("layer", (evt) => {
             this.layerAvailable = !!evt.value;
@@ -590,17 +592,32 @@ export default declare({
     },
 
     /**
-     * revertToInitialDefinitionExpression()
+     * Method to revert to initial layer definition expression.
      *
      * Function used to apply layer._initialDefinitionExpression as current definitionExpression
      * The _initialDefinitionExpression is accessed and saved by QueryController.queryStore()
      */
     revertToInitialDefinitionExpression() {
-        const currentLayer = this.layer;
-        if (currentLayer._initialDefinitionExpression && currentLayer._initialDefinitionExpression !== "none") {
-            currentLayer.definitionExpression = currentLayer._initialDefinitionExpression;
+        const layer = this.layer;
+        if (layer._initialDefinitionExpression) {
+            layer.definitionExpression = layer._initialDefinitionExpression;
+        }
+        this.disableResetLayerDefinitionButton = true;
+    },
+
+    /**
+     * Method to manage the disabled status of the ResetLayerDefinitionButton.
+     *
+     * @param selectedStoreId
+     */
+    manageResetButtonVisibility(selectedStoreId) {
+        const selectedStore = this.getSelectedStoreObj(selectedStoreId);
+        const currentLayer = selectedStore.layer;
+
+        if (currentLayer._initialDefinitionExpression && currentLayer._initialDefinitionExpression !== currentLayer.definitionExpression) {
+            this.disableResetLayerDefinitionButton = false;
         } else {
-            currentLayer.definitionExpression = null;
+            this.disableResetLayerDefinitionButton = true;
         }
     }
 });

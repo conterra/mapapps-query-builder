@@ -93,6 +93,7 @@ export default class QueryController {
 
                         if (setLayerDefinition && layer) {
                             layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
+                            queryBuilderWidgetModel.disableResetLayerDefinitionButton = false;
                         } else {
                             if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
                                 resultStore = this._createResultReferenceStore(idList, store, 1000);

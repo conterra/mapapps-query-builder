@@ -98,7 +98,8 @@ export default class QueryBuilderWidgetFactory {
             .syncAllToLeft("locale", "storeData", "sortFieldData",
                 "showSpatialInputActions", "spatialInputActions", "enableDistinctValues",
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode",
-                "allowNegation", "loading", "processing", "activeTool", "showSetLayerDefinition", "layerAvailable")
+                "allowNegation", "loading", "processing", "activeTool", "showSetLayerDefinition",
+                "layerAvailable", "disableResetLayerDefinitionButton")
             .enable()
             .syncToLeftNow();
     }
