@@ -45,11 +45,11 @@
                 "resizable": true,
                 "marginBox": {
                     "w": 600,
-                    "h": 400
+                    "h": 500
                 },
                 "minSize": {
                     "w": 600,
-                    "h": 400
+                    "h": 500
                 },
                 "windowClass": "querybuilder-window"
             }
@@ -70,7 +70,7 @@
                 "draggable": false,
                 "marginBox": {
                     "w": 600,
-                    "h": 400
+                    "h": 500
                 },
                 "windowClass": "querybuilder-window"
             }
@@ -111,11 +111,11 @@
                 "resizable": true,
                 "marginBox": {
                     "w": 600,
-                    "h": 400
+                    "h": 500
                 },
                 "minSize": {
                     "w": 600,
-                    "h": 400
+                    "h": 500
                 },
                 "windowClass": "querybuilder-window"
             }
