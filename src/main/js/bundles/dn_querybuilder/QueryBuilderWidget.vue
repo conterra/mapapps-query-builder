@@ -345,7 +345,7 @@
                             row
                             wrap
                         >
-                            <div>
+                            <v-flex grow>
                                 <v-checkbox
                                     v-model="setLayerDefinitionActivated"
                                     :label="i18n.setLayerDefinition"
@@ -354,21 +354,20 @@
                                     hide-details
                                 >
                                 </v-checkbox>
-                            </div>
-                            <div>
+                            </v-flex>
+                            <v-flex shrink>
                                 <v-btn
                                     flat
-                                    icon
                                     class="pa-0 pl-2 ma-1"
                                     color="primary"
                                     @click="$emit('reset-layer-definition')"
                                 >
-                                    {{ i18n.resetLayerDefinition }}
-                                    <v-icon>
+                                    <v-icon left>
                                         restore
                                     </v-icon>
+                                    {{ i18n.resetLayerDefinition }}
                                 </v-btn>
-                            </div>
+                            </v-flex>
                         </v-layout>
                     </v-flex>
                     <v-flex md12>
@@ -462,7 +461,7 @@
                             errors: {
                                 noResultsError: "No results found for your query!"
                             }
-                        }
+                        };
                     }
                 },
                 locale: "en",
