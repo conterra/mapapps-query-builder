@@ -68,13 +68,13 @@ export default class QueryController {
 
         const layer = queryBuilderWidgetModel.layer;
         if (setLayerDefinition && layer) {
-            // save initial definitionExpression to enable reversion to initial state
-            if (layer.definitionExpression && !layer._initialDefinitionExpression) {
-                layer._initialDefinitionExpression = layer.definitionExpression;
-            }
             // reset previously applied or initial definitionExpression to allow filtering the entire layer
             if (layer._initialDefinitionExpression) {
                 layer.definitionExpression = layer._initialDefinitionExpression;
+            }
+            // save initial definitionExpression to enable reversion to initial state
+            if (!layer._initialDefinitionExpression) {
+                layer._initialDefinitionExpression = layer.definitionExpression ? layer.definitionExpression : "1=1";
             }
         }
 
