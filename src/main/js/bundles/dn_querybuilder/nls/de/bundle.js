@@ -18,6 +18,7 @@ module.exports = {
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
     windowTitle: "Abfrage erstellen",
     editableWindowTitle: "Bearbeitbare Abfrage",
+    filterWindowTitle: "Filter auf Inhalt setzen",
     tool: {
         title: "Eigene Abfrage erstellen",
         tooltip: "Bauen Sie Ihre eigene Abfrage"
@@ -47,6 +48,8 @@ module.exports = {
         resetSpatialInput: "Ausgew\u00e4hlte Geometrie entfernen",
         negateSpatialInput: "Außerhalb der ausgew\u00e4hlten Geometrie suchen",
         tempStoreTitle: "Ergebnisse der vorherigen Suche",
+        filterTitle: "Filter",
+        filterActionLabel: "Filter auf Layer setzen",
         relationalOperators: {
             is: "ist gleich",
             exists: "ist vorhanden",

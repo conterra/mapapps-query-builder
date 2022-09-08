@@ -160,6 +160,69 @@
                 },
                 "windowClass": "querybuilder-window"
             }
+        },
+        {
+            "widgetRole": "filterQueryBuilderWidget",
+            "sublayout": [
+                "desktop"
+            ],
+            "window": {
+                "title": "${filterWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": false,
+                "resizable": true,
+                "marginBox": {
+                    "w": 600,
+                    "h": 500
+                },
+                "minSize": {
+                    "w": 600,
+                    "h": 500
+                },
+                "windowClass": "querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "filterQueryBuilderWidget",
+            "sublayout": [
+                "tablet_landscape",
+                "tablet_portrait"
+            ],
+            "window": {
+                "title": "${filterWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": false,
+                "resizable": false,
+                "draggable": false,
+                "marginBox": {
+                    "w": "100%",
+                    "h": "50%",
+                    "t": 0
+                },
+                "windowClass": "querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "filterQueryBuilderWidget",
+            "sublayout": [
+                "mobile_landscape",
+                "mobile_portrait"
+            ],
+            "window": {
+                "title": "${filterWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": false,
+                "resizable": false,
+                "draggable": false,
+                "marginBox": {
+                    "w": "100%",
+                    "h": "100%"
+                },
+                "windowClass": "querybuilder-window"
+            }
         }
     ],
     "components": [
@@ -221,10 +284,6 @@
                     "providing": "dn_querybuilder.QueryBuilderWidgetModel"
                 },
                 {
-                    "name": "_spatialInputActionService",
-                    "providing": "selection-services.SpatialInputActionService"
-                },
-                {
                     "name": "_tool",
                     "providing": "ct.tools.Tool",
                     "filter": "(id=queryBuilderToggleTool)"
@@ -243,8 +302,25 @@
                     "cardinality": "0..1"
                 },
                 {
-                    "name": "_spatialInputActionService",
-                    "providing": "selection-services.SpatialInputActionService"
+                    "name": "_queryBuilderProperties",
+                    "providing": "dn_querybuilder.QueryBuilderProperties"
+                }
+            ]
+        },
+        {
+            "name": "FilterQueryBuilderWidgetFactory",
+            "provides": "dn_querybuilder.FilterQueryBuilderWidgetFactory",
+            "properties": {
+            },
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
+                },
+                {
+                    "name": "_agsStoreFactory",
+                    "providing": "agssearch.AGSStoreFactory"
                 },
                 {
                     "name": "_queryBuilderProperties",
@@ -269,7 +345,6 @@
                 "allowNegation": false,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
-                "showSetLayerDefinition": false,
                 "showFieldType": true,
                 "showSpatialInputActions": false,
                 "spatialInputActions": [
@@ -463,6 +538,16 @@
                 {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
+                }
+            ]
+        },
+        {
+            "name": "FilterActionDefinitionFactory",
+            "provides": "toc.ActionDefinitionFactory",
+            "references": [
+                {
+                    "name": "_filterQueryBuilderWidgetFactory",
+                    "providing":  "dn_querybuilder.FilterQueryBuilderWidgetFactory"
                 }
             ]
         },

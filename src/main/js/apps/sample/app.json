@@ -48,7 +48,6 @@
                 "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
-                "showSetLayerDefinition": false,
                 "showFieldType": true,
                 "showSpatialInputActions": false,
                 "hiddenFields": [
@@ -475,6 +474,19 @@
                             "queryBuilderToggleTool"
                         ]
                     }
+                ]
+            }
+        },
+        "toc": {
+            "Config": {
+                "actions": [
+                    "show-description",
+                    "zoom-to-extent",
+                    "activate-children",
+                    "deactivate-children",
+                    "change-opacity",
+                    "show-copyright",
+                    "querybuilder-filter"
                 ]
             }
         },

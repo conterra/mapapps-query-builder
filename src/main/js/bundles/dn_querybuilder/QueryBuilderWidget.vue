@@ -32,19 +32,20 @@
                     justify-space-between
                 >
                     <v-flex
-                        v-if="editable && title"
+                        v-if="(editable || filter) && title"
                         xs12
                         md12
                     >
                         <div>{{ title }}</div>
                     </v-flex>
                     <v-flex
+                        v-if="showQuerySettings && !filter"
                         xs12
                         md12
                     >
                         <div class="caption">{{ i18n.selectStore }}</div>
                         <v-select
-                            v-if="showQuerySettings && storeData.length > 1"
+                            v-if="storeData.length > 1"
                             ref="selectedStoreIdSelect"
                             v-model="selectedStoreId"
                             :items="storeData"
@@ -159,7 +160,7 @@
                         </v-switch>
                     </v-flex>-->
                     <v-flex
-                        v-if="showQuerySettings && showSortSelectInUserMode"
+                        v-if="showQuerySettings && showSortSelectInUserMode && !filter"
                         xs12
                         md12
                     >
@@ -302,7 +303,7 @@
                 class="pa-1"
             >
                 <v-layout
-                    v-if="!showSetLayerDefinition || !layerAvailable"
+                    v-if="!filter"
                     row
                     wrap
                     justify-center
@@ -341,37 +342,6 @@
                     justify-center
                 >
                     <v-flex md12>
-                        <v-layout
-                            row
-                            wrap
-                        >
-                            <v-flex grow>
-                                <v-checkbox
-                                    v-model="setLayerDefinitionActivated"
-                                    :label="i18n.setLayerDefinition"
-                                    color="primary"
-                                    class="pa-0 mt-2"
-                                    hide-details
-                                >
-                                </v-checkbox>
-                            </v-flex>
-                            <v-flex shrink>
-                                <v-btn
-                                    flat
-                                    class="pa-0 pl-2 ma-1"
-                                    color="primary"
-                                    :disabled="disableResetLayerDefinitionButton"
-                                    @click="$emit('reset-layer-definition')"
-                                >
-                                    <v-icon left>
-                                        restore
-                                    </v-icon>
-                                    {{ i18n.resetLayerDefinition }}
-                                </v-btn>
-                            </v-flex>
-                        </v-layout>
-                    </v-flex>
-                    <v-flex md12>
                         <v-btn
                             v-if="!processing"
                             block
@@ -380,9 +350,9 @@
                             @click="emitSearch"
                         >
                             <v-icon left>
-                                search
+                                filter
                             </v-icon>
-                            {{ i18n.search }}
+                            {{ i18n.setLayerDefinition }}
                         </v-btn>
                         <v-btn
                             v-else
@@ -469,6 +439,7 @@
                 storeData: [],
                 sortFieldData: [],
                 editable: false,
+                filter: false,
                 selectedStoreId: "",
                 selectedSortFieldName: "",
                 sortDescending: false,
@@ -494,10 +465,6 @@
                 linkOperatorsEnabled: false,
                 linkOperatorsDisabled: true,
                 ariaLabelAdded: false,
-                showSetLayerDefinition: false,
-                setLayerDefinitionActivated: false,
-                layerAvailable: false,
-                disableResetLayerDefinitionButton: true,
                 textToRead: ""
             };
         },
@@ -537,11 +504,7 @@
                     // use setTimeout to be sure that combobox value is set before search gets started
                     // https://github.com/vuetifyjs/vuetify/issues/4679
                     setTimeout(() => {
-                        if(this.setLayerDefinitionActivated) {
-                            this.$emit('set-layer-definition', {});
-                        } else {
-                            this.$emit('search', {setLayerDefinitionActivated: this.setLayerDefinitionActivated});
-                        }
+                        this.$emit('search');
                     });
                 });
             },

@@ -19,6 +19,7 @@ module.exports = {
         bundleDescription: "Bundle to build custom query tools",
         windowTitle: "Query Builder",
         editableWindowTitle: "Editable Query",
+        filterWindowTitle: "Set filter to map content",
         tool: {
             title: "Build Query",
             tooltip: "Build your own Query"
@@ -48,6 +49,8 @@ module.exports = {
             resetSpatialInput: "Reset selected geometry",
             negateSpatialInput: "Search outside of selected geometry",
             tempStoreTitle: "Results of the previous search",
+            filterTitle: "Filter",
+            filterActionLabel: "Set filter on layer",
             relationalOperators: {
                 is: "is",
                 exists: "exists",

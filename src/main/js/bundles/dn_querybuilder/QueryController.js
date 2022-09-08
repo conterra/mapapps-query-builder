@@ -66,7 +66,7 @@ export default class QueryController {
             fields[idProperty] = true;
         }
 
-        const layer = queryBuilderWidgetModel.layer;
+        const layer = store.layer;
         if (setLayerDefinition && layer) {
             // reset previously applied or initial definitionExpression to allow filtering the entire layer
             if (layer._initialDefinitionExpression) {
@@ -93,7 +93,6 @@ export default class QueryController {
 
                         if (setLayerDefinition && layer) {
                             layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
-                            queryBuilderWidgetModel.disableResetLayerDefinitionButton = false;
                         } else {
                             if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
                                 resultStore = this._createResultReferenceStore(idList, store, 1000);
@@ -189,4 +188,5 @@ export default class QueryController {
             tool.set("processing", processing);
         }
     }
+
 }

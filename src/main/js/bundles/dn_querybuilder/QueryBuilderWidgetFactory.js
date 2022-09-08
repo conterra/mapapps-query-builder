@@ -61,22 +61,16 @@ export default class QueryBuilderWidgetFactory {
             model.getFieldData();
         });
         vm.$on('search', (param) => {
-            model.search(false);
+            model.search();
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();
-        });
-        vm.$on('reset-layer-definition', () => {
-            model.revertToInitialDefinitionExpression();
-        });
-        vm.$on('set-layer-definition', () => {
-            model.search(true);
         });
         vm.$on('getDistinctValues', (args) => {
             model.getDistinctValues(args.value, args.fieldQuery);
         });
         vm.$on('add', () => {
-            model.addFieldQuery()
+            model.addFieldQuery();
         });
         vm.$on('remove', (fieldQuery) => {
             model.removeFieldQuery(fieldQuery);
@@ -98,8 +92,7 @@ export default class QueryBuilderWidgetFactory {
             .syncAllToLeft("locale", "storeData", "sortFieldData",
                 "showSpatialInputActions", "spatialInputActions", "enableDistinctValues",
                 "activeSpatialInputActionDescription", "showSortSelectInUserMode",
-                "allowNegation", "loading", "processing", "activeTool", "showSetLayerDefinition",
-                "layerAvailable", "disableResetLayerDefinitionButton")
+                "allowNegation", "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();
     }

@@ -52,10 +52,6 @@ export default declare({
     negateSpatialInput: false,
     allowMultipleSpatialInputs: true,
     enableDistinctValues: true,
-    showSetLayerDefinition: false,
-    layer: null,
-    layerAvailable: false,
-    disableResetLayerDefinitionButton: true,
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -70,7 +66,6 @@ export default declare({
         this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
-        this.showSetLayerDefinition = queryBuilderProperties.showSetLayerDefinition;
         this.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
         this.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
         this.fieldQueries = [];
@@ -110,11 +105,6 @@ export default declare({
             this.removeFieldQueries();
             this.addFieldQuery(evt.value);
             this.getFieldData(evt.value);
-            this.searchForConnectedLayer(evt.value);
-            this.manageResetButtonVisibility(evt.value);
-        });
-        this.watch("layer", (evt) => {
-            this.layerAvailable = !!evt.value;
         });
 
         const spatialInputActionService = this._spatialInputActionService;
@@ -217,7 +207,7 @@ export default declare({
         const stores = this.stores;
         const storeIds = this._properties.storeIds;
         const storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
-        apprt_when(storeData, (data) => {
+        return apprt_when(storeData, (data) => {
             if (storeIds.length <= 1) {
                 data = this._metadataAnalyzer.getStoreData(stores);
             }
@@ -226,12 +216,13 @@ export default declare({
                 this.selectedStoreId = data.length ? data[0].id : null;
             }
             this.getFieldData();
+            return data;
         });
     },
 
     getFieldData(selectedStoreId) {
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
-        apprt_when(sortFieldData, (data) => {
+        return apprt_when(sortFieldData, (data) => {
             if (data) {
                 this.sortFieldData = data;
                 this.selectedSortFieldName = data[0].id;
@@ -239,7 +230,7 @@ export default declare({
         });
     },
 
-    search(setLayerDefinition, selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable) {
+    search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable, filter) {
         const properties = this._queryBuilderProperties;
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
@@ -252,17 +243,17 @@ export default declare({
             sortOptions = this.getSortOptions();
             opts.sort = sortOptions;
         }
-        this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this, setLayerDefinition);
+        this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this, filter);
     },
 
     cancelSearch() {
         this._queryController.cancelQuery();
     },
 
-    addFieldQuery(selectedStoreId) {
+    addFieldQuery(selectedStoreId = this.selectedStoreId, fieldQueries = this.fieldQueries) {
         this.loading = true;
         const fieldData = this._getSelectedFieldData(selectedStoreId);
-        apprt_when(fieldData, (fields) => {
+        return apprt_when(fieldData, (fields) => {
             if (!fields) {
                 return;
             }
@@ -273,8 +264,8 @@ export default declare({
                 selectedFieldId: firstField.id,
                 relationalOperator: "$eq",
                 value: (firstField.codedValues[0] && firstField.codedValues[0].code) || ""
-            }
-            this.fieldQueries.push(addedFieldQuery);
+            };
+            fieldQueries.push(addedFieldQuery);
             if (firstField.loading) {
                 const watcher = firstField.watch("loading", (loading) => {
                     if (!loading.value) {
@@ -287,7 +278,7 @@ export default declare({
         }, this);
     },
 
-    addFieldQueries(fieldQueries, fields, editFields, selectedStoreId) {
+    addFieldQueries(fields, editFields, selectedStoreId, fieldQueries) {
         fields.forEach((field, i) => {
             const editOptions = editFields && editFields[i];
             let fieldId;
@@ -381,8 +372,7 @@ export default declare({
     },
 
     _getFilteredFieldData(selectedStoreId, hiddenSortFields) {
-        const storeId = selectedStoreId || this.selectedStoreId;
-        const store = this.getSelectedStoreObj(storeId);
+        const store = this.getSelectedStoreObj(selectedStoreId);
         if (!store) {
             return;
         }
@@ -459,16 +449,16 @@ export default declare({
         ];
     },
 
-    removeFieldQuery(fieldQuery) {
-        const index = this.fieldQueries.indexOf(fieldQuery);
+    removeFieldQuery(fieldQuery, fieldQueries = this.fieldQueries) {
+        const index = fieldQueries.indexOf(fieldQuery);
         if (index > -1) {
-            this.fieldQueries.splice(index, 1);
+            fieldQueries.splice(index, 1);
         }
     },
 
-    removeFieldQueries() {
-        while (this.fieldQueries.length > 0) {
-            this.fieldQueries.pop();
+    removeFieldQueries(fieldQueries = this.fieldQueries) {
+        while (fieldQueries.length > 0) {
+            fieldQueries.pop();
         }
     },
 
@@ -528,7 +518,7 @@ export default declare({
             description: store.description || properties.description || ""
         });
         this.stores = newStores;
-        this.getStoreDataFromMetadata();
+        return this.getStoreDataFromMetadata();
     },
 
     removeStore(store, properties) {
@@ -558,39 +548,6 @@ export default declare({
         return stores.find((store) => store.id === this.selectedStoreId);
     },
 
-    searchForConnectedLayer(storeId) {
-        const store = this.getSelectedStoreObj(storeId);
-        if (!store) {
-            return;
-        }
-        const layerId = store.layerId;
-        this.layer = this._getLayer(layerId);
-    },
-
-    _getLayer(layerId) {
-        const mapWidgetModel = this._mapWidgetModel;
-        if (!layerId) {
-            return null;
-        }
-        if (!mapWidgetModel) {
-            return null;
-        }
-        const lastIndexOfSlash = layerId.lastIndexOf("/");
-        const parsedId = lastIndexOfSlash > -1 ? {
-            parentId: layerId.substring(0, lastIndexOfSlash),
-            subLayerId: Number.parseInt(layerId.substring(lastIndexOfSlash + 1))
-        } : {
-            parentId: layerId
-        };
-        const matchingLayer = mapWidgetModel.map.findLayerById(parsedId.parentId);
-        if (matchingLayer && parsedId.subLayerId === undefined) {
-            return matchingLayer;
-        }
-        if (matchingLayer.findSublayerById) {
-            return matchingLayer.findSublayerById(parsedId.subLayerId);
-        }
-    },
-
     /**
      * Method to revert to initial layer definition expression.
      *
@@ -602,7 +559,6 @@ export default declare({
         if (layer._initialDefinitionExpression) {
             layer.definitionExpression = layer._initialDefinitionExpression;
         }
-        this.disableResetLayerDefinitionButton = true;
     },
 
     /**

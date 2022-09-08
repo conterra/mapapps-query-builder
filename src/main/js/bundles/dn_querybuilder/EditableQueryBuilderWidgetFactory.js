@@ -58,12 +58,12 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.spatialRelation = spatialRelation;
         vm.disableSpatialRelationRadio = !editOptions.spatialRelation;
         vm.fieldQueries = [];
-        model.addFieldQueries(vm.fieldQueries, complexQuery[linkOperator], editOptions.editFields, properties.storeId);
+        model.addFieldQueries(complexQuery[linkOperator], editOptions.editFields, properties.storeId, vm.fieldQueries);
 
         // listen to view model methods
         vm.$on('search', () => {
             model.search(false, vm.selectedStoreId, vm.linkOperator,
-                vm.spatialRelation, vm.fieldQueries, tool, options, true);
+                vm.spatialRelation, vm.fieldQueries, tool, options, true, false);
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();

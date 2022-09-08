@@ -96,7 +96,6 @@ No further configuration required, default values will be used.
     "allowNegation": true,
     "showQuerySettingsInEditableMode": true,
     "showSortSelectInUserMode": false,
-    "showSetLayerDefinition": false,
     "showFieldType": true,
     "showSpatialInputActions": false,
     "spatialInputActions": [
@@ -168,7 +167,6 @@ No further configuration required, default values will be used.
 | allowNegation                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Allows the user to negate the different parts of the queries.                                                                                           |
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the query settings for editable queries.                                                                                                   |
 | showSortSelectInUserMode        | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Show or hide the sort field select in user mode.                                                                                                        |
-| showSetLayerDefinition          | Boolean | ```true``` &#124; ```false```                                         | ```false```                 | Show or hide the set layer definition button.                                                                                                        |
 | showFieldType                   | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show or hide the field type after the field name                                                                                                        |
 | showSpatialInputActions         | Boolean | ```true``` &#124; ```false```                                         | ```true```                  | Show spatial input actions of the selection-ui bundle.                                                                                                  |
 | spatialInputActions             | Array   | ```point``` &#124; ```rectangle``` &#124; ```polygon```               | ```["*"]```                 | IDs of allowed spatial input actions. More actions are available in the selection-actions bundle: https://github.com/conterra/mapapps-selection-actions |
