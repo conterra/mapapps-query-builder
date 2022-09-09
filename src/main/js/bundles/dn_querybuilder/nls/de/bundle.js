@@ -49,7 +49,8 @@ module.exports = {
         negateSpatialInput: "Außerhalb der ausgew\u00e4hlten Geometrie suchen",
         tempStoreTitle: "Ergebnisse der vorherigen Suche",
         filterTitle: "Filter",
-        filterActionLabel: "Filter auf Layer setzen",
+        setFilterActionLabel: "Karte filtern",
+        resetFilterActionLabel: "Filter zurücksetzen",
         relationalOperators: {
             is: "ist gleich",
             exists: "ist vorhanden",

@@ -546,34 +546,5 @@ export default declare({
 
     _selectedStoreStillAvailable(stores) {
         return stores.find((store) => store.id === this.selectedStoreId);
-    },
-
-    /**
-     * Method to revert to initial layer definition expression.
-     *
-     * Function used to apply layer._initialDefinitionExpression as current definitionExpression
-     * The _initialDefinitionExpression is accessed and saved by QueryController.queryStore()
-     */
-    revertToInitialDefinitionExpression() {
-        const layer = this.layer;
-        if (layer._initialDefinitionExpression) {
-            layer.definitionExpression = layer._initialDefinitionExpression;
-        }
-    },
-
-    /**
-     * Method to manage the disabled status of the ResetLayerDefinitionButton.
-     *
-     * @param selectedStoreId
-     */
-    manageResetButtonVisibility(selectedStoreId) {
-        const selectedStore = this.getSelectedStoreObj(selectedStoreId);
-        const currentLayer = selectedStore.layer;
-
-        if (currentLayer._initialDefinitionExpression && currentLayer._initialDefinitionExpression !== currentLayer.definitionExpression) {
-            this.disableResetLayerDefinitionButton = false;
-        } else {
-            this.disableResetLayerDefinitionButton = true;
-        }
     }
 });

@@ -77,6 +77,7 @@ export default class FilterQueryBuilderWidgetFactory {
             const window = ct_util.findEnclosingWindow(widget);
             window?.on("Close", () => {
                 this.hideWidget();
+                this.unregisterStore();
             });
         }, DELAY);
     }
