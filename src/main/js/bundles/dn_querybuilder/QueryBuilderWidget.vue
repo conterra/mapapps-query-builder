@@ -350,7 +350,7 @@
                             @click="emitSearch"
                         >
                             <v-icon left>
-                                filter
+                                filter_alt
                             </v-icon>
                             {{ i18n.setLayerDefinition }}
                         </v-btn>
