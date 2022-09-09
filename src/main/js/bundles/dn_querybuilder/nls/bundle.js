@@ -49,7 +49,7 @@ module.exports = {
             negateSpatialInput: "Search outside of selected geometry",
             tempStoreTitle: "Results of the previous search",
             filterTitle: "Filter",
-            setFilterActionLabel: "Filter map",
+            setFilterActionLabel: "Filter map content",
             resetFilterActionLabel: "Reset filter",
             relationalOperators: {
                 is: "is",

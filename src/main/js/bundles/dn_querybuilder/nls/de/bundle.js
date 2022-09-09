@@ -18,7 +18,7 @@ module.exports = {
     bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
     windowTitle: "Abfrage erstellen",
     editableWindowTitle: "Bearbeitbare Abfrage",
-    filterWindowTitle: "Filter auf Inhalt setzen",
+    filterWindowTitle: "Karteninhalt filtern",
     tool: {
         title: "Eigene Abfrage erstellen",
         tooltip: "Bauen Sie Ihre eigene Abfrage"
@@ -48,7 +48,7 @@ module.exports = {
         negateSpatialInput: "Außerhalb der ausgew\u00e4hlten Geometrie suchen",
         tempStoreTitle: "Ergebnisse der vorherigen Suche",
         filterTitle: "Filter",
-        setFilterActionLabel: "Karte filtern",
+        setFilterActionLabel: "Karteninhalt filtern",
         resetFilterActionLabel: "Filter zurücksetzen",
         relationalOperators: {
             is: "ist gleich",
