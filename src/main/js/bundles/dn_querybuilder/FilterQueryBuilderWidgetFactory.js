@@ -69,7 +69,7 @@ export default class FilterQueryBuilderWidgetFactory {
         this.hideWidget();
         const widget = this.getWidget(store);
         const serviceProperties = {
-            "widgetRole": "editableQueryBuilderWidget"
+            "widgetRole": "filterQueryBuilderWidget"
         };
         const interfaces = ["dijit.Widget"];
         this._widgetServiceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
