@@ -106,7 +106,7 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.fieldQueries = [];
         vm.linkOperator = queryBuilderProperties.defaultLinkOperator;
         vm.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
-        vm.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
+        // vm.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         vm.allowNegation = queryBuilderProperties.allowNegation;
         vm.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
         vm.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
