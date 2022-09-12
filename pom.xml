@@ -206,13 +206,6 @@
             </plugins>
         </pluginManagement>
         <sourceDirectory>src/main/js</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/js</directory>
-                <targetPath>${js.build.outputPath}</targetPath>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
