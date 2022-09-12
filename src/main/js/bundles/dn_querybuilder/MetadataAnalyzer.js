@@ -105,6 +105,10 @@ export default class MetadataAnalyzer {
                 resolve();
                 return;
             }
+            if (fieldData.id === "st_length(shape)" || fieldData.id === "st_length(area)") {
+                resolve();
+                return;
+            }
             const metadata = store.getMetadata();
             return apprt_when(metadata, (metadata) => {
                 const metadataSupportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
@@ -122,7 +126,7 @@ export default class MetadataAnalyzer {
                     if (!value) {
                         query.where = "1=1";
                     } else if (fieldData.type === "string") {
-                        value = value.toLowerCase();
+                        value = value.toLowerCase ? value.toLowerCase() : value;
                         query.where = "LOWER(" + [fieldData.id] + ") LIKE '%" + value + "%'";
                     } else if (fieldData.type === "number") {
                         query.where = "1=1";
