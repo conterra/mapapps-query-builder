@@ -89,7 +89,7 @@ export default class MetadataAnalyzer {
         });
     }
 
-    getDistinctValues(value, fieldQuery, store) {
+    getDistinctValues(value, fieldData, store) {
         if (this.#distinctValueQuery) {
             this.#distinctValueQuery.cancel && this.#distinctValueQuery.cancel();
             this.#distinctValueQuery = null;
@@ -101,11 +101,11 @@ export default class MetadataAnalyzer {
                 resolve();
                 return;
             }
-            if (fieldQuery.type === "number" && fieldQuery.distinctValues.length) {
+            if (fieldData.type === "number" && fieldData.distinctValues.length) {
                 resolve();
                 return;
             }
-            if (fieldQuery.id === "st_length(shape)" || fieldQuery.id === "st_length(area)") {
+            if (fieldData.id === "st_length(shape)" || fieldData.id === "st_length(area)") {
                 resolve();
                 return;
             }
@@ -115,20 +115,20 @@ export default class MetadataAnalyzer {
                 const layerSupportsDistinct = store.layer?.capabilities?.query?.supportsDistinct;
                 const supportsDistinct = metadataSupportsDistinct || layerSupportsDistinct;
                 if (supportsDistinct) {
-                    fieldQuery.loading = true;
+                    fieldData.loading = true;
                     const query = {
-                        outFields: fieldQuery.id,
-                        orderByFields: fieldQuery.id,
+                        outFields: fieldData.id,
+                        orderByFields: fieldData.id,
                         returnDistinctValues: true,
                         returnGeometry: false,
                         f: 'json'
                     };
                     if (!value) {
                         query.where = "1=1";
-                    } else if (fieldQuery.type === "string") {
+                    } else if (fieldData.type === "string") {
                         value = value.toLowerCase ? value.toLowerCase() : value;
-                        query.where = "LOWER(" + [fieldQuery.id] + ") LIKE '%" + value + "%'";
-                    } else if (fieldQuery.type === "number") {
+                        query.where = "LOWER(" + [fieldData.id] + ") LIKE '%" + value + "%'";
+                    } else if (fieldData.type === "number") {
                         query.where = "1=1";
                     }
                     this.#distinctValueQuery = apprt_request(store.target + "/query", {
@@ -137,18 +137,18 @@ export default class MetadataAnalyzer {
                     }).then((result) => {
                         const distinctValues = [];
                         result.features?.forEach((feature) => {
-                            const value = feature.attributes[fieldQuery.id];
+                            const value = feature.attributes[fieldData.id];
                             if (value !== null && value !== "") {
                                 distinctValues.push(value);
                             }
                         });
-                        fieldQuery.distinctValues = distinctValues;
-                        fieldQuery.loading = false;
+                        fieldData.distinctValues = distinctValues;
+                        fieldData.loading = false;
                         this.#distinctValueQuery = null;
                         resolve();
                     }, (error) => {
-                        fieldQuery.distinctValues = [];
-                        fieldQuery.loading = false;
+                        fieldData.distinctValues = [];
+                        fieldData.loading = false;
                         this.#distinctValueQuery = null;
                         resolve();
                     });
