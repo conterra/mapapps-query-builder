@@ -67,7 +67,7 @@ export default class QueryBuilderWidgetFactory {
             model.cancelSearch();
         });
         vm.$on('getDistinctValues', (args) => {
-            model.getDistinctValues(args.value, args.fieldQuery);
+            model.getDistinctValues(args.value, args.selectedField);
         });
         vm.$on('add', () => {
             model.addFieldQuery();

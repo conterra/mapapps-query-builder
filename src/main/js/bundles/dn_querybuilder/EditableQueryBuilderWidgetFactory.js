@@ -69,7 +69,7 @@ export default class EditableQueryBuilderWidgetFactory {
             model.cancelSearch();
         });
         vm.$on('getDistinctValues', (args) => {
-            model.getDistinctValues(args.value, args.fieldQuery, vm.selectedStoreId);
+            model.getDistinctValues(args.value, args.selectedField, vm.selectedStoreId);
         });
 
         const widget = VueDijit(vm);

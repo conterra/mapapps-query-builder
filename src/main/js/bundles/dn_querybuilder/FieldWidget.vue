@@ -479,8 +479,8 @@
                         ];
                 }
             },
-            getDistinctValues(value, fieldQuery) {
-                this.$root.$emit("getDistinctValues", {value, fieldQuery});
+            getDistinctValues(value, selectedField) {
+                this.$root.$emit("getDistinctValues", {value, selectedField});
             }
         }
     };

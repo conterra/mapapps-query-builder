@@ -125,7 +125,7 @@ export default class FilterQueryBuilderWidgetFactory {
             model.cancelSearch();
         });
         vm.$on('getDistinctValues', (args) => {
-            model.getDistinctValues(args.value, args.fieldQuery, vm.selectedStoreId);
+            model.getDistinctValues(args.value, args.selectedField, vm.selectedStoreId);
         });
         vm.$on('add', () => {
             model.addFieldQuery(vm.selectedStoreId, vm.fieldQueries);
