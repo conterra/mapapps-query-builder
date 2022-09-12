@@ -323,15 +323,15 @@ export default declare({
         }, this);
     },
 
-    getDistinctValues(value, fieldData, selectedStoreId) {
+    getDistinctValues(value, fieldQuery, selectedStoreId) {
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
+        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldQuery, selectedStore),
             (distinctValues) => {
                 const lang = Locale.getCurrent().getLanguage();
-                const type = fieldData.type;
-                const dValues = fieldData.distinctValues;
+                const type = fieldQuery.type;
+                const dValues = fieldQuery.distinctValues;
                 if (lang === "de" && type === "number" && dValues && dValues.length) {
-                    fieldData.distinctValues = dValues.map(distinctValue => {
+                    fieldQuery.distinctValues = dValues.map(distinctValue => {
                         if (typeof distinctValue === "number" && !Number.isInteger(distinctValue)) {
                             return distinctValue.toString().replace(".", ",");
                         } else {
