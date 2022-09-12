@@ -511,6 +511,12 @@
                             "id": "standorte",
                             "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
                             "type": "AGS_FEATURE"
+                        },
+                        {
+                            "id": "earthquakes",
+                            "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "expanded": true
                         }
                     ],
                     "ground": {

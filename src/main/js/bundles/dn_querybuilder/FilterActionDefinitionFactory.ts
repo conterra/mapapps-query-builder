@@ -79,7 +79,7 @@ export default class FilterActionDefinitionFactory {
                         id = ref.parent.id + "/" + ref.id;
                     }
                     const title = ref.title;
-                    filterQueryBuilderWidgetFactory.showFilter(id, title);
+                    filterQueryBuilderWidgetFactory.showFilter(id, title, ref);
                 }
             }
         };

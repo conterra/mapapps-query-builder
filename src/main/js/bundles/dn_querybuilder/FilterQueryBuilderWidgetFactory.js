@@ -31,7 +31,7 @@ export default class FilterQueryBuilderWidgetFactory {
         this.hideWidget();
     }
 
-    showFilter(layerId, layerTitle) {
+    showFilter(layerId, layerTitle, layer) {
         const filterTitle = this.i18n.filterTitle + " " + layerTitle;
         const storeProps = {
             id: "filter_store_" + new Date().getTime(),
@@ -43,7 +43,7 @@ export default class FilterQueryBuilderWidgetFactory {
             store.useIn = ["querybuilder"];
             store.load().then(() => {
                 this.registerStore(store);
-                this.showWidget(store, layerTitle);
+                this.showWidget(store, layer);
             });
         });
     }
@@ -65,9 +65,9 @@ export default class FilterQueryBuilderWidgetFactory {
         }
     }
 
-    showWidget(store) {
+    showWidget(store, layer) {
         this.hideWidget();
-        const widget = this.getWidget(store);
+        const widget = this.getWidget(store, layer);
         const serviceProperties = {
             "widgetRole": "filterQueryBuilderWidget"
         };
@@ -94,7 +94,7 @@ export default class FilterQueryBuilderWidgetFactory {
         }
     }
 
-    getWidget(store) {
+    getWidget(store, layer) {
         const queryBuilderProperties = this._queryBuilderProperties;
         const model = this._queryBuilderWidgetModel;
 
@@ -119,7 +119,7 @@ export default class FilterQueryBuilderWidgetFactory {
         // listen to view model methods
         vm.$on('search', () => {
             model.search(vm.selectedStoreId, vm.linkOperator,
-                vm.spatialRelation, vm.fieldQueries, null, {}, false, true);
+                vm.spatialRelation, vm.fieldQueries, null, {}, false, layer);
         });
         vm.$on('cancel-search', () => {
             model.cancelSearch();

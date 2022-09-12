@@ -40,9 +40,9 @@ export default class QueryController {
         this.#i18n = undefined;
     }
 
-    query(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition) {
+    query(store, complexQuery, options, tool, queryBuilderWidgetModel, layer) {
         this.searchReplacer(complexQuery);
-        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition);
+        this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, layer);
         this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
     }
 
@@ -54,7 +54,7 @@ export default class QueryController {
         this._dataModel.setDatasource();
     }
 
-    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, setLayerDefinition) {
+    queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, layer) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
         const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
@@ -66,8 +66,7 @@ export default class QueryController {
             fields[idProperty] = true;
         }
 
-        const layer = store.layer;
-        if (setLayerDefinition && layer) {
+        if (layer) {
             // reset previously applied or initial definitionExpression to allow filtering the entire layer
             if (layer._initialDefinitionExpression) {
                 layer.definitionExpression = layer._initialDefinitionExpression;
@@ -91,7 +90,7 @@ export default class QueryController {
                         let resultStore;
                         const idList = result ? result.map(item => item[idProperty]) : [];
 
-                        if (setLayerDefinition && layer) {
+                        if (layer) {
                             layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
                         } else {
                             if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
