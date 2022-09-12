@@ -348,7 +348,9 @@ export default declare({
         let hiddenFields = null;
         if (editable) {
             hiddenFields = [];
-        } else if (queryBuilderProperties.hidedFields) {
+        }
+        // TODO: Fallback that can be removed in version 5
+        else if (queryBuilderProperties.hidedFields) {
             hiddenFields = queryBuilderProperties.hidedFields;
         } else if (queryBuilderProperties.hiddenFields) {
             hiddenFields = queryBuilderProperties.hiddenFields;
