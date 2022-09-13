@@ -82,6 +82,28 @@ To enable user query tools in your app, add the "queryBuilderToggleTool" to your
 
 No further configuration required, default values will be used.
 
+### TOC filter action
+
+The query builder includes a TOC action that allows to filter layers.
+To make it available you need to add the action with the ID _querybuilder-filter_ to the toc actions.
+The filter function supports FeatureLayer and MapImageLayer, which are queryable.
+
+```json
+"toc": {
+    "Config": {
+        "actions": [
+            "show-description",
+            "zoom-to-extent",
+            "activate-children",
+            "deactivate-children",
+            "change-opacity",
+            "show-copyright",
+            "querybuilder-filter"
+        ]
+    }
+}
+```
+
 ## Configuration Reference
 
 ### QueryBuilderProperties:
