@@ -207,6 +207,7 @@
                         </v-layout>
                     </v-flex>
                     <v-flex
+                        v-if="showQuerySettings"
                         xs12
                         md12
                     >
@@ -218,19 +219,11 @@
                                 role="group"
                             >
                                 <v-flex
-                                    class="pr-5 subheading"
-                                    shrink
-                                >
-                                    {{ i18n.searchParameter }}
-                                </v-flex>
-                                <v-flex
-                                    v-if="showQuerySettings"
                                     class="flex caption shrink pt-2"
                                 >
                                     {{ i18n.linkOperator }}
                                 </v-flex>
                                 <v-flex
-                                    v-if="showQuerySettings"
                                     shrink
                                 >
                                     <v-radio-group
@@ -400,7 +393,6 @@
                             currentExtent: "current extent",
                             delete: "Delete",
                             search: "Search",
-                            searchParameter: "Search parameter",
                             negated: "negated",
                             typeInValue: "type in value",
                             yes: "yes",

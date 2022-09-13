@@ -35,7 +35,6 @@ module.exports = {
         search: "Suche starten",
         cancelSearch: "Suche abbrechen",
         setLayerDefinition: "Filter setzen",
-        searchParameter: "Suchparameter",
         negated: "negiert",
         typeInValue: "Wert eingeben",
         yes: "ja",
