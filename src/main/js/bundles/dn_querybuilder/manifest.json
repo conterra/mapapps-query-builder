@@ -11,15 +11,15 @@
         "bundle"
     ],
     "dependencies": {
-        "apprt-vue": "^4.12.0",
-        "apprt-binding": "^4.12.0",
-        "apprt-vuetify": "^4.12.0",
-        "resultcenter": "^4.12.0",
-        "agssearch": "^4.12.0",
-        "map-init": "^4.12.0",
-        "selection-services": "^4.12.0",
-        "coordinatetransformer": "^4.12.0",
-        "store-api": "^4.12.0",
+        "apprt-vue": "^4.13.0",
+        "apprt-binding": "^4.13.0",
+        "apprt-vuetify": "^4.13.0",
+        "resultcenter": "^4.13.0",
+        "agssearch": "^4.13.0",
+        "map-init": "^4.13.0",
+        "selection-services": "^4.13.0",
+        "coordinatetransformer": "^4.13.0",
+        "store-api": "^4.13.0",
         "dn_queryplaceholder": "^4.0.0"
     },
     "CSS-Themes-Extension": [
