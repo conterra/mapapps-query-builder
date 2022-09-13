@@ -335,35 +335,46 @@
                 "dn_querybuilder.QueryBuilderProperties"
             ],
             "propertiesConstructor": true,
+            // TODO: Add visibleElements property for version 5
             "properties": {
                 "enableDistinctValues": true,
+                // TODO: Move next property to QueryBuilderWidgetModel
                 "enableInitialDistinctValues": true,
+                // TODO: Move next property QueryBuilderWidgetModel
                 "enableTempStore": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
+                // TODO: Move next property QueryBuilderWidgetModel
                 "useUserExtent": false,
                 "allowNegation": false,
+                // TODO: Move next property QueryBuilderWidgetModel
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
+                // TODO: Move next property QueryBuilderWidgetModel
                 "showFieldType": true,
                 "showSpatialInputActions": false,
+                // TODO: Move next property QueryBuilderWidgetModel
                 "spatialInputActions": [
                     "*"
                 ],
                 "allowMultipleSpatialInputs": true,
+                // TODO: Move next property QueryBuilderWidgetModel
                 "defaultQueryOptions": {
                     "ignoreCase": false
                 },
+                // TODO: Move next property QueryBuilderWidgetModel
                 "hiddenFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"
                 ],
+                // TODO: Move next property QueryBuilderWidgetModel
                 "hiddenSortFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"
                 ],
+                // TODO: Move next property QueryBuilderWidgetModel
                 "symbols": {
                     "point": {
                         "type": "simple-marker",
