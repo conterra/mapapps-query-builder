@@ -66,7 +66,7 @@
                         </div>
                     </v-flex>
                     <v-flex
-                        v-if="showQuerySettings"
+                        v-if="showQuerySettings && showSpatialRelation"
                         xs12
                         md12
                     >
@@ -448,6 +448,7 @@
                 linkOperator: "$and",
                 disableLinkOperatorRadio: false,
                 spatialRelation: "everywhere",
+                showSpatialRelation: true,
                 showSpatialInputActions: false,
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],

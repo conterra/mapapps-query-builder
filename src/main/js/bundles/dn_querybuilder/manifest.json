@@ -352,6 +352,7 @@
                 "showSortSelectInUserMode": false,
                 // TODO: Move next property QueryBuilderWidgetModel
                 "showFieldType": true,
+                "showSpatialRelation": true,
                 "showSpatialInputActions": false,
                 // TODO: Move next property QueryBuilderWidgetModel
                 "spatialInputActions": [

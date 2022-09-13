@@ -63,6 +63,7 @@ export default declare({
         this.getStoreDataFromMetadata();
         this.linkOperator = queryBuilderProperties.defaultLinkOperator;
         this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
+        this.showSpatialRelation = queryBuilderProperties.showSpatialRelation;
         this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
         this.allowNegation = queryBuilderProperties.allowNegation;
         this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;

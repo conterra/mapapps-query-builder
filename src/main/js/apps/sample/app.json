@@ -49,6 +49,7 @@
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
                 "showFieldType": true,
+                "showSpatialRelation": true,
                 "showSpatialInputActions": false,
                 "hiddenFields": [
                     "objectid",
