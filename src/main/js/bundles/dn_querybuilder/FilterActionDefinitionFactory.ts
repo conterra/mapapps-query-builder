@@ -47,7 +47,7 @@ export default class FilterActionDefinitionFactory {
                 if (ref && ref.type !== "group") {
                     if (ref.type === "feature") {
                         return true;
-                    } else if (capabilities?.operations?.supportsQuery) {
+                    } else if (capabilities?.operations?.supportsQuery && ref.fields) {
                         return true;
                     } else {
                         return false;
