@@ -74,12 +74,8 @@ export default class FilterActionDefinitionFactory {
                         ref.definitionExpression = ref._initialDefinitionExpression;
                     }
                 } else {
-                    let id = ref.id;
-                    if (ref?.parent?.type === "map-image") {
-                        id = ref.parent.id + "/" + ref.id;
-                    }
                     const title = ref.title;
-                    filterQueryBuilderWidgetFactory.showFilter(id, title, ref);
+                    filterQueryBuilderWidgetFactory.showFilter(title, ref);
                 }
             }
         };

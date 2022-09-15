@@ -31,7 +31,11 @@ export default class FilterQueryBuilderWidgetFactory {
         this.hideWidget();
     }
 
-    showFilter(layerId, layerTitle, layer) {
+    showFilter(layerTitle, layer) {
+        let layerId = layer.id;
+        if (layer?.layer) {
+            layerId = layer.layer.id + "/" + layer.id;
+        }
         const filterTitle = this.i18n.filterTitle + " " + layerTitle;
         const storeProps = {
             id: "filter_store_" + new Date().getTime(),
