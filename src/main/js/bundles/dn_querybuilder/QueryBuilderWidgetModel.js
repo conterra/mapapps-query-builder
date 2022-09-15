@@ -240,7 +240,7 @@ export default declare({
         const opts = Object.assign({}, properties.defaultQueryOptions || {}, options || {}, {
             suggestContains: false
         });
-        if (properties.showSortSelectInUserMode && !editable) {
+        if (properties.showSortSelectInUserMode && !editable && !layer) {
             sortOptions = this.getSortOptions();
             opts.sort = sortOptions;
         }
