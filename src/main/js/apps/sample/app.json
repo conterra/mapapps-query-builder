@@ -64,7 +64,6 @@
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
-                    "koeln",
                     "standorte",
                     "countries",
                     "baumkataster",
@@ -495,18 +494,25 @@
             "Config": {
                 "basemaps": [
                     {
-                        "id": "dark_gray",
-                        "title": "Dark Gray",
-                        "basemap": "dark-gray-vector",
-                        "selected": true
+                        "id": "esri_street",
+                        "title": "Straßenkarte (grau)",
+                        "thumbnailUrl": "resource('${app}:/images/streets.png')",
+                        "selected": true,
+                        "basemap": "gray-vector"
+                    },
+                    {
+                        "id": "esri_hybrid",
+                        "title": "Luftbild (hybrid)",
+                        "thumbnailUrl": "resource('${app}:/images/hybrid.png')",
+                        "basemap": "hybrid"
                     }
                 ],
                 "map": {
                     "layers": [
                         {
                             "id": "koeln",
-                            "url": "https://services.arcgis.com/ObdAEOfl1Z5LP2D0/arcgis/rest/services/Köln/FeatureServer/6",
-                            "type": "AGS_FEATURE"
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
+                            "type": "AGS_DYNAMIC"
                         },
                         {
                             "id": "standorte",
@@ -539,39 +545,49 @@
         },
         "templates": {
             "TemplateModel": {
-                "_templates": [
+                "_selectedTemplate": "seasons",
+                "widgets": [
                     {
-                        "name": "seasons",
-                        "widgets": [
-                            {
-                                "widgetRole": "queryBuilderWidget",
-                                "sublayout": [
-                                    "desktop"
-                                ],
-                                "window": {
-                                    "marginBox": {
-                                        "w": 600,
-                                        "h": 400,
-                                        "l": 20,
-                                        "t": 120
-                                    }
-                                }
-                            },
-                            {
-                                "widgetRole": "editableQueryBuilderWidget",
-                                "sublayout": [
-                                    "desktop"
-                                ],
-                                "window": {
-                                    "marginBox": {
-                                        "w": 600,
-                                        "h": 400,
-                                        "l": 20,
-                                        "t": 120
-                                    }
-                                }
+                        "widgetRole": "queryBuilderWidget",
+                        "sublayout": [
+                            "desktop"
+                        ],
+                        "window": {
+                            "marginBox": {
+                                "w": 600,
+                                "h": 400,
+                                "l": 20,
+                                "t": 120
                             }
-                        ]
+                        }
+                    },
+                    {
+                        "widgetRole": "editableQueryBuilderWidget",
+                        "sublayout": [
+                            "desktop"
+                        ],
+                        "window": {
+                            "marginBox": {
+                                "w": 600,
+                                "h": 400,
+                                "l": 20,
+                                "t": 120
+                            }
+                        }
+                    },
+                    {
+                        "widgetRole": "filterQueryBuilderWidget",
+                        "sublayout": [
+                            "desktop"
+                        ],
+                        "window": {
+                            "marginBox": {
+                                "w": 600,
+                                "h": 400,
+                                "r": 20,
+                                "t": 120
+                            }
+                        }
                     }
                 ]
             }
