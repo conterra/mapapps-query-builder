@@ -1,6 +1,6 @@
 {
     "name": "dn_querybuilder",
-    "version": "4.14.1",
+    "version": "4.14.2-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
