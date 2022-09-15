@@ -33,9 +33,6 @@
     "layout-widgets": [
         {
             "widgetRole": "queryBuilderWidget",
-            "sublayout": [
-                "desktop"
-            ],
             "window": {
                 "title": "${windowTitle}",
                 "dockTool": "queryBuilderToggleTool",
@@ -43,6 +40,15 @@
                 "maximizable": true,
                 "minimizeOnClose": true,
                 "resizable": true,
+                "windowClass": "querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "queryBuilderWidget",
+            "sublayout": [
+                "desktop"
+            ],
+            "window": {
                 "marginBox": {
                     "w": 600,
                     "h": 500
@@ -50,8 +56,7 @@
                 "minSize": {
                     "w": 600,
                     "h": 500
-                },
-                "windowClass": "querybuilder-window"
+                }
             }
         },
         {
@@ -61,18 +66,12 @@
                 "tablet_portrait"
             ],
             "window": {
-                "title": "${windowTitle}",
-                "dockTool": "queryBuilderToggleTool",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": true,
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
                     "w": 600,
                     "h": 500
-                },
-                "windowClass": "querybuilder-window"
+                }
             }
         },
         {
@@ -82,19 +81,24 @@
                 "mobile_portrait"
             ],
             "window": {
-                "title": "${windowTitle}",
-                "dockTool": "queryBuilderToggleTool",
                 "dockable": true,
                 "dockingBar": "${id}-dockingBarBottomLeft",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": true,
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "100%"
-                },
+                }
+            }
+        },
+        {
+            "widgetRole": "editableQueryBuilderWidget",
+            "window": {
+                "title": "${editableWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": false,
+                "resizable": true,
                 "windowClass": "querybuilder-window"
             }
         },
@@ -104,11 +108,6 @@
                 "desktop"
             ],
             "window": {
-                "title": "${editableWindowTitle}",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": false,
-                "resizable": true,
                 "marginBox": {
                     "w": 600,
                     "h": 500
@@ -116,8 +115,7 @@
                 "minSize": {
                     "w": 600,
                     "h": 500
-                },
-                "windowClass": "querybuilder-window"
+                }
             }
         },
         {
@@ -127,16 +125,11 @@
                 "tablet_portrait"
             ],
             "window": {
-                "title": "${editableWindowTitle}",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": false,
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
-                    "w": "100%",
-                    "h": "50%",
-                    "t": 0
+                    "w": 600,
+                    "h": 500
                 },
                 "windowClass": "querybuilder-window"
             }
@@ -148,16 +141,23 @@
                 "mobile_portrait"
             ],
             "window": {
-                "title": "${editableWindowTitle}",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": false,
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "100%"
                 },
+                "windowClass": "querybuilder-window"
+            }
+        },
+        {
+            "widgetRole": "filterQueryBuilderWidget",
+            "window": {
+                "title": "${filterWindowTitle}",
+                "closable": true,
+                "maximizable": true,
+                "minimizeOnClose": false,
+                "resizable": true,
                 "windowClass": "querybuilder-window"
             }
         },
@@ -167,11 +167,6 @@
                 "desktop"
             ],
             "window": {
-                "title": "${filterWindowTitle}",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": false,
-                "resizable": true,
                 "marginBox": {
                     "w": 600,
                     "h": 500
@@ -179,8 +174,7 @@
                 "minSize": {
                     "w": 600,
                     "h": 500
-                },
-                "windowClass": "querybuilder-window"
+                }
             }
         },
         {
@@ -190,18 +184,12 @@
                 "tablet_portrait"
             ],
             "window": {
-                "title": "${filterWindowTitle}",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": false,
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
-                    "w": "100%",
-                    "h": "50%",
-                    "t": 0
-                },
-                "windowClass": "querybuilder-window"
+                    "w": 600,
+                    "h": 500
+                }
             }
         },
         {
@@ -211,17 +199,12 @@
                 "mobile_portrait"
             ],
             "window": {
-                "title": "${filterWindowTitle}",
-                "closable": true,
-                "maximizable": true,
-                "minimizeOnClose": false,
                 "resizable": false,
                 "draggable": false,
                 "marginBox": {
                     "w": "100%",
                     "h": "100%"
-                },
-                "windowClass": "querybuilder-window"
+                }
             }
         }
     ],
