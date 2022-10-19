@@ -28,6 +28,7 @@ export default class QueryController {
     #query = undefined;
     #bundleContext = undefined;
     #serviceRegistration = undefined;
+    #resultUiHandle = undefined;
 
     activate(componentContext) {
         this.#bundleContext = componentContext.getBundleContext();
@@ -51,7 +52,8 @@ export default class QueryController {
         if (query && query.cancel) {
             query.cancel();
         }
-        this._dataModel.setDatasource();
+        this._dataModel?.setDatasource();
+        this.#resultUiHandle?.cancel();
     }
 
     queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, layer) {
@@ -78,12 +80,25 @@ export default class QueryController {
         }
 
         let query = this.#query = countFilter.query({}, {count: 0});
-        return apprt_when(query.total, (total) => {
+        return apprt_when(query.total, async (total) => {
             if (total) {
+                // smartfinder
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
-                } else {
+                    return;
+                }
+
+                // result-ui
+                const resultUiConfigured = this._resultViewerService;
+                if (resultUiConfigured) {
+                    await this._openResultUi(tool, store, complexQuery, options, queryBuilderWidgetModel);
+                    return;
+                }
+
+                // result-center
+                const resultCenterConfigured = this._dataModel != null;
+                if (resultCenterConfigured) {
                     query = this.#query = store.query(complexQuery, opts || options);
                     return apprt_when(query, (result) => {
                         this._setProcessing(tool, false, queryBuilderWidgetModel);
@@ -108,6 +123,7 @@ export default class QueryController {
                         }
                     });
                 }
+                throw new Error("Could not process query result");
             } else {
                 this._logService.warn({
                     message: this.#i18n.errors.noResultsError
@@ -121,6 +137,35 @@ export default class QueryController {
                 message: e.message
             });
         });
+    }
+
+    async _openResultUi(tool, store, complexQuery, queryOptions, queryBuilderWidgetModel) {
+        const dataTableFactory = this._resultViewerService.dataTableFactory;
+        const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery(
+            {
+                dataTableTitle: tool.store_info?.title ?? store.id,
+                dataSource: store,
+                queryExpression: complexQuery,
+                queryOptions: queryOptions
+            }
+        );
+        const dataset = dataTable.dataset;
+        const datasetStateHandle = dataset.watch("state", (event) => {
+            const newState = event.value;
+            if (newState === "initialized" || newState === "init-error") {
+                this._setProcessing(tool, false, queryBuilderWidgetModel);
+            }
+        });
+        const tableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+        const resultViewerServiceHandle = this._resultViewerService.open(tableCollection);
+
+        this.#resultUiHandle = {
+            cancel() {
+                this._setProcessing(tool, false, queryBuilderWidgetModel);
+                datasetStateHandle.remove();
+                resultViewerServiceHandle.remove();
+            }
+        };
     }
 
     _createFullItemResultStore(idList, result, masterStore) {

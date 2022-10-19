@@ -441,10 +441,6 @@
                     "providing": "map-widget.MapWidgetModel"
                 },
                 {
-                    "name": "_dataModel",
-                    "providing": "resultcenter.DataModel"
-                },
-                {
                     "name": "_smartfinderComplexQueryHandler",
                     "providing": "sf_querybuilder.ComplexQueryHandler",
                     "cardinality": "0..1"
@@ -476,7 +472,18 @@
                 {
                     "name": "_resultcenterToggleTool",
                     "providing": "ct.tools.Tool",
-                    "filter": "(id=resultcenterToggleTool)"
+                    "filter": "(id=resultcenterToggleTool)",
+                    "cardinality": "0..1"
+                },                
+                {
+                    "name": "_dataModel",
+                    "providing": "resultcenter.DataModel",
+                    "cardinality": "0..1"
+                },
+                {
+                    "name": "_resultViewerService",
+                    "providing": "result-api.ResultViewerService",
+                    "cardinality": "0..1"
                 }
             ]
         },
