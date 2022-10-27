@@ -179,7 +179,7 @@
                             :multiple="fieldQuery.relationalOperator==='$in'"
                         />
                         <v-combobox
-                            v-else-if="selectedField && enableDistinctValues && selectedField.type === 'string'"
+                            v-else-if="selectedField && enableDistinctValues && (selectedField.type === 'string' || selectedField.type === 'guid' || selectedField.type === 'global-id')"
                             v-model="fieldQuery.value"
                             ref="valueStringDistinctValuesCombobox"
                             :items="selectedField.distinctValues"
@@ -454,6 +454,8 @@
                             {value: "$exists", text: this.i18n.relationalOperators.exists}
                         ];
                     case "string":
+                    case "guid":
+                    case "global-id":
                         return [
                             {value: "$eq", text: this.i18n.relationalOperators.is},
                             {value: "$eqw", text: this.i18n.relationalOperators.eqw},
