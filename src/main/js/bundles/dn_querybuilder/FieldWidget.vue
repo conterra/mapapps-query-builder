@@ -340,10 +340,10 @@
             },
             relationalOperatorAriaLabel() {
                 const relOperators = this.getRelationalOperators(this.selectedField);
-                const relOpInfo = relOperators.find(ro => ro.value === this.fieldQuery.relationalOperator);
-                const relOpText = relOpInfo && relOpInfo["text"];
+                const relOperator = relOperators?.find(ro => ro.value === this.fieldQuery.relationalOperator);
+                const relOperatorText = relOperator?.text;
                 const ariaLabel = this.i18n.aria.selectRelationalOperators;
-                return relOpText ? ariaLabel + " " + relOpText : ariaLabel;
+                return relOperatorText ? ariaLabel + " " + relOperatorText : ariaLabel;
             }
         },
         watch: {
@@ -477,6 +477,8 @@
                             {value: "$gte", text: this.i18n.relationalOperators.after},
                             {value: "$exists", text: this.i18n.relationalOperators.exists}
                         ];
+                    default:
+                        return [];
                 }
             },
             getDistinctValues(value, selectedField) {
