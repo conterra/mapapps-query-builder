@@ -358,7 +358,8 @@ export default declare({
         } else {
             hiddenFields = [];
         }
-        return this._getFilteredFieldData(selectedStoreId, hiddenFields);
+        const hiddenFieldTypes = queryBuilderProperties.hiddenFieldTypes;
+        return this._getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes);
     },
 
     _getSelectedSortFieldData(selectedStoreId) {
@@ -371,16 +372,21 @@ export default declare({
         } else {
             hiddenSortFields = [];
         }
-        return this._getFilteredFieldData(selectedStoreId, hiddenSortFields);
+        const hiddenFieldTypes = queryBuilderProperties.hiddenFieldTypes;
+        return this._getFilteredFieldData(selectedStoreId, hiddenSortFields, hiddenFieldTypes);
     },
 
-    _getFilteredFieldData(selectedStoreId, hiddenSortFields) {
+    _getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes) {
         const store = this.getSelectedStoreObj(selectedStoreId);
         if (!store) {
             return;
         }
         return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) =>
-            fieldData.filter((field) => !hiddenSortFields.includes(field.id)));
+            fieldData.filter((field) => {
+                const fieldNameAllowed = !hiddenFields.includes(field.id);
+                const fieldTypeAllowed = !hiddenFieldTypes.includes(field.type);
+                return fieldNameAllowed && fieldTypeAllowed;
+            }));
     },
 
     getSelectedStoreObj(id) {

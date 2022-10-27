@@ -351,6 +351,12 @@
                     "shape"
                 ],
                 // TODO: Move next property QueryBuilderWidgetModel
+                "hiddenFieldTypes": [
+                    "oid",
+                    "guid",
+                    "global-id"
+                ],
+                // TODO: Move next property QueryBuilderWidgetModel
                 "hiddenSortFields": [
                     "objectid",
                     "OBJECTID",

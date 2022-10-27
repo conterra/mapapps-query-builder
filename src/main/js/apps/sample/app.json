@@ -56,6 +56,11 @@
                     "OBJECTID",
                     "shape"
                 ],
+                "hiddenFieldTypes": [
+                    "oid",
+                    "guid",
+                    "global-id"
+                ],
                 "hiddenSortFields": [
                     "objectid",
                     "OBJECTID",
