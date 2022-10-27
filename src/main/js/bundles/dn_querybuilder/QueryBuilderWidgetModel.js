@@ -259,6 +259,10 @@ export default declare({
                 return;
             }
             const firstField = fields[0];
+            if (!firstField) {
+                this.loading = false;
+                return;
+            }
             const addedFieldQuery = {
                 fields: fields,
                 not: false,
