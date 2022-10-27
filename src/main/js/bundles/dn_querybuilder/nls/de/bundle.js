@@ -45,7 +45,6 @@ module.exports = {
         multipleSpatialInputs: "Mehrere Geometrien ausw\u00e4hlen",
         resetSpatialInput: "Ausgew\u00e4hlte Geometrie entfernen",
         negateSpatialInput: "Außerhalb der ausgew\u00e4hlten Geometrie suchen",
-        tempStoreTitle: "Ergebnisse der vorherigen Suche",
         filterTitle: "Filter",
         setFilterActionLabel: "Karteninhalt filtern",
         resetFilterActionLabel: "Filter zurücksetzen",

@@ -100,9 +100,6 @@ export default class QueryController {
                             }
                             resultStore.id = store.id;
 
-                            if (this._queryBuilderProperties.enableTempStore) {
-                                this._registerTempStore(filter, queryBuilderWidgetModel);
-                            }
                             this._dataModel.setDatasource(resultStore);
                             this._resultcenterToggleTool.set("active", true);
                         }
@@ -151,30 +148,6 @@ export default class QueryController {
                 that.searchReplacer(value);
             }
         });
-    }
-
-    _registerTempStore(store, queryBuilderWidgetModel) {
-        if (store.id === "querybuilder_temp") {
-            return;
-        }
-        const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
-        if (this.#serviceRegistration) {
-            const registration = this.#serviceRegistration;
-            // clear the reference
-            this.#serviceRegistration = null;
-            if (registration) {
-                // call unregister
-                registration.unregister();
-            }
-        }
-        const title = storeTitle ? this.#i18n.tempStoreTitle + " (" + storeTitle + ")" : this.#i18n.tempStoreTitle;
-        const serviceProperties = {
-            id: "querybuilder_temp",
-            title: title,
-            useIn: ["selection"]
-        };
-        const interfaces = ["ct.api.Store"];
-        this.#serviceRegistration = this.#bundleContext.registerService(interfaces, store, serviceProperties);
     }
 
     _setProcessing(tool, processing, queryBuilderWidgetModel) {

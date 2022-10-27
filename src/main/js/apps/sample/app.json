@@ -27,6 +27,7 @@
             "viewmodeswitcher",
             "popups-default",
             "toc",
+            "selection-ui",
             "dn_querybuilder"
         ],
         "require": [
@@ -41,7 +42,6 @@
             "QueryBuilderProperties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
-                "enableTempStore": false,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useUserExtent": false,
@@ -471,7 +471,8 @@
                         },
                         "tools": [
                             "querybuilder_*",
-                            "queryBuilderToggleTool"
+                            "queryBuilderToggleTool",
+                            "selection-ui-tool"
                         ]
                     }
                 ]

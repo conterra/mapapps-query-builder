@@ -111,7 +111,6 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 "QueryBuilderProperties": {
     "enableDistinctValues": true,
     "enableInitialDistinctValues": true,
-    "enableTempStore": true,
     "defaultLinkOperator": "$or",
     "defaultSpatialRelation": "everywhere",
     "useUserExtent": false,
@@ -181,7 +180,6 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 | Property                        | Type    | Possible Values                                         | Default          | Description                                                                                                                                             |
 |---------------------------------|---------|---------------------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | enableDistinctValues            | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried by the service.                                                                                                             |
-| enableTempStore                 | Boolean | ```true``` &#124; ```false```                           | ```true```       | Enable temp store that contains the last query results and allows additional queries on the previous results.                                           |
 | enableInitialDistinctValues     | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried after a new field was selected.                                                                                             |
 | defaultLinkOperator             | String  | ```or``` &#124; ```and```                               | ```or```         | Defines the default link operator.                                                                                                                      |
 | defaultSpatialRelation          | String  | ```everywhere``` &#124; ```current_extent```            | ```everywhere``` | Defines the default spatial relation.                                                                                                                   |

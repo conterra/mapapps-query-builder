@@ -323,8 +323,6 @@
                 "enableDistinctValues": true,
                 // TODO: Move next property to QueryBuilderWidgetModel
                 "enableInitialDistinctValues": true,
-                // TODO: Move next property QueryBuilderWidgetModel
-                "enableTempStore": true,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 // TODO: Move next property QueryBuilderWidgetModel
