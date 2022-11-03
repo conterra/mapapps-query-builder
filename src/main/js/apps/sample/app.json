@@ -69,18 +69,19 @@
             },
             "QueryBuilderWidgetModel": {
                 "storeIds": [
-                    "standorte",
                     "countries",
                     "baumkataster",
                     "stoerungen",
                     "wahlkreise_strukturdaten",
-                    "gemeinden"
+                    "gemeinden",
+                    "earthquakes/0",
+                    "koeln/1"
                 ]
             },
             "QueryTools": [
                 {
-                    "id": "querybuilder_1441021732534",
-                    "title": "${queries.q_street_damage}",
+                    "id": "querybuilder_street_damage",
+                    "title": "${queries.streetDamage}",
                     "iconClass": "icon-toolcase",
                     "storeId": "stoerungen",
                     "complexQuery": {
@@ -126,8 +127,8 @@
                     }
                 },
                 {
-                    "id": "querybuilder_1540467316530",
-                    "title": "${queries.q_constituency_density_1000}",
+                    "id": "querybuilder_population_density",
+                    "title": "${queries.populationDensity}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -151,8 +152,8 @@
                     "storeId": "wahlkreise_strukturdaten"
                 },
                 {
-                    "id": "querybuilder_1540467904227",
-                    "title": "${queries.q_constituency_income_20000}",
+                    "id": "querybuilder_income",
+                    "title": "${queries.income}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -176,8 +177,8 @@
                     "storeId": "wahlkreise_strukturdaten"
                 },
                 {
-                    "id": "querybuilder_1540468225267",
-                    "title": "${queries.q_constituency_inhabitants_increasing}",
+                    "id": "querybuilder_population_increasing",
+                    "title": "${queries.populationIncreasing}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -201,8 +202,8 @@
                     "storeId": "wahlkreise_strukturdaten"
                 },
                 {
-                    "id": "querybuilder_1550577927595",
-                    "title": "${queries.q_find_tree_species}",
+                    "id": "querybuilder_tree",
+                    "title": "${queries.tree}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -238,8 +239,8 @@
                     "storeId": "baumkataster"
                 },
                 {
-                    "id": "querybuilder_1572005863861",
-                    "title": "${queries.q_find_disturbances}",
+                    "id": "querybuilder_disturbances",
+                    "title": "${queries.disturbances}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -273,6 +274,43 @@
                         }
                     },
                     "storeId": "stoerungen"
+                },
+                {
+                    "id": "querybuilder_earthquakes",
+                    "title": "${queries.earthquakes}",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "magnitude": {
+                                    "$gt": null
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": true,
+                        "editOptions": {
+                            "spatialRelation": true,
+                            "linkOperator": true,
+                            "editFields": [
+                                {
+                                    "not": false,
+                                    "field": false,
+                                    "relationalOperator": false,
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "earthquakes/0"
                 }
             ]
         },
@@ -411,7 +449,7 @@
                     "title": "Wahlkreise 2017 - Strukturdaten",
                     "description": "Wahlkreise 2017 - Strukturdaten",
                     "idProperty": "OBJECTID",
-                    "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+                    "url": "https://services.arcgis.com/CHWy5Vg5bILt6ufC/ArcGIS/rest/services/Wahlkreise_2017/FeatureServer/0",
                     "popupEnabled": true,
                     "useIn": [
                         "querybuilder"
@@ -461,12 +499,12 @@
                     },
                     {
                         "id": "questions",
-                        "title": "${toolset.toolset_title}",
+                        "title": "${toolset.whatDoYouWant}",
                         "container": "map",
                         "window": {
                             "closable": true
                         },
-                        "tooltip": "${toolset.toolset_hover}",
+                        "tooltip": "${toolset.whatDoYouWantToolTip}",
                         "cssClass": "ctWDYWBtn ctPrimaryInput",
                         "max_horizontal": 1,
                         "windowType": "dropdown",
@@ -476,8 +514,7 @@
                         },
                         "tools": [
                             "querybuilder_*",
-                            "queryBuilderToggleTool",
-                            "selection-ui-tool"
+                            "queryBuilderToggleTool"
                         ]
                     }
                 ]
@@ -518,18 +555,15 @@
                         {
                             "id": "koeln",
                             "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
-                            "type": "AGS_DYNAMIC"
-                        },
-                        {
-                            "id": "standorte",
-                            "url": "https://services.conterra.de/arcgis/rest/services/common/standorte/FeatureServer/0",
-                            "type": "AGS_FEATURE"
+                            "type": "AGS_DYNAMIC",
+                            "title": "${map.cologne}"
                         },
                         {
                             "id": "earthquakes",
                             "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
                             "type": "AGS_DYNAMIC",
-                            "expanded": true
+                            "title": "${map.earthquakes}",
+                            "listMode": "hide-children"
                         }
                     ],
                     "ground": {
