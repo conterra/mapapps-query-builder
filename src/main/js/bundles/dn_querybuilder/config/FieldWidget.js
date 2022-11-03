@@ -25,8 +25,7 @@ import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
 import ct_css from "ct/util/css";
 
-import Query from "esri/tasks/support/Query";
-import QueryTask from "esri/tasks/QueryTask";
+import {executeQueryJSON} from "esri/rest/query";
 
 import _WidgetBase from "dijit/_WidgetBase";
 import _TemplatedMixin from "dijit/_TemplatedMixin";
@@ -430,13 +429,12 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         if (!this.store.target) {
             return [];
         }
-        const query = new Query();
-        const queryTask = new QueryTask(this.store.target);
+        const query = {};
         query.where = "1=1";
         query.returnGeometry = false;
         query.outFields = [selectedField];
         query.returnDistinctValues = true;
-        return apprt_when(queryTask.execute(query), (result) => {
+        return executeQueryJSON(this.store.target, query).then((result) => {
             const distinctValues = [];
             const features = result.features;
             d_array.forEach(features, (feature) => {
@@ -446,7 +444,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
                 }
             });
             return distinctValues;
-        }, this);
+        });
     },
 
     _createCodedValueRelationalOperatorStore() {
