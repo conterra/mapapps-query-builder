@@ -52,7 +52,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         apprt_when(this.store.getMetadata(), (metadata) => {
             const metadataSupportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
             const layerSupportsDistinct = this.store.layer?.capabilities?.query?.supportsDistinct;
-            this._supportsDistincts = metadataSupportsDistinct||layerSupportsDistinct;
+            this._supportsDistincts = metadataSupportsDistinct || layerSupportsDistinct;
             this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
             if (this.type === "user") {
                 this.notSelectDisabled = false;
