@@ -21,7 +21,6 @@ const ID = "querybuilder-filter";
 export default class FilterActionDefinitionFactory {
 
     private _i18n!: InjectedReference<any>;
-    private _properties!: InjectedReference<any>;
     private _filterQueryBuilderWidgetFactory!: InjectedReference<any>;
     private supportedIds!: InjectedReference<any>;
 
@@ -42,7 +41,7 @@ export default class FilterActionDefinitionFactory {
             icon: "icon-filter",
             isVisibleForItem(tocItem) {
                 const ref = tocItem.ref;
-                const parent = ref && ref.parent;
+                const parent = ref && ref.layer;
                 const capabilities = parent && parent.capabilities;
                 if (ref && ref.type !== "group") {
                     if (ref.type === "feature") {
