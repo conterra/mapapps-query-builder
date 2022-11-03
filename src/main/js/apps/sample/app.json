@@ -556,7 +556,37 @@
                             "id": "koeln",
                             "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
                             "type": "AGS_DYNAMIC",
-                            "title": "${map.cologne}"
+                            "title": "${map.cologne}",
+                            "initiallyExpandedInToc": true,
+                            "sublayers": [
+                                {
+                                    "id": 0,
+                                    "initiallyExpandedInToc": true,
+                                    "sublayers": [
+                                        {
+                                            "id": 1
+                                        },
+                                        {
+                                            "id": 2,
+                                            "visible": false
+                                        },
+                                        {
+                                            "id": 3,
+                                            "visible": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 4,
+                                    "visible": false,
+                                    "initiallyExpandedInToc": true
+                                },
+                                {
+                                    "id": 8,
+                                    "visible": false,
+                                    "initiallyExpandedInToc": true
+                                }
+                            ]
                         },
                         {
                             "id": "earthquakes",
