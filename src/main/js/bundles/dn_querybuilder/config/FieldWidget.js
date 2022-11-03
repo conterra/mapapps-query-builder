@@ -23,6 +23,7 @@ import Memory from "dojo/store/Memory";
 
 import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
+import apprt_request from "apprt-request";
 import ct_css from "ct/util/css";
 
 import {executeQueryJSON} from "esri/rest/query";
@@ -49,10 +50,8 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
 
     postCreate() {
         this.inherited(arguments);
-        apprt_when(this.store.getMetadata(), (metadata) => {
-            const metadataSupportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
-            const layerSupportsDistinct = this.store.layer?.capabilities?.query?.supportsDistinct;
-            this._supportsDistincts = metadataSupportsDistinct || layerSupportsDistinct;
+        this.queryMetadata(this.store.target).then((metadata) => {
+            this._supportsDistincts = metadata.advancedQueryCapabilities?.supportsDistinct;
             this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
             if (this.type === "user") {
                 this.notSelectDisabled = false;
@@ -625,5 +624,15 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
 
     _validator() {
         return true;
+    },
+
+    queryMetadata(url) {
+        return apprt_request(url,
+            {
+                query: {
+                    f: 'json'
+                },
+                handleAs: 'json'
+            });
     }
 });

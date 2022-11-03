@@ -51,7 +51,7 @@ export default class MetadataAnalyzer {
                                 }
                             }
                         }
-                    })
+                    });
 
                     const fields = metadata.fields;
                     const storeData = [];
@@ -109,11 +109,8 @@ export default class MetadataAnalyzer {
                 resolve();
                 return;
             }
-            const metadata = store.getMetadata();
-            return apprt_when(metadata, (metadata) => {
-                const metadataSupportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
-                const layerSupportsDistinct = store.layer?.capabilities?.query?.supportsDistinct;
-                const supportsDistinct = metadataSupportsDistinct || layerSupportsDistinct;
+            this.queryMetadata(store.target).then((metadata) => {
+                const supportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
                 if (supportsDistinct) {
                     fieldData.loading = true;
                     const query = {
@@ -188,5 +185,15 @@ export default class MetadataAnalyzer {
             return resolver.getServiceProperties("ct.api.Store", "(id=" + idOrStore + ")");
         }
         return resolver.getServiceProperties(idOrStore);
+    }
+
+    queryMetadata(url) {
+        return apprt_request(url,
+            {
+                query: {
+                    f: 'json'
+                },
+                handleAs: 'json'
+            });
     }
 }
