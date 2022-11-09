@@ -521,10 +521,7 @@ export default declare({
 
     addStore(store, properties) {
         properties = properties || {};
-        let id = store?.id;
-        if (properties.id === "querybuilder_temp") {
-            id = "querybuilder_temp";
-        }
+        const id = store?.id;
         if (!id) {
             console.debug("Store has no id and will be ignored!");
             return;
@@ -546,10 +543,7 @@ export default declare({
 
     removeStore(store, properties) {
         properties = properties || {};
-        let id = store?.id;
-        if (properties.id === "querybuilder_temp") {
-            id = "querybuilder_temp";
-        }
+        const id = store?.id;
         if (!id) {
             return;
         }
