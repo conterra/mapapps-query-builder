@@ -27,7 +27,6 @@
                 </div>
                 <div
                     v-if="showQuerySettings && !filter"
-                    class="pa-1 "
                 >
                     <div class="caption">
                         {{ i18n.selectStore }}
@@ -40,22 +39,23 @@
                         :disabled="editable"
                         :loading="loading"
                         :aria-label="i18n.aria.selectLayer"
+                        label="i18n.selectStore"
                         item-value="id"
                         class="pa-0"
                         single-line
                         hide-details
-                        @change="$emit('storeChanged', $event)"
-                    >
-                    </v-select>
+                        @change="$emit('store-changed', $event)"
+                    />
                     <div
                         v-else-if="storeData[0]"
-                        class="single-store">
+                        class="single-store"
+                    >
                         {{ storeData[0].text }}
                     </div>
                 </div>
                 <div
                     v-if="showQuerySettings && showSpatialRelation"
-                    class="pa-1"
+                    class="pt-3"
                     :aria-label="i18n.spatialRelation"
                     role="group"
                 >
@@ -72,7 +72,7 @@
                             hide-details
                             color="primary"
                             :label="i18n.negateSpatialInput"
-                        ></v-checkbox>
+                        />
                         <v-btn-toggle v-model="activeSpatialInputAction">
                             <v-btn
                                 v-for="spatialInputAction in spatialInputActions"
@@ -122,7 +122,7 @@
                         small
                         block
                         class="ma-0"
-                        @click="$emit('resetSpatialInput')"
+                        @click="$emit('reset-spatial-input')"
                     >
                         <v-icon left>
                             delete
@@ -176,44 +176,6 @@
                         </div>
                     </div>
                 </div>
-                <div
-                    v-if="showQuerySettings"
-                    class="pa-1"
-                    :aria-label="i18n.linkOperator"
-                    role="group"
-                >
-                    <div class="caption">
-                        {{ i18n.linkOperator }}
-                    </div>
-                    <div>
-                        <v-radio-group
-                            v-model="linkOperator"
-                            class="pa-0 mt-1"
-                            :disabled="fieldQueriesLength < 2"
-                            row
-                            hide-details
-                        >
-                            <v-radio
-                                :label="i18n.and"
-                                :disabled="disableLinkOperatorRadio"
-                                hide-details
-                                value="$and"
-                                color="primary"
-                            />
-                            <v-radio
-                                :label="i18n.or"
-                                :disabled="disableLinkOperatorRadio"
-                                hide-details
-                                value="$or"
-                                color="primary"
-                            />
-                        </v-radio-group>
-                    </div>
-                </div>
-                <v-divider
-                    v-if="showQuerySettings"
-                    class="mt-1"
-                ></v-divider>
             </div>
         </div>
         <div class="center ct-flex-item overflow--auto">
@@ -231,7 +193,7 @@
                     :size="100"
                     color="primary"
                     indeterminate
-                ></v-progress-circular>
+                />
                 <field-widget
                     v-for="(fieldQuery, index) in fieldQueries"
                     v-else
@@ -247,7 +209,52 @@
                     @remove="removeField"
                     @add="addField"
                 />
+                <v-btn
+                    :disabled="editable"
+                    :aria-label="i18n.aria.add"
+                    class="ma-0"
+                    flat
+                    @click="$emit('add')"
+                >
+                    <v-icon>add</v-icon>
+                    {{ i18n.aria.add }}
+                </v-btn>
             </v-container>
+        </div>
+        <div
+            v-if="showQuerySettings"
+            class="pa-1"
+            :aria-label="i18n.linkOperator"
+            role="group"
+        >
+            <div v-if="fieldQueriesLength > 1">
+                <div class="caption">
+                    {{ i18n.linkOperator }}
+                </div>
+                <div>
+                    <v-radio-group
+                        v-model="linkOperator"
+                        class="pa-0 mt-1"
+                        row
+                        hide-details
+                    >
+                        <v-radio
+                            :label="i18n.and"
+                            :disabled="disableLinkOperatorRadio"
+                            hide-details
+                            value="$and"
+                            color="primary"
+                        />
+                        <v-radio
+                            :label="i18n.or"
+                            :disabled="disableLinkOperatorRadio"
+                            hide-details
+                            value="$or"
+                            color="primary"
+                        />
+                    </v-radio-group>
+                </div>
+            </div>
         </div>
         <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <div

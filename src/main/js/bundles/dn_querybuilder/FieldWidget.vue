@@ -17,9 +17,9 @@
 -->
 <template>
     <v-scroll-y-transition hide-on-leave>
-        <v-card
-            v-if="!fieldQuery.disableNot || !fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
-            raised
+        <div
+            v-if="!fieldQuery.disableNot || !fieldQuery.disableField
+                || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             class="mb-2"
         >
             <v-container
@@ -102,12 +102,13 @@
                         />
                     </v-flex>
                     <v-flex
-                        :class="{ xs12: $root.editable, md5: $root.editable }"
-                        xs8
-                        md3
+                        :class="{ xs12: $root.editable, md6: $root.editable }"
+                        xs10
+                        md4
                     >
                         <v-menu
-                            v-if="selectedField && selectedField.type === 'date' && fieldQuery.relationalOperator !== '$exists'"
+                            v-if="selectedField && selectedField.type === 'date'
+                                && fieldQuery.relationalOperator !== '$exists'"
                             ref="dateMenu"
                             :close-on-content-click="false"
                             transition="scale-transition"
@@ -117,7 +118,7 @@
                             max-width="290px"
                             min-width="290px"
                         >
-                            <template v-slot:activator="{ on }">
+                            <template #activator="{ on }">
                                 <v-text-field
                                     v-model="dateString"
                                     :disabled="fieldQuery.disableValue"
@@ -138,7 +139,8 @@
                             />
                         </v-menu>
                         <v-select
-                            v-else-if="selectedField && selectedField.type === 'boolean' || fieldQuery.relationalOperator === '$exists'"
+                            v-else-if="selectedField && selectedField.type === 'boolean'
+                                || fieldQuery.relationalOperator === '$exists'"
                             ref="valueBooleanSelect"
                             v-model="fieldQuery.value"
                             :items="getBooleanItems()"
@@ -162,8 +164,8 @@
                         />
                         <v-combobox
                             v-else-if="selectedField && enableDistinctValues && selectedField.type === 'number'"
-                            v-model="fieldQuery.value"
                             ref="valueNumberDistinctValuesCombobox"
+                            v-model="fieldQuery.value"
                             :items="selectedField.distinctValues"
                             :disabled="fieldQuery.disableValue"
                             :rules="[rules.required, rules.number]"
@@ -179,9 +181,10 @@
                             :multiple="fieldQuery.relationalOperator==='$in'"
                         />
                         <v-combobox
-                            v-else-if="selectedField && enableDistinctValues && (selectedField.type === 'string' || selectedField.type === 'guid' || selectedField.type === 'global-id')"
-                            v-model="fieldQuery.value"
+                            v-else-if="selectedField && enableDistinctValues && (selectedField.type === 'string'
+                                || selectedField.type === 'guid' || selectedField.type === 'global-id')"
                             ref="valueStringDistinctValuesCombobox"
+                            v-model="fieldQuery.value"
                             :items="selectedField.distinctValues"
                             :disabled="fieldQuery.disableValue"
                             :rules="[rules.required]"
@@ -243,28 +246,9 @@
                             </v-btn>
                         </v-fab-transition>
                     </v-flex>
-                    <v-flex
-                        v-if="!$root.editable"
-                        xs2
-                        md1
-                    >
-                        <v-fab-transition>
-                            <v-btn
-                                v-if="$root.fieldQueries.length === index + 1"
-                                :disabled="$root.editable"
-                                :aria-label="i18n.aria.add"
-                                class="ma-0"
-                                icon
-                                small
-                                @click="$emit('add')"
-                            >
-                                <v-icon>add</v-icon>
-                            </v-btn>
-                        </v-fab-transition>
-                    </v-flex>
                 </v-layout>
             </v-container>
-        </v-card>
+        </div>
     </v-scroll-y-transition>
 </template>
 <script>
@@ -307,7 +291,8 @@
             return {
                 rules: {
                     required: (value) => !!value || this.i18n.rules.required,
-                    number: (value) => (typeof Number.parseFloat(value) === "number" && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
+                    number: (value) => (typeof Number.parseFloat(value) === "number"
+                        && !isNaN(Number.parseFloat(value))) || this.i18n.rules.number,
                     string: (value) => typeof value === "string" || this.i18n.rules.string
                 },
                 search: ""
