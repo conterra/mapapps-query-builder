@@ -27,8 +27,8 @@
             "viewmodeswitcher",
             "popups-default",
             "toc",
-            "selection-ui",
-            "dn_querybuilder"
+            "dn_querybuilder",
+            "result-ui"
         ],
         "require": [
             "${app}.app"
