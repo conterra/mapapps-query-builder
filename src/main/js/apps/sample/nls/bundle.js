@@ -17,28 +17,21 @@ module.exports = {
     root: {
         apptitle: "Query Builder 4 Sample",
         map: {
-            esrisites: {
-                title: "Esri Germany Group Sites",
-                popup: {
-                    address: "Address",
-                    contact: "Contact",
-                    tel: "Telephone:",
-                    mail: "Email:",
-                    link: "Internet:"
-                }
-            }
+            cologne: "Data of the city of Cologne",
+            earthquakes: "Earthquakes"
         },
         queries: {
-            "q_street_damage": "Show reported street damages that are not yet fixed in Münster",
-            "q_constituency_density_1000": "Constituencies with population densities exceeding 1000 inhabitants/km²",
-            "q_constituency_income_20000": "Constituencies with mean available disposable income of more than 20000€",
-            "q_constituency_inhabitants_increasing": "Constituencies with increasing population",
-            "q_find_tree_species": "Search tree species",
-            "q_find_disturbances": "Search disturbances"
+            streetDamage: "Show reported street damages that are not yet fixed in Münster",
+            populationDensity: "Constituencies with population densities exceeding 1000 inhabitants/km²",
+            income: "Constituencies with mean available disposable income of more than 20000€",
+            populationIncreasing: "Constituencies with increasing population",
+            tree: "Search tree species",
+            disturbances: "Search disturbances",
+            earthquakes: "Search earthquakes"
         },
         toolset: {
-            "toolset_title": "Questions and Answers",
-            "toolset_hover": "List of predefined questions, click to see the answer"
+            whatDoYouWant: "Questions and Answers",
+            whatDoYouWantToolTip: "List of predefined questions, click to see the answer"
         }
     },
     "de": true

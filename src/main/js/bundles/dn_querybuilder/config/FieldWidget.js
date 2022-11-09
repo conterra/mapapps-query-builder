@@ -23,10 +23,10 @@ import Memory from "dojo/store/Memory";
 
 import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
+import apprt_request from "apprt-request";
 import ct_css from "ct/util/css";
 
-import Query from "esri/tasks/support/Query";
-import QueryTask from "esri/tasks/QueryTask";
+import {executeQueryJSON} from "esri/rest/query";
 
 import _WidgetBase from "dijit/_WidgetBase";
 import _TemplatedMixin from "dijit/_TemplatedMixin";
@@ -50,9 +50,8 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
 
     postCreate() {
         this.inherited(arguments);
-        apprt_when(this.store.getMetadata(), (metadata) => {
-            this._supportsDistincts = metadata.advancedQueryCapabilities
-                && metadata.advancedQueryCapabilities.supportsDistinct;
+        this.queryMetadata(this.store.target).then((metadata) => {
+            this._supportsDistincts = metadata.advancedQueryCapabilities?.supportsDistinct;
             this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
             if (this.type === "user") {
                 this.notSelectDisabled = false;
@@ -429,13 +428,12 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         if (!this.store.target) {
             return [];
         }
-        const query = new Query();
-        const queryTask = new QueryTask(this.store.target);
+        const query = {};
         query.where = "1=1";
         query.returnGeometry = false;
         query.outFields = [selectedField];
         query.returnDistinctValues = true;
-        return apprt_when(queryTask.execute(query), (result) => {
+        return executeQueryJSON(this.store.target, query).then((result) => {
             const distinctValues = [];
             const features = result.features;
             d_array.forEach(features, (feature) => {
@@ -445,7 +443,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
                 }
             });
             return distinctValues;
-        }, this);
+        });
     },
 
     _createCodedValueRelationalOperatorStore() {
@@ -626,5 +624,15 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
 
     _validator() {
         return true;
+    },
+
+    queryMetadata(url) {
+        return apprt_request(url,
+            {
+                query: {
+                    f: 'json'
+                },
+                handleAs: 'json'
+            });
     }
 });

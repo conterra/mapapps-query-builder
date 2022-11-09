@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.conterra.devnet</groupId>
     <artifactId>mapapps-query-builder</artifactId>
-    <version>4.14.4-SNAPSHOT</version>
+    <version>4.14.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <repositories>
         <repository>
@@ -278,7 +278,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>de.conterra.mapapps</groupId>
-                                    <artifactId>ct-mapapps-js-api</artifactId>
+                                    <artifactId>ct-mapapps-js</artifactId>
                                     <version>${mapapps.version}</version>
                                     <classifier>src</classifier>
                                     <outputDirectory>${project.build.directory}/unpacked</outputDirectory>
@@ -362,6 +362,9 @@
                         </goals>
                         <configuration>
                             <arguments>${gulp.task}</arguments>
+                            <environmentVariables>
+                                <NODE_ENV>${gulp.node.env}</NODE_ENV>
+                            </environmentVariables>
                         </configuration>
                     </execution>
                     <execution>
@@ -433,9 +436,8 @@
                             <replacements>
                                 <replacement>
                                     <!-- remove bundleLocations from app.json -->
-                                    <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*
-                                    </token>
-                                    <value/>
+                                    <token>\s*"bundleLocations"\s*:\s*\[\s*"localbundles"\s*,\s*"bundles"\s*\]\s*,\s*</token>
+                                    <value></value>
                                 </replacement>
                             </replacements>
                         </configuration>
@@ -528,18 +530,17 @@
     </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- dojo custom build parameters -->
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.13.1</mapapps.version>
+        <mapapps.version>4.14.0</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.4.4</ct.jsregistry.version>
+        <ct.jsregistry.version>1.5.6</ct.jsregistry.version>
         <ct.jsrt-test.version>2.0.2</ct.jsrt-test.version>
 
-        <selectionactions.version>1.10.2</selectionactions.version>
+        <selectionactions.version>1.10.3</selectionactions.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
         <default.app.name>sample</default.app.name>
@@ -550,9 +551,12 @@
         </proxy.allowedServerUrls>
         <proxy.allowedSSLDNs>*</proxy.allowedSSLDNs>
         <proxy.use.rules></proxy.use.rules>
+        <proxy.cors.trustedServers>$\{mapapps.remote.base\}</proxy.cors.trustedServers>
+
         <jetty.port>9090</jetty.port>
         <mvn.cmd>mvn</mvn.cmd>
         <gulp.task></gulp.task>
+        <gulp.node.env>development</gulp.node.env>
 
         <mapapps.user>
             <!-- set correct username for map.apps remote installation-->
@@ -644,7 +648,7 @@
             <dependencies>
                 <dependency>
                     <groupId>de.conterra.mapapps</groupId>
-                    <artifactId>ct-mapapps-js-api</artifactId>
+                    <artifactId>ct-mapapps-js</artifactId>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
@@ -840,6 +844,7 @@
             <id>compress</id>
             <properties>
                 <gulp.task>compress</gulp.task>
+                <gulp.node.env>production</gulp.node.env>
             </properties>
             <build>
                 <plugins>
@@ -865,17 +870,7 @@
                                     <goal>optimizeJS</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceLanguageLevel>ESNEXT</sourceLanguageLevel>
-                                    <targetLanguageLevel>ESNEXT</targetLanguageLevel>
-                                    <hasFeatures>
-                                        <ct-debug>false</ct-debug>
-                                    </hasFeatures>
-                                    <jsFiles>
-                                        <excludes>
-                                            <exclude>apps/**</exclude>
-                                            <exclude>**/tests/**</exclude>
-                                        </excludes>
-                                    </jsFiles>
+                                    <compress>false</compress>
                                 </configuration>
                             </execution>
                         </executions>

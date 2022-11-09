@@ -179,7 +179,7 @@
                             :multiple="fieldQuery.relationalOperator==='$in'"
                         />
                         <v-combobox
-                            v-else-if="selectedField && enableDistinctValues && selectedField.type === 'string'"
+                            v-else-if="selectedField && enableDistinctValues && (selectedField.type === 'string' || selectedField.type === 'guid' || selectedField.type === 'global-id')"
                             v-model="fieldQuery.value"
                             ref="valueStringDistinctValuesCombobox"
                             :items="selectedField.distinctValues"
@@ -340,10 +340,10 @@
             },
             relationalOperatorAriaLabel() {
                 const relOperators = this.getRelationalOperators(this.selectedField);
-                const relOpInfo = relOperators.find(ro => ro.value === this.fieldQuery.relationalOperator);
-                const relOpText = relOpInfo && relOpInfo["text"];
+                const relOperator = relOperators?.find(ro => ro.value === this.fieldQuery.relationalOperator);
+                const relOperatorText = relOperator?.text;
                 const ariaLabel = this.i18n.aria.selectRelationalOperators;
-                return relOpText ? ariaLabel + " " + relOpText : ariaLabel;
+                return relOperatorText ? ariaLabel + " " + relOperatorText : ariaLabel;
             }
         },
         watch: {
@@ -454,6 +454,8 @@
                             {value: "$exists", text: this.i18n.relationalOperators.exists}
                         ];
                     case "string":
+                    case "guid":
+                    case "global-id":
                         return [
                             {value: "$eq", text: this.i18n.relationalOperators.is},
                             {value: "$eqw", text: this.i18n.relationalOperators.eqw},
@@ -477,6 +479,8 @@
                             {value: "$gte", text: this.i18n.relationalOperators.after},
                             {value: "$exists", text: this.i18n.relationalOperators.exists}
                         ];
+                    default:
+                        return [];
                 }
             },
             getDistinctValues(value, selectedField) {

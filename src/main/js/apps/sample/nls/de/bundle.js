@@ -16,27 +16,20 @@
 module.exports = {
     apptitle: "Query Builder 4 Sample",
     map: {
-        esrisites: {
-            title: "Standorte der Esri Deutschland Gruppe",
-            popup: {
-                address: "Adresse",
-                contact: "Kontakt",
-                tel: "Telefon:",
-                mail: "Email:",
-                link: "Internet:"
-            }
-        }
+        cologne: "Daten der Stadt Köln",
+        earthquakes: "Erdbeben"
     },
     queries: {
-        "q_street_damage": "Bisher nicht reparierte Straßenschäden in Münster suchen",
-        "q_constituency_density_1000": "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
-        "q_constituency_income_20000": "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
-        "q_constituency_inhabitants_increasing": "Wahlkreise deren Bevölkerung zunimmt",
-        "q_find_tree_species": "Baumart suchen",
-        "q_find_disturbances": "Störungen suchen"
+        streetDamage: "Bisher nicht reparierte Straßenschäden in Münster suchen",
+        populationDensity: "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+        income: "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+        populationIncreasing: "Wahlkreise deren Bevölkerung zunimmt",
+        tree: "Baumart suchen",
+        disturbances: "Störungen suchen",
+        earthquakes: "Erdbeben suchen"
     },
     toolset: {
-        "toolset_title": "Fragen und Antworten",
-        "toolset_hover": "Liste vordefinierter Fragen, klicken um Antworten zu sehen"
+        whatDoYouWant: "Fragen und Antworten",
+        whatDoYouWantToolTip: "Liste vordefinierter Fragen, klicken um Antworten zu sehen"
     }
 };

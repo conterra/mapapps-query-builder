@@ -33,7 +33,7 @@ testConfig({
         //     ]
         // }
     ],
-    // ensure apprt polyfill is loaded during test execution
+    // ensure babel polyfill is loaded during test execution
     deps: [
         "apprt-polyfill",
         // Needed for import { assert } from "chai"

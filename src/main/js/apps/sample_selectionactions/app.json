@@ -40,7 +40,6 @@
             "QueryBuilderProperties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
-                "enableTempStore": false,
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useUserExtent": false,

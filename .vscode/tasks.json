@@ -2,24 +2,33 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run Jetty Server",
+            "label": "Initialize",
             "type": "shell",
-            "command": "mvn clean jetty:run -Pwatch-all",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Run stand-alone Jetty Server",
-            "type": "shell",
-            "command": "mvn clean jetty:run -P'watch-all,include-mapapps-deps'",
+            "command": "mvn initialize",
             "group": "build"
         },
         {
-            "label": "Install",
+            "label": "Run HTTP Server",
             "type": "shell",
-            "command": "mvn clean install -Pcompress",
+            "command": "mvn jetty:run -Denv=dev '-Dlocal.configfile=./build.properties'",
+            "group": "build"
+        },
+        {
+            "label": "Run stand-alone HTTP Server",
+            "type": "shell",
+            "command": "mvn jetty:run -Denv=dev '-Dlocal.configfile=./build.properties' -Pinclude-mapapps-deps",
+            "group": "build"
+        },
+        {
+            "label": "Compress",
+            "type": "shell",
+            "command": "mvn install -P compress",
+            "group": "build"
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "mvn clean",
             "group": "build"
         }
     ]
