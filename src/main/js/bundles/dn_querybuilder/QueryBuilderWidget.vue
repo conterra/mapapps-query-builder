@@ -210,7 +210,7 @@
                     @add="addField"
                 />
                 <v-btn
-                    :disabled="editable"
+                    v-if="!editable"
                     :aria-label="i18n.aria.add"
                     class="ma-0"
                     flat

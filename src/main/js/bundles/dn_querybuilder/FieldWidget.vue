@@ -102,7 +102,7 @@
                         />
                     </v-flex>
                     <v-flex
-                        :class="{ xs12: $root.editable, md6: $root.editable }"
+                        :class="{ xs12: $root.editable, md5: $root.editable }"
                         xs10
                         md4
                     >
