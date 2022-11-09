@@ -38,12 +38,6 @@
     "bundles": {
         "dn_querybuilder": {
             "Config": {
-                "storeIds": [
-                    "countries",
-                    "baumkataster",
-                    "stoerungen",
-                    "wahlkreise_strukturdaten"
-                ],
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -316,7 +310,10 @@
         },
         "agssearch": {
             "AutoStoreRegistration": {
-                "componentEnabled": false
+                "componentEnabled": true,
+                "useIn": [
+                    "querybuilder"
+                ]
             },
             "AGSStore": [
                 {

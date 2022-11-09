@@ -108,16 +108,37 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 
 ## Configuration Reference
 
+To use a store with the Query Builder bundle, add the value _querybuilder_ to the useIn property.
+
+### Manual store
+
+```json
+{
+    "id": "countries",
+    "title": "Countries",
+    "description": "Countries of the world",
+    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
+    "popupEnabled": true,
+    "useIn": [
+        "querybuilder"
+    ]
+}
+```
+
+### AutoStoreRegistration
+
+```json
+"AutoStoreRegistration": {
+    "componentEnabled": true,
+    "useIn": [
+        "querybuilder"
+    ]
+}
+```
+
 ### Config:
 ```json
 "Config": {
-    "storeIds": [
-        "airtraffic",
-        "countries",
-        "baumkataster",
-        "stoerungen",
-        "wahlkreise_strukturdaten"
-    ]
     "enableDistinctValues": true,
     "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",
@@ -188,7 +209,6 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 
 | Property                        | Type    | Possible Values                                         | Default          | Description                                                                                                                                             |
 |---------------------------------|---------|---------------------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| storeIds                        | Array   |                                                         | ```["*"]```      | List of store IDs that should be available in the QueryBuilderWidget.                                                                                   |
 | enableDistinctValues            | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried by the service.                                                                                                             |
 | enableInitialDistinctValues     | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried after a new field was selected.                                                                                             |
 | defaultLinkOperator             | String  | ```or``` &#124; ```and```                               | ```or```         | Defines the default link operator.                                                                                                                      |

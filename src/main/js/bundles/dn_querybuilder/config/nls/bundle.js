@@ -31,15 +31,6 @@ module.exports = {
             showSortSelectInUserMode: "Show sort select in user mode",
             showFieldType: "Show field type of every field in user mode"
         },
-        queryBuilderWidgetStoreSelection: {
-            menuTitle: "QueryBuilderWidget",
-            description: "Configure the QueryBuilderWidget",
-            grid: {
-                title: "Title",
-                description: "Description"
-            },
-            hint: "Please specify stores"
-        },
         toolsBuilder: {
             toolsBuilderTitle: "Query Tools",
             toolsBuilderDescription: "Create your own Query Tools"

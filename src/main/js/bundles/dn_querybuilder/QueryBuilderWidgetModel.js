@@ -16,7 +16,6 @@
 import {declare} from "apprt-core/Mutable";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
-import ServiceResolver from "apprt/ServiceResolver";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import Graphic from "esri/Graphic";
@@ -49,7 +48,6 @@ export default declare({
     spatialRelation: null,
 
     // properties
-    storeIds: [],
     enableDistinctValues: true,
     enableInitialDistinctValues: true,
     defaultLinkOperator: "$or",
@@ -82,12 +80,8 @@ export default declare({
         "shape"
     ],
 
-    activate(componentContext) {
+    activate() {
         this.locale = Locale.getCurrent().getLanguage();
-        const serviceResolver = this.serviceResolver = new ServiceResolver();
-        const bundleCtx = componentContext.getBundleContext();
-        serviceResolver.setBundleCtx(bundleCtx);
-
         this.getStoreDataFromMetadata();
         this.linkOperator = this.defaultLinkOperator;
         this.spatialRelation = this.defaultSpatialRelation;
@@ -225,19 +219,13 @@ export default declare({
 
     getStoreDataFromMetadata() {
         const stores = this.stores;
-        const storeIds = this.storeIds;
-        const storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
-        return apprt_when(storeData, (data) => {
-            if (storeIds.length <= 1) {
-                data = this._metadataAnalyzer.getStoreData(stores);
-            }
-            this.storeData = data;
-            if (!this.selectedStoreId) {
-                this.selectedStoreId = data.length ? data[0].id : null;
-            }
-            this.getFieldData();
-            return data;
-        });
+        const data = this._metadataAnalyzer.getStoreData(stores);
+        this.storeData = data;
+        if (!this.selectedStoreId) {
+            this.selectedStoreId = data.length ? data[0].id : null;
+        }
+        this.getFieldData();
+        return data;
     },
 
     getFieldData(selectedStoreId) {
@@ -251,7 +239,7 @@ export default declare({
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable, layer) {
-        const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
+        const selectedStore = this._metadataAnalyzer.getStore(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
             spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
@@ -347,8 +335,10 @@ export default declare({
     },
 
     getDistinctValues(value, fieldData, selectedStoreId) {
-        const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
-        return apprt_when(this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore),
+        const selectedStore = this._metadataAnalyzer.getStore(selectedStoreId || this.selectedStoreId);
+        return apprt_when(
+            this._metadataAnalyzer.getDistinctValues(value, fieldData, selectedStore,
+                this.enableDistinctValues, this.enableInitialDistinctValues),
             (distinctValues) => {
                 const lang = Locale.getCurrent().getLanguage();
                 const type = fieldData.type;
@@ -392,20 +382,16 @@ export default declare({
     },
 
     _getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes) {
-        const store = this.getSelectedStoreObj(selectedStoreId);
+        const store = this._metadataAnalyzer.getStore(selectedStoreId);
         if (!store) {
             return;
         }
-        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) =>
+        return apprt_when(this._metadataAnalyzer.getFields(store, this.showFieldType), (fieldData) =>
             fieldData.filter((field) => {
                 const fieldNameAllowed = !hiddenFields.includes(field.id);
                 const fieldTypeAllowed = !hiddenFieldTypes.includes(field.type);
                 return fieldNameAllowed && fieldTypeAllowed;
             }));
-    },
-
-    getSelectedStoreObj(id) {
-        return this.serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
     },
 
     checkDecimalSeparator(value) {

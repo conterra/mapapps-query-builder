@@ -214,7 +214,6 @@
             "provides": "dn_querybuilder.QueryBuilderWidgetModel",
             "propertiesConstructor": true,
             "properties": {
-                "storeIds": [],
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "linkOperator": "$or",
@@ -325,7 +324,7 @@
                     "name": "store",
                     "providing": "ct.api.Store",
                     "cardinality": "0..n",
-                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
+                    "filter": "(useIn=querybuilder)"
                 }
             ]
         },
@@ -504,11 +503,6 @@
                 {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
-                },
-                {
-                    "name": "_queryBuilderWidgetModel",
-                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
-                    "cardinality": "0..1"
                 }
             ]
         },

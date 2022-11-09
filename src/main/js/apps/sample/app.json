@@ -40,15 +40,6 @@
     "bundles": {
         "dn_querybuilder": {
             "Config": {
-                "storeIds": [
-                    "countries",
-                    "baumkataster",
-                    "stoerungen",
-                    "wahlkreise_strukturdaten",
-                    "gemeinden",
-                    "earthquakes/0",
-                    "koeln/1"
-                ],
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -352,7 +343,10 @@
         },
         "agssearch": {
             "AutoStoreRegistration": {
-                "componentEnabled": true
+                "componentEnabled": true,
+                "useIn": [
+                    "querybuilder"
+                ]
             },
             "AGSStore": [
                 {

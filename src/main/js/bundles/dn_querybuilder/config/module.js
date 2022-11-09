@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import ".";
-import "./QueryBuilderWidgetStoreSelection";
 import "./QueryToolsBuilderWidget";
 import "./QueryToolsBuilder";
 import "wizard/DataFormBuilderWidgetFactory";

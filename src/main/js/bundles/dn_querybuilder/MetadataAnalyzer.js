@@ -33,10 +33,9 @@ export default class MetadataAnalyzer {
         this.#serviceResolver = undefined;
     }
 
-    getFields(store) {
+    getFields(store, showFieldType) {
         return new Promise((resolve) => {
             try {
-                const queryBuilderWidgetModel = this._queryBuilderWidgetModel;
                 const metadata = store.getMetadata();
                 apprt_when(metadata, (metadata) => {
                     const types = metadata.types;
@@ -65,7 +64,7 @@ export default class MetadataAnalyzer {
                                 title = field.name;
                             }
                             let text = title;
-                            if (queryBuilderWidgetModel.showFieldType) {
+                            if (showFieldType) {
                                 text = title + " (" + field.type + ") " + codedValueString;
                             }
                             storeData.push({
@@ -89,15 +88,14 @@ export default class MetadataAnalyzer {
         });
     }
 
-    getDistinctValues(value, fieldData, store) {
+    getDistinctValues(value, fieldData, store, enableDistinctValues, enableInitialDistinctValues) {
         if (this.#distinctValueQuery) {
             this.#distinctValueQuery.cancel && this.#distinctValueQuery.cancel();
             this.#distinctValueQuery = null;
         }
-        const queryBuilderWidgetModel = this._queryBuilderWidgetModel;
         return new Promise((resolve) => {
-            if ((!value && !queryBuilderWidgetModel.enableInitialDistinctValues)
-                || !queryBuilderWidgetModel.enableDistinctValues) {
+            if ((!value && !enableInitialDistinctValues)
+                || !enableDistinctValues) {
                 resolve();
                 return;
             }
@@ -155,14 +153,7 @@ export default class MetadataAnalyzer {
     }
 
     getStoreData(stores) {
-        const storeIds = [];
-        stores.forEach((store) => {
-            storeIds.push(store.id);
-        });
-        return this.getStoreDataByIds(storeIds);
-    }
-
-    getStoreDataByIds(storeIds) {
+        const storeIds = stores.map((store) => store.id);
         const storeData = [];
         storeIds.forEach((storeId) => {
             const storeProperties = this.getStoreProperties(storeId);
@@ -185,6 +176,10 @@ export default class MetadataAnalyzer {
             return resolver.getServiceProperties("ct.api.Store", "(id=" + idOrStore + ")");
         }
         return resolver.getServiceProperties(idOrStore);
+    }
+
+    getStore(id) {
+        return this.#serviceResolver.getService("ct.api.Store", "(id=" + id + ")");
     }
 
     queryMetadata(url) {

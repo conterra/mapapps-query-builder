@@ -96,42 +96,6 @@
             ]
         },
         {
-            "name": "QueryBuilderWidgetStoreSelection",
-            "provides": [
-                "dijit.wizard.Widget"
-            ],
-            "immediate": true,
-            "instanceFactory": true,
-            "properties": {
-                "widgetProperties": {
-                    "bid": "dn_querybuilder",
-                    "pid": "dn_querybuilder-Config",
-                    "id": "queryBuilderWidgetStoreSelectionWidget"
-                },
-                "defaultProperties": {
-                    "widgetEnabled": true,
-                    "storeIds": []
-                },
-                "description": "${queryBuilderWidgetStoreSelection.description}"
-            },
-            "references": [
-                {
-                    "name": "_configAdminService",
-                    "providing": "ct.framework.api.ConfigurationAdmin"
-                },
-                {
-                    "name": "_dataformService",
-                    "providing": "dataform.DataFormService"
-                },
-                {
-                    "name": "store",
-                    "providing": "ct.api.Store",
-                    "cardinality": "1..n",
-                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
-                }
-            ]
-        },
-        {
             "name": "QueryToolsBuilder",
             "provides": [
                 "ct.framework.api.EventHandler",

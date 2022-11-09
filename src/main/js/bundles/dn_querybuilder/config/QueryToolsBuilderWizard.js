@@ -331,7 +331,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         }
         const storeId = this._storeSelect.value;
         const store = this._getSelectedStoreObj(storeId);
-        const fieldData = this.metadataAnalyzer.getFields(store);
+        const fieldData = this.metadataAnalyzer.getFields(store, this.queryBuilderWidgetModel.showFieldType);
 
         apprt_when(fieldData, (storeData) => {
             const storeId = this._storeSelect.value;
@@ -355,7 +355,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
     _addField() {
         const storeId = this._storeSelect.value;
         const store = this._getSelectedStoreObj(storeId);
-        const fieldData = this.metadataAnalyzer.getFields(store);
+        const fieldData = this.metadataAnalyzer.getFields(store, this.queryBuilderWidgetModel.showFieldType);
         apprt_when(fieldData, (storeData) => {
             const fieldWidget = new FieldWidget({
                 source: this,
