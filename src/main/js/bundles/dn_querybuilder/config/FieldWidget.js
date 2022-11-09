@@ -53,19 +53,16 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         this.queryMetadata(this.store.target).then((metadata) => {
             this._supportsDistincts = metadata.advancedQueryCapabilities?.supportsDistinct;
             if (this.type === "user") {
-                this.notSelectDisabled = false;
                 this.fieldSelectDisabled = false;
                 this.relationalOperatorSelectDisabled = false;
                 this.valueSelectDisabled = false;
             } else if (this.type === "editing") {
                 if (this.editFields) {
-                    this.notSelectDisabled = !this.editFields.not;
                     this.fieldSelectDisabled = !this.editFields.field;
                     this.relationalOperatorSelectDisabled = !this.editFields.relationalOperator;
                     this.valueSelectDisabled = !this.editFields.value;
                 }
             } else {
-                this.notSelectDisabled = false;
                 this.fieldSelectDisabled = false;
                 this.relationalOperatorSelectDisabled = false;
                 this.valueSelectDisabled = false;
@@ -157,28 +154,6 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         });
         domConstruct.place(fieldSelect.domNode, this._fieldNode);
         d_class.add(this._fieldSelect.domNode, "fieldSelect");
-        const i18n = this.i18n;
-        const notStore = new Memory({
-            data: [
-                {id: false, name: i18n.shouldBeTrue},
-                {id: true, name: i18n.shouldBeFalse}
-            ]
-        });
-        let not = false;
-        if (this.not) {
-            not = this.not;
-        }
-        const notSelect = this._notSelect = new FilteringSelect({
-            name: "not",
-            value: not,
-            store: notStore,
-            searchAttr: "name",
-            maxHeight: this.maxComboBoxHeight,
-            disabled: this.notSelectDisabled
-        });
-        d_class.add(notSelect.domNode, "notSelect");
-        domConstruct.place(notSelect.domNode, this._notNode);
-        notSelect.startup();
         this._createCheckBoxes();
         if (this.type === "admin") {
             this.connect(this.source._editableSelect, "onChange", this._changeEditingVisibility);
@@ -507,20 +482,14 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
     },
 
     _createCheckBoxes() {
-        let not = false;
         let field = false;
         let relation = false;
         let value = false;
         if (this.editFields) {
-            not = this.editFields.not;
             field = this.editFields.field;
             relation = this.editFields.relationalOperator;
             value = this.editFields.value;
         }
-        this._notCheckBox = new CheckBox({
-            name: "checkBox",
-            checked: not
-        }, this._notCheckBoxNode);
         this._fieldCheckBox = new CheckBox({
             name: "checkBox",
             checked: field
@@ -543,7 +512,6 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         } else {
             hidden = true;
         }
-        ct_css.switchHidden(this._notCheckBox.domNode, hidden);
         ct_css.switchHidden(this._fieldCheckBox.domNode, hidden);
         ct_css.switchHidden(this._relationalOperatorCheckBox.domNode, hidden);
         ct_css.switchHidden(this._valueCheckBox.domNode, hidden);
@@ -572,14 +540,6 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
 
     getSelectedRelationalOperator() {
         return this._relationalOperatorSelect.value;
-    },
-
-    getSelectedNot() {
-        return this._notSelect.value;
-    },
-
-    getNotCheckBoxValue() {
-        return this._notCheckBox.checked;
     },
 
     getFieldCheckBoxValue() {

@@ -18,26 +18,9 @@
 <template>
     <v-scroll-y-transition hide-on-leave>
         <div
-            v-if="!fieldQuery.disableNot || !fieldQuery.disableField
-                || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
+            v-if="!fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             class="mb-2"
         >
-            <v-container
-                v-if="fieldQuery.not"
-                fluid
-                grid-list-md
-                class="pa-0 pl-2"
-            >
-                <v-chip
-                    label
-                    color="red"
-                >
-                    <v-icon left>
-                        warning
-                    </v-icon>
-                    {{ i18n.negated }}
-                </v-chip>
-            </v-container>
             <v-container
                 fluid
                 grid-list-md

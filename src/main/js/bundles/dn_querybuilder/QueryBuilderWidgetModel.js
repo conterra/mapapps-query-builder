@@ -270,7 +270,6 @@ export default declare({
             }
             const addedFieldQuery = {
                 fields: fields,
-                not: false,
                 selectedFieldId: firstField.id,
                 relationalOperator: "$eq",
                 value: (firstField.codedValues[0] && firstField.codedValues[0].code) || ""
@@ -292,38 +291,23 @@ export default declare({
         fields.forEach((field, i) => {
             const editOptions = editFields && editFields[i];
             let fieldId;
-            let not;
             let relationalOperator;
             let value;
-            if (field.$not) {
-                not = true;
-                ct_lang.forEachOwnProp(field.$not, function (v1, n1) {
-                    fieldId = n1;
-                    ct_lang.forEachOwnProp(v1, function (v2, n2) {
-                        relationalOperator = n2;
-                        value = v2;
-                    });
+            ct_lang.forEachOwnProp(field, function (v1, n1) {
+                fieldId = n1;
+                ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                    relationalOperator = n2;
+                    value = v2;
                 });
-            } else {
-                not = false;
-                ct_lang.forEachOwnProp(field, function (v1, n1) {
-                    fieldId = n1;
-                    ct_lang.forEachOwnProp(v1, function (v2, n2) {
-                        relationalOperator = n2;
-                        value = v2;
-                    });
-                });
-            }
+            });
             this.loading = true;
             const fieldData = this._getSelectedFieldData(selectedStoreId, true);
             apprt_when(fieldData, (fields) => {
                 fieldQueries.push({
                     fields: fields,
-                    not: not,
                     selectedFieldId: fieldId,
                     relationalOperator: relationalOperator,
                     value: value || "",
-                    disableNot: !editOptions.not,
                     disableField: !editOptions.field,
                     disableRelationalOperator: !editOptions.relationalOperator,
                     disableValue: !editOptions.value
@@ -412,7 +396,6 @@ export default declare({
         fieldQueries.forEach((fieldQuery) => {
             const fieldId = fieldQuery.selectedFieldId;
             const relationalOperator = fieldQuery.relationalOperator;
-            const not = fieldQuery.not;
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
@@ -438,12 +421,7 @@ export default declare({
             obj1[relationalOperator] = value;
             const obj2 = {};
             obj2[fieldId] = obj1;
-            if (not) {
-                const object = {$not: obj2};
-                complexQuery[linkOperator].push(object);
-            } else {
-                complexQuery[linkOperator].push(obj2);
-            }
+            complexQuery[linkOperator].push(obj2);
         }, this);
         return complexQuery;
     },

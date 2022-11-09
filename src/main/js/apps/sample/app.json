@@ -210,7 +210,6 @@
                             "linkOperator": true,
                             "editFields": [
                                 {
-                                    "not": false,
                                     "field": false,
                                     "relationalOperator": false,
                                     "value": true
@@ -247,7 +246,6 @@
                             "linkOperator": true,
                             "editFields": [
                                 {
-                                    "not": false,
                                     "field": false,
                                     "relationalOperator": false,
                                     "value": true
@@ -284,7 +282,6 @@
                             "linkOperator": true,
                             "editFields": [
                                 {
-                                    "not": false,
                                     "field": false,
                                     "relationalOperator": false,
                                     "value": true

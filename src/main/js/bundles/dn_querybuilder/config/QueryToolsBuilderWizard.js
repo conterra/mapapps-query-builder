@@ -155,7 +155,6 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                 d_array.forEach(children, (child) => {
                     const obj = {};
                     const widget = d_registry.getEnclosingWidget(child);
-                    obj["not"] = widget.getNotCheckBoxValue();
                     obj["field"] = widget.getFieldCheckBoxValue();
                     obj["relationalOperator"] = widget.getRelationalOperatorCheckBoxValue();
                     obj["value"] = widget.getValueCheckBoxValue();
@@ -199,18 +198,12 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
             const widget = d_registry.getEnclosingWidget(child);
             const fieldId = widget.getSelectedField();
             const relationalOperatorId = widget.getSelectedRelationalOperator();
-            const not = widget.getSelectedNot();
             const value = widget.getValue();
             const obj1 = {};
             obj1[relationalOperatorId] = value;
             const obj2 = {};
             obj2[fieldId] = obj1;
-            if (not) {
-                const object = {$not: obj2};
-                complexQuery[match].push(object);
-            } else {
-                complexQuery[match].push(obj2);
-            }
+            complexQuery[match].push(obj2);
         });
         return complexQuery;
     },
@@ -309,26 +302,13 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         let fieldId;
         let relationalOperatorId;
         let value;
-        let not;
-        if (field.$not) {
-            not = true;
-            ct_lang.forEachOwnProp(field.$not, function (v1, n1) {
-                fieldId = n1;
-                ct_lang.forEachOwnProp(v1, function (v2, n2) {
-                    relationalOperatorId = n2;
-                    value = v2;
-                });
+        ct_lang.forEachOwnProp(field, function (v1, n1) {
+            fieldId = n1;
+            ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                relationalOperatorId = n2;
+                value = v2;
             });
-        } else {
-            not = false;
-            ct_lang.forEachOwnProp(field, function (v1, n1) {
-                fieldId = n1;
-                ct_lang.forEachOwnProp(v1, function (v2, n2) {
-                    relationalOperatorId = n2;
-                    value = v2;
-                });
-            });
-        }
+        });
         const storeId = this._storeSelect.value;
         const store = this._getSelectedStoreObj(storeId);
         const fieldData = this.metadataAnalyzer.getFields(store, this.queryBuilderWidgetModel.showFieldType);
@@ -343,7 +323,6 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                 fieldId: fieldId,
                 relationalOperatorId: relationalOperatorId,
                 value: value,
-                not: not,
                 editFields: editFields,
                 type: "admin",
                 enableDistinctValues: this.queryBuilderWidgetModel.enableDistinctValues
