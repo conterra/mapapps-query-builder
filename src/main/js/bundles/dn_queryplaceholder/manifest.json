@@ -6,7 +6,7 @@
     "vendor": "con terra GmbH",
     "productName": "devnet-mapapps-query-builder",
     "main": "",
-    "Bundle-Localization": [],
+    "i18n": [],
     "components": [
         {
             "name": "Replacer",

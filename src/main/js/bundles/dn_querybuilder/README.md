@@ -108,9 +108,16 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 
 ## Configuration Reference
 
-### QueryBuilderProperties:
+### Config:
 ```json
-"QueryBuilderProperties": {
+"Config": {
+    "storeIds": [
+        "airtraffic",
+        "countries",
+        "baumkataster",
+        "stoerungen",
+        "wahlkreise_strukturdaten"
+    ]
     "enableDistinctValues": true,
     "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",
@@ -181,6 +188,7 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 
 | Property                        | Type    | Possible Values                                         | Default          | Description                                                                                                                                             |
 |---------------------------------|---------|---------------------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeIds                        | Array   |                                                         | ```["*"]```      | List of store IDs that should be available in the QueryBuilderWidget.                                                                                   |
 | enableDistinctValues            | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried by the service.                                                                                                             |
 | enableInitialDistinctValues     | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried after a new field was selected.                                                                                             |
 | defaultLinkOperator             | String  | ```or``` &#124; ```and```                               | ```or```         | Defines the default link operator.                                                                                                                      |
@@ -197,20 +205,6 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
 | hiddenFields                    | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the field select                                                                                               |
 | hiddenSortFields                | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the sort field select                                                                                          |
 | symbols                         | Object  |                                                         |                  | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
-
-### QueryBuilderWidgetModel:
-List of store IDs that should be available in the QueryBuilderWidget
-```json
-"QueryBuilderWidgetModel": {
-    "storeIds": [
-        "airtraffic",
-        "countries",
-        "baumkataster",
-        "stoerungen",
-        "wahlkreise_strukturdaten"
-    ]
-}
-```
 
 ### QueryTools:
 ```

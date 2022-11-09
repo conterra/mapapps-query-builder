@@ -37,21 +37,50 @@ export default declare({
     selectedStoreId: null,
     selectedSortFieldName: null,
     sortDescending: false,
-    linkOperator: null,
-    spatialRelation: null,
-    allowNegation: null,
     fieldQueries: [],
     loading: false,
     processing: false,
-    showSortSelectInUserMode: false,
     activeTool: false,
     geometry: null,
-    spatialInputActions: [],
     activeSpatialInputAction: null,
     activeSpatialInputActionDescription: null,
     negateSpatialInput: false,
-    allowMultipleSpatialInputs: true,
+    linkOperator: null,
+    spatialRelation: null,
+
+    // properties
+    storeIds: [],
     enableDistinctValues: true,
+    enableInitialDistinctValues: true,
+    defaultLinkOperator: "$or",
+    defaultSpatialRelation: "everywhere",
+    allowNegation: false,
+    useUserExtent: false,
+    showQuerySettingsInEditableMode: true,
+    showSortSelectInUserMode: false,
+    showFieldType: true,
+    showSpatialRelation: true,
+    showSpatialInputActions: false,
+    spatialInputActions: ["*"],
+    allowMultipleSpatialInputs: true,
+    defaultQueryOptions: {
+        ignoreCase: false
+    },
+    hiddenFields: [
+        "objectid",
+        "OBJECTID",
+        "shape"
+    ],
+    hiddenFieldTypes: [
+        "oid",
+        "guid",
+        "global-id"
+    ],
+    hiddenSortFields: [
+        "objectid",
+        "OBJECTID",
+        "shape"
+    ],
 
     activate(componentContext) {
         this.locale = Locale.getCurrent().getLanguage();
@@ -59,16 +88,9 @@ export default declare({
         const bundleCtx = componentContext.getBundleContext();
         serviceResolver.setBundleCtx(bundleCtx);
 
-        const queryBuilderProperties = this._queryBuilderProperties;
         this.getStoreDataFromMetadata();
-        this.linkOperator = queryBuilderProperties.defaultLinkOperator;
-        this.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
-        this.showSpatialRelation = queryBuilderProperties.showSpatialRelation;
-        this.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
-        this.allowNegation = queryBuilderProperties.allowNegation;
-        this.showSortSelectInUserMode = queryBuilderProperties.showSortSelectInUserMode;
-        this.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
-        this.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
+        this.linkOperator = this.defaultLinkOperator;
+        this.spatialRelation = this.defaultSpatialRelation;
         this.fieldQueries = [];
 
         const connect = this.connect = new Connect();
@@ -191,7 +213,7 @@ export default declare({
     },
 
     getActionFilter() {
-        const allowedMethods = this._queryBuilderProperties.spatialInputActions;
+        const allowedMethods = this.spatialInputActions;
         const all = !allowedMethods || allowedMethods[0] === "*";
         if (all) {
             return () => true;
@@ -203,7 +225,7 @@ export default declare({
 
     getStoreDataFromMetadata() {
         const stores = this.stores;
-        const storeIds = this._properties.storeIds;
+        const storeIds = this.storeIds;
         const storeData = this._metadataAnalyzer.getStoreDataByIds(storeIds);
         return apprt_when(storeData, (data) => {
             if (storeIds.length <= 1) {
@@ -229,15 +251,14 @@ export default declare({
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable, layer) {
-        const properties = this._queryBuilderProperties;
         const selectedStore = this.getSelectedStoreObj(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
             spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
-        const opts = Object.assign({}, properties.defaultQueryOptions || {}, options || {}, {
+        const opts = Object.assign({}, this.defaultQueryOptions || {}, options || {}, {
             suggestContains: false
         });
-        if (properties.showSortSelectInUserMode && !editable && !layer) {
+        if (this.showSortSelectInUserMode && !editable && !layer) {
             sortOptions = this.getSortOptions();
             opts.sort = sortOptions;
         }
@@ -346,29 +367,27 @@ export default declare({
     },
 
     _getSelectedFieldData(selectedStoreId, editable) {
-        const queryBuilderProperties = this._queryBuilderProperties;
         let hiddenFields = null;
         if (editable) {
             hiddenFields = [];
         }
-        if (queryBuilderProperties.hiddenFields) {
-            hiddenFields = queryBuilderProperties.hiddenFields;
+        if (this.hiddenFields) {
+            hiddenFields = this.hiddenFields;
         } else {
             hiddenFields = [];
         }
-        const hiddenFieldTypes = queryBuilderProperties.hiddenFieldTypes;
+        const hiddenFieldTypes = this.hiddenFieldTypes;
         return this._getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes);
     },
 
     _getSelectedSortFieldData(selectedStoreId) {
-        const queryBuilderProperties = this._queryBuilderProperties;
         let hiddenSortFields = null;
-        if (queryBuilderProperties.hiddenSortFields) {
-            hiddenSortFields = queryBuilderProperties.hiddenSortFields;
+        if (this.hiddenSortFields) {
+            hiddenSortFields = this.hiddenSortFields;
         } else {
             hiddenSortFields = [];
         }
-        const hiddenFieldTypes = queryBuilderProperties.hiddenFieldTypes;
+        const hiddenFieldTypes = this.hiddenFieldTypes;
         return this._getFilteredFieldData(selectedStoreId, hiddenSortFields, hiddenFieldTypes);
     },
 
@@ -486,13 +505,12 @@ export default declare({
     },
 
     getGraphicSymbol(type) {
-        const queryBuilderProperties = this._queryBuilderProperties;
         switch (type) {
             case "polygon":
             case "extent":
-                return queryBuilderProperties.symbols.polygon;
+                return this.symbols.polygon;
             case "point":
-                return queryBuilderProperties.symbols.point;
+                return this.symbols.point;
         }
     },
 

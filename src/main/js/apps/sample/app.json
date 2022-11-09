@@ -39,7 +39,16 @@
     },
     "bundles": {
         "dn_querybuilder": {
-            "QueryBuilderProperties": {
+            "Config": {
+                "storeIds": [
+                    "countries",
+                    "baumkataster",
+                    "stoerungen",
+                    "wahlkreise_strukturdaten",
+                    "gemeinden",
+                    "earthquakes/0",
+                    "koeln/1"
+                ],
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -65,17 +74,6 @@
                     "objectid",
                     "OBJECTID",
                     "shape"
-                ]
-            },
-            "QueryBuilderWidgetModel": {
-                "storeIds": [
-                    "countries",
-                    "baumkataster",
-                    "stoerungen",
-                    "wahlkreise_strukturdaten",
-                    "gemeinden",
-                    "earthquakes/0",
-                    "koeln/1"
                 ]
             },
             "QueryTools": [

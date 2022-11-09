@@ -26,7 +26,7 @@ import _Connect from "ct/_Connect";
 import BuilderWidget from "wizard/_BuilderWidget";
 
 import "dijit/layout/ContentPane";
-import "dijit/layout/BorderContainer"
+import "dijit/layout/BorderContainer";
 
 export default declare([BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
 

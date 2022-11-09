@@ -52,7 +52,6 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         this.inherited(arguments);
         this.queryMetadata(this.store.target).then((metadata) => {
             this._supportsDistincts = metadata.advancedQueryCapabilities?.supportsDistinct;
-            this._enableDistinctValues = this.queryBuilderProperties._properties.enableDistinctValues;
             if (this.type === "user") {
                 this.notSelectDisabled = false;
                 this.fieldSelectDisabled = false;
@@ -258,7 +257,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
                     this._createRelationalOperatorSelect("$lte", relationalOperatorStore);
                 }
             }
-            if (this._supportsDistincts && this._enableDistinctValues && type !== "date") {
+            if (this._supportsDistincts && this.enableDistinctValues && type !== "date") {
                 const valueComboBox = this._valueField = new ComboBox({
                     name: "value",
                     searchAttr: "id",

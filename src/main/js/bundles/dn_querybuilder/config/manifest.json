@@ -60,7 +60,7 @@
             }
         },
         {
-            "name": "QueryBuilderPropertiesWidget",
+            "name": "QueryBuilderWidgetModelPropertiesWidget",
             "impl": "wizard/DataFormBuilderWidgetFactory",
             "provides": [
                 "dijit.wizard.Widget"
@@ -70,7 +70,7 @@
             "properties": {
                 "dataformFile": "resource('./PropertiesWidget.json')",
                 "bid": "dn_querybuilder",
-                "pid": "dn_querybuilder-QueryBuilderProperties",
+                "pid": "dn_querybuilder-Config",
                 "id": "propertiesWidget",
                 "defaultProperties": {
                     "enableDistinctValues": true,
@@ -80,12 +80,7 @@
                     "allowNegation": false,
                     "showQuerySettingsInEditableMode": true,
                     "showSortSelectInUserMode": false,
-                    "showFieldType": true,
-                    "hiddenFields": [
-                        "objectid",
-                        "OBJECTID",
-                        "shape"
-                    ]
+                    "showFieldType": true
                 },
                 "description": "${propertiesWidget.propertiesWidgetDescription}"
             },
@@ -110,7 +105,7 @@
             "properties": {
                 "widgetProperties": {
                     "bid": "dn_querybuilder",
-                    "pid": "dn_querybuilder-QueryBuilderWidgetModel",
+                    "pid": "dn_querybuilder-Config",
                     "id": "queryBuilderWidgetStoreSelectionWidget"
                 },
                 "defaultProperties": {
@@ -185,12 +180,13 @@
                     "providing": "dn_querybuilder.MetadataAnalyzer"
                 },
                 {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                },
-                {
                     "name": "_replacer",
                     "providing": "dn_queryplaceholder.Replacer"
+                },
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
                 },
                 {
                     "name": "_stores",

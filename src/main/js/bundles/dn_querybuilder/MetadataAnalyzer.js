@@ -36,7 +36,7 @@ export default class MetadataAnalyzer {
     getFields(store) {
         return new Promise((resolve) => {
             try {
-                const queryBuilderProperties = this._queryBuilderProperties;
+                const queryBuilderWidgetModel = this._queryBuilderWidgetModel;
                 const metadata = store.getMetadata();
                 apprt_when(metadata, (metadata) => {
                     const types = metadata.types;
@@ -65,7 +65,7 @@ export default class MetadataAnalyzer {
                                 title = field.name;
                             }
                             let text = title;
-                            if (queryBuilderProperties.showFieldType) {
+                            if (queryBuilderWidgetModel.showFieldType) {
                                 text = title + " (" + field.type + ") " + codedValueString;
                             }
                             storeData.push({
@@ -94,10 +94,10 @@ export default class MetadataAnalyzer {
             this.#distinctValueQuery.cancel && this.#distinctValueQuery.cancel();
             this.#distinctValueQuery = null;
         }
-        const queryBuilderProperties = this._queryBuilderProperties;
+        const queryBuilderWidgetModel = this._queryBuilderWidgetModel;
         return new Promise((resolve) => {
-            if ((!value && !queryBuilderProperties.enableInitialDistinctValues)
-                || !queryBuilderProperties.enableDistinctValues) {
+            if ((!value && !queryBuilderWidgetModel.enableInitialDistinctValues)
+                || !queryBuilderWidgetModel.enableDistinctValues) {
                 resolve();
                 return;
             }

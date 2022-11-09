@@ -37,7 +37,13 @@
     },
     "bundles": {
         "dn_querybuilder": {
-            "QueryBuilderProperties": {
+            "Config": {
+                "storeIds": [
+                    "countries",
+                    "baumkataster",
+                    "stoerungen",
+                    "wahlkreise_strukturdaten"
+                ],
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -68,14 +74,6 @@
                     "objectid",
                     "OBJECTID",
                     "shape"
-                ]
-            },
-            "QueryBuilderWidgetModel": {
-                "storeIds": [
-                    "countries",
-                    "baumkataster",
-                    "stoerungen",
-                    "wahlkreise_strukturdaten"
                 ]
             },
             "QueryTools": [

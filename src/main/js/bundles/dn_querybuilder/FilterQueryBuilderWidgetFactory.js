@@ -99,7 +99,6 @@ export default class FilterQueryBuilderWidgetFactory {
     }
 
     getWidget(store, layer) {
-        const queryBuilderProperties = this._queryBuilderProperties;
         const model = this._queryBuilderWidgetModel;
 
         const vm = new Vue(QueryBuilderWidget);
@@ -108,12 +107,12 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.selectedStoreId = store.id;
         vm.title = store.title;
         vm.fieldQueries = [];
-        vm.linkOperator = queryBuilderProperties.defaultLinkOperator;
-        vm.spatialRelation = queryBuilderProperties.defaultSpatialRelation;
-        // vm.showSpatialInputActions = queryBuilderProperties.showSpatialInputActions;
-        vm.allowNegation = queryBuilderProperties.allowNegation;
-        vm.allowMultipleSpatialInputs = queryBuilderProperties.allowMultipleSpatialInputs;
-        vm.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
+        vm.linkOperator = model.defaultLinkOperator;
+        vm.spatialRelation = model.defaultSpatialRelation;
+        // vm.showSpatialInputActions = model.showSpatialInputActions;
+        vm.allowNegation = model.allowNegation;
+        vm.allowMultipleSpatialInputs = model.allowMultipleSpatialInputs;
+        vm.enableDistinctValues = model.enableDistinctValues;
 
         model.getStoreDataFromMetadata().then((storeData)=>{
             vm.storeData = storeData;

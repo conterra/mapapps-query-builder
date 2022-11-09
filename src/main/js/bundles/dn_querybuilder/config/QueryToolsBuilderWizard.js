@@ -346,7 +346,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                 not: not,
                 editFields: editFields,
                 type: "admin",
-                queryBuilderProperties: this.queryBuilderProperties
+                enableDistinctValues: this.queryBuilderWidgetModel.enableDistinctValues
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeChildrenButtons();
@@ -363,7 +363,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                 storeData: storeData,
                 i18n: this.i18n.fields,
                 type: "admin",
-                queryBuilderProperties: this.queryBuilderProperties
+                enableDistinctValues: this.queryBuilderWidgetModel.enableDistinctValues
             });
             domConstruct.place(fieldWidget.domNode, this._queryNode, "last");
             this._changeChildrenButtons();
@@ -392,7 +392,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         });
     },
     _createBuilderGUI(textAreaComplexQuery) {
-        const queryBuilderProperties = this.queryBuilderProperties._properties;
+        const queryBuilderWidgetModel = this.queryBuilderWidgetModel;
         const spatialRelationStore = new Memory({
             data: [
                 {name: this.i18n.everywhere, id: "everywhere"},
@@ -435,7 +435,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         if (!this._matchSelect) {
             this._matchSelect = new FilteringSelect({
                 name: "match",
-                value: queryBuilderProperties.defaultLinkOperator,
+                value: queryBuilderWidgetModel.defaultLinkOperator,
                 store: matchStore,
                 searchAttr: "name",
                 style: "width: 80px;",

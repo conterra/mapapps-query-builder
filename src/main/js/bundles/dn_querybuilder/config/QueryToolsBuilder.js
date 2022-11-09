@@ -152,7 +152,7 @@ export default declare([_Connect], {
             replacer: this._replacer,
             metadataAnalyzer: this._metadataAnalyzer,
             drawGeometryHandler: this._drawGeometryHandler,
-            queryBuilderProperties: this._queryBuilderProperties
+            queryBuilderWidgetModel: this._queryBuilderWidgetModel
         });
     },
 

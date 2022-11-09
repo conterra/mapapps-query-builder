@@ -209,132 +209,23 @@
     ],
     "components": [
         {
-            "name": "QueryBuilderWidgetModel",
+            "name": "Config",
+            "impl": "./QueryBuilderWidgetModel",
             "provides": "dn_querybuilder.QueryBuilderWidgetModel",
             "propertiesConstructor": true,
             "properties": {
-                "storeIds": []
-            },
-            "references": [
-                {
-                    "name": "_queryController",
-                    "providing": "dn_querybuilder.QueryController"
-                },
-                {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                },
-                {
-                    "name": "_mapWidgetModel",
-                    "providing": "map-widget.MapWidgetModel"
-                },
-                {
-                    "name": "_tool",
-                    "providing": "ct.tools.Tool",
-                    "filter": "(id=queryBuilderToggleTool)"
-                },
-                {
-                    "name": "_spatialInputActionService",
-                    "providing": "selection-services.SpatialInputActionService"
-                },
-                {
-                    "name": "_metadataAnalyzer",
-                    "providing": "dn_querybuilder.MetadataAnalyzer"
-                },
-                {
-                    "name": "_geometryService",
-                    "providing": "geometryservice.GeometryService"
-                },
-                {
-                    "name": "store",
-                    "providing": "ct.api.Store",
-                    "cardinality": "0..n",
-                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
-                }
-            ]
-        },
-        {
-            "name": "QueryBuilderWidgetFactory",
-            "provides": "dijit.Widget",
-            "instanceFactory": true,
-            "properties": {
-                "widgetRole": "queryBuilderWidget"
-            },
-            "references": [
-                {
-                    "name": "_queryBuilderWidgetModel",
-                    "providing": "dn_querybuilder.QueryBuilderWidgetModel"
-                },
-                {
-                    "name": "_tool",
-                    "providing": "ct.tools.Tool",
-                    "filter": "(id=queryBuilderToggleTool)"
-                }
-            ]
-        },
-        {
-            "name": "EditableQueryBuilderWidgetFactory",
-            "provides": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
-            "properties": {
-            },
-            "references": [
-                {
-                    "name": "_queryBuilderWidgetModel",
-                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
-                    "cardinality": "0..1"
-                },
-                {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                }
-            ]
-        },
-        {
-            "name": "FilterQueryBuilderWidgetFactory",
-            "provides": "dn_querybuilder.FilterQueryBuilderWidgetFactory",
-            "properties": {
-            },
-            "references": [
-                {
-                    "name": "_queryBuilderWidgetModel",
-                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
-                    "cardinality": "0..1"
-                },
-                {
-                    "name": "_agsStoreFactory",
-                    "providing": "agssearch.AGSStoreFactory"
-                },
-                {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                }
-            ]
-        },
-        {
-            "name": "QueryBuilderProperties",
-            "impl": "ct/Stateful",
-            "provides": [
-                "dn_querybuilder.QueryBuilderProperties"
-            ],
-            "propertiesConstructor": true,
-            // TODO: Add visibleElements property for version 5
-            "properties": {
+                "storeIds": [],
                 "enableDistinctValues": true,
-                // TODO: Move next property to QueryBuilderWidgetModel
                 "enableInitialDistinctValues": true,
-                "defaultLinkOperator": "$or",
-                "defaultSpatialRelation": "everywhere",
-                // TODO: Move next property QueryBuilderWidgetModel
-                "useUserExtent": false,
+                "linkOperator": "$or",
+                "spatialRelation": "everywhere",
                 "allowNegation": false,
-                // TODO: Move next property QueryBuilderWidgetModel
+                "useUserExtent": false,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
-                // TODO: Move next property QueryBuilderWidgetModel
                 "showFieldType": true,
                 "showSpatialRelation": true,
                 "showSpatialInputActions": false,
-                // TODO: Move next property QueryBuilderWidgetModel
                 "spatialInputActions": [
                     "*"
                 ],
@@ -403,7 +294,89 @@
                         }
                     }
                 }
-            }
+            },
+            "references": [
+                {
+                    "name": "_queryController",
+                    "providing": "dn_querybuilder.QueryController"
+                },
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=queryBuilderToggleTool)"
+                },
+                {
+                    "name": "_spatialInputActionService",
+                    "providing": "selection-services.SpatialInputActionService"
+                },
+                {
+                    "name": "_metadataAnalyzer",
+                    "providing": "dn_querybuilder.MetadataAnalyzer"
+                },
+                {
+                    "name": "_geometryService",
+                    "providing": "geometryservice.GeometryService"
+                },
+                {
+                    "name": "store",
+                    "providing": "ct.api.Store",
+                    "cardinality": "0..n",
+                    "filter": "(|(useIn=selection)(useIn=querybuilder))"
+                }
+            ]
+        },
+        {
+            "name": "QueryBuilderWidgetFactory",
+            "provides": "dijit.Widget",
+            "instanceFactory": true,
+            "properties": {
+                "widgetRole": "queryBuilderWidget"
+            },
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel"
+                },
+                {
+                    "name": "_tool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=queryBuilderToggleTool)"
+                }
+            ]
+        },
+        {
+            "name": "EditableQueryBuilderWidgetFactory",
+            "provides": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
+            "properties": {
+            },
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
+                }
+            ]
+        },
+        {
+            "name": "FilterQueryBuilderWidgetFactory",
+            "provides": "dn_querybuilder.FilterQueryBuilderWidgetFactory",
+            "properties": {
+            },
+            "references": [
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
+                },
+                {
+                    "name": "_agsStoreFactory",
+                    "providing": "agssearch.AGSStoreFactory"
+                }
+            ]
         },
         {
             "name": "QueryTools",
@@ -457,10 +430,6 @@
                     "providing": "dn_querybuilder.MetadataAnalyzer"
                 },
                 {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                },
-                {
                     "name": "_replacer",
                     "providing": "dn_queryplaceholder.Replacer"
                 },
@@ -477,7 +446,7 @@
                     "providing": "ct.tools.Tool",
                     "filter": "(id=resultcenterToggleTool)",
                     "cardinality": "0..1"
-                },                
+                },
                 {
                     "name": "_dataModel",
                     "providing": "resultcenter.DataModel",
@@ -506,10 +475,6 @@
             },
             "references": [
                 {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                },
-                {
                     "name": "_queryController",
                     "providing": "dn_querybuilder.QueryController"
                 },
@@ -537,12 +502,13 @@
             ],
             "references": [
                 {
-                    "name": "_queryBuilderProperties",
-                    "providing": "dn_querybuilder.QueryBuilderProperties"
-                },
-                {
                     "name": "_logService",
                     "providing": "ct.framework.api.LogService"
+                },
+                {
+                    "name": "_queryBuilderWidgetModel",
+                    "providing": "dn_querybuilder.QueryBuilderWidgetModel",
+                    "cardinality": "0..1"
                 }
             ]
         },
@@ -552,7 +518,7 @@
             "references": [
                 {
                     "name": "_filterQueryBuilderWidgetFactory",
-                    "providing":  "dn_querybuilder.FilterQueryBuilderWidgetFactory"
+                    "providing": "dn_querybuilder.FilterQueryBuilderWidgetFactory"
                 }
             ]
         },
