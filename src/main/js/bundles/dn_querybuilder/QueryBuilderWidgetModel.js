@@ -71,9 +71,6 @@ export default declare({
         this.enableDistinctValues = queryBuilderProperties.enableDistinctValues;
         this.fieldQueries = [];
 
-        const properties = this._properties;
-        properties.storeIds.push("querybuilder_temp");
-
         const connect = this.connect = new Connect();
         connect.connect(this._tool, "onActivate", () => {
             this.activeTool = true;
