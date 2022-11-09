@@ -229,29 +229,24 @@
                     "*"
                 ],
                 "allowMultipleSpatialInputs": true,
-                // TODO: Move next property QueryBuilderWidgetModel
                 "defaultQueryOptions": {
                     "ignoreCase": false
                 },
-                // TODO: Move next property QueryBuilderWidgetModel
                 "hiddenFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"
                 ],
-                // TODO: Move next property QueryBuilderWidgetModel
                 "hiddenFieldTypes": [
                     "oid",
                     "guid",
                     "global-id"
                 ],
-                // TODO: Move next property QueryBuilderWidgetModel
                 "hiddenSortFields": [
                     "objectid",
                     "OBJECTID",
                     "shape"
                 ],
-                // TODO: Move next property QueryBuilderWidgetModel
                 "symbols": {
                     "point": {
                         "type": "simple-marker",
