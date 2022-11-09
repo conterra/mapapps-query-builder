@@ -144,7 +144,6 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
     "defaultLinkOperator": "$or",
     "defaultSpatialRelation": "everywhere",
     "useUserExtent": false,
-    "allowNegation": true,
     "showQuerySettingsInEditableMode": true,
     "showSortSelectInUserMode": false,
     "showFieldType": true,
@@ -214,7 +213,6 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 | defaultLinkOperator             | String  | ```or``` &#124; ```and```                               | ```or```         | Defines the default link operator.                                                                                                                      |
 | defaultSpatialRelation          | String  | ```everywhere``` &#124; ```current_extent```            | ```everywhere``` | Defines the default spatial relation.                                                                                                                   |
 | useUserExtent                   | Boolean | ```true``` &#124; ```false```                           | ```false```      | Use the current user extent to filter predefined queries.                                                                                               |
-| allowNegation                   | Boolean | ```true``` &#124; ```false```                           | ```true```       | Allows the user to negate the different parts of the queries.                                                                                           |
 | showQuerySettingsInEditableMode | Boolean | ```true``` &#124; ```false```                           | ```true```       | Show or hide the query settings for editable queries.                                                                                                   |
 | showSpatialRelation             | Boolean | ```true``` &#124; ```false```                           | ```true```       | Show or hide the spatial relation radio button.                                                                                                         |
 | showSortSelectInUserMode        | Boolean | ```true``` &#124; ```false```                           | ```false```      | Show or hide the sort field select in user mode.                                                                                                        |

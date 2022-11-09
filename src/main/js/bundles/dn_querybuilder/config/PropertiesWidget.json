@@ -62,11 +62,6 @@
         },
         {
             "type": "checkbox",
-            "label": "${propertiesWidget.allowNegation}",
-            "field": "allowNegation"
-        },
-        {
-            "type": "checkbox",
             "label": "${propertiesWidget.showQuerySettingsInEditableMode}",
             "field": "showQuerySettingsInEditableMode"
         },

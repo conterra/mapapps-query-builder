@@ -43,7 +43,6 @@
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useUserExtent": false,
-                "allowNegation": true,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,
                 "showFieldType": true,

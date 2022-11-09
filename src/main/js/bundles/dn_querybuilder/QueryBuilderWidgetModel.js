@@ -52,7 +52,6 @@ export default declare({
     enableInitialDistinctValues: true,
     defaultLinkOperator: "$or",
     defaultSpatialRelation: "everywhere",
-    allowNegation: false,
     useUserExtent: false,
     showQuerySettingsInEditableMode: true,
     showSortSelectInUserMode: false,

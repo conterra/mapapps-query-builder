@@ -25,7 +25,6 @@ module.exports = {
         defaultLinkOperator: "Standard-Vergleichsoperator",
         defaultSpatialRelation: "Standard-R\u00E4umlicher-Vergleichsoperator",
         useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
-        allowNegation: "Negation eines Feldes erlauben",
         showQuerySettingsInEditableMode: "Sucheinstellungen im Editiermodus anzeigen",
         showSortSelectInUserMode: "Sortierm\u00f6glichkeit im Widget anzeigen",
         showFieldType: "Feldtyp im Widget anzeigen"

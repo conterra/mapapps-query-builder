@@ -342,7 +342,7 @@
         methods: {
             focus: function () {
                 // TODO: Focus should be possible via ref
-                // const focusElement = this.allowNegation ? this.$refs.notSwitch : this.$refs.selectedFieldIdSelect;
+                // const focusElement = this.$refs.selectedFieldIdSelect;
                 // this.$nextTick(() => {
                 //     setTimeout(() => {
                 //         focusElement.$el.focus();

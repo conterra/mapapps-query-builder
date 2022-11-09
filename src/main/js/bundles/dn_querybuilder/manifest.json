@@ -218,7 +218,6 @@
                 "enableInitialDistinctValues": true,
                 "linkOperator": "$or",
                 "spatialRelation": "everywhere",
-                "allowNegation": false,
                 "useUserExtent": false,
                 "showQuerySettingsInEditableMode": true,
                 "showSortSelectInUserMode": false,

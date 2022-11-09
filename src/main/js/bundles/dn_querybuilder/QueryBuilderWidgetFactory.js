@@ -92,7 +92,7 @@ export default class QueryBuilderWidgetFactory {
             .syncAllToLeft("locale", "storeData", "sortFieldData",
                 "showSpatialInputActions", "showSpatialRelation", "spatialInputActions",
                 "enableDistinctValues", "activeSpatialInputActionDescription", "showSortSelectInUserMode",
-                "allowNegation", "loading", "processing", "activeTool")
+                "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();
     }

@@ -110,7 +110,6 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.linkOperator = model.defaultLinkOperator;
         vm.spatialRelation = model.defaultSpatialRelation;
         // vm.showSpatialInputActions = model.showSpatialInputActions;
-        vm.allowNegation = model.allowNegation;
         vm.allowMultipleSpatialInputs = model.allowMultipleSpatialInputs;
         vm.enableDistinctValues = model.enableDistinctValues;
 
