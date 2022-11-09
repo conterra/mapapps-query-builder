@@ -49,27 +49,8 @@
                     align-center
                 >
                     <v-flex
-                        v-if="allowNegation"
-                        xs2
-                        md1
-                    >
-                        <v-switch
-                            :id="'notSwitch' + index"
-                            ref="notSwitch"
-                            v-model="fieldQuery.not"
-                            :value="fieldQuery.not"
-                            :disabled="fieldQuery.disableNot"
-                            class="pa-0 ma-0"
-                            color="red"
-                            hide-details
-                            :aria-label="i18n.aria.negate"
-                            @blur.self="console.log('blur')"
-                        />
-                    </v-flex>
-                    <v-flex
-                        :class="{ xs7: !allowNegation, md4: !allowNegation }"
-                        xs5
-                        md3
+                        xs7
+                        md4
                     >
                         <v-select
                             :id="'selectedFieldId' + index"
@@ -274,10 +255,6 @@
                 type: Number,
                 default: 0
             },
-            allowNegation: {
-                type: Boolean,
-                default: false
-            },
             activeTool: {
                 type: Boolean,
                 default: false
@@ -373,8 +350,7 @@
                 // });
 
                 const index = this.index;
-                const idSubstr = this.allowNegation ? "notSwitch" : "selectedFieldIdSelect";
-                const focusElement = document.getElementById(idSubstr + index);
+                const focusElement = document.getElementById("selectedFieldIdSelect" + index);
                 this.$nextTick(() => {
                     focusElement?.focus();
                 });

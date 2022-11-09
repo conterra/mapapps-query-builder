@@ -202,7 +202,6 @@
                     :locale="locale"
                     :field-query="fieldQuery"
                     :index="index"
-                    :allow-negation="allowNegation"
                     :active-tool="activeTool"
                     :enable-distinct-values="enableDistinctValues"
                     :i18n="i18n"
@@ -397,7 +396,6 @@
                 showSpatialInputActions: false,
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
-                allowNegation: false,
                 loading: false,
                 processing: false,
                 showSortSelectInUserMode: false,
