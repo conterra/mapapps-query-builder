@@ -354,10 +354,7 @@ export default declare({
         if (editable) {
             hiddenFields = [];
         }
-        // TODO: Fallback that can be removed in version 5
-        else if (queryBuilderProperties.hidedFields) {
-            hiddenFields = queryBuilderProperties.hidedFields;
-        } else if (queryBuilderProperties.hiddenFields) {
+        if (queryBuilderProperties.hiddenFields) {
             hiddenFields = queryBuilderProperties.hiddenFields;
         } else {
             hiddenFields = [];
@@ -369,9 +366,7 @@ export default declare({
     _getSelectedSortFieldData(selectedStoreId) {
         const queryBuilderProperties = this._queryBuilderProperties;
         let hiddenSortFields = null;
-        if (queryBuilderProperties.hidedSortFields) {
-            hiddenSortFields = queryBuilderProperties.hidedSortFields;
-        } else if (queryBuilderProperties.hiddenSortFields) {
+        if (queryBuilderProperties.hiddenSortFields) {
             hiddenSortFields = queryBuilderProperties.hiddenSortFields;
         } else {
             hiddenSortFields = [];
