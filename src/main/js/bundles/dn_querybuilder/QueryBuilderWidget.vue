@@ -19,14 +19,14 @@
     <v-form class="ct-flex-container ct-flex-container--column fullHeight">
         <div
             v-if="!processing"
-            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink mb-2"
+            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink"
         >
             <v-container
                 grid-list-md
                 class="pa-0"
             >
                 <v-layout
-                    v-if="!filter"
+                    v-if="!filter && !editable"
                     row
                     wrap
                 >
@@ -39,7 +39,6 @@
                             ref="selectedStoreIdSelect"
                             v-model="selectedStoreId"
                             :items="storeData"
-                            :disabled="editable"
                             :loading="loading"
                             :aria-label="i18n.aria.selectLayer"
                             label="i18n.selectStore"
