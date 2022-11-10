@@ -209,7 +209,7 @@
                     @add="addField"
                 />
                 <v-btn
-                    v-if="!editable"
+                    v-if="!editable && !processing"
                     :aria-label="i18n.aria.add"
                     class="ma-0"
                     flat
