@@ -21,9 +21,6 @@
             v-if="!processing"
             class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink mb-2"
         >
-            <div v-if="(editable || filter) && title">
-                <div>{{ title }}</div>
-            </div>
             <v-container
                 grid-list-md
                 class="pa-0"
@@ -394,7 +391,6 @@
                 selectedStoreId: "",
                 selectedSortFieldName: "",
                 sortDescending: false,
-                title: null,
                 linkOperator: "$and",
                 disableLinkOperatorRadio: false,
                 spatialRelation: "everywhere",

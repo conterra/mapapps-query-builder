@@ -18,7 +18,7 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import ct_util from "ct/ui/desktop/util";
 
-const DELAY = 1000;
+const DELAY = 200;
 
 export default class FilterQueryBuilderWidgetFactory {
 
@@ -79,10 +79,13 @@ export default class FilterQueryBuilderWidgetFactory {
         this._widgetServiceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
         setTimeout(() => {
             const window = ct_util.findEnclosingWindow(widget);
-            window?.on("Close", () => {
-                this.hideWidget();
-                this.unregisterStore();
-            });
+            if (window) {
+                window.set("title", store.title);
+                window.on("Close", () => {
+                    this.hideWidget();
+                    this.unregisterStore();
+                });
+            }
         }, DELAY);
     }
 
@@ -105,7 +108,6 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.i18n = this._i18n.get().ui;
         vm.filter = true;
         vm.selectedStoreId = store.id;
-        vm.title = store.title;
         vm.fieldQueries = [];
         vm.linkOperator = model.defaultLinkOperator;
         vm.spatialRelation = model.defaultSpatialRelation;

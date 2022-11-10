@@ -16,7 +16,7 @@
 import Extent from "esri/geometry/Extent";
 import ct_util from "ct/ui/desktop/util";
 
-const DELAY = 1000;
+const DELAY = 200;
 
 export default class QueryToolController {
     activate(componentContext) {
@@ -59,9 +59,12 @@ export default class QueryToolController {
             this._serviceregistration = this._bundleContext.registerService(interfaces, widget, serviceProperties);
             setTimeout(() => {
                 const window = ct_util.findEnclosingWindow(widget);
-                window?.on("Close", () => {
-                    this.hideWindow();
-                });
+                if (window) {
+                    window.set("title", tool.title);
+                    window.on("Close", () => {
+                        this.hideWindow();
+                    });
+                }
             }, DELAY);
         } else {
             if (complexQuery.geometry) {
