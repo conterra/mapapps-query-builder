@@ -21,159 +21,203 @@
             v-if="!processing"
             class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink mb-2"
         >
-            <div class="pa-1 ct-layout-grid container-fluid">
-                <div v-if="(editable || filter) && title">
-                    <div>{{ title }}</div>
-                </div>
-                <div
+            <div v-if="(editable || filter) && title">
+                <div>{{ title }}</div>
+            </div>
+            <v-container
+                grid-list-md
+                class="pa-0"
+            >
+                <v-layout
                     v-if="showQuerySettings && !filter"
+                    row
+                    wrap
                 >
-                    <div class="caption">
-                        {{ i18n.selectStore }}
-                    </div>
-                    <v-select
-                        v-if="storeData.length > 1"
-                        ref="selectedStoreIdSelect"
-                        v-model="selectedStoreId"
-                        :items="storeData"
-                        :disabled="editable"
-                        :loading="loading"
-                        :aria-label="i18n.aria.selectLayer"
-                        label="i18n.selectStore"
-                        item-value="id"
-                        class="pa-0"
-                        single-line
-                        hide-details
-                        @change="$emit('store-changed', $event)"
-                    />
-                    <div
-                        v-else-if="storeData[0]"
-                        class="single-store"
-                    >
-                        {{ storeData[0].text }}
-                    </div>
-                </div>
-                <div
-                    v-if="showQuerySettings && showSpatialRelation"
-                    class="pt-3"
+                    <v-flex xs3>
+                        <v-subheader>{{ i18n.selectStore }}</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
+                        <v-select
+                            v-if="storeData.length > 1"
+                            ref="selectedStoreIdSelect"
+                            v-model="selectedStoreId"
+                            :items="storeData"
+                            :disabled="editable"
+                            :loading="loading"
+                            :aria-label="i18n.aria.selectLayer"
+                            label="i18n.selectStore"
+                            item-value="id"
+                            class="pa-0"
+                            single-line
+                            hide-details
+                            @change="$emit('store-changed', $event)"
+                        />
+                        <div
+                            v-else-if="storeData[0]"
+                            class="single-store"
+                        >
+                            {{ storeData[0].text }}
+                        </div>
+                    </v-flex>
+                </v-layout>
+                <v-layout
+                    v-if="showQuerySettings && showSpatialRelation && !filter"
                     :aria-label="i18n.spatialRelation"
                     role="group"
+                    row
+                    wrap
                 >
-                    <div class="caption">
-                        {{ i18n.spatialRelation }}
-                    </div>
-                    <div
-                        v-if="showSpatialInputActions"
-                        class="mt-1"
-                    >
-                        <v-checkbox
-                            v-model="negateSpatialInput"
-                            class="pa-0 my-2"
-                            hide-details
-                            color="primary"
-                            :label="i18n.negateSpatialInput"
-                        />
-                        <v-btn-toggle v-model="activeSpatialInputAction">
-                            <v-btn
-                                v-for="spatialInputAction in spatialInputActions"
-                                :key="spatialInputAction.id"
-                                :value="spatialInputAction.id"
-                            >
-                                <v-icon>{{ spatialInputAction.iconClass }}</v-icon>
-                                <span class="ml-2">{{ spatialInputAction.title }}</span>
-                            </v-btn>
-                        </v-btn-toggle>
+                    <v-flex xs3>
+                        <v-subheader>{{ i18n.spatialRelation }}</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
                         <div
-                            v-if="activeSpatialInputActionDescription"
-                            class="ct-message ct-message--info mt-2"
+                            v-if="showSpatialInputActions"
+                            class="mt-1"
                         >
-                            {{ activeSpatialInputActionDescription }}
+                            <v-checkbox
+                                v-model="negateSpatialInput"
+                                class="pa-0 my-2"
+                                hide-details
+                                color="primary"
+                                :label="i18n.negateSpatialInput"
+                            />
+                            <v-btn-toggle v-model="activeSpatialInputAction">
+                                <v-btn
+                                    v-for="spatialInputAction in spatialInputActions"
+                                    :key="spatialInputAction.id"
+                                    :value="spatialInputAction.id"
+                                >
+                                    <v-icon>{{ spatialInputAction.iconClass }}</v-icon>
+                                    <span class="ml-2">{{ spatialInputAction.title }}</span>
+                                </v-btn>
+                            </v-btn-toggle>
+                            <div
+                                v-if="activeSpatialInputActionDescription"
+                                class="ct-message ct-message--info mt-2"
+                            >
+                                {{ activeSpatialInputActionDescription }}
+                            </div>
                         </div>
-                    </div>
-                    <div v-else>
+                        <div v-else>
+                            <v-radio-group
+                                v-model="spatialRelation"
+                                class="mt-2"
+                                row
+                                hide-details
+                            >
+                                <v-radio
+                                    :label="i18n.everywhere"
+                                    :disabled="disableSpatialRelationRadio"
+                                    hide-details
+                                    value="everywhere"
+                                    color="primary"
+                                />
+                                <v-radio
+                                    :label="i18n.currentExtent"
+                                    :disabled="disableSpatialRelationRadio"
+                                    hide-details
+                                    value="current_extent"
+                                    color="primary"
+                                />
+                            </v-radio-group>
+                        </div>
+                    </v-flex>
+                </v-layout>
+                <v-layout
+                    v-if="showQuerySettings && fieldQueriesLength > 1"
+                    :aria-label="i18n.linkOperator"
+                    role="group"
+                    row
+                    wrap
+                >
+                    <v-flex xs3>
+                        <v-subheader>{{ i18n.linkOperator }}</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
                         <v-radio-group
-                            v-model="spatialRelation"
+                            v-model="linkOperator"
                             class="mt-2"
                             row
                             hide-details
                         >
                             <v-radio
-                                :label="i18n.everywhere"
-                                :disabled="disableSpatialRelationRadio"
+                                :label="i18n.and"
+                                :disabled="disableLinkOperatorRadio"
                                 hide-details
-                                value="everywhere"
+                                value="$and"
                                 color="primary"
                             />
                             <v-radio
-                                :label="i18n.currentExtent"
-                                :disabled="disableSpatialRelationRadio"
+                                :label="i18n.or"
+                                :disabled="disableLinkOperatorRadio"
                                 hide-details
-                                value="current_extent"
+                                value="$or"
                                 color="primary"
                             />
                         </v-radio-group>
-                    </div>
-                </div>
-                <div
-                    v-if="showSpatialInputActions"
-                    class="pa-1"
+                    </v-flex>
+                </v-layout>
+            </v-container>
+            <div
+                v-if="showSpatialInputActions"
+                class="pa-1"
+            >
+                <v-btn
+                    small
+                    block
+                    class="ma-0"
+                    @click="$emit('reset-spatial-input')"
                 >
-                    <v-btn
-                        small
-                        block
-                        class="ma-0"
-                        @click="$emit('reset-spatial-input')"
-                    >
-                        <v-icon left>
-                            delete
-                        </v-icon>
-                        {{ i18n.resetSpatialInput }}
-                    </v-btn>
+                    <v-icon left>
+                        delete
+                    </v-icon>
+                    {{ i18n.resetSpatialInput }}
+                </v-btn>
+            </div>
+            <div
+                v-if="showQuerySettings && showSortSelectInUserMode && !filter"
+                class="pa-1"
+            >
+                <div class="caption">
+                    {{ i18n.sortOptions }}
                 </div>
-                <div
-                    v-if="showQuerySettings && showSortSelectInUserMode && !filter"
-                    class="pa-1"
-                >
-                    <div class="caption">
-                        {{ i18n.sortOptions }}
+                <div class="ct-flex-container">
+                    <div class="ct-flex-item ct-flex-item--no-shrink">
+                        <v-select
+                            ref="selectedSortFieldNameSelect"
+                            v-model="selectedSortFieldName"
+                            :items="sortFieldData"
+                            :disabled="editable"
+                            :aria-label="i18n.aria.sortingField"
+                            item-value="id"
+                            class="pa-0"
+                            single-line
+                            hide-details
+                        />
                     </div>
-                    <div class="ct-flex-container">
-                        <div class="ct-flex-item ct-flex-item--no-shrink">
-                            <v-select
-                                ref="selectedSortFieldNameSelect"
-                                v-model="selectedSortFieldName"
-                                :items="sortFieldData"
-                                :disabled="editable"
-                                :aria-label="i18n.aria.sortingField"
-                                item-value="id"
-                                class="pa-0"
-                                single-line
-                                hide-details
-                            />
-                        </div>
-                        <div class="ct-flex-item ct-flex-item--no-grow">
-                            <v-btn
-                                flat
-                                small
-                                class="ma-0"
-                                color="primary"
-                                @click="sortDescending=!sortDescending"
+                    <div class="ct-flex-item ct-flex-item--no-grow">
+                        <v-btn
+                            flat
+                            small
+                            class="ma-0"
+                            color="primary"
+                            @click="sortDescending=!sortDescending"
+                        >
+                            <v-icon
+                                v-if="sortDescending"
+                                left
                             >
-                                <v-icon
-                                    v-if="sortDescending"
-                                    left
-                                >
-                                    arrow_downward
-                                </v-icon>
-                                <v-icon
-                                    v-else
-                                    left
-                                >
-                                    arrow_upward
-                                </v-icon>
-                                {{ i18n.sorting }}
-                            </v-btn>
-                        </div>
+                                arrow_downward
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                left
+                            >
+                                arrow_upward
+                            </v-icon>
+                            {{ i18n.sorting }}
+                        </v-btn>
                     </div>
                 </div>
             </div>
@@ -218,41 +262,6 @@
                     {{ i18n.aria.add }}
                 </v-btn>
             </v-container>
-        </div>
-        <div
-            v-if="showQuerySettings"
-            class="pa-1"
-            :aria-label="i18n.linkOperator"
-            role="group"
-        >
-            <div v-if="fieldQueriesLength > 1">
-                <div class="caption">
-                    {{ i18n.linkOperator }}
-                </div>
-                <div>
-                    <v-radio-group
-                        v-model="linkOperator"
-                        class="pa-0 mt-1"
-                        row
-                        hide-details
-                    >
-                        <v-radio
-                            :label="i18n.and"
-                            :disabled="disableLinkOperatorRadio"
-                            hide-details
-                            value="$and"
-                            color="primary"
-                        />
-                        <v-radio
-                            :label="i18n.or"
-                            :disabled="disableLinkOperatorRadio"
-                            hide-details
-                            value="$or"
-                            color="primary"
-                        />
-                    </v-radio-group>
-                </div>
-            </div>
         </div>
         <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <div v-if="!filter">
