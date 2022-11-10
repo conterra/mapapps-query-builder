@@ -58,7 +58,7 @@
                     </v-flex>
                 </v-layout>
                 <v-layout
-                    v-if="visibleElements.spatialRelation"
+                    v-if="visibleElements.spatialRelation && !filter"
                     :aria-label="i18n.spatialRelation"
                     role="group"
                     row
@@ -84,6 +84,7 @@
                                     v-for="spatialInputAction in spatialInputActions"
                                     :key="spatialInputAction.id"
                                     :value="spatialInputAction.id"
+                                    class="mt-1"
                                 >
                                     <v-icon>{{ spatialInputAction.iconClass }}</v-icon>
                                     <span class="ml-2">{{ spatialInputAction.title }}</span>
@@ -98,7 +99,6 @@
                             <v-btn
                                 small
                                 block
-                                class="ma-0"
                                 @click="$emit('reset-spatial-input')"
                             >
                                 <v-icon left>
@@ -343,7 +343,6 @@
                             currentExtent: "current extent",
                             delete: "Delete",
                             search: "Search",
-                            negated: "negated",
                             typeInValue: "type in value",
                             yes: "yes",
                             no: "no",
