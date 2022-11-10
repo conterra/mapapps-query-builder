@@ -220,7 +220,7 @@
                 "spatialRelation": "everywhere",
                 "useUserExtent": false,
                 "availableSpatialInputActions": [
-                    "point"
+                    "*"
                 ],
                 "allowMultipleSpatialInputs": true,
                 "visibleElements": {
