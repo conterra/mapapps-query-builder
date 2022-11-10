@@ -19,7 +19,7 @@
     <v-form class="ct-flex-container ct-flex-container--column fullHeight">
         <div
             v-if="!processing"
-            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink"
+            class="header ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink mb-2"
         >
             <div class="pa-1 ct-layout-grid container-fluid">
                 <div v-if="(editable || filter) && title">
@@ -68,7 +68,7 @@
                     >
                         <v-checkbox
                             v-model="negateSpatialInput"
-                            class="pa-0 mt-2 mb-2"
+                            class="pa-0 my-2"
                             hide-details
                             color="primary"
                             :label="i18n.negateSpatialInput"
@@ -93,7 +93,7 @@
                     <div v-else>
                         <v-radio-group
                             v-model="spatialRelation"
-                            class="pa-0 mt-1"
+                            class="mt-2"
                             row
                             hide-details
                         >
@@ -186,7 +186,7 @@
                 :fill-height="processing"
                 grid-list-md
                 fluid
-                class="pa-1"
+                class="pa-0"
             >
                 <v-progress-circular
                     v-if="processing"
@@ -211,7 +211,6 @@
                 <v-btn
                     v-if="!editable && !processing"
                     :aria-label="i18n.aria.add"
-                    class="ma-0"
                     flat
                     @click="$emit('add')"
                 >
@@ -256,15 +255,13 @@
             </div>
         </div>
         <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
-            <div
-                v-if="!filter"
-                class="pa-1"
-            >
+            <div v-if="!filter">
                 <v-btn
                     v-if="!processing"
                     block
                     ripple
                     color="primary"
+                    class="mb-0"
                     @click="emitSearch"
                 >
                     <v-icon left>
@@ -277,6 +274,7 @@
                     block
                     ripple
                     color="primary"
+                    class="mb-0"
                     @click="$emit('cancel-search', {})"
                 >
                     <v-icon left>
@@ -285,15 +283,13 @@
                     {{ i18n.cancelSearch }}
                 </v-btn>
             </div>
-            <div
-                v-else
-                class="pa-1"
-            >
+            <div v-else>
                 <v-btn
                     v-if="!processing"
                     block
                     ripple
                     color="primary"
+                    class="mb-0"
                     @click="emitSearch"
                 >
                     <v-icon left>
@@ -306,6 +302,7 @@
                     block
                     ripple
                     color="primary"
+                    class="mb-0"
                     @click="$emit('cancel-search', {})"
                 >
                     <v-icon left>

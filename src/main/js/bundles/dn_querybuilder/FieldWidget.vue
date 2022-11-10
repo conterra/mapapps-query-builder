@@ -24,7 +24,7 @@
             <v-container
                 fluid
                 grid-list-md
-                class="pa-1 pl-2"
+                class="pa-1"
             >
                 <v-layout
                     row
@@ -66,7 +66,8 @@
                         />
                     </v-flex>
                     <v-flex
-                        :class="{ xs12: $root.editable, md5: $root.editable }"
+                        :class="{ xs12: $root.editable || $root.fieldQueries.length < 2, md5: $root.editable
+                            || $root.fieldQueries.length < 2}"
                         xs10
                         md4
                     >
