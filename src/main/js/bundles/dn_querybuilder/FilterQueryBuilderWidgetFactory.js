@@ -118,10 +118,8 @@ export default class FilterQueryBuilderWidgetFactory {
             sortSelect: false
         };
 
-        model.getStoreDataFromMetadata().then((storeData)=>{
-            vm.storeData = storeData;
-            model.addFieldQuery(store.id, vm.fieldQueries);
-        });
+        vm.storeData = model.getStoreDataFromMetadata();
+        model.addFieldQuery(store.id, vm.fieldQueries);
 
         // listen to view model methods
         vm.$on('search', () => {

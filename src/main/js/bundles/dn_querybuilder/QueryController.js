@@ -89,26 +89,33 @@ export default class QueryController {
                     return;
                 }
 
-                // result-ui
-                const resultUiConfigured = this._resultViewerService;
-                if (resultUiConfigured) {
-                    await this._openResultUi(tool, store, complexQuery, options, queryBuilderWidgetModel);
-                    return;
-                }
-
-                // result-center
-                const resultCenterConfigured = this._dataModel != null;
-                if (resultCenterConfigured) {
+                // filter mode
+                if (layer) {
                     query = this.#query = store.query(complexQuery, opts || options);
                     return apprt_when(query, (result) => {
                         this._setProcessing(tool, false, queryBuilderWidgetModel);
-                        let resultStore;
                         const idList = result ? result.map(item => item[idProperty]) : [];
+                        layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
+                    });
+                } else {
+                    // result-ui
+                    const resultUiConfigured = this._resultViewerService;
+                    if (resultUiConfigured) {
+                        await this._openResultUi(tool, store, complexQuery, options, queryBuilderWidgetModel);
+                        return;
+                    }
 
-                        if (layer) {
-                            layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
-                        } else {
-                            if (store.get) { // Check if store has a get-method, i.e. it can retrieve single features by ID
+                    // result-center
+                    const resultCenterConfigured = this._dataModel != null;
+                    if (resultCenterConfigured) {
+                        query = this.#query = store.query(complexQuery, opts || options);
+                        return apprt_when(query, (result) => {
+                            this._setProcessing(tool, false, queryBuilderWidgetModel);
+                            const idList = result ? result.map(item => item[idProperty]) : [];
+
+                            let resultStore;
+                            // Check if store has a get-method, i.e. it can retrieve single features by ID
+                            if (store.get) {
                                 resultStore = this._createResultReferenceStore(idList, store, 1000);
                             } else {
                                 resultStore = this._createFullItemResultStore(idList, result, store);
@@ -117,8 +124,8 @@ export default class QueryController {
 
                             this._dataModel.setDatasource(resultStore);
                             this._resultcenterToggleTool.set("active", true);
-                        }
-                    });
+                        });
+                    }
                 }
                 throw new Error("Could not process query result");
             } else {
