@@ -53,12 +53,9 @@ export default declare({
     defaultLinkOperator: "$or",
     defaultSpatialRelation: "everywhere",
     useUserExtent: false,
-    showQuerySettingsInEditableMode: true,
-    showSortSelectInUserMode: false,
-    showFieldType: true,
-    showSpatialRelation: true,
-    showSpatialInputActions: false,
-    spatialInputActions: ["*"],
+    visibleElements: {},
+    availableSpatialInputActions: ["*"],
+    spatialInputActions: [],
     allowMultipleSpatialInputs: true,
     defaultQueryOptions: {
         ignoreCase: false
@@ -206,7 +203,7 @@ export default declare({
     },
 
     getActionFilter() {
-        const allowedMethods = this.spatialInputActions;
+        const allowedMethods = this.availableSpatialInputActions;
         const all = !allowedMethods || allowedMethods[0] === "*";
         if (all) {
             return () => true;
@@ -245,7 +242,7 @@ export default declare({
         const opts = Object.assign({}, this.defaultQueryOptions || {}, options || {}, {
             suggestContains: false
         });
-        if (this.showSortSelectInUserMode && !editable && !layer) {
+        if (this.visibleElements.sortSelect && !editable && !layer) {
             sortOptions = this.getSortOptions();
             opts.sort = sortOptions;
         }
@@ -369,7 +366,7 @@ export default declare({
         if (!store) {
             return;
         }
-        return apprt_when(this._metadataAnalyzer.getFields(store, this.showFieldType), (fieldData) =>
+        return apprt_when(this._metadataAnalyzer.getFields(store), (fieldData) =>
             fieldData.filter((field) => {
                 const fieldNameAllowed = !hiddenFields.includes(field.id);
                 const fieldTypeAllowed = !hiddenFieldTypes.includes(field.type);

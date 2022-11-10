@@ -53,6 +53,12 @@ export default class QueryBuilderWidgetFactory {
         const vm = this.#vm = new Vue(QueryBuilderWidget);
         const model = this._queryBuilderWidgetModel;
         vm.i18n = this._i18n.get().ui;
+        vm.visibleElements = {
+            fieldInfos: model.visibleElements.defaultMode.fieldInfos,
+            spatialRelation: model.visibleElements.defaultMode.spatialRelation,
+            spatialInputActions: model.visibleElements.defaultMode.spatialInputActions,
+            sortSelect: model.visibleElements.sortSelect
+        };
 
         // listen to view model methods
         vm.$on('startup', () => {
@@ -89,9 +95,8 @@ export default class QueryBuilderWidgetFactory {
             .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName",
                 "sortDescending", "linkOperator", "spatialRelation",
                 "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput")
-            .syncAllToLeft("locale", "storeData", "sortFieldData",
-                "showSpatialInputActions", "showSpatialRelation", "spatialInputActions",
-                "enableDistinctValues", "activeSpatialInputActionDescription", "showSortSelectInUserMode",
+            .syncAllToLeft("locale", "storeData", "sortFieldData", "enableDistinctValues",
+                "spatialInputActions", "activeSpatialInputActionDescription",
                 "loading", "processing", "activeTool")
             .enable()
             .syncToLeftNow();

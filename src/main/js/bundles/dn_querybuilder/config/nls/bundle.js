@@ -25,10 +25,7 @@ module.exports = {
             enableDistinctValues: "Use distinct values",
             defaultLinkOperator: "Default relational operator",
             defaultSpatialRelation: "Default spatial relation",
-            useUserExtent: "Use user's current map extent instead of a preset one",
-            showQuerySettingsInEditableMode: "Show query settings in editable mode",
-            showSortSelectInUserMode: "Show sort select in user mode",
-            showFieldType: "Show field type of every field in user mode"
+            visibleElements: "Visible elements"
         },
         toolsBuilder: {
             toolsBuilderTitle: "Query Tools",

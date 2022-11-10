@@ -29,7 +29,7 @@
                 class="pa-0"
             >
                 <v-layout
-                    v-if="showQuerySettings && !filter"
+                    v-if="!filter"
                     row
                     wrap
                 >
@@ -61,7 +61,7 @@
                     </v-flex>
                 </v-layout>
                 <v-layout
-                    v-if="showQuerySettings && showSpatialRelation && !filter"
+                    v-if="visibleElements.spatialRelation"
                     :aria-label="i18n.spatialRelation"
                     role="group"
                     row
@@ -72,7 +72,7 @@
                     </v-flex>
                     <v-flex xs9>
                         <div
-                            v-if="showSpatialInputActions"
+                            v-if="visibleElements.spatialInputActions"
                             class="mt-1"
                         >
                             <v-checkbox
@@ -125,7 +125,7 @@
                     </v-flex>
                 </v-layout>
                 <v-layout
-                    v-if="showQuerySettings && fieldQueriesLength > 1"
+                    v-if="fieldQueriesLength > 1"
                     :aria-label="i18n.linkOperator"
                     role="group"
                     row
@@ -160,7 +160,7 @@
                 </v-layout>
             </v-container>
             <div
-                v-if="showSpatialInputActions"
+                v-if="visibleElements.spatialInputActions"
                 class="pa-1"
             >
                 <v-btn
@@ -176,7 +176,7 @@
                 </v-btn>
             </div>
             <div
-                v-if="showQuerySettings && showSortSelectInUserMode && !filter"
+                v-if="visibleElements.sortSelect && !filter"
                 class="pa-1"
             >
                 <div class="caption">
@@ -248,6 +248,7 @@
                     :index="index"
                     :active-tool="activeTool"
                     :enable-distinct-values="enableDistinctValues"
+                    :show-field-infos="visibleElements.fieldInfos"
                     :i18n="i18n"
                     @remove="removeField"
                     @add="addField"
@@ -394,17 +395,19 @@
                 selectedSortFieldName: "",
                 sortDescending: false,
                 title: null,
-                showQuerySettings: true,
                 linkOperator: "$and",
                 disableLinkOperatorRadio: false,
                 spatialRelation: "everywhere",
-                showSpatialRelation: true,
-                showSpatialInputActions: false,
+                visibleElements: {
+                    spatialRelation: true,
+                    spatialInputActions: false,
+                    sortSelect: false,
+                    fieldInfos: false
+                },
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
                 loading: false,
                 processing: false,
-                showSortSelectInUserMode: false,
                 activeTool: false,
                 spatialInputActions: [],
                 activeSpatialInputAction: null,

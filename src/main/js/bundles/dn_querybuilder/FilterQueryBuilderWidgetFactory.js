@@ -109,9 +109,14 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.fieldQueries = [];
         vm.linkOperator = model.defaultLinkOperator;
         vm.spatialRelation = model.defaultSpatialRelation;
-        // vm.showSpatialInputActions = model.showSpatialInputActions;
         vm.allowMultipleSpatialInputs = model.allowMultipleSpatialInputs;
         vm.enableDistinctValues = model.enableDistinctValues;
+        vm.visibleElements = {
+            fieldInfos: model.visibleElements.filterMode.fieldInfos,
+            spatialRelation: model.visibleElements.filterMode.spatialRelation,
+            spatialInputActions: false,
+            sortSelect: false
+        };
 
         model.getStoreDataFromMetadata().then((storeData)=>{
             vm.storeData = storeData;

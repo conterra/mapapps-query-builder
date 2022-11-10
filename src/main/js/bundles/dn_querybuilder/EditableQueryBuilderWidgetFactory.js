@@ -51,12 +51,17 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.storeData = model.storeData;
         vm.selectedStoreId = properties.storeId;
         vm.title = properties.title;
-        vm.showQuerySettings = model.showQuerySettingsInEditableMode;
         vm.linkOperator = linkOperator;
         vm.disableLinkOperatorRadio = !editOptions.linkOperator;
         vm.spatialRelation = spatialRelation;
         vm.disableSpatialRelationRadio = !editOptions.spatialRelation;
         vm.fieldQueries = [];
+        vm.visibleElements = {
+            fieldInfos: model.visibleElements.predefinedMode.fieldInfos,
+            spatialRelation: model.visibleElements.predefinedMode.spatialRelation,
+            spatialInputActions: false,
+            sortSelect: model.visibleElements.predefinedMode.sortSelect
+        };
         model.addFieldQueries(complexQuery[linkOperator], editOptions.editFields, properties.storeId, vm.fieldQueries);
 
         // listen to view model methods

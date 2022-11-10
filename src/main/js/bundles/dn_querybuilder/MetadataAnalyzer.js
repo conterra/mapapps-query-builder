@@ -33,7 +33,7 @@ export default class MetadataAnalyzer {
         this.#serviceResolver = undefined;
     }
 
-    getFields(store, showFieldType) {
+    getFields(store) {
         return new Promise((resolve) => {
             try {
                 const metadata = store.getMetadata();
@@ -63,13 +63,12 @@ export default class MetadataAnalyzer {
                             if (!title || title === "") {
                                 title = field.name;
                             }
-                            let text = title;
-                            if (showFieldType) {
-                                text = title + " (" + field.type + ") " + codedValueString;
-                            }
+                            const infos = "(" + field.type + ") " + codedValueString;
                             storeData.push({
                                 id: field.name,
-                                text: text,
+                                title: title,
+                                infos: infos,
+                                titleAndInfos: title + " " + infos,
                                 type: field.type,
                                 codedValues: codedValues,
                                 distinctValues: [],

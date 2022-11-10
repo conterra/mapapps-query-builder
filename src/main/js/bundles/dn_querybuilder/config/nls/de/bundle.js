@@ -25,9 +25,8 @@ module.exports = {
         defaultLinkOperator: "Standard-Vergleichsoperator",
         defaultSpatialRelation: "Standard-R\u00E4umlicher-Vergleichsoperator",
         useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
-        showQuerySettingsInEditableMode: "Sucheinstellungen im Editiermodus anzeigen",
-        showSortSelectInUserMode: "Sortierm\u00f6glichkeit im Widget anzeigen",
-        showFieldType: "Feldtyp im Widget anzeigen"
+        showFieldType: "Feldtyp im Widget anzeigen",
+        visibleElements: "Sichtbare Elemente"
     },
     toolsBuilder: {
         toolsBuilderTitle: "Query Tools",

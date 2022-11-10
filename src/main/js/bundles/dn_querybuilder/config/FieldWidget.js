@@ -147,7 +147,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
             name: "fields",
             value: this.fieldId || fieldData[0].id,
             store: fieldStore,
-            searchAttr: "text",
+            searchAttr: "titleAndInfos",
             maxHeight: this.maxComboBoxHeight,
             readOnly: false,
             disabled: this.fieldSelectDisabled

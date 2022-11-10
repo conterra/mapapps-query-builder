@@ -47,7 +47,22 @@
                             hide-details
                             :aria-label="firstSelectAriaLabel"
                             @change="fieldChanged($event, fieldQuery)"
-                        />
+                        >
+                            <template
+                                slot="selection"
+                                slot-scope="data"
+                            >
+                                <div v-if="showFieldInfos">{{ data.item.title }} {{ data.item.infos }}</div>
+                                <div v-else>{{ data.item.title }}</div>
+                            </template>
+                            <template
+                                slot="item"
+                                slot-scope="data"
+                            >
+                                <div v-if="showFieldInfos">{{ data.item.title }} {{ data.item.infos }}</div>
+                                <div v-else>{{ data.item.title }}</div>
+                            </template>
+                        </v-select>
                     </v-flex>
                     <v-flex
                         xs5
@@ -246,6 +261,10 @@
             enableDistinctValues: {
                 type: Boolean,
                 default: true
+            },
+            showFieldInfos: {
+                type: Boolean,
+                default: false
             }
         },
         data() {

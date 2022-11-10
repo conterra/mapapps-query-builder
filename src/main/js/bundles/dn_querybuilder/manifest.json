@@ -219,15 +219,27 @@
                 "linkOperator": "$or",
                 "spatialRelation": "everywhere",
                 "useUserExtent": false,
-                "showQuerySettingsInEditableMode": true,
-                "showSortSelectInUserMode": false,
-                "showFieldType": true,
-                "showSpatialRelation": true,
-                "showSpatialInputActions": false,
-                "spatialInputActions": [
-                    "*"
+                "availableSpatialInputActions": [
+                    "point"
                 ],
                 "allowMultipleSpatialInputs": true,
+                "visibleElements": {
+                    "defaultMode": {
+                        "spatialRelation": true,
+                        "spatialInputActions": false,
+                        "sortSelect": false,
+                        "fieldInfos": false
+                    },
+                    "predefinedMode": {
+                        "spatialRelation": true,
+                        "sortSelect": false,
+                        "fieldInfos": false
+                    },
+                    "filterMode": {
+                        "spatialRelation": true,
+                        "fieldInfos": false
+                    }
+                },
                 "defaultQueryOptions": {
                     "ignoreCase": false
                 },
