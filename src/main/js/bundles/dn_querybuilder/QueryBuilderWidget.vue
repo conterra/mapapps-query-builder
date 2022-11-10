@@ -254,7 +254,7 @@
                 </v-btn>
             </v-container>
         </div>
-        <div class="ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
+        <div class="footer ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
             <div v-if="!filter">
                 <v-btn
                     v-if="!processing"

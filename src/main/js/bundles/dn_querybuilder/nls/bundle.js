@@ -42,6 +42,7 @@ module.exports = {
             and: "All conditions",
             or: "At least one condition",
             enterValue: "enter value",
+            removeQuery: "Remove this query",
             multipleSpatialInputs: "Select multiple geometries",
             resetSpatialInput: "Remove spatial restriction",
             negateSpatialInput: "Search outside of selected geometry",

@@ -15,7 +15,7 @@
  */
 module.exports = {
     bundleName: "Query Builder",
-    bundleDescription: "Das Bundle erm\u00f6glicht es benutzerdefinierte Queries zu erstellen",
+    bundleDescription: "Das Bundle ermöglicht es benutzerdefinierte Queries zu erstellen",
     windowTitle: "Abfrage erstellen",
     editableWindowTitle: "Bearbeitbare Abfrage",
     filterWindowTitle: "Karteninhalt filtern",
@@ -26,7 +26,7 @@ module.exports = {
     ui: {
         selectStore: "Was suchen?",
         spatialRelation: "Wo suchen?",
-        linkOperator: "Was gilt?",
+        linkOperator: "Was soll gelten?",
         sorting: "Sortierung",
         sortOptions: "Wie sortieren?",
         everywhere: "Überall",
@@ -41,9 +41,10 @@ module.exports = {
         and: "Alle Bedingungen",
         or: "Mindestens eine Bedingung",
         enterValue: "Wert eingeben",
-        multipleSpatialInputs: "Mehrere Geometrien ausw\u00e4hlen",
+        removeQuery: "Diesen Ausdruck entfernen",
+        multipleSpatialInputs: "Mehrere Geometrien auswählen",
         resetSpatialInput: "Räumliche Einschränkung entfernen",
-        negateSpatialInput: "Außerhalb der ausgew\u00e4hlten Geometrie suchen",
+        negateSpatialInput: "Außerhalb der ausgewählten Geometrie suchen",
         filterTitle: "Filter",
         setFilterActionLabel: "Karteninhalt filtern",
         resetFilterActionLabel: "Filter zurücksetzen",
@@ -51,13 +52,13 @@ module.exports = {
             is: "ist gleich",
             exists: "ist vorhanden",
             eqw: "ist gleich (wildcard)",
-            suggest: "\u00e4hnelt",
-            contains: "enth\u00e4lt",
-            contains_not: "enth\u00e4lt nicht",
+            suggest: "ähnelt",
+            contains: "enthält",
+            contains_not: "enthält nicht",
             starts_with: "beginnt mit",
             ends_with: "endet mit",
-            is_greater_than: "ist gr\u00f6\u00dfer",
-            is_greater_or_equal: "ist gr\u00f6\u00dfer / gleich",
+            is_greater_than: "ist größer",
+            is_greater_or_equal: "ist größer / gleich",
             is_less_than: "ist kleiner",
             is_less_or_equal: "ist kleiner / gleich",
             before: "vor",
@@ -65,12 +66,12 @@ module.exports = {
             in: "ist in"
         },
         rules: {
-            required: "Wert wird ben\u00f6tigt",
+            required: "Wert wird benötigt",
             number: "Wert muss vom Typ number sein",
             string: "Wert muss vom Typ string sein"
         },
         errors: {
-            noResultsError: "Keine Ergebnisse f\u00fcr Ihre Abfrage gefunden!"
+            noResultsError: "Keine Ergebnisse für Ihre Abfrage gefunden!"
         },
         aria: {
             add: "Neuen Ausdruck hinzufügen",

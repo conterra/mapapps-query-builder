@@ -221,17 +221,23 @@
                         md1
                     >
                         <v-fab-transition>
-                            <v-btn
-                                v-if="$root.fieldQueries.length > 1"
-                                :disabled="$root.editable"
-                                :aria-label="i18n.aria.remove"
-                                class="ma-0"
-                                icon
-                                small
-                                @click="$emit('remove', fieldQuery)"
-                            >
-                                <v-icon>delete</v-icon>
-                            </v-btn>
+                            <v-tooltip right>
+                                <template #activator="{ on }">
+                                    <v-btn
+                                        v-if="$root.fieldQueries.length > 1"
+                                        :disabled="$root.editable"
+                                        :aria-label="i18n.aria.remove"
+                                        class="ma-0"
+                                        icon
+                                        small
+                                        v-on="on"
+                                        @click="$emit('remove', fieldQuery)"
+                                    >
+                                        <v-icon>delete</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>{{ i18n.removeQuery }}</span>
+                            </v-tooltip>
                         </v-fab-transition>
                     </v-flex>
                 </v-layout>
