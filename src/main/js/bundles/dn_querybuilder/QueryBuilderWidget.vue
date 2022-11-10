@@ -95,6 +95,17 @@
                             >
                                 {{ activeSpatialInputActionDescription }}
                             </div>
+                            <v-btn
+                                small
+                                block
+                                class="ma-0"
+                                @click="$emit('reset-spatial-input')"
+                            >
+                                <v-icon left>
+                                    delete
+                                </v-icon>
+                                {{ i18n.resetSpatialInput }}
+                            </v-btn>
                         </div>
                         <div v-else>
                             <v-radio-group
@@ -157,22 +168,6 @@
                 </v-layout>
             </v-container>
             <div
-                v-if="visibleElements.spatialInputActions"
-                class="pa-1"
-            >
-                <v-btn
-                    small
-                    block
-                    class="ma-0"
-                    @click="$emit('reset-spatial-input')"
-                >
-                    <v-icon left>
-                        delete
-                    </v-icon>
-                    {{ i18n.resetSpatialInput }}
-                </v-btn>
-            </div>
-            <div
                 v-if="visibleElements.sortSelect && !filter"
                 class="pa-1"
             >
@@ -225,9 +220,8 @@
                 align-center
                 justify-center
                 :fill-height="processing"
-                grid-list-md
                 fluid
-                class="pa-0"
+                class="pa-1"
             >
                 <v-progress-circular
                     v-if="processing"
