@@ -25,6 +25,7 @@ export default {
             enableDistinctValues: "Use distinct values",
             defaultLinkOperator: "Default relational operator",
             defaultSpatialRelation: "Default spatial relation",
+            useCurrentMapExtent: "Use user's current map extent instead of a preset one",
             visibleElements: "Visible elements"
         },
         toolsBuilder: {
