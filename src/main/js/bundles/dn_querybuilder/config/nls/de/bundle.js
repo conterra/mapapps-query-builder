@@ -24,7 +24,7 @@ module.exports = {
         enableDistinctValues: "Distinct Values vorschlagen",
         defaultLinkOperator: "Standard-Vergleichsoperator",
         defaultSpatialRelation: "Standard-R\u00E4umlicher-Vergleichsoperator",
-        useUserExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
+        useCurrentMapExtent: "Aktuelle Kartenausdehnung des Anwenders verwenden anstelle einer voreingestellten Ausdehnung",
         showFieldType: "Feldtyp im Widget anzeigen",
         visibleElements: "Sichtbare Elemente"
     },

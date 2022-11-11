@@ -190,7 +190,7 @@
                 "enableInitialDistinctValues": true,
                 "linkOperator": "$or",
                 "spatialRelation": "everywhere",
-                "useUserExtent": false,
+                "useCurrentMapExtent": false,
                 "availableSpatialInputActions": ["*"],
                 "allowMultipleSpatialInputs": true,
                 "visibleElements": {

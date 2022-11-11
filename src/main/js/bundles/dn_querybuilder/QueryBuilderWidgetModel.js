@@ -52,7 +52,7 @@ export default declare({
     enableInitialDistinctValues: true,
     defaultLinkOperator: "$or",
     defaultSpatialRelation: "everywhere",
-    useUserExtent: false,
+    useCurrentMapExtent: false,
     visibleElements: {},
     availableSpatialInputActions: ["*"],
     spatialInputActions: [],

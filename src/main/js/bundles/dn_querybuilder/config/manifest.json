@@ -76,7 +76,7 @@
                     "enableDistinctValues": true,
                     "defaultLinkOperator": "$or",
                     "defaultSpatialRelation": "everywhere",
-                    "useUserExtent": false,
+                    "useCurrentMapExtent": false,
                     "visibleElements": {
                         "defaultMode": {
                             "spatialRelation": true,
