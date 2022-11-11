@@ -5,7 +5,7 @@
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
     "productName": "devnet-mapapps-query-builder",
-    "configBundleLocation": "/config",
+    "configBundleLocation": "dn_querybuilder-config",
     "layer": "module",
     "main": "",
     "i18n": ["bundle"],
