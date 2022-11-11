@@ -6,9 +6,8 @@
     "vendor": "con terra GmbH",
     "productName": "devnet-mapapps-query-builder",
     "layer": "module",
-    "i18n": [
-        "bundle"
-    ],
+    "main": "",
+    "i18n": ["bundle"],
     "dependencies": {
         "dataform": "^4.2.0",
         "wizard": "^4.2.0",
@@ -17,18 +16,14 @@
     "CSS-Themes-Extension": [
         {
             "name": "*",
-            "files": [
-                "./styles/styles.css"
-            ]
+            "files": ["./styles/styles.css"]
         }
     ],
     "components": [
         {
             "name": "BuilderEntry",
             "impl": "ct/Stateful",
-            "provides": [
-                "wizard.MenuEntry"
-            ],
+            "provides": ["wizard.MenuEntry"],
             "propertiesConstructor": true,
             "properties": {
                 "parentNodeId": "appBuilderToolsNode",
@@ -62,9 +57,7 @@
         {
             "name": "QueryBuilderWidgetModelPropertiesWidget",
             "impl": "wizard/DataFormBuilderWidgetFactory",
-            "provides": [
-                "dijit.wizard.Widget"
-            ],
+            "provides": ["dijit.wizard.Widget"],
             "immediate": true,
             "instanceFactory": true,
             "properties": {
@@ -176,9 +169,7 @@
         {
             "name": "QueryBuilderToolbar",
             "impl": "ct/tools/ToolContainer",
-            "provides": [
-                "dn_querybuilder.Toolbar"
-            ],
+            "provides": ["dn_querybuilder.Toolbar"],
             "references": [
                 {
                     "name": "tool",
@@ -191,9 +182,7 @@
         {
             "name": "AddServiceTool",
             "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
+            "provides": ["ct.tools.Tool"],
             "enabled": true,
             "propertiesConstructor": true,
             "properties": {
@@ -216,9 +205,7 @@
         {
             "name": "RemoveServiceTool",
             "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
+            "provides": ["ct.tools.Tool"],
             "enabled": true,
             "propertiesConstructor": true,
             "properties": {
@@ -241,9 +228,7 @@
         {
             "name": "CopyServiceTool",
             "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
+            "provides": ["ct.tools.Tool"],
             "enabled": true,
             "propertiesConstructor": true,
             "properties": {

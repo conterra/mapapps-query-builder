@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module.exports = {
+export default {
     bundleName: "Query Builder Konfiguration",
     bundleDescription: "Konfigurations-Bundle f\u00fcr den Query Builder",
     title: "Query Builder Konfiguration",
