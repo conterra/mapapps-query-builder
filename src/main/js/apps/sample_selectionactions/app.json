@@ -38,7 +38,7 @@
                 "visibleElements": {
                     "defaultMode": {
                         "spatialRelation": true,
-                        "spatialInputActions": false,
+                        "spatialInputActions": true,
                         "sortSelect": false,
                         "fieldInfos": false
                     },
@@ -52,7 +52,7 @@
                         "fieldInfos": false
                     }
                 },
-                "spatialInputActions": [
+                "availableSpatialInputActions": [
                     "point",
                     "rectangle",
                     "polygon",
@@ -63,6 +63,7 @@
                 ],
                 "allowMultipleSpatialInputs": true,
                 "hiddenFields": ["objectid", "OBJECTID", "shape"],
+                "hiddenFieldTypes": ["oid", "guid", "global-id"],
                 "hiddenSortFields": ["objectid", "OBJECTID", "shape"]
             },
             "QueryTools": [
