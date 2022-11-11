@@ -48,12 +48,12 @@
                             hide-details
                             @change="$emit('store-changed', $event)"
                         />
-                        <div
+                        <v-subheader
                             v-else-if="storeData[0]"
-                            class="single-store"
+                            class="pa-0"
                         >
                             {{ storeData[0].text }}
-                        </div>
+                        </v-subheader>
                     </v-flex>
                 </v-layout>
                 <v-layout
