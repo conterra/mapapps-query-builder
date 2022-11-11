@@ -24,6 +24,8 @@ import Memory from "dojo/store/Memory";
 import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
 import apprt_request from "apprt-request";
+// TODO: Replace apprt-request with apprt-fetch
+// https://demos.conterra.de/mapapps/resources/jsregistry/root/apprt-fetch/latest/README.md
 import ct_css from "ct/util/css";
 
 import {executeQueryJSON} from "esri/rest/query";

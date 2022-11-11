@@ -17,6 +17,8 @@ import apprt_when from "apprt-core/when";
 import Promise from "apprt-core/Promise";
 import ServiceResolver from "apprt/ServiceResolver";
 import apprt_request from "apprt-request";
+// TODO: Replace apprt-request with apprt-fetch
+// https://demos.conterra.de/mapapps/resources/jsregistry/root/apprt-fetch/latest/README.md
 
 export default class MetadataAnalyzer {
 
