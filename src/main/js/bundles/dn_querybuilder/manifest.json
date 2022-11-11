@@ -189,8 +189,8 @@
             "properties": {
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
-                "linkOperator": "$or",
-                "spatialRelation": "everywhere",
+                "defaultLinkOperator": "$or",
+                "defaultSpatialRelation": "everywhere",
                 "useCurrentMapExtent": false,
                 "availableSpatialInputActions": ["*"],
                 "allowMultipleSpatialInputs": true,
