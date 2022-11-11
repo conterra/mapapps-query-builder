@@ -7,6 +7,9 @@
     "productName": "devnet-mapapps-query-builder",
     "main": "",
     "i18n": [],
+    "editor": {
+        "suggest": false
+    },
     "components": [
         {
             "name": "Replacer",
