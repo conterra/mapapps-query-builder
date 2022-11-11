@@ -373,7 +373,7 @@ export default declare([], {
 
     _getOffset(options) {
         const opts = options || {};
-        return ct_lang.chkProp(opts.geometry, "maxAllowableOffset", 0)
+        return ct_lang.chkProp(opts.geometry, "maxAllowableOffset", 0);
     },
 
     _checkIfCacheIsPopulated() {
