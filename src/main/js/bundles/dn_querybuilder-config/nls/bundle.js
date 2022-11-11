@@ -77,10 +77,10 @@ export default {
                 fields: {
                     typeInValue: "type in value",
                     is: "is",
+                    is_not: "is not",
                     exists: "exists",
                     eqw: "is (wildcard)",
                     suggest: "suggest",
-                    is_not: "is not",
                     contains: "contains",
                     contains_not: "does not contain",
                     starts_with: "starts with",

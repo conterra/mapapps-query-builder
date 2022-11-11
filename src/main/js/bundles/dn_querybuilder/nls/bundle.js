@@ -51,6 +51,7 @@ export default {
             resetFilterActionLabel: "Reset filter",
             relationalOperators: {
                 is: "is",
+                is_not: "is not",
                 exists: "exists",
                 eqw: "is (wildcard)",
                 suggest: "suggest",

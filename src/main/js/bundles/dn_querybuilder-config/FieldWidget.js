@@ -427,6 +427,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
+                {id: "!$eq", name: i18n.is_not},
                 {id: "$gt", name: i18n.is_greater_than},
                 {id: "$gte", name: i18n.is_greater_or_equal},
                 {id: "$lt", name: i18n.is_less_than},
@@ -441,6 +442,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
+                {id: "!$eq", name: i18n.is_not},
                 {id: "$exists", name: i18n.exists}
             ]
         });
@@ -451,6 +453,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
+                {id: "!$eq", name: i18n.is_not},
                 {id: "$eqw", name: i18n.eqw},
                 {id: "$suggest", name: i18n.suggest},
                 {id: "$exists", name: i18n.exists}
@@ -463,6 +466,7 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _
         return new Memory({
             data: [
                 {id: "$eq", name: i18n.is},
+                {id: "!$eq", name: i18n.is_not},
                 {id: "$gt", name: i18n.is_greater_than},
                 {id: "$gte", name: i18n.is_greater_or_equal},
                 {id: "$lt", name: i18n.is_less_than},

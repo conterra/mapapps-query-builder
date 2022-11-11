@@ -420,6 +420,7 @@
                     case "codedvalue":
                         return [
                             {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
                             {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
                             {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
                             {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
@@ -429,6 +430,7 @@
                     case "boolean":
                         return [
                             {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
                             {value: "$exists", text: this.i18n.relationalOperators.exists}
                         ];
                     case "string":
@@ -436,6 +438,7 @@
                     case "global-id":
                         return [
                             {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
                             {value: "$eqw", text: this.i18n.relationalOperators.eqw},
                             {value: "$suggest", text: this.i18n.relationalOperators.suggest},
                             {value: "$exists", text: this.i18n.relationalOperators.exists},
@@ -444,6 +447,7 @@
                     case "number":
                         return [
                             {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
                             {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
                             {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
                             {value: "$lt", text: this.i18n.relationalOperators.is_less_than},

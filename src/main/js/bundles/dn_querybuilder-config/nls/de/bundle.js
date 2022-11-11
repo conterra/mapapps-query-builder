@@ -76,10 +76,10 @@ export default {
             fields: {
                 typeInValue: "Wert eingeben",
                 is: "ist gleich",
+                is_not: "ist nicht gleich",
                 exists: "ist vorhanden",
                 eqw: "ist gleich (wildcard)",
                 suggest: "\u00e4hnelt",
-                is_not: "ist nicht gleich",
                 contains: "enth\u00e4lt",
                 contains_not: "enth\u00e4lt nicht",
                 starts_with: "beginnt mit",

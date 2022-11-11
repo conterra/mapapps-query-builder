@@ -197,12 +197,24 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         d_array.forEach(children, (child) => {
             const widget = d_registry.getEnclosingWidget(child);
             const fieldId = widget.getSelectedField();
-            const relationalOperatorId = widget.getSelectedRelationalOperator();
+            let relationalOperatorId = widget.getSelectedRelationalOperator();
+            let not = false;
+            const firstChar = relationalOperatorId.substring(0, 1);
+            if (firstChar === "!") {
+                relationalOperatorId = relationalOperatorId.substring(1);
+                not = true;
+            }
             const value = widget.getValue();
             const obj1 = {};
-            obj1[relationalOperatorId] = value;
             const obj2 = {};
-            obj2[fieldId] = obj1;
+            obj1[relationalOperatorId] = value;
+            if (not) {
+                const notObj = {};
+                notObj["$not"] = obj1;
+                obj2[fieldId] = notObj;
+            } else {
+                obj2[fieldId] = obj1;
+            }
             complexQuery[match].push(obj2);
         });
         return complexQuery;

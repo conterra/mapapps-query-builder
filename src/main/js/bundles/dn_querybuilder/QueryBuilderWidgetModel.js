@@ -391,8 +391,14 @@ export default declare({
         }
         complexQuery[linkOperator] = [];
         fieldQueries.forEach((fieldQuery) => {
+            let not = false;
             const fieldId = fieldQuery.selectedFieldId;
-            const relationalOperator = fieldQuery.relationalOperator;
+            let relationalOperator = fieldQuery.relationalOperator;
+            const firstChar = relationalOperator.substring(0, 1);
+            if (firstChar === "!") {
+                relationalOperator = relationalOperator.substring(1);
+                not = true;
+            }
             let value = fieldQuery.value;
             const field = fieldQuery.fields.find((field) => field.id === fieldId);
             if (field.type === "number") {
@@ -415,11 +421,17 @@ export default declare({
                 return;
             }
             const obj1 = {};
-            obj1[relationalOperator] = value;
             const obj2 = {};
-            obj2[fieldId] = obj1;
+            obj1[relationalOperator] = value;
+            if (not) {
+                const notObj = {};
+                notObj["$not"] = obj1;
+                obj2[fieldId] = notObj;
+            } else {
+                obj2[fieldId] = obj1;
+            }
             complexQuery[linkOperator].push(obj2);
-        }, this);
+        });
         return complexQuery;
     },
 

@@ -50,6 +50,7 @@ export default {
         resetFilterActionLabel: "Filter zurücksetzen",
         relationalOperators: {
             is: "ist gleich",
+            is_not: "ist nicht gleich",
             exists: "ist vorhanden",
             eqw: "ist gleich (wildcard)",
             suggest: "ähnelt",
