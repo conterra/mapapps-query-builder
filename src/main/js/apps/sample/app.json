@@ -3,10 +3,7 @@
         "title": "${apptitle}"
     },
     "load": {
-        "bundleLocations": [
-            "localbundles",
-            "bundles"
-        ],
+        "bundleLocations": ["localbundles", "bundles"],
         "allowedBundles": [
             "system",
             "console",
@@ -30,12 +27,7 @@
             "dn_querybuilder",
             "result-ui"
         ],
-        "require": [
-            "${app}.app"
-        ],
-        "i18n": [
-            "bundle"
-        ]
+        "i18n": ["bundle"]
     },
     "bundles": {
         "dn_querybuilder": {
@@ -62,21 +54,9 @@
                         "fieldInfos": false
                     }
                 },
-                "hiddenFields": [
-                    "objectid",
-                    "OBJECTID",
-                    "shape"
-                ],
-                "hiddenFieldTypes": [
-                    "oid",
-                    "guid",
-                    "global-id"
-                ],
-                "hiddenSortFields": [
-                    "objectid",
-                    "OBJECTID",
-                    "shape"
-                ]
+                "hiddenFields": ["objectid", "OBJECTID", "shape"],
+                "hiddenFieldTypes": ["oid", "guid", "global-id"],
+                "hiddenSortFields": ["objectid", "OBJECTID", "shape"]
             },
             "QueryTools": [
                 {
@@ -352,9 +332,7 @@
         "agssearch": {
             "AutoStoreRegistration": {
                 "componentEnabled": true,
-                "useIn": [
-                    "querybuilder"
-                ]
+                "useIn": ["querybuilder"]
             },
             "AGSStore": [
                 {
@@ -363,9 +341,7 @@
                     "description": "Countries of the world",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
                     "popupEnabled": true,
-                    "useIn": [
-                        "querybuilder"
-                    ],
+                    "useIn": ["querybuilder"],
                     "filterOptions": {
                         "metadata": {
                             "fields": [
@@ -391,9 +367,7 @@
                     "description": "Baumkataster",
                     "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": [
-                        "querybuilder"
-                    ],
+                    "useIn": ["querybuilder"],
                     "filterOptions": {
                         "metadata": {
                             "fields": [
@@ -440,9 +414,7 @@
                     "idProperty": "objectid",
                     "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
                     "popupEnabled": true,
-                    "useIn": [
-                        "querybuilder"
-                    ]
+                    "useIn": ["querybuilder"]
                 },
                 {
                     "id": "wahlkreise_strukturdaten",
@@ -451,9 +423,7 @@
                     "idProperty": "OBJECTID",
                     "url": "https://services.arcgis.com/CHWy5Vg5bILt6ufC/ArcGIS/rest/services/Wahlkreise_2017/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": [
-                        "querybuilder"
-                    ]
+                    "useIn": ["querybuilder"]
                 },
                 {
                     "id": "gemeinden",
@@ -462,9 +432,7 @@
                     "idProperty": "objectid",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": [
-                        "querybuilder"
-                    ]
+                    "useIn": ["querybuilder"]
                 }
             ]
         },
@@ -512,10 +480,7 @@
                             "rel_l": 20,
                             "rel_t": 20
                         },
-                        "tools": [
-                            "querybuilder_*",
-                            "queryBuilderToggleTool"
-                        ]
+                        "tools": ["querybuilder_*", "queryBuilderToggleTool"]
                     }
                 ]
             }
@@ -619,9 +584,7 @@
                 "widgets": [
                     {
                         "widgetRole": "queryBuilderWidget",
-                        "sublayout": [
-                            "desktop"
-                        ],
+                        "sublayout": ["desktop"],
                         "window": {
                             "marginBox": {
                                 "w": 600,
@@ -633,9 +596,7 @@
                     },
                     {
                         "widgetRole": "editableQueryBuilderWidget",
-                        "sublayout": [
-                            "desktop"
-                        ],
+                        "sublayout": ["desktop"],
                         "window": {
                             "marginBox": {
                                 "w": 600,
@@ -647,9 +608,7 @@
                     },
                     {
                         "widgetRole": "filterQueryBuilderWidget",
-                        "sublayout": [
-                            "desktop"
-                        ],
+                        "sublayout": ["desktop"],
                         "window": {
                             "marginBox": {
                                 "w": 600,
