@@ -5,28 +5,24 @@
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
     "productName": "devnet-mapapps-query-builder",
-    "Config-Bundle-Location": "/config",
+    "configBundleLocation": "/config",
     "layer": "module",
-    "i18n": [
-        "bundle"
-    ],
+    "i18n": ["bundle"],
     "dependencies": {
-        "apprt-vue": "^4.13.0",
-        "apprt-binding": "^4.13.0",
-        "apprt-vuetify": "^4.13.0",
         "agssearch": "^4.13.0",
+        "apprt-binding": "^4.13.0",
+        "apprt-vue": "^4.13.0",
+        "apprt-vuetify": "^4.13.0",
+        "coordinatetransformer": "^4.13.0",
+        "dn_queryplaceholder": "^5.0.0",
         "map-init": "^4.13.0",
         "selection-services": "^4.13.0",
-        "coordinatetransformer": "^4.13.0",
-        "store-api": "^4.13.0",
-        "dn_queryplaceholder": "^5.0.0"
+        "store-api": "^4.13.0"
     },
-    "CSS-Themes-Extension": [
+    "cssThemesExtension": [
         {
             "name": "*",
-            "files": [
-                "./css/styles.css"
-            ]
+            "files": ["./css/styles.css"]
         }
     ],
     "layout-widgets": [
@@ -44,9 +40,7 @@
         },
         {
             "widgetRole": "queryBuilderWidget",
-            "sublayout": [
-                "desktop"
-            ],
+            "sublayout": ["desktop"],
             "window": {
                 "marginBox": {
                     "w": 600,
@@ -60,10 +54,7 @@
         },
         {
             "widgetRole": "queryBuilderWidget",
-            "sublayout": [
-                "tablet_landscape",
-                "tablet_portrait"
-            ],
+            "sublayout": ["tablet_landscape", "tablet_portrait"],
             "window": {
                 "resizable": false,
                 "draggable": false,
@@ -75,10 +66,7 @@
         },
         {
             "widgetRole": "queryBuilderWidget",
-            "sublayout": [
-                "mobile_landscape",
-                "mobile_portrait"
-            ],
+            "sublayout": ["mobile_landscape", "mobile_portrait"],
             "window": {
                 "dockable": true,
                 "dockingBar": "${id}-dockingBarBottomLeft",
@@ -103,9 +91,7 @@
         },
         {
             "widgetRole": "editableQueryBuilderWidget",
-            "sublayout": [
-                "desktop"
-            ],
+            "sublayout": ["desktop"],
             "window": {
                 "marginBox": {
                     "w": 600,
@@ -119,10 +105,7 @@
         },
         {
             "widgetRole": "editableQueryBuilderWidget",
-            "sublayout": [
-                "tablet_landscape",
-                "tablet_portrait"
-            ],
+            "sublayout": ["tablet_landscape", "tablet_portrait"],
             "window": {
                 "resizable": false,
                 "draggable": false,
@@ -135,10 +118,7 @@
         },
         {
             "widgetRole": "editableQueryBuilderWidget",
-            "sublayout": [
-                "mobile_landscape",
-                "mobile_portrait"
-            ],
+            "sublayout": ["mobile_landscape", "mobile_portrait"],
             "window": {
                 "resizable": false,
                 "draggable": false,
@@ -162,9 +142,7 @@
         },
         {
             "widgetRole": "filterQueryBuilderWidget",
-            "sublayout": [
-                "desktop"
-            ],
+            "sublayout": ["desktop"],
             "window": {
                 "marginBox": {
                     "w": 600,
@@ -178,10 +156,7 @@
         },
         {
             "widgetRole": "filterQueryBuilderWidget",
-            "sublayout": [
-                "tablet_landscape",
-                "tablet_portrait"
-            ],
+            "sublayout": ["tablet_landscape", "tablet_portrait"],
             "window": {
                 "resizable": false,
                 "draggable": false,
@@ -193,10 +168,7 @@
         },
         {
             "widgetRole": "filterQueryBuilderWidget",
-            "sublayout": [
-                "mobile_landscape",
-                "mobile_portrait"
-            ],
+            "sublayout": ["mobile_landscape", "mobile_portrait"],
             "window": {
                 "resizable": false,
                 "draggable": false,
@@ -219,9 +191,7 @@
                 "linkOperator": "$or",
                 "spatialRelation": "everywhere",
                 "useUserExtent": false,
-                "availableSpatialInputActions": [
-                    "*"
-                ],
+                "availableSpatialInputActions": ["*"],
                 "allowMultipleSpatialInputs": true,
                 "visibleElements": {
                     "defaultMode": {
@@ -243,58 +213,26 @@
                 "defaultQueryOptions": {
                     "ignoreCase": false
                 },
-                "hiddenFields": [
-                    "objectid",
-                    "OBJECTID",
-                    "shape"
-                ],
-                "hiddenFieldTypes": [
-                    "oid",
-                    "guid",
-                    "global-id"
-                ],
-                "hiddenSortFields": [
-                    "objectid",
-                    "OBJECTID",
-                    "shape"
-                ],
+                "hiddenFields": ["objectid", "OBJECTID", "shape"],
+                "hiddenFieldTypes": ["oid", "guid", "global-id"],
+                "hiddenSortFields": ["objectid", "OBJECTID", "shape"],
                 "symbols": {
                     "point": {
                         "type": "simple-marker",
-                        "color": [
-                            255,
-                            0,
-                            0,
-                            0.25
-                        ],
+                        "color": [255, 0, 0, 0.25],
                         "style": "circle",
                         "outline": {
-                            "color": [
-                                255,
-                                0,
-                                0,
-                                1
-                            ],
+                            "color": [255, 0, 0, 1],
                             "width": 2
                         },
                         "size": 10
                     },
                     "polygon": {
                         "type": "simple-fill",
-                        "color": [
-                            255,
-                            0,
-                            0,
-                            0.25
-                        ],
+                        "color": [255, 0, 0, 0.25],
                         "style": "solid",
                         "outline": {
-                            "color": [
-                                255,
-                                0,
-                                0,
-                                1
-                            ],
+                            "color": [255, 0, 0, 1],
                             "width": "2px"
                         }
                     }
@@ -356,8 +294,7 @@
         {
             "name": "EditableQueryBuilderWidgetFactory",
             "provides": "dn_querybuilder.EditableQueryBuilderWidgetFactory",
-            "properties": {
-            },
+            "properties": {},
             "references": [
                 {
                     "name": "_queryBuilderWidgetModel",
@@ -369,8 +306,7 @@
         {
             "name": "FilterQueryBuilderWidgetFactory",
             "provides": "dn_querybuilder.FilterQueryBuilderWidgetFactory",
-            "properties": {
-            },
+            "properties": {},
             "references": [
                 {
                     "name": "_queryBuilderWidgetModel",
@@ -413,9 +349,7 @@
         },
         {
             "name": "QueryController",
-            "provides": [
-                "dn_querybuilder.QueryController"
-            ],
+            "provides": ["dn_querybuilder.QueryController"],
             "references": [
                 {
                     "name": "_mapWidgetModel",
@@ -502,9 +436,7 @@
         {
             "name": "MetadataAnalyzer",
             "immediate": true,
-            "provides": [
-                "dn_querybuilder.MetadataAnalyzer"
-            ],
+            "provides": ["dn_querybuilder.MetadataAnalyzer"],
             "references": [
                 {
                     "name": "_logService",
@@ -525,9 +457,7 @@
         {
             "name": "QueryBuilderToggleTool",
             "impl": "ct/tools/Tool",
-            "provides": [
-                "ct.tools.Tool"
-            ],
+            "provides": ["ct.tools.Tool"],
             "propertiesConstructor": true,
             "properties": {
                 "id": "queryBuilderToggleTool",
