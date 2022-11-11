@@ -317,8 +317,13 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         ct_lang.forEachOwnProp(field, function (v1, n1) {
             fieldId = n1;
             ct_lang.forEachOwnProp(v1, function (v2, n2) {
-                relationalOperatorId = n2;
-                value = v2;
+                if (n2 === "$not") {
+                    relationalOperatorId = "!$eq";
+                    value = v2["$eq"];
+                } else {
+                    relationalOperatorId = n2;
+                    value = v2;
+                }
             });
         });
         const storeId = this._storeSelect.value;

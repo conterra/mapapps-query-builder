@@ -293,8 +293,13 @@ export default declare({
             ct_lang.forEachOwnProp(field, function (v1, n1) {
                 fieldId = n1;
                 ct_lang.forEachOwnProp(v1, function (v2, n2) {
-                    relationalOperator = n2;
-                    value = v2;
+                    if (n2 === "$not") {
+                        relationalOperator = "!$eq";
+                        value = v2["$eq"];
+                    } else {
+                        relationalOperator = n2;
+                        value = v2;
+                    }
                 });
             });
             this.loading = true;
