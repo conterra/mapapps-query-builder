@@ -108,9 +108,54 @@ export default class MetadataAnalyzer {
                 resolve();
                 return;
             }
-            this.queryMetadata(store.target).then((metadata) => {
-                const supportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
-                if (supportsDistinct) {
+            let supportsDistinct = false;
+            const layer = store.layer;
+            // Check if store uses new LayerStore class
+            if (layer) {
+                supportsDistinct = layer.capabilities?.query?.supportsDistinct;
+                if (!supportsDistinct) {
+                    resolve();
+                    return;
+                }
+                fieldData.loading = true;
+                const query = layer.createQuery();
+                query.outFields = fieldData.id;
+                query.orderByFields = fieldData.id;
+                query.returnDistinctValues = true;
+                query.returnGeometry = false;
+                if (!value) {
+                    query.where = "1=1";
+                } else if (fieldData.type === "string") {
+                    value = value.toLowerCase ? value.toLowerCase() : value;
+                    query.where = "LOWER(" + [fieldData.id] + ") LIKE '%" + value + "%'";
+                } else if (fieldData.type === "number") {
+                    query.where = "1=1";
+                }
+                this.#distinctValueQuery = layer.queryFeatures(query).then((result) => {
+                    const distinctValues = [];
+                    result.features?.forEach((feature) => {
+                        const value = feature.attributes[fieldData.id];
+                        if (value !== null && value !== "") {
+                            distinctValues.push(value);
+                        }
+                    });
+                    fieldData.distinctValues = distinctValues;
+                    fieldData.loading = false;
+                    this.#distinctValueQuery = null;
+                    resolve();
+                }, (error) => {
+                    fieldData.distinctValues = [];
+                    fieldData.loading = false;
+                    this.#distinctValueQuery = null;
+                    resolve();
+                });
+            } else {
+                this.queryMetadata(store.target).then((metadata) => {
+                    supportsDistinct = metadata.advancedQueryCapabilities?.supportsDistinct;
+                    if (!supportsDistinct) {
+                        resolve();
+                        return;
+                    }
                     fieldData.loading = true;
                     const query = {
                         outFields: fieldData.id,
@@ -148,8 +193,8 @@ export default class MetadataAnalyzer {
                         this.#distinctValueQuery = null;
                         resolve();
                     });
-                }
-            });
+                });
+            }
         });
     }
 
