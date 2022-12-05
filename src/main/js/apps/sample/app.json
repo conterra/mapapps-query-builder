@@ -3,7 +3,10 @@
         "title": "${apptitle}"
     },
     "load": {
-        "bundleLocations": ["localbundles", "bundles"],
+        "bundleLocations": [
+            "localbundles",
+            "bundles"
+        ],
         "allowedBundles": [
             "system",
             "console",
@@ -27,7 +30,9 @@
             "dn_querybuilder",
             "result-ui"
         ],
-        "i18n": ["bundle"]
+        "i18n": [
+            "bundle"
+        ]
     },
     "bundles": {
         "dn_querybuilder": {
@@ -54,9 +59,21 @@
                         "fieldInfos": false
                     }
                 },
-                "hiddenFields": ["objectid", "OBJECTID", "shape"],
-                "hiddenFieldTypes": ["oid", "guid", "global-id"],
-                "hiddenSortFields": ["objectid", "OBJECTID", "shape"]
+                "hiddenFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
+                ],
+                "hiddenFieldTypes": [
+                    "oid",
+                    "guid",
+                    "global-id"
+                ],
+                "hiddenSortFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
+                ]
             },
             "QueryTools": [
                 {
@@ -336,12 +353,24 @@
             },
             "AGSStore": [
                 {
+                    "id": "client_store",
+                    "title": "Client Store",
+                    "layerId": "client_featurelayer",
+                    "legacyImplementation": false,
+                    "useIn": [
+                        "querybuilder"
+                    ]
+                },
+                {
                     "id": "countries",
                     "title": "Countries",
                     "description": "Countries of the world",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"],
+                    "legacyImplementation": true,
+                    "useIn": [
+                        "querybuilder"
+                    ],
                     "filterOptions": {
                         "metadata": {
                             "fields": [
@@ -367,7 +396,9 @@
                     "description": "Baumkataster",
                     "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"],
+                    "useIn": [
+                        "querybuilder"
+                    ],
                     "filterOptions": {
                         "metadata": {
                             "fields": [
@@ -414,7 +445,9 @@
                     "idProperty": "objectid",
                     "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"]
+                    "useIn": [
+                        "querybuilder"
+                    ]
                 },
                 {
                     "id": "wahlkreise_strukturdaten",
@@ -423,7 +456,9 @@
                     "idProperty": "OBJECTID",
                     "url": "https://services.arcgis.com/CHWy5Vg5bILt6ufC/ArcGIS/rest/services/Wahlkreise_2017/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"]
+                    "useIn": [
+                        "querybuilder"
+                    ]
                 },
                 {
                     "id": "gemeinden",
@@ -432,7 +467,9 @@
                     "idProperty": "objectid",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"]
+                    "useIn": [
+                        "querybuilder"
+                    ]
                 }
             ]
         },
@@ -480,7 +517,10 @@
                             "rel_l": 20,
                             "rel_t": 20
                         },
-                        "tools": ["querybuilder_*", "queryBuilderToggleTool"]
+                        "tools": [
+                            "querybuilder_*",
+                            "queryBuilderToggleTool"
+                        ]
                     }
                 ]
             }
@@ -517,6 +557,83 @@
                 ],
                 "map": {
                     "layers": [
+                        {
+                            "id": "client_featurelayer",
+                            "title": "Client Side FeatureLayer",
+                            "type": "AGS_FEATURE",
+                            "objectIdField": "id",
+                            "fields": [
+                                {
+                                    "name": "name",
+                                    "alias": "Name",
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "country",
+                                    "alias": "Country",
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "population",
+                                    "alias": "Population",
+                                    "type": "double"
+                                }
+                            ],
+                            "source": [
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": 13.4083,
+                                        "y": 52.5186
+                                    },
+                                    "attributes": {
+                                        "id": 1,
+                                        "name": "Berlin",
+                                        "country": "Deutschland",
+                                        "population": 3677472
+                                    }
+                                },
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": 2.3517,
+                                        "y": 48.8567
+                                    },
+                                    "attributes": {
+                                        "id": 2,
+                                        "name": "Paris",
+                                        "country": "Frankreich",
+                                        "population": 2165423
+                                    }
+                                },
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": 4.8904,
+                                        "y": 52.3702
+                                    },
+                                    "attributes": {
+                                        "id": 3,
+                                        "name": "Amsterdam",
+                                        "country": "Niederlande",
+                                        "population": 821752
+                                    }
+                                },
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": -0.1183,
+                                        "y": 51.5094
+                                    },
+                                    "attributes": {
+                                        "id": 4,
+                                        "name": "London",
+                                        "country": "Vereinigtes Königreich",
+                                        "population": 9002488
+                                    }
+                                }
+                            ]
+                        },
                         {
                             "id": "koeln",
                             "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
@@ -584,7 +701,9 @@
                 "widgets": [
                     {
                         "widgetRole": "queryBuilderWidget",
-                        "sublayout": ["desktop"],
+                        "sublayout": [
+                            "desktop"
+                        ],
                         "window": {
                             "marginBox": {
                                 "w": 600,
@@ -596,7 +715,9 @@
                     },
                     {
                         "widgetRole": "editableQueryBuilderWidget",
-                        "sublayout": ["desktop"],
+                        "sublayout": [
+                            "desktop"
+                        ],
                         "window": {
                             "marginBox": {
                                 "w": 600,
@@ -608,7 +729,9 @@
                     },
                     {
                         "widgetRole": "filterQueryBuilderWidget",
-                        "sublayout": ["desktop"],
+                        "sublayout": [
+                            "desktop"
+                        ],
                         "window": {
                             "marginBox": {
                                 "w": 600,
