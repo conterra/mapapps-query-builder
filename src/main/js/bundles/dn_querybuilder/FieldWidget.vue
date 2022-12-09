@@ -462,7 +462,11 @@
                             {value: "$exists", text: this.i18n.relationalOperators.exists}
                         ];
                     default:
-                        return [];
+                        return [
+                            {value: "$eq", text: this.i18n.relationalOperators.is},
+                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
+                            {value: "$exists", text: this.i18n.relationalOperators.exists}
+                        ];
                 }
             },
             getDistinctValues(value, selectedField) {
