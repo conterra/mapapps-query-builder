@@ -27,8 +27,8 @@
             "viewmodeswitcher",
             "popups-default",
             "toc",
-            "dn_querybuilder",
-            "result-ui"
+            "result-ui",
+            "dn_querybuilder"
         ],
         "i18n": [
             "bundle"

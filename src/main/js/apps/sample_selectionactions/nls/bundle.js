@@ -17,16 +17,21 @@ export default {
     root: {
         apptitle: "Query Builder 4 Sample",
         map: {
-            esrisites: {
-                title: "Esri Germany Group Sites",
-                popup: {
-                    address: "Address",
-                    contact: "Contact",
-                    tel: "Telephone:",
-                    mail: "Email:",
-                    link: "Internet:"
-                }
-            }
+            cologne: "Data of the city of Cologne",
+            earthquakes: "Earthquakes"
+        },
+        queries: {
+            streetDamage: "Show reported street damages that are not yet fixed in Münster",
+            populationDensity: "Constituencies with population densities exceeding 1000 inhabitants/km²",
+            income: "Constituencies with mean available disposable income of more than 20000€",
+            populationIncreasing: "Constituencies with increasing population",
+            tree: "Search tree species",
+            disturbances: "Search disturbances",
+            earthquakes: "Search earthquakes"
+        },
+        toolset: {
+            whatDoYouWant: "Questions and Answers",
+            whatDoYouWantToolTip: "List of predefined questions, click to see the answer"
         }
     },
     "de": true

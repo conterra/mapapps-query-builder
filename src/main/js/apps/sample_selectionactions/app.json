@@ -3,13 +3,17 @@
         "title": "${apptitle}"
     },
     "load": {
-        "bundleLocations": ["localbundles", "bundles"],
+        "bundleLocations": [
+            "localbundles",
+            "bundles"
+        ],
         "allowedBundles": [
             "system",
+            "console",
             "splashscreen",
             "templatelayout",
             "template-seasons",
-            "theme-everlasting",
+            "theme-autumn",
             "toolset",
             "map-init",
             "map-preload-2D",
@@ -22,10 +26,14 @@
             "authentication",
             "viewmodeswitcher",
             "popups-default",
-            "dn_selectionactions",
-            "dn_querybuilder"
+            "toc",
+            "result-ui",
+            "dn_querybuilder",
+            "dn_selectionactions"
         ],
-        "i18n": ["bundle"]
+        "i18n": [
+            "bundle"
+        ]
     },
     "bundles": {
         "dn_querybuilder": {
@@ -52,6 +60,7 @@
                         "fieldInfos": false
                     }
                 },
+                "allowMultipleSpatialInputs": true,
                 "availableSpatialInputActions": [
                     "point",
                     "rectangle",
@@ -61,15 +70,26 @@
                     "area_select",
                     "circle"
                 ],
-                "allowMultipleSpatialInputs": true,
-                "hiddenFields": ["objectid", "OBJECTID", "shape"],
-                "hiddenFieldTypes": ["oid", "guid", "global-id"],
-                "hiddenSortFields": ["objectid", "OBJECTID", "shape"]
+                "hiddenFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
+                ],
+                "hiddenFieldTypes": [
+                    "oid",
+                    "guid",
+                    "global-id"
+                ],
+                "hiddenSortFields": [
+                    "objectid",
+                    "OBJECTID",
+                    "shape"
+                ]
             },
             "QueryTools": [
                 {
-                    "id": "querybuilder_1441021732534",
-                    "title": "Show reported street damages that are not yet fixed in Münster",
+                    "id": "querybuilder_street_damage",
+                    "title": "${queries.streetDamage}",
                     "iconClass": "icon-toolcase",
                     "storeId": "stoerungen",
                     "complexQuery": {
@@ -115,8 +135,8 @@
                     }
                 },
                 {
-                    "id": "querybuilder_1540467316530",
-                    "title": "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+                    "id": "querybuilder_population_density",
+                    "title": "${queries.populationDensity}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -140,8 +160,8 @@
                     "storeId": "wahlkreise_strukturdaten"
                 },
                 {
-                    "id": "querybuilder_1540467904227",
-                    "title": "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+                    "id": "querybuilder_income",
+                    "title": "${queries.income}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -165,8 +185,8 @@
                     "storeId": "wahlkreise_strukturdaten"
                 },
                 {
-                    "id": "querybuilder_1540468225267",
-                    "title": "Wahlkreise deren Bevölkerung zunimmt",
+                    "id": "querybuilder_population_increasing",
+                    "title": "${queries.populationIncreasing}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -190,8 +210,8 @@
                     "storeId": "wahlkreise_strukturdaten"
                 },
                 {
-                    "id": "querybuilder_1550577927595",
-                    "title": "Baumart suchen",
+                    "id": "querybuilder_tree",
+                    "title": "${queries.tree}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -226,8 +246,8 @@
                     "storeId": "baumkataster"
                 },
                 {
-                    "id": "querybuilder_1572005863861",
-                    "title": "Störungen suchen",
+                    "id": "querybuilder_disturbances",
+                    "title": "${queries.disturbances}",
                     "iconClass": "icon-custom-info",
                     "complexQuery": {
                         "$or": [
@@ -260,10 +280,45 @@
                         }
                     },
                     "storeId": "stoerungen"
+                },
+                {
+                    "id": "querybuilder_earthquakes",
+                    "title": "${queries.earthquakes}",
+                    "iconClass": "icon-custom-info",
+                    "complexQuery": {
+                        "$or": [
+                            {
+                                "magnitude": {
+                                    "$gt": null
+                                }
+                            }
+                        ]
+                    },
+                    "options": {
+                        "mode": "builder",
+                        "editable": true,
+                        "editOptions": {
+                            "spatialRelation": true,
+                            "linkOperator": true,
+                            "editFields": [
+                                {
+                                    "field": false,
+                                    "relationalOperator": false,
+                                    "value": true
+                                }
+                            ]
+                        },
+                        "count": -1,
+                        "ignoreCase": false,
+                        "locale": {
+                            "language": "en",
+                            "country": "EN"
+                        }
+                    },
+                    "storeId": "earthquakes/0"
                 }
             ]
         },
-        "dn_selectionactions": {},
         "banner": {
             "BannerWidget": {
                 "label": "Developer Network",
@@ -280,7 +335,8 @@
                 "centerSelected": true,
                 "zoomAfterDeletion": false,
                 "zoomToClicked": false,
-                "centerClicked": false
+                "centerClicked": false,
+                "openPopup": true
             },
             "FeatureMapVisualizer": {
                 "useDataViewPaging": true
@@ -308,12 +364,24 @@
             },
             "AGSStore": [
                 {
+                    "id": "client_store",
+                    "title": "Client Store",
+                    "layerId": "client_featurelayer",
+                    "legacyImplementation": false,
+                    "useIn": [
+                        "querybuilder"
+                    ]
+                },
+                {
                     "id": "countries",
                     "title": "Countries",
                     "description": "Countries of the world",
                     "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder", "selection-actions-area"],
+                    "legacyImplementation": true,
+                    "useIn": [
+                        "querybuilder"
+                    ],
                     "filterOptions": {
                         "metadata": {
                             "fields": [
@@ -339,7 +407,9 @@
                     "description": "Baumkataster",
                     "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"],
+                    "useIn": [
+                        "querybuilder"
+                    ],
                     "filterOptions": {
                         "metadata": {
                             "fields": [
@@ -386,16 +456,31 @@
                     "idProperty": "objectid",
                     "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"]
+                    "useIn": [
+                        "querybuilder"
+                    ]
                 },
                 {
                     "id": "wahlkreise_strukturdaten",
                     "title": "Wahlkreise 2017 - Strukturdaten",
                     "description": "Wahlkreise 2017 - Strukturdaten",
                     "idProperty": "OBJECTID",
-                    "url": "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Wahlkreise_2017_mit_Strukturdaten/FeatureServer/0",
+                    "url": "https://services.arcgis.com/CHWy5Vg5bILt6ufC/ArcGIS/rest/services/Wahlkreise_2017/FeatureServer/0",
                     "popupEnabled": true,
-                    "useIn": ["querybuilder"]
+                    "useIn": [
+                        "querybuilder"
+                    ]
+                },
+                {
+                    "id": "gemeinden",
+                    "title": "Gemeinden",
+                    "description": "Gemeinden",
+                    "idProperty": "objectid",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/FeatureServer/0",
+                    "popupEnabled": true,
+                    "useIn": [
+                        "querybuilder"
+                    ]
                 }
             ]
         },
@@ -430,12 +515,12 @@
                     },
                     {
                         "id": "questions",
-                        "title": "Questions And Answers",
+                        "title": "${toolset.whatDoYouWant}",
                         "container": "map",
                         "window": {
                             "closable": true
                         },
-                        "tooltip": "List of predefined questions, click to see the answer",
+                        "tooltip": "${toolset.whatDoYouWantToolTip}",
                         "cssClass": "ctWDYWBtn ctPrimaryInput",
                         "max_horizontal": 1,
                         "windowType": "dropdown",
@@ -443,8 +528,24 @@
                             "rel_l": 20,
                             "rel_t": 20
                         },
-                        "tools": ["querybuilder_*", "queryBuilderToggleTool"]
+                        "tools": [
+                            "querybuilder_*",
+                            "queryBuilderToggleTool"
+                        ]
                     }
+                ]
+            }
+        },
+        "toc": {
+            "Config": {
+                "actions": [
+                    "show-description",
+                    "zoom-to-extent",
+                    "activate-children",
+                    "deactivate-children",
+                    "change-opacity",
+                    "show-copyright",
+                    "querybuilder-filter"
                 ]
             }
         },
@@ -452,14 +553,142 @@
             "Config": {
                 "basemaps": [
                     {
-                        "id": "dark_gray",
-                        "title": "Dark Gray",
-                        "basemap": "dark-gray-vector",
-                        "selected": true
+                        "id": "esri_street",
+                        "title": "Straßenkarte (grau)",
+                        "thumbnailUrl": "resource('${app}:/images/streets.png')",
+                        "selected": true,
+                        "basemap": "gray-vector"
+                    },
+                    {
+                        "id": "esri_hybrid",
+                        "title": "Luftbild (hybrid)",
+                        "thumbnailUrl": "resource('${app}:/images/hybrid.png')",
+                        "basemap": "hybrid"
                     }
                 ],
                 "map": {
-                    "layers": [],
+                    "layers": [
+                        {
+                            "id": "client_featurelayer",
+                            "title": "Client Side FeatureLayer",
+                            "type": "AGS_FEATURE",
+                            "objectIdField": "id",
+                            "fields": [
+                                {
+                                    "name": "name",
+                                    "alias": "Name",
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "country",
+                                    "alias": "Country",
+                                    "type": "string"
+                                },
+                                {
+                                    "name": "population",
+                                    "alias": "Population",
+                                    "type": "double"
+                                }
+                            ],
+                            "source": [
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": 13.4083,
+                                        "y": 52.5186
+                                    },
+                                    "attributes": {
+                                        "id": 1,
+                                        "name": "Berlin",
+                                        "country": "Deutschland",
+                                        "population": 3677472
+                                    }
+                                },
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": 2.3517,
+                                        "y": 48.8567
+                                    },
+                                    "attributes": {
+                                        "id": 2,
+                                        "name": "Paris",
+                                        "country": "Frankreich",
+                                        "population": 2165423
+                                    }
+                                },
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": 4.8904,
+                                        "y": 52.3702
+                                    },
+                                    "attributes": {
+                                        "id": 3,
+                                        "name": "Amsterdam",
+                                        "country": "Niederlande",
+                                        "population": 821752
+                                    }
+                                },
+                                {
+                                    "geometry": {
+                                        "type": "point",
+                                        "x": -0.1183,
+                                        "y": 51.5094
+                                    },
+                                    "attributes": {
+                                        "id": 4,
+                                        "name": "London",
+                                        "country": "Vereinigtes Königreich",
+                                        "population": 9002488
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "koeln",
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "${map.cologne}",
+                            "initiallyExpandedInToc": true,
+                            "sublayers": [
+                                {
+                                    "id": 0,
+                                    "initiallyExpandedInToc": true,
+                                    "sublayers": [
+                                        {
+                                            "id": 1
+                                        },
+                                        {
+                                            "id": 2,
+                                            "visible": false
+                                        },
+                                        {
+                                            "id": 3,
+                                            "visible": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 4,
+                                    "visible": false,
+                                    "initiallyExpandedInToc": true
+                                },
+                                {
+                                    "id": 8,
+                                    "visible": false,
+                                    "initiallyExpandedInToc": true
+                                }
+                            ]
+                        },
+                        {
+                            "id": "earthquakes",
+                            "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "${map.earthquakes}",
+                            "listMode": "hide-children"
+                        }
+                    ],
                     "ground": {
                         "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
                         "type": "ELEVATION"
@@ -479,57 +708,71 @@
         },
         "templates": {
             "TemplateModel": {
-                "_templates": [
+                "_selectedTemplate": "seasons",
+                "widgets": [
                     {
-                        "name": "seasons",
-                        "widgets": [
-                            {
-                                "widgetRole": "queryBuilderWidget",
-                                "sublayout": ["desktop"],
-                                "window": {
-                                    "marginBox": {
-                                        "w": 600,
-                                        "h": 500,
-                                        "l": 20,
-                                        "t": 120
-                                    }
-                                }
-                            },
-                            {
-                                "widgetRole": "editableQueryBuilderWidget",
-                                "sublayout": ["desktop"],
-                                "window": {
-                                    "marginBox": {
-                                        "w": 600,
-                                        "h": 500,
-                                        "l": 20,
-                                        "t": 120
-                                    }
-                                }
-                            },
-                            {
-                                "widgetRole": "circleSpatialInputWidget",
-                                "window": {
-                                    "marginBox": {
-                                        "w": 400,
-                                        "h": 230,
-                                        "t": 120,
-                                        "l": 620
-                                    }
-                                }
-                            },
-                            {
-                                "widgetRole": "areaSelectSpatialInputWidget",
-                                "window": {
-                                    "marginBox": {
-                                        "w": 300,
-                                        "h": 130,
-                                        "t": 120,
-                                        "l": 620
-                                    }
-                                }
+                        "widgetRole": "queryBuilderWidget",
+                        "sublayout": [
+                            "desktop"
+                        ],
+                        "window": {
+                            "marginBox": {
+                                "w": 600,
+                                "h": 400,
+                                "l": 20,
+                                "t": 120
                             }
-                        ]
+                        }
+                    },
+                    {
+                        "widgetRole": "editableQueryBuilderWidget",
+                        "sublayout": [
+                            "desktop"
+                        ],
+                        "window": {
+                            "marginBox": {
+                                "w": 600,
+                                "h": 400,
+                                "l": 20,
+                                "t": 120
+                            }
+                        }
+                    },
+                    {
+                        "widgetRole": "filterQueryBuilderWidget",
+                        "sublayout": [
+                            "desktop"
+                        ],
+                        "window": {
+                            "marginBox": {
+                                "w": 600,
+                                "h": 400,
+                                "r": 20,
+                                "t": 120
+                            }
+                        }
+                    },
+                    {
+                        "widgetRole": "circleSpatialInputWidget",
+                        "window": {
+                            "marginBox": {
+                                "w": 400,
+                                "h": 230,
+                                "t": 120,
+                                "l": 620
+                            }
+                        }
+                    },
+                    {
+                        "widgetRole": "areaSelectSpatialInputWidget",
+                        "window": {
+                            "marginBox": {
+                                "w": 300,
+                                "h": 130,
+                                "t": 120,
+                                "l": 620
+                            }
+                        }
                     }
                 ]
             }

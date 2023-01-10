@@ -16,15 +16,20 @@
 export default {
     apptitle: "Query Builder 4 Sample",
     map: {
-        esrisites: {
-            title: "Standorte der Esri Deutschland Gruppe",
-            popup: {
-                address: "Adresse",
-                contact: "Kontakt",
-                tel: "Telefon:",
-                mail: "Email:",
-                link: "Internet:"
-            }
-        }
+        cologne: "Daten der Stadt Köln",
+        earthquakes: "Erdbeben"
+    },
+    queries: {
+        streetDamage: "Bisher nicht reparierte Straßenschäden in Münster suchen",
+        populationDensity: "Wahlkreise deren Bevökerungsdichte größer ist als 1000 Einwohner/km²",
+        income: "Wahlkreise in denen das verfügbare Einkommen je Einwohner größer ist als 20000€",
+        populationIncreasing: "Wahlkreise deren Bevölkerung zunimmt",
+        tree: "Baumart suchen",
+        disturbances: "Störungen suchen",
+        earthquakes: "Erdbeben suchen"
+    },
+    toolset: {
+        whatDoYouWant: "Fragen und Antworten",
+        whatDoYouWantToolTip: "Liste vordefinierter Fragen, klicken um Antworten zu sehen"
     }
 };
