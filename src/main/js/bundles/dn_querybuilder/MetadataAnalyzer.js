@@ -112,7 +112,8 @@ export default class MetadataAnalyzer {
             const layer = store.layer;
             // Check if store uses new LayerStore class
             if (layer) {
-                supportsDistinct = layer.capabilities?.query?.supportsDistinct;
+                supportsDistinct = layer.capabilities?.query?.supportsDistinct ||
+                    layer.sourceJSON?.advancedQueryCapabilities?.supportsDistinct;
                 if (!supportsDistinct) {
                     resolve();
                     return;
