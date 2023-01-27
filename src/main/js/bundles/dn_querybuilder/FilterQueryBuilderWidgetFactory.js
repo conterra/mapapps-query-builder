@@ -47,7 +47,11 @@ export default class FilterQueryBuilderWidgetFactory {
             store.useIn = ["querybuilder"];
             store.load().then(() => {
                 this.registerStore(store);
-                this.showWidget(store, layer);
+                if (this.widget) {
+                    this.changeExistingWidget(this.widget, store, layer);
+                } else {
+                    this.showWidget(store, layer);
+                }
             });
         });
     }
@@ -69,9 +73,24 @@ export default class FilterQueryBuilderWidgetFactory {
         }
     }
 
+    changeExistingWidget(widget, store, layer) {
+        const window = ct_util.findEnclosingWindow(widget);
+        if (window) {
+            window.set("title", store.title);
+        }
+        const model = this._queryBuilderWidgetModel;
+        const vm = this.widget.getVM();
+        this.#listenToViewModelEvents(vm, layer, model);
+        this.#initializeFilterUI(vm, store, model);
+    }
+
     showWidget(store, layer) {
         this.hideWidget();
-        const widget = this.getWidget(store, layer);
+        const model = this._queryBuilderWidgetModel;
+        const widget = this.widget = this.getWidget(store);
+        const vm = widget.getVM();
+        this.#listenToViewModelEvents(vm, layer, model);
+        this.#initializeFilterUI(vm, store, model);
         const serviceProperties = {
             "widgetRole": "filterQueryBuilderWidget"
         };
@@ -90,6 +109,7 @@ export default class FilterQueryBuilderWidgetFactory {
     }
 
     hideWidget() {
+        this.widget = null;
         const registration = this._widgetServiceregistration;
 
         // clear the reference
@@ -101,13 +121,12 @@ export default class FilterQueryBuilderWidgetFactory {
         }
     }
 
-    getWidget(store, layer) {
+    getWidget() {
         const model = this._queryBuilderWidgetModel;
 
         const vm = new Vue(QueryBuilderWidget);
         vm.i18n = this._i18n.get().ui;
         vm.filter = true;
-        vm.selectedStoreId = store.id;
         vm.fieldQueries = [];
         vm.linkOperator = model.defaultLinkOperator;
         vm.spatialRelation = "everywhere";
@@ -120,9 +139,17 @@ export default class FilterQueryBuilderWidgetFactory {
             sortSelect: false
         };
 
-        vm.storeData = model.getStoreDataFromMetadata();
-        model.addFieldQuery(store.id, vm.fieldQueries);
+        const widget = VueDijit(vm);
+        widget.own({
+            remove() {
+                vm.$off();
+            }
+        });
+        return widget;
+    }
 
+    #listenToViewModelEvents(vm, layer, model) {
+        vm.$off();
         // listen to view model methods
         vm.$on('search', () => {
             model.search(vm.selectedStoreId, vm.linkOperator,
@@ -140,13 +167,12 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.$on('remove', (fieldQuery) => {
             model.removeFieldQuery(fieldQuery, vm.fieldQueries);
         });
+    }
 
-        const widget = VueDijit(vm);
-        widget.own({
-            remove() {
-                vm.$off();
-            }
-        });
-        return widget;
+    #initializeFilterUI(vm, store, model) {
+        vm.selectedStoreId = store.id;
+        vm.storeData = model.getStoreDataFromMetadata();
+        vm.fieldQueries = [];
+        model.addFieldQuery(store.id, vm.fieldQueries);
     }
 }
