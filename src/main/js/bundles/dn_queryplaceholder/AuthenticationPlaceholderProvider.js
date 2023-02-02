@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default class AuthenticationPlaceholderProvider {
+import { Evented } from "apprt-core/Events";
+
+class AuthenticationPlaceholderProvider extends Evented {
 
     getPlaceholder() {
         const placeholder = {};
@@ -24,5 +26,14 @@ export default class AuthenticationPlaceholderProvider {
         }
         return placeholder;
     }
-    
+
+    reEvaluate() {
+        return this.getPlaceholder();
+    }
+
+    _onLoginTriggered() {
+        this.emit('trigger-placeholder-refresh');
+    }
+
 }
+export default AuthenticationPlaceholderProvider;

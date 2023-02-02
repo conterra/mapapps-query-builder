@@ -46,11 +46,14 @@ export default class Replacer {
         return this.placeholder;
     }
 
-    addPlaceholderProvider(placeholderProvider) {
+    async addPlaceholderProvider(placeholderProvider) {
         this.placeholderProvider = this.placeholderProvider || [];
         this.placeholderProvider.push(placeholderProvider);
         const globalPlaceholder = this.placeholder || {};
-        const placeholder = placeholderProvider.getPlaceholder();
+        if (placeholderProvider.on) {
+            this._handlePlaceholderProviderEvent(placeholderProvider);
+        }
+        const placeholder = await placeholderProvider.getPlaceholder();
         d_lang.mixin(globalPlaceholder, placeholder);
         this.placeholder = globalPlaceholder;
     }
@@ -62,6 +65,12 @@ export default class Replacer {
                     d_lang.mixin(this.placeholder, placeholder);
                 });
             }
+        });
+    }
+
+    _handlePlaceholderProviderEvent(placeholderProvider) {
+        placeholderProvider.on('trigger-placeholder-refresh', () => {
+            this.refresh();
         });
     }
 

@@ -31,7 +31,18 @@
         },
         {
             "name": "AuthenticationPlaceholderProvider",
-            "provides": "dn_queryplaceholder.PlaceholderProvider",
+            "provides": [
+                "dn_queryplaceholder.PlaceholderProvider",
+                "ct.framework.api.EventHandler"
+            ],
+            "properties": {
+                "Event-Topics": [
+                    {
+                        "topic": ["ct/framework/user/LOGGED_IN"],
+                        "method": "_onLoginTriggered"
+                    }
+                ]
+            },
             "references": [
                 {
                     "name": "_userAdminService",
