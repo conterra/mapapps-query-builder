@@ -61,9 +61,16 @@ export default class EditableQueryBuilderWidgetFactory {
             spatialInputActions: false,
             sortSelect: model.visibleElements.predefinedMode.sortSelect
         };
+        vm.enableReplaceOpenedTablesControl = model.enableReplaceOpenedTablesControl;
+        vm.replaceOpenedTables = model.replaceOpenedTables;
         model.addFieldQueries(complexQuery[linkOperator], editOptions.editFields, properties.storeId, vm.fieldQueries);
 
         // listen to view model methods
+        vm.$on("replaceOpenedTables", (replaceOpenedTables) => {
+            const resultConfig = this._resultconfig;
+            resultConfig['replace-opened-tables'] = replaceOpenedTables;
+            model.replaceOpenedTables = replaceOpenedTables;
+        });
         vm.$on('search', () => {
             model.search(vm.selectedStoreId, vm.linkOperator,
                 vm.spatialRelation, vm.fieldQueries, tool, options, true, null);

@@ -33,6 +33,7 @@ export default {
             everywhere: "everywhere",
             currentExtent: "current extent",
             delete: "Delete",
+            replaceOpenedTables: "Replace opened tables in result-ui",
             search: "Search",
             cancelSearch: "Cancel search",
             setLayerDefinition: "Set filter",

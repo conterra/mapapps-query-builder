@@ -217,6 +217,8 @@
                 "hiddenFields": ["objectid", "OBJECTID", "shape"],
                 "hiddenFieldTypes": ["oid", "guid", "global-id"],
                 "hiddenSortFields": ["objectid", "OBJECTID", "shape"],
+                "enableReplaceOpenedTablesControl": true,
+                "replaceOpenedTables": true,
                 "symbols": {
                     "point": {
                         "type": "simple-marker",
@@ -301,6 +303,10 @@
                     "name": "_queryBuilderWidgetModel",
                     "providing": "dn_querybuilder.QueryBuilderWidgetModel",
                     "cardinality": "0..1"
+                },
+                {
+                    "name": "_resultconfig",
+                    "providing": "result-api.Config"
                 }
             ]
         },

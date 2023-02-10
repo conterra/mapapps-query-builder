@@ -255,6 +255,14 @@
             </v-container>
         </div>
         <div class="footer ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
+            <div v-if="enableReplaceOpenedTablesControl">
+                <v-checkbox
+                    v-model="replaceOpenedTables"
+                    :label="i18n.replaceOpenedTables"
+                    color="primary"
+                    @change="$emit('replaceOpenedTables', replaceOpenedTables)"
+                />
+            </div>
             <div v-if="!filter">
                 <v-btn
                     v-if="!processing"
@@ -406,7 +414,9 @@
                 linkOperatorsEnabled: false,
                 linkOperatorsDisabled: true,
                 ariaLabelAdded: false,
-                textToRead: ""
+                textToRead: "",
+                enableReplaceOpenedTablesControl: false,
+                replaceOpenedTables: false
             };
         },
         computed: {

@@ -75,6 +75,8 @@ export default declare({
         "OBJECTID",
         "shape"
     ],
+    enableReplaceOpenedTablesControl: false,
+    replaceOpenedTables: false,
 
     activate() {
         this.locale = Locale.getCurrent().getLanguage();
