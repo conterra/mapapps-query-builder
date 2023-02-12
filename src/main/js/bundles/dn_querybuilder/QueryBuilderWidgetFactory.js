@@ -57,7 +57,7 @@ export default class QueryBuilderWidgetFactory {
             fieldInfos: model.visibleElements.defaultMode.fieldInfos,
             spatialRelation: model.visibleElements.defaultMode.spatialRelation,
             spatialInputActions: model.visibleElements.defaultMode.spatialInputActions,
-            sortSelect: model.visibleElements.sortSelect
+            sortSelect: model.visibleElements.defaultMode.sortSelect
         };
 
         // listen to view model methods
