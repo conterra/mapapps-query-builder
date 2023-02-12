@@ -47,12 +47,14 @@
                         "spatialRelation": true,
                         "spatialInputActions": false,
                         "sortSelect": false,
-                        "fieldInfos": false
+                        "fieldInfos": false,
+                        "replaceOpenedTables": true
                     },
                     "predefinedMode": {
                         "spatialRelation": true,
                         "sortSelect": false,
-                        "fieldInfos": false
+                        "fieldInfos": false,
+                        "replaceOpenedTables": true
                     },
                     "filterMode": {
                         "spatialRelation": true,

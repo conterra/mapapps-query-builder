@@ -153,12 +153,14 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
             "spatialRelation": true,
             "spatialInputActions": false,
             "sortSelect": false,
-            "fieldInfos": false
+            "fieldInfos": false,
+            "replaceOpenedTables": false
         },
         "predefinedMode": {
             "spatialRelation": true,
             "sortSelect": false,
-            "fieldInfos": false
+            "fieldInfos": false,
+            "replaceOpenedTables": false
         },
         "filterMode": {
             "spatialRelation": true,
@@ -231,8 +233,6 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 | visibleElements                  | Object  |                                                         |                  | Select visible elements in default mode, predefined mode and filter mode.                                                                               |
 | hiddenFields                     | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the field select                                                                                               |
 | hiddenSortFields                 | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the sort field select                                                                                          |
-| enableReplaceOpenedTablesControl | Boolean | ```true``` &#124; ```false```                           | ```[]```         | Show/hide control to set "replace-opened-tables" property of result-api                                                                                 |
-| replaceOpenedTables              | Boolean | ```true``` &#124; ```false```                           | ```[]```         | Default value of "replace-opened-tables" control. Only used if enableReplaceOpenedTablesControl = true                                                  |
 | symbols                          | Object  |                                                         |                  | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
 
 ### QueryTools:
