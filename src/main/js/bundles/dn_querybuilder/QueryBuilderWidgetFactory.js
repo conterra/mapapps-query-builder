@@ -57,7 +57,7 @@ export default class QueryBuilderWidgetFactory {
             fieldInfos: model.visibleElements.defaultMode.fieldInfos,
             spatialRelation: model.visibleElements.defaultMode.spatialRelation,
             spatialInputActions: model.visibleElements.defaultMode.spatialInputActions,
-            sortSelect: model.visibleElements.sortSelect,
+            sortSelect: model.visibleElements.defaultMode.sortSelect,
             replaceOpenedTables: model.visibleElements.defaultMode.replaceOpenedTables
         };
 
@@ -95,7 +95,7 @@ export default class QueryBuilderWidgetFactory {
         this.#queryBuilderWidgetModelBinding = Binding.for(vm, model)
             .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName",
                 "sortDescending", "linkOperator", "spatialRelation",
-                "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput", "replaceOpenedTables")
+                "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput")
             .syncAllToLeft("locale", "storeData", "sortFieldData", "enableDistinctValues",
                 "spatialInputActions", "activeSpatialInputActionDescription",
                 "loading", "processing", "activeTool")
