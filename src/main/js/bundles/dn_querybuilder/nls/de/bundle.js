@@ -32,6 +32,7 @@ export default {
         everywhere: "Überall",
         currentExtent: "Aktueller Kartenausschnitt",
         delete: "Löschen",
+        replaceOpenedTables: "Vorhandene Ergebnisse ersetzen",
         search: "Suche starten",
         cancelSearch: "Suche abbrechen",
         setLayerDefinition: "Filter setzen",

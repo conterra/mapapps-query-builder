@@ -255,6 +255,13 @@
             </v-container>
         </div>
         <div class="footer ct-flex-item ct-flex-item--no-grow ct-flex-item--no-shrink">
+            <div v-if="visibleElements.replaceOpenedTables">
+                <v-checkbox
+                    v-model="replaceOpenedTables"
+                    :label="i18n.replaceOpenedTables"
+                    color="primary"
+                />
+            </div>
             <div v-if="!filter">
                 <v-btn
                     v-if="!processing"
@@ -390,7 +397,8 @@
                     spatialRelation: true,
                     spatialInputActions: false,
                     sortSelect: false,
-                    fieldInfos: false
+                    fieldInfos: false,
+                    replaceOpenedTables: false,
                 },
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
@@ -406,7 +414,8 @@
                 linkOperatorsEnabled: false,
                 linkOperatorsDisabled: true,
                 ariaLabelAdded: false,
-                textToRead: ""
+                textToRead: "",
+                replaceOpenedTables: false
             };
         },
         computed: {

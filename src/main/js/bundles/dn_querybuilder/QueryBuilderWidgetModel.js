@@ -24,6 +24,7 @@ import {union, difference} from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
 import ProjectParameters from "esri/rest/support/ProjectParameters";
 
+const _replaceOpenedTablesBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
 
@@ -75,6 +76,7 @@ export default declare({
         "OBJECTID",
         "shape"
     ],
+    replaceOpenedTables: false,
 
     activate() {
         this.locale = Locale.getCurrent().getLanguage();
@@ -128,6 +130,11 @@ export default declare({
                         iconClass
                     };
                 }))
+            .enable()
+            .syncToLeftNow();
+        const resultApiConfig = this._resultApiConfig;
+        this[_replaceOpenedTablesBinding] = Binding.for(this, resultApiConfig)
+            .sync("replaceOpenedTables", "replace-opened-tables")
             .enable()
             .syncToLeftNow();
     },

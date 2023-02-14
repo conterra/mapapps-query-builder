@@ -33,9 +33,10 @@ describe(module.id, function(){
                 return placeholder;
             }
         };
-        replacer.addPlaceholderProvider(namePlaceholderProcvider);
-        queryController._replacer = replacer;
-        queryController.searchReplacer(object);
-        assert.equal(object["$or"][0].aeroway["$eq"], "Peter", 'the replacement failed.');
+        replacer.addPlaceholderProvider(namePlaceholderProcvider).then(() => {
+            queryController._replacer = replacer;
+            queryController.searchReplacer(object);
+            assert.equal(object["$or"][0].aeroway["$eq"], "Peter", 'the replacement failed.');
+        });
     });
 });

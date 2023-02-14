@@ -16,8 +16,11 @@
 import QueryBuilderWidget from "./QueryBuilderWidget.vue";
 import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
+import Binding from "apprt-binding/Binding";
 
 export default class EditableQueryBuilderWidgetFactory {
+
+    #queryBuilderWidgetModelBinding = undefined;
 
     getWidget(properties, tool) {
         const model = this._queryBuilderWidgetModel;
@@ -59,8 +62,10 @@ export default class EditableQueryBuilderWidgetFactory {
             fieldInfos: model.visibleElements.predefinedMode.fieldInfos,
             spatialRelation: model.visibleElements.predefinedMode.spatialRelation,
             spatialInputActions: false,
-            sortSelect: model.visibleElements.predefinedMode.sortSelect
+            sortSelect: model.visibleElements.predefinedMode.sortSelect,
+            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables
         };
+        vm.replaceOpenedTables = model.replaceOpenedTables;
         model.addFieldQueries(complexQuery[linkOperator], editOptions.editFields, properties.storeId, vm.fieldQueries);
 
         // listen to view model methods
@@ -74,6 +79,10 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.$on('getDistinctValues', (args) => {
             model.getDistinctValues(args.value, args.selectedField, vm.selectedStoreId);
         });
+        this.#queryBuilderWidgetModelBinding = Binding.for(vm, model)
+            .syncAll("replaceOpenedTables")
+            .enable()
+            .syncToLeftNow();
 
         const widget = VueDijit(vm);
         widget.own({

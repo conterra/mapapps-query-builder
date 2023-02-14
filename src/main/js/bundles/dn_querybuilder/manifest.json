@@ -199,12 +199,14 @@
                         "spatialRelation": true,
                         "spatialInputActions": false,
                         "sortSelect": false,
-                        "fieldInfos": false
+                        "fieldInfos": false,
+                        "replaceOpenedTables": false
                     },
                     "predefinedMode": {
                         "spatialRelation": true,
                         "sortSelect": false,
-                        "fieldInfos": false
+                        "fieldInfos": false,
+                        "replaceOpenedTables": false
                     },
                     "filterMode": {
                         "spatialRelation": true,
@@ -247,6 +249,10 @@
                 {
                     "name": "_mapWidgetModel",
                     "providing": "map-widget.MapWidgetModel"
+                },
+                {
+                    "name": "_resultApiConfig",
+                    "providing": "result-api.Config"
                 },
                 {
                     "name": "_tool",
