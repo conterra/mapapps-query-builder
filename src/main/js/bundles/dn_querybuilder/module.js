@@ -19,6 +19,7 @@ import "./QueryToolController";
 import "./QueryBuilderWidgetModel";
 import "./QueryBuilderWidgetFactory";
 import "./EditableQueryBuilderWidgetFactory";
+import "./FilterQueryBuilderWidgetFactory";
 import "./MetadataAnalyzer";
 import "./FilterActionDefinitionFactory";
 import "ct/tools/Tool";
