@@ -165,53 +165,58 @@
                         </v-radio-group>
                     </v-flex>
                 </v-layout>
+                <v-layout
+                    v-if="visibleElements.sortSelect && !filter"
+                    :aria-label="i18n.linkOperator"
+                    role="group"
+                    row
+                    wrap
+                >
+                    <v-flex xs3>
+                        <v-subheader>{{ i18n.sortOptions }}</v-subheader>
+                    </v-flex>
+                    <v-flex xs9>
+                        <div class="ct-flex-container">
+                            <div class="ct-flex-item ct-flex-item--no-shrink">
+                                <v-select
+                                    ref="selectedSortFieldNameSelect"
+                                    v-model="selectedSortFieldName"
+                                    :items="sortFieldData"
+                                    :disabled="editable"
+                                    :aria-label="i18n.aria.sortingField"
+                                    item-value="id"
+                                    item-text="title"
+                                    class="pa-0"
+                                    single-line
+                                    hide-details
+                                />
+                            </div>
+                            <div class="ct-flex-item ct-flex-item--no-grow">
+                                <v-btn
+                                    flat
+                                    class="ma-0"
+                                    color="primary"
+                                    @click="sortDescending=!sortDescending"
+                                >
+                                    <v-icon
+                                        v-if="sortDescending"
+                                        left
+                                    >
+                                        arrow_downward
+                                    </v-icon>
+                                    <v-icon
+                                        v-else
+                                        left
+                                    >
+                                        arrow_upward
+                                    </v-icon>
+                                    {{ i18n.sorting }}
+                                </v-btn>
+                            </div>
+                        </div>
+                    </v-flex>
+                </v-layout>
             </v-container>
-            <div
-                v-if="visibleElements.sortSelect && !filter"
-                class="pa-1"
-            >
-                <div class="caption">
-                    {{ i18n.sortOptions }}
-                </div>
-                <div class="ct-flex-container">
-                    <div class="ct-flex-item ct-flex-item--no-shrink">
-                        <v-select
-                            ref="selectedSortFieldNameSelect"
-                            v-model="selectedSortFieldName"
-                            :items="sortFieldData"
-                            :disabled="editable"
-                            :aria-label="i18n.aria.sortingField"
-                            item-value="id"
-                            class="pa-0"
-                            single-line
-                            hide-details
-                        />
-                    </div>
-                    <div class="ct-flex-item ct-flex-item--no-grow">
-                        <v-btn
-                            flat
-                            small
-                            class="ma-0"
-                            color="primary"
-                            @click="sortDescending=!sortDescending"
-                        >
-                            <v-icon
-                                v-if="sortDescending"
-                                left
-                            >
-                                arrow_downward
-                            </v-icon>
-                            <v-icon
-                                v-else
-                                left
-                            >
-                                arrow_upward
-                            </v-icon>
-                            {{ i18n.sorting }}
-                        </v-btn>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="center ct-flex-item overflow--auto">
             <v-container
