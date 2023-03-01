@@ -121,6 +121,7 @@
                             </template>
                             <v-date-picker
                                 v-model="dateString"
+                                color="primary"
                                 :locale="locale"
                                 full-width
                                 scrollable
