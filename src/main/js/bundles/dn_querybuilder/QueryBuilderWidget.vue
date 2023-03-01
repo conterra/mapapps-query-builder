@@ -31,7 +31,7 @@
                     wrap
                 >
                     <v-flex xs3>
-                        <v-subheader>{{ i18n.selectStore }}</v-subheader>
+                        <v-subheader class="pl-2">{{ i18n.selectStore }}</v-subheader>
                     </v-flex>
                     <v-flex xs9>
                         <v-select
@@ -64,7 +64,7 @@
                     wrap
                 >
                     <v-flex xs3>
-                        <v-subheader>{{ i18n.spatialRelation }}</v-subheader>
+                        <v-subheader class="pl-2">{{ i18n.spatialRelation }}</v-subheader>
                     </v-flex>
                     <v-flex xs9>
                         <div
@@ -139,7 +139,7 @@
                     wrap
                 >
                     <v-flex xs3>
-                        <v-subheader>{{ i18n.linkOperator }}</v-subheader>
+                        <v-subheader class="pl-2">{{ i18n.linkOperator }}</v-subheader>
                     </v-flex>
                     <v-flex xs9>
                         <v-radio-group
@@ -173,7 +173,7 @@
                     wrap
                 >
                     <v-flex xs3>
-                        <v-subheader>{{ i18n.sortOptions }}</v-subheader>
+                        <v-subheader class="pl-2">{{ i18n.sortOptions }}</v-subheader>
                     </v-flex>
                     <v-flex xs9>
                         <div class="ct-flex-container">
