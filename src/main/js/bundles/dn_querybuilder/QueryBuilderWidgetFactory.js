@@ -95,7 +95,7 @@ export default class QueryBuilderWidgetFactory {
         this.#queryBuilderWidgetModelBinding = Binding.for(vm, model)
             .syncAll("selectedStoreId", "fieldQueries", "selectedSortFieldName",
                 "sortDescending", "linkOperator", "spatialRelation",
-                "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput")
+                "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput", "replaceOpenedTables")
             .syncAllToLeft("locale", "storeData", "sortFieldData", "enableDistinctValues",
                 "spatialInputActions", "activeSpatialInputActionDescription",
                 "loading", "processing", "activeTool")
