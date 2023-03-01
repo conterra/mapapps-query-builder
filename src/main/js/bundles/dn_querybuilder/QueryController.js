@@ -164,9 +164,10 @@ export default class QueryController {
         const tableCollection = dataTableFactory.createDataTableCollection([dataTable]);
         const resultViewerServiceHandle = this._resultViewerService.open(tableCollection);
 
+        const that = this;
         this.#resultUiHandle = {
             cancel() {
-                this._setProcessing(tool, false, queryBuilderWidgetModel);
+                that._setProcessing(tool, false, queryBuilderWidgetModel);
                 datasetStateHandle.remove();
                 resultViewerServiceHandle.remove();
             }
