@@ -252,7 +252,8 @@
                 },
                 {
                     "name": "_resultApiConfig",
-                    "providing": "result-api.Config"
+                    "providing": "result-api.Config",
+                    "cardinality": "0..1"
                 },
                 {
                     "name": "_tool",
