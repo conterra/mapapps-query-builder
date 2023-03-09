@@ -20,7 +20,7 @@
         "selection-services": "^4.13.0",
         "store-api": "^4.13.0"
     },
-    "cssThemesExtension": [
+    "CSS-Themes-Extension": [
         {
             "name": "*",
             "files": ["./css/styles.css"]
