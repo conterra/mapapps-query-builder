@@ -247,7 +247,7 @@ export default declare({
             spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
         let sortOptions = [];
         const opts = Object.assign({}, this.defaultQueryOptions || {}, options || {}, {
-            suggestContains: false
+            suggestContains: true
         });
         if (this.visibleElements.sortSelect && !editable && !layer) {
             sortOptions = this.getSortOptions();
