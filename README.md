@@ -15,7 +15,7 @@ https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder/index.h
 ## Installation Guide
 ⚠️**Requirement: map.apps 4.13.0**
 
-⚠️**Attention the new version Query Builder version 5 has a different configuration than the previous version 4**
+⚠️**Attention the new Query Builder version 5 has a different configuration than the previous version 4**
 
 [dn_querybuilder Documentation](https://github.com/conterra/mapapps-query-builder/tree/master/src/main/js/bundles/dn_querybuilder)
 
