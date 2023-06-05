@@ -145,10 +145,14 @@ export default class QueryController {
 
     async _openResultUi(tool, store, complexQuery, queryOptions, queryBuilderWidgetModel) {
         const dataTableFactory = this._resultViewerService.dataTableFactory;
-        const title = queryBuilderWidgetModel.getSelectedStoreTitle(queryBuilderWidgetModel.selectedStoreId);
+        const storeProperties = this._metadataAnalyzer.getStoreProperties(store.id);
+        let dataTableTitle = storeProperties.title || store.id;
+        if(tool.id !== "queryBuilderToggleTool") {
+            dataTableTitle = tool.title;
+        }
         const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery(
             {
-                dataTableTitle: title || store.id,
+                dataTableTitle: dataTableTitle,
                 dataSource: store,
                 queryExpression: complexQuery,
                 queryOptions: queryOptions
