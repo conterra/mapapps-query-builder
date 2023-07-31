@@ -28,3 +28,6 @@ jobs:
          release_version: ${{ github.event.inputs.releaseVersion }}
          next_dev_version: ${{ github.event.inputs.nextDevVersion }}
          ms_teams_webhook_uri: ${{secrets.MS_TEAMS_WEBHOOK_URI}}
+         demo_user: ${{secrets.DEMO_USER}}
+         demo_user_pw: ${{secrets.DEMO_USER_PW}}
+         demo_url: ${{secrets.DEMO_URL}}
