@@ -22,13 +22,13 @@ export default class FilterActionDefinitionFactory {
 
     private _i18n!: InjectedReference<any>;
     private _filterQueryBuilderWidgetFactory!: InjectedReference<any>;
-    private supportedIds!: InjectedReference<any>;
+    private supportedIds!: Array<string>;
 
     constructor() {
         this.supportedIds = [ID];
     }
 
-    createDefinitionById(id) {
+    createDefinitionById(id: string): any {
         if (ID !== id) {
             return;
         }
@@ -56,7 +56,7 @@ export default class FilterActionDefinitionFactory {
                 }
             },
             isDisabledForItem(tocItem) {
-                // use this method to change the action title since  isVisibleForItem is only called once
+                // use this method to change the action title since isVisibleForItem is only called once
                 const ref = tocItem.ref;
                 if (ref._initialDefinitionExpression && ref._initialDefinitionExpression !== ref.definitionExpression
                     && ref.definitionExpression !== "1=1") {
