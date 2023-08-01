@@ -28,6 +28,7 @@
             "popups-default",
             "toc",
             "result-ui",
+            // "resultcenter",
             "dn_querybuilder"
         ],
         "i18n": [

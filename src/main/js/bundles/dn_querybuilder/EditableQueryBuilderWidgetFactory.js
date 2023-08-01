@@ -63,9 +63,8 @@ export default class EditableQueryBuilderWidgetFactory {
             spatialRelation: model.visibleElements.predefinedMode.spatialRelation,
             spatialInputActions: false,
             sortSelect: model.visibleElements.predefinedMode.sortSelect,
-            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables
+            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables && this._resultViewerService
         };
-        vm.replaceOpenedTables = model.replaceOpenedTables;
         model.addFieldQueries(complexQuery[linkOperator], editOptions.editFields, properties.storeId, vm.fieldQueries);
 
         // listen to view model methods

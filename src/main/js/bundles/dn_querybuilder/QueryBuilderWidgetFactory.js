@@ -53,12 +53,13 @@ export default class QueryBuilderWidgetFactory {
         const vm = this.#vm = new Vue(QueryBuilderWidget);
         const model = this._queryBuilderWidgetModel;
         vm.i18n = this._i18n.get().ui;
+
         vm.visibleElements = {
             fieldInfos: model.visibleElements.defaultMode.fieldInfos,
             spatialRelation: model.visibleElements.defaultMode.spatialRelation,
             spatialInputActions: model.visibleElements.defaultMode.spatialInputActions,
             sortSelect: model.visibleElements.defaultMode.sortSelect,
-            replaceOpenedTables: model.visibleElements.defaultMode.replaceOpenedTables
+            replaceOpenedTables: model.visibleElements.defaultMode.replaceOpenedTables && this._resultViewerService
         };
 
         // listen to view model methods
