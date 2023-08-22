@@ -58,7 +58,8 @@ export default class FilterActionDefinitionFactory {
             isDisabledForItem(tocItem) {
                 // use this method to change the action title since isVisibleForItem is only called once
                 const ref = tocItem.ref;
-                if (ref._initialDefinitionExpression && ref._initialDefinitionExpression !== ref.definitionExpression
+                if (ref._initialDefinitionExpression !== undefined
+                    && ref._initialDefinitionExpression !== ref.definitionExpression
                     && ref.definitionExpression !== "1=1") {
                     this.label = i18n.resetFilterActionLabel;
                 } else {
