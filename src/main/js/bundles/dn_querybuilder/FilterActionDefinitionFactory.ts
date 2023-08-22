@@ -69,7 +69,8 @@ export default class FilterActionDefinitionFactory {
             },
             trigger(tocItem) {
                 const ref = tocItem.ref;
-                if (ref._initialDefinitionExpression && ref._initialDefinitionExpression !== ref.definitionExpression) {
+                if (ref._initialDefinitionExpression !== undefined
+                    && ref._initialDefinitionExpression !== ref.definitionExpression) {
                     if (ref._initialDefinitionExpression) {
                         ref.definitionExpression = ref._initialDefinitionExpression;
                     }
