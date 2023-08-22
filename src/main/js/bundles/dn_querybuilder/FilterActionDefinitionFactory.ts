@@ -71,9 +71,7 @@ export default class FilterActionDefinitionFactory {
                 const ref = tocItem.ref;
                 if (ref._initialDefinitionExpression !== undefined
                     && ref._initialDefinitionExpression !== ref.definitionExpression) {
-                    if (ref._initialDefinitionExpression) {
-                        ref.definitionExpression = ref._initialDefinitionExpression;
-                    }
+                    ref.definitionExpression = ref._initialDefinitionExpression;
                 } else {
                     const title = ref.title;
                     filterQueryBuilderWidgetFactory.showFilter(title, ref);
