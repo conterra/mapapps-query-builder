@@ -74,7 +74,7 @@ export default class QueryController {
                 layer.definitionExpression = layer._initialDefinitionExpression;
             }
             // save initial definitionExpression to enable reversion to initial state
-            if (!layer._initialDefinitionExpression) {
+            if (layer._initialDefinitionExpression === undefined) {
                 layer._initialDefinitionExpression = layer.definitionExpression ? layer.definitionExpression : "1=1";
             }
         }
