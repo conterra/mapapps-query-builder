@@ -245,9 +245,13 @@ export default declare({
     },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable, layer) {
+        let filter = false;
+        if (layer) {
+            filter = true;
+        }
         const selectedStore = this._metadataAnalyzer.getStore(selectedStoreId || this.selectedStoreId);
         const complexQuery = this.getComplexQuery(linkOperator || this.linkOperator,
-            spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries);
+            spatialRelation || this.spatialRelation, fieldQueries || this.fieldQueries, filter);
         let sortOptions = [];
         const opts = Object.assign({}, this.defaultQueryOptions || {}, options || {}, {
             suggestContains: true
@@ -392,17 +396,20 @@ export default declare({
     checkDecimalSeparator(value) {
         return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
     },
-    getComplexQuery(linkOperator, spatialRelation, fieldQueries) {
+
+    getComplexQuery(linkOperator, spatialRelation, fieldQueries, filter) {
         const complexQuery = {};
-        if (this.geometry) {
-            complexQuery.geometry = {
-                $intersects: this.geometry
-            };
-        } else if (spatialRelation === "current_extent") {
-            const extent = this._mapWidgetModel.get("extent");
-            complexQuery.geometry = {
-                $intersects: extent
-            };
+        if (!filter) {
+            if (this.geometry) {
+                complexQuery.geometry = {
+                    $intersects: this.geometry
+                };
+            } else if (spatialRelation === "current_extent") {
+                const extent = this._mapWidgetModel.get("extent");
+                complexQuery.geometry = {
+                    $intersects: extent
+                };
+            }
         }
         complexQuery[linkOperator] = [];
         fieldQueries.forEach((fieldQuery) => {
