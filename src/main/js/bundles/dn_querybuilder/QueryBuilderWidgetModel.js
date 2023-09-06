@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {declare} from "apprt-core/Mutable";
+import { declare } from "apprt-core/Mutable";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
+import AsyncTask from "apprt-core/AsyncTask";
 import Graphic from "esri/Graphic";
 import Extent from "esri/geometry/Extent";
-import {union, difference} from "esri/geometry/geometryEngine";
+import { union, difference } from "esri/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
 import ProjectParameters from "esri/rest/support/ProjectParameters";
 
@@ -77,6 +78,8 @@ export default declare({
         "shape"
     ],
     replaceOpenedTables: false,
+    metadataQuery: null,
+    metadataDelay: 500,
 
     activate() {
         this.locale = Locale.getCurrent().getLanguage();
@@ -122,7 +125,7 @@ export default declare({
         const spatialInputActionService = this._spatialInputActionService;
         this[_spatialInputActionServiceBinding] = Binding.for(this, spatialInputActionService)
             .syncToLeft("actions", "spatialInputActions",
-                (actions) => actions.filter(this.getActionFilter()).map(({id, title, description, iconClass}) => {
+                (actions) => actions.filter(this.getActionFilter()).map(({ id, title, description, iconClass }) => {
                     return {
                         id,
                         title,
@@ -164,7 +167,7 @@ export default declare({
             return;
         }
         const spatialInputAction = spatialInputActionService.getById(id);
-        const promise = this[_spatialInputActionPromise] = spatialInputAction.trigger({queryBuilderSelection: true});
+        const promise = this[_spatialInputActionPromise] = spatialInputAction.trigger({ queryBuilderSelection: true });
         promise.then((geometry) => {
             this.activeSpatialInputAction = null;
             this.activeSpatialInputActionDescription = null;
@@ -217,7 +220,7 @@ export default declare({
         }
         const actionIdLookup = {};
         allowedMethods.forEach((id) => actionIdLookup[id] = true);
-        return ({id}) => actionIdLookup[id];
+        return ({ id }) => actionIdLookup[id];
     },
 
     getStoreDataFromMetadata() {
@@ -525,8 +528,7 @@ export default declare({
         return this.getStoreDataFromMetadata();
     },
 
-    removeStore(store, properties) {
-        properties = properties || {};
+    removeStore(store) {
         const id = store?.id;
         if (!id) {
             return;
@@ -542,7 +544,18 @@ export default declare({
         if (!this._selectedStoreStillAvailable(newStores)) {
             this.selectedStoreId = null;
         }
-        this.getStoreDataFromMetadata();
+        this._deferredMetadata();
+    },
+
+    _deferredMetadata() {
+        let metadataQuery;
+        if (this.metadataQuery) {
+            metadataQuery = this.metadataQuery;
+        } else {
+            metadataQuery =
+                AsyncTask(this.getStoreDataFromMetadata.bind(this)).delay.bind(this, this.metadataDelay);
+        }
+        metadataQuery();
     },
 
     _selectedStoreStillAvailable(stores) {
