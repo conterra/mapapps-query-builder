@@ -87,11 +87,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>de.conterra.mapapps</groupId>
-                    <artifactId>mapapps-maven-plugin</artifactId>
-                    <version>${mapapps.version}</version>
-                </plugin>
-                <plugin>
                     <groupId>de.conterra.jsregistry</groupId>
                     <artifactId>ct-jsregistry-maven-plugin</artifactId>
                     <version>${ct.jsregistry.version}</version>
@@ -394,7 +389,8 @@
                             <goal>buildPacksProperties</goal>
                         </goals>
                         <configuration>
-                            <!-- don't list not shipped bundles in the META-INF\js-registry-packs.properties file -->
+                            <!-- don't list not shipped bundles in the
+                            META-INF\js-registry-packs.properties file -->
                             <scanPackagesExcludes>apps/**,bundles/sample_tests</scanPackagesExcludes>
                         </configuration>
                     </execution>
@@ -473,9 +469,10 @@
         </plugins>
     </build>
     <scm>
-        <connection>scm:git:https://github.com/conterra/mapapps-query-builder.git</connection>
-        <developerConnection>scm:git:https://github.com/conterra/mapapps-query-builder.git</developerConnection>
-        <url>https://github.com/conterra/mapapps-query-builder</url>
+        <connection>scm:git:https://github.com/conterra/mapapps-devnet-blueprint.git</connection>
+        <developerConnection>scm:git:https://github.com/conterra/mapapps-devnet-blueprint.git
+        </developerConnection>
+        <url>https://github.com/conterra/mapapps-devnet-blueprint</url>
         <tag>HEAD</tag>
     </scm>
     <distributionManagement>
@@ -493,11 +490,11 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.15.0</mapapps.version>
+        <mapapps.version>4.15.1</mapapps.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.5.9</ct.jsregistry.version>
+        <ct.jsregistry.version>1.5.10</ct.jsregistry.version>
         <ct.jsrt-test.version>2.0.2</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
@@ -527,7 +524,7 @@
         required -->
         <mapapps.useChunkedRequestEncoding>true</mapapps.useChunkedRequestEncoding>
         <!-- enable this if "upload" profile should only deploy bundles -->
-        <skip.apps.upload>false</skip.apps.upload>
+        <skip.apps.upload>true</skip.apps.upload>
         <!-- enable this if "upload" profile should pre-optimize apps -->
         <triggerPreOptimization>false</triggerPreOptimization>
     </properties>
