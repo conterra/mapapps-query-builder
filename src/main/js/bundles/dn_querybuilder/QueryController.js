@@ -17,8 +17,9 @@ import apprt_when from "apprt-core/when";
 import async from "apprt-core/async";
 import ct_lang from "ct/_lang";
 import Filter from "ct/store/Filter";
-import {MemoryStore} from "./MemoryStore";
+import { MemoryStore } from "./MemoryStore";
 import CachingStore from "./CachingStore";
+import { toSQLWhere } from "store-api/rest/ComplexQueryToSQL";
 
 const DELAY = 500;
 
@@ -44,7 +45,7 @@ export default class QueryController {
     query(store, complexQuery, options, tool, queryBuilderWidgetModel, layer) {
         this.searchReplacer(complexQuery);
         this.queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, layer);
-        this._eventService.postEvent("dn_querybuilder/QUERY", {complexQuery: complexQuery});
+        this._eventService.postEvent("dn_querybuilder/QUERY", { complexQuery: complexQuery });
     }
 
     cancelQuery() {
@@ -79,7 +80,7 @@ export default class QueryController {
             }
         }
 
-        let query = this.#query = countFilter.query({}, {count: 0});
+        let query = this.#query = countFilter.query({}, { count: 0 });
         return apprt_when(query.total, async (total) => {
             if (total) {
                 // smartfinder
@@ -92,11 +93,9 @@ export default class QueryController {
                 // filter mode
                 if (layer) {
                     query = this.#query = store.query(complexQuery, opts || options);
-                    return apprt_when(query, (result) => {
-                        this._setProcessing(tool, false, queryBuilderWidgetModel);
-                        const idList = result ? result.map(item => item[idProperty]) : [];
-                        layer.definitionExpression = idProperty + " IN(" + idList.join() + ")";
-                    });
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
+                    const definitionExpression = toSQLWhere(complexQuery);
+                    layer.definitionExpression = definitionExpression;
                 } else {
                     // result-ui
                     const resultUiConfigured = this._resultViewerService;
@@ -147,7 +146,7 @@ export default class QueryController {
         const dataTableFactory = this._resultViewerService.dataTableFactory;
         const storeProperties = this._metadataAnalyzer.getStoreProperties(store.id);
         let dataTableTitle = storeProperties.title || store.id;
-        if(tool.id !== "queryBuilderToggleTool") {
+        if (tool.id !== "queryBuilderToggleTool") {
             dataTableTitle = tool.title;
         }
         const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery(
