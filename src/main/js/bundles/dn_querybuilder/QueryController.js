@@ -96,6 +96,7 @@ export default class QueryController {
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
                     const definitionExpression = toSQLWhere(complexQuery);
                     layer.definitionExpression = definitionExpression;
+                    return;
                 } else {
                     // result-ui
                     const resultUiConfigured = this._resultViewerService;
