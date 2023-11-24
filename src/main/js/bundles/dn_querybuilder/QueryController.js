@@ -92,7 +92,6 @@ export default class QueryController {
 
                 // filter mode
                 if (layer) {
-                    query = this.#query = store.query(complexQuery, opts || options);
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
                     const definitionExpression = toSQLWhere(complexQuery);
                     layer.definitionExpression = definitionExpression;
