@@ -46,11 +46,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>de.conterra.mapapps</groupId>
-                <artifactId>ct-mapapps-js</artifactId>
-                <version>${mapapps.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -81,11 +76,15 @@
             <version>${ct.jsrt-test.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>de.conterra.mapapps</groupId>
+                    <artifactId>mapapps-maven-plugin</artifactId>
+                    <version>${mapapps.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>de.conterra.jsregistry</groupId>
                     <artifactId>ct-jsregistry-maven-plugin</artifactId>
@@ -138,10 +137,9 @@
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
-                    <version>1.12.1</version>
+                    <version>1.14.2</version>
                     <configuration>
-                        <nodeVersion>v18.13.0</nodeVersion>
-                        <npmVersion>8.19.3</npmVersion>
+                        <nodeVersion>v20.9.0</nodeVersion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -219,7 +217,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.11.0</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -227,7 +225,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.5.0</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -235,6 +233,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>unpack-themes-src</id>
@@ -403,6 +402,12 @@
             <plugin>
                 <groupId>de.conterra.mapapps</groupId>
                 <artifactId>mapapps-maven-plugin</artifactId>
+                <configuration>
+                    <!-- only build zip files -->
+                    <skipDeploy>true</skipDeploy>
+                    <sourceDirectory>${js.build.outputPath}/apps</sourceDirectory>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
                 <executions>
                     <execution>
                         <!-- used to create .zip files containing the apps during the build -->
@@ -411,32 +416,7 @@
                             <goal>deployApps</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>build-app-template</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>deployAppTemplate</goal>
-                        </goals>
-                        <configuration>
-                            <templateFile>${project.build.directory}/${project.artifactId}-sample-app.zip</templateFile>
-                            <templateResources>
-                                <templateResource>
-                                    <directory>${js.build.outputPath}/apps/sample</directory>
-                                    <includes>
-                                        <include>**/*</include>
-                                    </includes>
-                                </templateResource>
-                            </templateResources>
-                        </configuration>
-                    </execution>
                 </executions>
-                <configuration>
-                    <!-- only build zip files -->
-                    <skipDeploy>true</skipDeploy>
-                    <createApp>false</createApp>
-                    <sourceDirectory>${js.build.outputPath}/apps</sourceDirectory>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -469,10 +449,9 @@
         </plugins>
     </build>
     <scm>
-        <connection>scm:git:https://github.com/conterra/mapapps-devnet-blueprint.git</connection>
-        <developerConnection>scm:git:https://github.com/conterra/mapapps-devnet-blueprint.git
-        </developerConnection>
-        <url>https://github.com/conterra/mapapps-devnet-blueprint</url>
+        <connection>scm:git:https://github.com/conterra/mapapps-query-builder.git</connection>
+        <developerConnection>scm:git:https://github.com/conterra/mapapps-query-builder.git</developerConnection>
+        <url>https://github.com/conterra/mapapps-query-builder</url>
         <tag>HEAD</tag>
     </scm>
     <distributionManagement>
@@ -490,11 +469,12 @@
         <root.build.outputPath>${project.build.directory}/webapp</root.build.outputPath>
         <js.build.outputPath>${root.build.outputPath}/js</js.build.outputPath>
 
-        <mapapps.version>4.15.1</mapapps.version>
+        <mapapps.version>4.16.0</mapapps.version>
+        <vuetify.version>1.5.28</vuetify.version>
         <!-- JS lib versions -->
         <apprt.version>${mapapps.version}</apprt.version>
         <!-- java lib versions -->
-        <ct.jsregistry.version>1.5.10</ct.jsregistry.version>
+        <ct.jsregistry.version>1.5.14</ct.jsregistry.version>
         <ct.jsrt-test.version>2.0.2</ct.jsrt-test.version>
 
         <!-- the default app, replaced in the *.html files to switch app names-->
@@ -555,6 +535,11 @@
                 <dependency>
                     <groupId>com.esri.js</groupId>
                     <artifactId>ags-js-api4</artifactId>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.esri</groupId>
+                    <artifactId>terraformer-js</artifactId>
                     <scope>test</scope>
                 </dependency>
                 <dependency>

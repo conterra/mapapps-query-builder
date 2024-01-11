@@ -64,15 +64,13 @@ mapapps.registerTasks({
     },
 
     /* a list of themes inside this project */
-    themes: [/*"sample-theme"*/],
+    themes: [],
     /* state that the custom theme will be dependant from map.apps everlasting theme that provides the base styles */
     hasBaseThemes: true,
     /* state that we want to support vuetify components and therefore need the vuetify core styles*/
     hasVuetify: true,
     themeChangeTargets: {
-        "vuetify": [
-            // "sample_theme"
-        ]
+        "vuetify": []
     },
     /* A list oft target browser versions. This should be streamlined with Esri JS API requirements. */
     transpileTargets: {
@@ -139,7 +137,6 @@ gulp.task("lint",
 gulp.task("preview",
     gulp.series(
         "build",
-        // "lint",
         gulp.parallel(
             "watch",
             "browser-sync"
@@ -163,20 +160,20 @@ gulp.task("run-tests",
 gulp.task("test",
     gulp.series(
         "build",
-        // "lint",
+        "lint",
         "run-tests"
     ));
 
 gulp.task("compress",
     gulp.series(
         "build",
-        "themes-compress"//,
-        // "lint"
+        "themes-compress",
+        "lint"
     )
 );
 
 gulp.task("default",
     gulp.series(
-        "build"//,
-        // "lint"
+        "build",
+        "lint"
     ));

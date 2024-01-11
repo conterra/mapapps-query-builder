@@ -1,6 +1,6 @@
 {
-    "extends": "eslint-config-ct-prodeng",
-    "plugins": [
-        "vue"
-    ]
+	"extends": "eslint-config-ct-prodeng",
+	"plugins": [
+		"vue"
+	]
 }
