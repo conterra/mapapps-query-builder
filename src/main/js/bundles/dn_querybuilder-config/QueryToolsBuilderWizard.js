@@ -308,7 +308,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
         }
     },
     _getSelectedStoreObj(id) {
-        return this.stores.find((store) => store.id === id)
+        return this.stores.find((store) => store.id === id);
     },
     _addDataField(field, editFields) {
         let fieldId;

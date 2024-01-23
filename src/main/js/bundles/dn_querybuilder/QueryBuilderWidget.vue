@@ -403,7 +403,7 @@
                     spatialInputActions: false,
                     sortSelect: false,
                     fieldInfos: false,
-                    replaceOpenedTables: false,
+                    replaceOpenedTables: false
                 },
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
