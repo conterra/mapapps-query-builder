@@ -35,7 +35,17 @@
                         xs7
                         md4
                     >
+                        <v-text-field
+                            v-if="fieldQuery.label"
+                            :value="fieldQuery.label"
+                            class="pa-0 ma-0"
+                            disabled
+                            single-line
+                            hide-details
+                            :aria-label="firstSelectAriaLabel"
+                        />
                         <v-select
+                            v-else
                             :id="'selectedFieldId' + index"
                             ref="selectedFieldIdSelect"
                             v-model="fieldQuery.selectedFieldId"

@@ -326,7 +326,8 @@ export default declare({
                     value: value || "",
                     disableField: !editOptions.field,
                     disableRelationalOperator: !editOptions.relationalOperator,
-                    disableValue: !editOptions.value
+                    disableValue: !editOptions.value,
+                    label: editOptions.label
                 });
                 this.loading = false;
             }, this);
