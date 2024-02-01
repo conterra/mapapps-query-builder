@@ -132,7 +132,7 @@
                     </v-flex>
                 </v-layout>
                 <v-layout
-                    v-if="fieldQueriesLength > 1"
+                    v-if="fieldQueriesLength > 1 && visibleElements.linkOperator"
                     :aria-label="i18n.linkOperator"
                     role="group"
                     row
@@ -400,6 +400,7 @@
                 spatialRelation: "everywhere",
                 visibleElements: {
                     spatialRelation: true,
+                    linkOperator: true,
                     spatialInputActions: false,
                     sortSelect: false,
                     fieldInfos: false,

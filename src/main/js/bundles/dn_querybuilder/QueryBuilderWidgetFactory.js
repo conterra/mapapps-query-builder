@@ -56,6 +56,7 @@ export default class QueryBuilderWidgetFactory {
         vm.visibleElements = {
             fieldInfos: model.visibleElements.defaultMode.fieldInfos,
             spatialRelation: model.visibleElements.defaultMode.spatialRelation,
+            linkOperator: model.visibleElements.defaultMode.linkOperator,
             spatialInputActions: model.visibleElements.defaultMode.spatialInputActions,
             sortSelect: model.visibleElements.defaultMode.sortSelect,
             replaceOpenedTables: model.visibleElements.defaultMode.replaceOpenedTables

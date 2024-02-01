@@ -61,6 +61,7 @@ export default class EditableQueryBuilderWidgetFactory {
         vm.visibleElements = {
             fieldInfos: model.visibleElements.predefinedMode.fieldInfos,
             spatialRelation: model.visibleElements.predefinedMode.spatialRelation,
+            linkOperator: model.visibleElements.predefinedMode.linkOperator,
             spatialInputActions: false,
             sortSelect: model.visibleElements.predefinedMode.sortSelect,
             replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables

@@ -46,12 +46,14 @@
                     "defaultMode": {
                         "spatialRelation": true,
                         "spatialInputActions": false,
+                        "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
                         "replaceOpenedTables": true
                     },
                     "predefinedMode": {
-                        "spatialRelation": true,
+                        "spatialRelation": false,
+                        "linkOperator": false,
                         "sortSelect": false,
                         "fieldInfos": false,
                         "replaceOpenedTables": true
@@ -210,6 +212,11 @@
                                 "gattung": {
                                     "$eq": "Ahorn (Acer)"
                                 }
+                            },
+                            {
+                                "gattung": {
+                                    "$eq": "Ahorn (Acer)"
+                                }
                             }
                         ]
                     },
@@ -218,9 +225,17 @@
                         "editable": true,
                         "editOptions": {
                             "spatialRelation": true,
-                            "linkOperator": true,
+                            "linkOperator": false,
                             "editFields": [
                                 {
+                                    "label": "Baumart 1",
+                                    "field": false,
+                                    "relationalOperator": false,
+                                    "value": true
+                                },
+
+                                {
+                                    "label": "Baumart 2",
                                     "field": false,
                                     "relationalOperator": false,
                                     "value": true

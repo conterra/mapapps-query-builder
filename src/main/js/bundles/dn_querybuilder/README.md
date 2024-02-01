@@ -152,12 +152,14 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
         "defaultMode": {
             "spatialRelation": true,
             "spatialInputActions": false,
+            "linkOperator": true,
             "sortSelect": false,
             "fieldInfos": false,
             "replaceOpenedTables": false
         },
         "predefinedMode": {
             "spatialRelation": true,
+            "linkOperator": true,
             "sortSelect": false,
             "fieldInfos": false,
             "replaceOpenedTables": false

@@ -198,12 +198,14 @@
                     "defaultMode": {
                         "spatialRelation": true,
                         "spatialInputActions": false,
+                        "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
                         "replaceOpenedTables": false
                     },
                     "predefinedMode": {
                         "spatialRelation": true,
+                        "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
                         "replaceOpenedTables": false
