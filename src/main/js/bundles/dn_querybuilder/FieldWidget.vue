@@ -401,11 +401,11 @@
             },
             relationalOperatorChanged: function (relationalOperator, fieldQuery) {
                 const selectedField = this.selectedField;
-                if (fieldQuery.value === null || fieldQuery.value === "") { /* only if no value was selected*/
+                if (relationalOperator === "$in") {
+                    fieldQuery.value = [];
+                } else if (fieldQuery.value === null || fieldQuery.value === "") { /* only if no value was selected*/
                     if (relationalOperator === "$exists") {
                         fieldQuery.value = true;
-                    } else if (relationalOperator === "$in") {
-                        fieldQuery.value = [];
                     } else {
                         if (selectedField.type === "date") {
                             fieldQuery.value = "";
