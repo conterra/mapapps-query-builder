@@ -80,6 +80,53 @@ export default declare({
     replaceOpenedTables: false,
     metadataQuery: null,
     metadataDelay: 500,
+    operators: {},
+    defaultOperators: {
+        default : {
+            codedvalue: [
+                {value: "$eq", text: "is"},
+                {value: "!$eq", text: "is_not"},
+                {value: "$gt", text: "is_greater_than"},
+                {value: "$gte", text: "is_greater_or_equal"},
+                {value: "$lt", text: "is_less_than"},
+                {value: "$lte", text: "is_less_or_equal"},
+                {value: "$exists", text: "exists"}
+            ],
+            boolean: [
+                {value: "$eq", text: "is"},
+                {value: "!$eq", text: "is_not"},
+                {value: "$exists", text: "exists"}
+            ],
+            string: [
+                {value: "$eq", text: "is"},
+                {value: "!$eq", text: "is_not"},
+                {value: "$eqw", text: "eqw"},
+                {value: "$suggest", text: "suggest"},
+                {value: "$exists", text: "exists"},
+                {value: "$in", text: "in"}
+            ],
+            number:   [
+                {value: "$eq", text: "is"},
+                {value: "!$eq", text: "is_not"},
+                {value: "$gt", text: "is_greater_than"},
+                {value: "$gte", text: "is_greater_or_equal"},
+                {value: "$lt", text: "is_less_than"},
+                {value: "$lte", text: "is_less_or_equal"},
+                {value: "$exists", text: "exists"},
+                {value: "$in", text: "in"}
+            ],
+            date: [
+                {value: "$lte", text: "before"},
+                {value: "$gte", text: "after"},
+                {value: "$exists", text: "exists"}
+            ],
+            default: [
+                {value: "$eq", text: "is"},
+                {value: "!$eq", text: "is_not"},
+                {value: "$exists", text: "exists"}
+            ]
+        }
+    },
 
     activate() {
         this.locale = Locale.getCurrent().getLanguage();
@@ -87,6 +134,9 @@ export default declare({
         this.linkOperator = this.defaultLinkOperator;
         this.spatialRelation = this.defaultSpatialRelation;
         this.fieldQueries = [];
+        this.i18n = this._i18n.get();
+        this.loadi18nText(this.defaultOperators);
+        this.prepareOperators(this.operators);
 
         const connect = this.connect = new Connect();
         connect.connect(this._tool, "onActivate", () => {
@@ -568,5 +618,37 @@ export default declare({
 
     _selectedStoreStillAvailable(stores) {
         return stores.find((store) => store.id === this.selectedStoreId);
+    },
+
+    loadi18nText(operators) {
+        if (typeof operators === 'object' && operators !== null) {
+            if (Array.isArray(operators)) {
+                operators.forEach(item => this.loadi18nText(item));
+            } else {
+                Object.keys(operators).forEach(key => {
+                    if (typeof operators[key] === 'object' && operators[key] !== null) {
+                        this.loadi18nText(operators[key]);
+                    } else if (key === "text") {
+                        const replacement = this.i18n.ui.relationalOperators[operators[key]];
+                        if (replacement) {
+                            operators[key] = replacement;
+                        }
+                    }
+                });
+            }
+        }
+        return;
+    },
+
+    prepareOperators(operators){
+        const completeOperators = {...this.defaultOperators};
+        Object.keys(operators).forEach(configuration => {
+            completeOperators[configuration] = {...this.defaultOperators.default};
+            Object.keys(operators[configuration]).forEach(type => {
+                completeOperators[configuration][type] = operators[configuration][type];
+            });
+        });
+        this.operators = completeOperators;
+        return;
     }
 });

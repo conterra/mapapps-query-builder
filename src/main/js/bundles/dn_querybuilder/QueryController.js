@@ -81,8 +81,13 @@ export default class QueryController {
         }
 
         let query = this.#query = countFilter.query({}, { count: 0 });
-        return apprt_when(query.total, async (total) => {
-            if (total) {
+        let totalInQuery = true;
+        if(!query.total){
+            query.total= query;
+            totalInQuery = false;
+        }
+        return apprt_when(query.total, async (res) => {
+            if (res && totalInQuery || res.total ) {
                 // smartfinder
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);

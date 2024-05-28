@@ -99,7 +99,7 @@ export default class QueryBuilderWidgetFactory {
                 "activeSpatialInputAction", "allowMultipleSpatialInputs", "negateSpatialInput", "replaceOpenedTables")
             .syncAllToLeft("locale", "storeData", "sortFieldData", "enableDistinctValues",
                 "spatialInputActions", "activeSpatialInputActionDescription",
-                "loading", "processing", "activeTool")
+                "loading", "processing", "activeTool", "operators")
             .enable()
             .syncToLeftNow();
     }
