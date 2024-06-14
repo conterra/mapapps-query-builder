@@ -49,7 +49,7 @@ import "dijit/layout/BorderContainer";
 export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin, _CssStateMixin, _Connect], {
     templateString: templateStringContent,
     baseClass: "queryBuilderWizard",
-    constructor(opts) {
+    constructor() {
         this.inherited(arguments);
     },
     destroyInstance(instance) {
@@ -118,7 +118,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
             });
         }
     },
-    _createWindow(url, title) {
+    _createWindow(url) {
         window.open(url, "_blank");
     },
     _iconClassHelp() {
@@ -265,8 +265,8 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                 results = 0;
                 d_array.forEach(objects, (object, i) => {
                     i = 0;
-                    ct_lang.forEachOwnProp(object, function (v1, n1) {
-                        ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                    ct_lang.forEachOwnProp(object, function (v1) {
+                        ct_lang.forEachOwnProp(v1, function () {
                             i++;
                         });
                     });
@@ -285,8 +285,8 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                     results = 0;
                     d_array.forEach(objects, (object, i) => {
                         i = 0;
-                        ct_lang.forEachOwnProp(object, function (v1, n1) {
-                            ct_lang.forEachOwnProp(v1, function (v2, n2) {
+                        ct_lang.forEachOwnProp(object, function (v1) {
+                            ct_lang.forEachOwnProp(v1, function () {
                                 i++;
                             });
                         });

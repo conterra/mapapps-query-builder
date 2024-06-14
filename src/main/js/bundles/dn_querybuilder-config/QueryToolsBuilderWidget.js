@@ -32,7 +32,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
 
     baseClass: "ctToolsBuilderWidget",
     templateString: templateStringContent,
-    constructor(opts) {
+    constructor() {
         this._listeners = new _Connect();
     },
     postCreate() {

@@ -59,7 +59,6 @@ export default class QueryController {
 
     queryStore(store, complexQuery, options, tool, queryBuilderWidgetModel, layer) {
         this._setProcessing(tool, true, queryBuilderWidgetModel);
-        const filter = new Filter(store, complexQuery, options);
         const countFilter = new Filter(store, complexQuery, {});
         const idProperty = store.idProperty;
         let opts = null;

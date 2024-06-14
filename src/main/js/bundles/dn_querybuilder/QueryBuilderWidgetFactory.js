@@ -68,7 +68,7 @@ export default class QueryBuilderWidgetFactory {
             model.addFieldQuery();
             model.getFieldData();
         });
-        vm.$on('search', (param) => {
+        vm.$on('search', () => {
             model.search();
         });
         vm.$on('cancel-search', () => {

@@ -210,7 +210,7 @@ export default declare([_Connect], {
         return data.find((d) => d.pid === pid);
     },
 
-    _onCreateQueryTool(event) {
+    _onCreateQueryTool() {
         const wizard = this._createWizard({});
         this._openWizardWindow(wizard, false);
     },

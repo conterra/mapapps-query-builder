@@ -144,7 +144,7 @@ export default class MetadataAnalyzer {
                     fieldData.loading = false;
                     this.#distinctValueQuery = null;
                     resolve();
-                }, (error) => {
+                }, () => {
                     fieldData.distinctValues = [];
                     fieldData.loading = false;
                     this.#distinctValueQuery = null;
@@ -188,7 +188,7 @@ export default class MetadataAnalyzer {
                         fieldData.loading = false;
                         this.#distinctValueQuery = null;
                         resolve();
-                    }, (error) => {
+                    }, () => {
                         fieldData.distinctValues = [];
                         fieldData.loading = false;
                         this.#distinctValueQuery = null;
