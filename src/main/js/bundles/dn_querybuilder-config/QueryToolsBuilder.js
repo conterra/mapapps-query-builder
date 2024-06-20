@@ -21,10 +21,19 @@ import d_registry from "dijit/registry";
 
 import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
-import ComplexMemoryStore from "ct/store/ComplexMemory";
+import { SyncWritableInMemoryStore } from "store-api/InMemoryStore";
 
 import ToolsBuilderWidget from "./QueryToolsBuilderWidget";
 import ToolsBuilderWizard from "./QueryToolsBuilderWizard";
+
+class LazyConfigStore extends SyncWritableInMemoryStore {
+    constructor(opts) {
+        super(opts);
+    }
+    setData(data) {
+        this._data = data;
+    }
+}
 
 export default declare([_Connect], {
 
@@ -60,7 +69,7 @@ export default declare([_Connect], {
 
     _getConfigStore() {
         if (!this._configStore) {
-            this._configStore = new ComplexMemoryStore({
+            this._configStore = new LazyConfigStore({
                 data: [],
                 idProperty: "pid",
                 metadata: {

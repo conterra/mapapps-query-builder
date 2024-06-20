@@ -25,7 +25,7 @@ import _Connect from "ct/_Connect";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import ct_css from "ct/util/css";
-import ComplexMemoryStore from "ct/store/ComplexMemory";
+import { AsyncInMemoryStore } from "store-api/InMemoryStore";
 import DataViewModel from "dataview/DataViewModel";
 import DataView from "dataview/DataView";
 
@@ -526,7 +526,7 @@ export default declare([_BuilderWidget, _TemplatedMixin, _WidgetsInTemplateMixin
                 value: value
             });
         });
-        const store = new ComplexMemoryStore({
+        const store = new AsyncInMemoryStore({
             data: placeholderArray,
             idProperty: "id",
             metadata: {
