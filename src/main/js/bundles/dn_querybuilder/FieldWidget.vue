@@ -432,9 +432,7 @@
                     return [];
                 }
                 let type = field.type;
-                //console.log(field)
                 let operators = [];
-                //console.log(this.operators[field.operatorClass], field.operatorClass, this.operators.default[type]);
                 if (type === "guid" || type === "global-id"){
                     type = "string";
                 }
