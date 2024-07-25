@@ -253,6 +253,7 @@
                     :enable-distinct-values="enableDistinctValues"
                     :show-field-infos="visibleElements.fieldInfos"
                     :i18n="i18n"
+                    :operators="operators"
                     @remove="removeField"
                     @add="addField"
                 />
@@ -429,7 +430,8 @@
                 linkOperatorsDisabled: true,
                 ariaLabelAdded: false,
                 textToRead: "",
-                replaceOpenedTables: false
+                replaceOpenedTables: false,
+                operators: {default:{default:[]}}
             };
         },
         computed: {

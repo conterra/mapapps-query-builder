@@ -290,6 +290,12 @@
             showFieldInfos: {
                 type: Boolean,
                 default: false
+            },
+            operators: {
+                type: Object,
+                default: () => {
+                    return {default:{default: []}};
+                }
             }
         },
         data() {
@@ -388,13 +394,12 @@
                 const selectedField = this.selectedField;
                 this.getDistinctValues(value, selectedField);
                 if (selectedField.type === "date") {
-                    fieldQuery.value = null;
-                    fieldQuery.relationalOperator = "$lte";
+                    fieldQuery.value = new Date();
                 } else {
                     fieldQuery.value = (selectedField.codedValues[0]
                         && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
-                    fieldQuery.relationalOperator = "$eq";
                 }
+                fieldQuery.relationalOperator = this.getRelationalOperators(selectedField)[0].value;
                 if (fieldQuery.relationalOperator === "$exists") {
                     fieldQuery.value = true;
                 }
@@ -408,7 +413,7 @@
                         fieldQuery.value = true;
                     } else {
                         if (selectedField.type === "date") {
-                            fieldQuery.value = "";
+                            fieldQuery.value = new Date();
                         } else {
                             fieldQuery.value = (selectedField.codedValues[0]
                                 && selectedField.codedValues[0].code) || selectedField.distinctValues[0] || "";
@@ -426,59 +431,22 @@
                 if (!field) {
                     return [];
                 }
-                const type = field.type;
-                switch (type) {
-                    case "codedvalue":
-                        return [
-                            {value: "$eq", text: this.i18n.relationalOperators.is},
-                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
-                            {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
-                            {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
-                            {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists}
-                        ];
-                    case "boolean":
-                        return [
-                            {value: "$eq", text: this.i18n.relationalOperators.is},
-                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists}
-                        ];
-                    case "string":
-                    case "guid":
-                    case "global-id":
-                        return [
-                            {value: "$eq", text: this.i18n.relationalOperators.is},
-                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
-                            {value: "$eqw", text: this.i18n.relationalOperators.eqw},
-                            {value: "$suggest", text: this.i18n.relationalOperators.suggest},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists},
-                            {value: "$in", text: this.i18n.relationalOperators.in}
-                        ];
-                    case "number":
-                        return [
-                            {value: "$eq", text: this.i18n.relationalOperators.is},
-                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
-                            {value: "$gt", text: this.i18n.relationalOperators.is_greater_than},
-                            {value: "$gte", text: this.i18n.relationalOperators.is_greater_or_equal},
-                            {value: "$lt", text: this.i18n.relationalOperators.is_less_than},
-                            {value: "$lte", text: this.i18n.relationalOperators.is_less_or_equal},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists},
-                            {value: "$in", text: this.i18n.relationalOperators.in}
-                        ];
-                    case "date":
-                        return [
-                            {value: "$lte", text: this.i18n.relationalOperators.before},
-                            {value: "$gte", text: this.i18n.relationalOperators.after},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists}
-                        ];
-                    default:
-                        return [
-                            {value: "$eq", text: this.i18n.relationalOperators.is},
-                            {value: "!$eq", text: this.i18n.relationalOperators.is_not},
-                            {value: "$exists", text: this.i18n.relationalOperators.exists}
-                        ];
+                let type = field.type;
+                let operators = [];
+                if (type === "guid" || type === "global-id"){
+                    type = "string";
                 }
+                if(field.operatorClass && this.operators[field.operatorClass]){
+                    operators = this.operators[field.operatorClass][type];
+                }
+                else{
+                    operators = this.operators.default[type];
+                }
+                if(!operators){
+                    operators = this.operators.default.default;
+                }
+                return operators;
+
             },
             getDistinctValues(value, selectedField) {
                 this.$root.$emit("getDistinctValues", {value, selectedField});

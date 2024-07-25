@@ -74,7 +74,8 @@ export default class MetadataAnalyzer {
                                 type: field.type,
                                 codedValues: codedValues,
                                 distinctValues: [],
-                                loading: false
+                                loading: false,
+                                operatorClass: field.operatorClass
                             });
                         }
                     });

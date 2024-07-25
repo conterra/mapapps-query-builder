@@ -218,7 +218,52 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
                 ],
                 "width": "2px"
             }
-        }
+        },
+        "operators": {
+            "default" : {
+                "codedvalue": [
+                    {"value": "$eq", "text": "${ui.relationalOperators.is}"},
+                    {"value": "!$eq", "text": "${ui.relationalOperators.is_not}"},
+                    {"value": "$gt", "text": "${ui.relationalOperators.is_greater_than}"},
+                    {"value": "$gte", "text": "${ui.relationalOperators.is_greater_or_equal}"},
+                    {"value": "$lt", "text": "${ui.relationalOperators.is_less_than}"},
+                    {"value": "$lte", "text": "${ui.relationalOperators.is_less_or_equal}"},
+                    {"value": "$exists", "text": "${ui.relationalOperators.exists}"}
+                ],
+                "boolean": [
+                    {"value": "$eq", "text": "${ui.relationalOperators.is}"},
+                    {"value": "!$eq", "text": "${ui.relationalOperators.is_not}"},
+                    {"value": "$exists", "text": "${ui.relationalOperators.exists}"}
+                ],
+                "string": [
+                    {"value": "$eq", "text": "${ui.relationalOperators.is}"},
+                    {"value": "!$eq", "text": "${ui.relationalOperators.is_not}"},
+                    {"value": "$eqw", "text": "${ui.relationalOperators.eqw}"},
+                    {"value": "$suggest", "text": "${ui.relationalOperators.suggest}"},
+                    {"value": "$exists", "text": "${ui.relationalOperators.exists}"},
+                    {"value": "$in", "text": "${ui.relationalOperators.in}"}
+                ],
+                "number":   [
+                    {"value": "$eq", "text": "${ui.relationalOperators.is}"},
+                    {"value": "!$eq", "text": "${ui.relationalOperators.is_not}"},
+                    {"value": "$gt", "text": "${ui.relationalOperators.is_greater_than}"},
+                    {"value": "$gte", "text": "${ui.relationalOperators.is_greater_or_equal}"},
+                    {"value": "$lt", "text": "is_less_than"},
+                    {"value": "$lte", "text": "${ui.relationalOperators.is_less_or_equal}"},
+                    {"value": "$exists", "text": "${ui.relationalOperators.exists}"},
+                    {"value": "$in", "text": "${ui.relationalOperators.in}"}
+                ],
+                "date": [
+                    {"value": "$lte", "text": "${ui.relationalOperators.before}"},
+                    {"value": "$gte", "text": "${ui.relationalOperators.after}"},
+                    {"value": "$exists", "text": "${ui.relationalOperators.exists}"}
+                ],
+                "default": [
+                    {"value": "$eq", "text": "${ui.relationalOperators.is}"},
+                    {"value": "!$eq", "text": "${ui.relationalOperators.is_not}"},
+                    {"value": "$exists", "text": "${ui.relationalOperators.exists}"}
+                ]
+            }
     }
 }
 ```
@@ -236,6 +281,7 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 | hiddenFields                     | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the field select                                                                                               |
 | hiddenSortFields                 | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the sort field select                                                                                          |
 | symbols                          | Object  |                                                         |                  | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
+| operators | Object |  | | Specify the allowed operators when formulating a costum query. All provided information is option, if no information is given the default will be chosen. You could also provide additional field types. Further, you can add a specififc `operatorClass` to the fieds ans specify the opertors here like: `{"operators": {default {...}, operatorClass: {...}}}`
 
 ### QueryTools:
 ```

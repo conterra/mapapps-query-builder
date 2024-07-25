@@ -81,7 +81,7 @@ export default class EditableQueryBuilderWidgetFactory {
             model.getDistinctValues(args.value, args.selectedField, vm.selectedStoreId);
         });
         this.#queryBuilderWidgetModelBinding = Binding.for(vm, model)
-            .syncAll("replaceOpenedTables")
+            .syncAll("replaceOpenedTables", "operators")
             .enable()
             .syncToLeftNow();
 
