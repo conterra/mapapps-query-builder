@@ -12,7 +12,7 @@ As an admin, it is possible to create complex queries using an interactive graph
 2. After that, add some stores to your app.
 3. Finally you can create a new Query Tool. (Tools -> Query Builder Config)
 
-The Query Builder uses the Complex Query Language: https://docs.conterra.de/en/mapapps/latest/developersguide/concepts/complex-query.html#_complex_query_language
+The Query Builder uses the Complex Query Language: [https://docs.conterra.de/en/mapapps/4.14/developersguide/concepts/complex-query.html](https://docs.conterra.de/en/mapapps/4.14/developersguide/concepts/complex-query.html)
 
 To make the functions of this bundle available to the user, the following tool can be added to a toolset:
 
