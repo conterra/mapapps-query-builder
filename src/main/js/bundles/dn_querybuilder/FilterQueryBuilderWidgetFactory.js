@@ -132,6 +132,7 @@ export default class FilterQueryBuilderWidgetFactory {
         vm.spatialRelation = "everywhere";
         vm.allowMultipleSpatialInputs = false;
         vm.enableDistinctValues = model.enableDistinctValues;
+        vm.operators = model.operators;
         vm.visibleElements = {
             fieldInfos: model.visibleElements.filterMode.fieldInfos,
             linkOperator: true,
