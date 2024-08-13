@@ -154,27 +154,32 @@
                         </v-subheader>
                     </v-flex>
                     <v-flex xs9>
-                        <v-radio-group
-                            v-model="linkOperator"
-                            class="mt-2"
-                            row
-                            hide-details
-                        >
-                            <v-radio
-                                :label="i18n.and"
-                                :disabled="disableLinkOperatorRadio"
+                        <fieldset>
+                            <legend class="visually-hidden">
+                                {{ i18n.linkOperator }}
+                            </legend>
+                            <v-radio-group
+                                v-model="linkOperator"
+                                class="mt-2"
+                                row
                                 hide-details
-                                value="$and"
-                                color="primary"
-                            />
-                            <v-radio
-                                :label="i18n.or"
-                                :disabled="disableLinkOperatorRadio"
-                                hide-details
-                                value="$or"
-                                color="primary"
-                            />
-                        </v-radio-group>
+                            >
+                                <v-radio
+                                    :label="i18n.and"
+                                    :disabled="disableLinkOperatorRadio"
+                                    hide-details
+                                    value="$and"
+                                    color="primary"
+                                />
+                                <v-radio
+                                    :label="i18n.or"
+                                    :disabled="disableLinkOperatorRadio"
+                                    hide-details
+                                    value="$or"
+                                    color="primary"
+                                />
+                            </v-radio-group>
+                        </fieldset>
                     </v-flex>
                 </v-layout>
                 <v-layout
