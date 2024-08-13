@@ -39,17 +39,27 @@
                             xs7
                             md4
                         >
+                            <label
+                                v-if="fieldQuery.label"
+                                :for="'fieldQueryLabel' + index"
+                                class="visually-hidden"
+                            >{{ i18n.conditionFieldNameLabel }}</label>
                             <v-text-field
                                 v-if="fieldQuery.label"
+                                :id="'fieldQueryLabel' + index"
                                 :value="fieldQuery.label"
                                 class="pa-0 ma-0"
                                 disabled
                                 single-line
                                 hide-details
-                                :aria-label="firstSelectAriaLabel"
                             />
+                            <label
+                                v-if="!fieldQuery.label"
+                                :for="'selectedFieldId' + index"
+                                class="visually-hidden"
+                            >{{ i18n.conditionFieldNameLabel }}</label>
                             <v-select
-                                v-else
+                                v-if="!fieldQuery.label"
                                 :id="'selectedFieldId' + index"
                                 ref="selectedFieldIdSelect"
                                 v-model="fieldQuery.selectedFieldId"
@@ -57,9 +67,9 @@
                                 :disabled="fieldQuery.disableField"
                                 class="pa-0 ma-0"
                                 item-value="id"
+                                item-text="title"
                                 single-line
                                 hide-details
-                                :aria-label="firstSelectAriaLabel"
                                 @change="fieldChanged($event, fieldQuery)"
                             >
                                 <template

@@ -382,6 +382,7 @@
                             or: "or",
                             enterValue: "enter value",
                             conditionFieldsetLegend: "Condition",
+                            conditionFieldNameLabel: "Field name",
                             relationalOperators: {
                                 is: "is",
                                 exists: "exists",
