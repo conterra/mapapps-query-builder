@@ -50,6 +50,7 @@ export default {
             filterTitle: "Filter",
             setFilterActionLabel: "Filter map content",
             resetFilterActionLabel: "Reset filter",
+            conditionFieldsetLegend: "Condition",
             relationalOperators: {
                 is: "is",
                 is_not: "is not",

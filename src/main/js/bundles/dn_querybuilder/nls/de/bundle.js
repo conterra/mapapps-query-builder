@@ -49,6 +49,7 @@ export default {
         filterTitle: "Filter",
         setFilterActionLabel: "Karteninhalt filtern",
         resetFilterActionLabel: "Filter zurücksetzen",
+        conditionFieldsetLegend: "Bedingung",
         relationalOperators: {
             is: "ist gleich",
             is_not: "ist nicht gleich",

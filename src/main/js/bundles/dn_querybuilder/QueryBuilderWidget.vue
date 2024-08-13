@@ -252,22 +252,23 @@
                     color="primary"
                     indeterminate
                 />
-                <field-widget
-                    v-for="(fieldQuery, index) in fieldQueries"
-                    v-else
-                    :ref="'fieldWidget_' + index"
-                    :key="index"
-                    :locale="locale"
-                    :field-query="fieldQuery"
-                    :index="index"
-                    :active-tool="activeTool"
-                    :enable-distinct-values="enableDistinctValues"
-                    :show-field-infos="visibleElements.fieldInfos"
-                    :i18n="i18n"
-                    :operators="operators"
-                    @remove="removeField"
-                    @add="addField"
-                />
+                <div v-else>
+                    <field-widget
+                        v-for="(fieldQuery, index) in fieldQueries"
+                        :ref="'fieldWidget_' + index"
+                        :key="index"
+                        :locale="locale"
+                        :field-query="fieldQuery"
+                        :index="index"
+                        :active-tool="activeTool"
+                        :enable-distinct-values="enableDistinctValues"
+                        :show-field-infos="visibleElements.fieldInfos"
+                        :i18n="i18n"
+                        :operators="operators"
+                        @remove="removeField"
+                        @add="addField"
+                    />
+                </div>
                 <v-btn
                     v-if="!editable && !processing"
                     :aria-label="i18n.aria.add"
@@ -380,6 +381,7 @@
                             and: "and",
                             or: "or",
                             enterValue: "enter value",
+                            conditionFieldsetLegend: "Condition",
                             relationalOperators: {
                                 is: "is",
                                 exists: "exists",
