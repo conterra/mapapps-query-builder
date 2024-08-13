@@ -32,18 +32,19 @@
                 >
                     <v-flex xs3>
                         <v-subheader class="pl-2">
-                            {{ i18n.selectStore }}
+                            <!-- This label is correctly defined but the rule triggers a false positive -->
+                            <!--eslint-disable-next-line vuejs-accessibility/label-has-for -->
+                            <label for="selectedStoreIdSelect">{{ i18n.selectStore }}</label>
                         </v-subheader>
                     </v-flex>
                     <v-flex xs9>
                         <v-select
                             v-if="storeData.length > 1"
+                            id="selectedStoreIdSelect"
                             ref="selectedStoreIdSelect"
                             v-model="selectedStoreId"
                             :items="storeData"
                             :loading="loading"
-                            :aria-label="i18n.aria.selectLayer"
-                            label="i18n.selectStore"
                             item-value="id"
                             class="pa-0"
                             single-line
@@ -431,7 +432,7 @@
                 ariaLabelAdded: false,
                 textToRead: "",
                 replaceOpenedTables: false,
-                operators: {default:{default:[]}}
+                operators: {default: {default: []}}
             };
         },
         computed: {
