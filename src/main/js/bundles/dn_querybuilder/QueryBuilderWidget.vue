@@ -112,27 +112,32 @@
                             </v-btn>
                         </div>
                         <div v-else>
-                            <v-radio-group
-                                v-model="spatialRelation"
-                                class="mt-2"
-                                row
-                                hide-details
-                            >
-                                <v-radio
-                                    :label="i18n.everywhere"
-                                    :disabled="disableSpatialRelationRadio"
+                            <fieldset>
+                                <legend class="visually-hidden">
+                                    {{ i18n.spatialRelation }}
+                                </legend>
+                                <v-radio-group
+                                    v-model="spatialRelation"
+                                    class="mt-2"
+                                    row
                                     hide-details
-                                    value="everywhere"
-                                    color="primary"
-                                />
-                                <v-radio
-                                    :label="i18n.currentExtent"
-                                    :disabled="disableSpatialRelationRadio"
-                                    hide-details
-                                    value="current_extent"
-                                    color="primary"
-                                />
-                            </v-radio-group>
+                                >
+                                    <v-radio
+                                        :label="i18n.everywhere"
+                                        :disabled="disableSpatialRelationRadio"
+                                        hide-details
+                                        value="everywhere"
+                                        color="primary"
+                                    />
+                                    <v-radio
+                                        :label="i18n.currentExtent"
+                                        :disabled="disableSpatialRelationRadio"
+                                        hide-details
+                                        value="current_extent"
+                                        color="primary"
+                                    />
+                                </v-radio-group>
+                            </fieldset>
                         </div>
                     </v-flex>
                 </v-layout>
