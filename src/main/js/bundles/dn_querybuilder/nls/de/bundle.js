@@ -42,7 +42,7 @@ export default {
         and: "Alle Bedingungen",
         or: "Mindestens eine Bedingung",
         enterValue: "Wert eingeben",
-        removeQuery: "Diesen Ausdruck entfernen",
+        removeQuery: "Diese Bedingung entfernen",
         multipleSpatialInputs: "Mehrere Geometrien auswählen",
         resetSpatialInput: "Räumliche Einschränkung entfernen",
         negateSpatialInput: "Außerhalb der ausgewählten Geometrie suchen",
@@ -78,9 +78,9 @@ export default {
             noResultsError: "Keine Ergebnisse für Ihre Abfrage gefunden!"
         },
         aria: {
-            add: "Neuen Ausdruck hinzufügen",
-            remove: "Aktuellen Ausdruck entfernen",
-            negate: "Aktuellen Ausdruck negieren",
+            add: "Neue Bedingung hinzufügen",
+            remove: "Aktuelle Bedingung entfernen",
+            negate: "Aktuelle Bedingung negieren",
             selectLayer: "Layer auswählen",
             sortingField: "Sortierfeldname auswählen",
             linkOperatorsEnabled: "Verknüpfungsoperatoren sind aktiv.",

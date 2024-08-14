@@ -79,9 +79,9 @@ export default {
                 noResultsError: "No results found for your query!"
             },
             aria: {
-                add: "add new field query",
-                remove: "remove current field query",
-                negate: "negate current statement",
+                add: "add new condition",
+                remove: "remove current condition",
+                negate: "negate current condition",
                 selectLayer: "select layer",
                 sortingField: "select sort field name",
                 linkOperatorsEnabled: "Link operators are active.",
