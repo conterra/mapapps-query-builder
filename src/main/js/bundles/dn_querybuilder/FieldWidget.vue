@@ -39,6 +39,8 @@
                             xs7
                             md4
                         >
+                            <!-- This label is correctly defined but the rule triggers a false positive -->
+                            <!--eslint-disable-next-line vuejs-accessibility/label-has-for -->
                             <label
                                 v-if="fieldQuery.label"
                                 :for="'fieldQueryLabel' + index"
