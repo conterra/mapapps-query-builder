@@ -32,18 +32,19 @@
                 >
                     <v-flex xs3>
                         <v-subheader class="pl-2">
-                            {{ i18n.selectStore }}
+                            <!-- This label is correctly defined but the rule triggers a false positive -->
+                            <!--eslint-disable-next-line vuejs-accessibility/label-has-for -->
+                            <label for="selectedStoreIdSelect">{{ i18n.selectStore }}</label>
                         </v-subheader>
                     </v-flex>
                     <v-flex xs9>
                         <v-select
                             v-if="storeData.length > 1"
+                            id="selectedStoreIdSelect"
                             ref="selectedStoreIdSelect"
                             v-model="selectedStoreId"
                             :items="storeData"
                             :loading="loading"
-                            :aria-label="i18n.aria.selectLayer"
-                            label="i18n.selectStore"
                             item-value="id"
                             class="pa-0"
                             single-line
@@ -111,27 +112,32 @@
                             </v-btn>
                         </div>
                         <div v-else>
-                            <v-radio-group
-                                v-model="spatialRelation"
-                                class="mt-2"
-                                row
-                                hide-details
-                            >
-                                <v-radio
-                                    :label="i18n.everywhere"
-                                    :disabled="disableSpatialRelationRadio"
+                            <fieldset>
+                                <legend class="visually-hidden">
+                                    {{ i18n.spatialRelation }}
+                                </legend>
+                                <v-radio-group
+                                    v-model="spatialRelation"
+                                    class="mt-2"
+                                    row
                                     hide-details
-                                    value="everywhere"
-                                    color="primary"
-                                />
-                                <v-radio
-                                    :label="i18n.currentExtent"
-                                    :disabled="disableSpatialRelationRadio"
-                                    hide-details
-                                    value="current_extent"
-                                    color="primary"
-                                />
-                            </v-radio-group>
+                                >
+                                    <v-radio
+                                        :label="i18n.everywhere"
+                                        :disabled="disableSpatialRelationRadio"
+                                        hide-details
+                                        value="everywhere"
+                                        color="primary"
+                                    />
+                                    <v-radio
+                                        :label="i18n.currentExtent"
+                                        :disabled="disableSpatialRelationRadio"
+                                        hide-details
+                                        value="current_extent"
+                                        color="primary"
+                                    />
+                                </v-radio-group>
+                            </fieldset>
                         </div>
                     </v-flex>
                 </v-layout>
@@ -148,27 +154,32 @@
                         </v-subheader>
                     </v-flex>
                     <v-flex xs9>
-                        <v-radio-group
-                            v-model="linkOperator"
-                            class="mt-2"
-                            row
-                            hide-details
-                        >
-                            <v-radio
-                                :label="i18n.and"
-                                :disabled="disableLinkOperatorRadio"
+                        <fieldset>
+                            <legend class="visually-hidden">
+                                {{ i18n.linkOperator }}
+                            </legend>
+                            <v-radio-group
+                                v-model="linkOperator"
+                                class="mt-2"
+                                row
                                 hide-details
-                                value="$and"
-                                color="primary"
-                            />
-                            <v-radio
-                                :label="i18n.or"
-                                :disabled="disableLinkOperatorRadio"
-                                hide-details
-                                value="$or"
-                                color="primary"
-                            />
-                        </v-radio-group>
+                            >
+                                <v-radio
+                                    :label="i18n.and"
+                                    :disabled="disableLinkOperatorRadio"
+                                    hide-details
+                                    value="$and"
+                                    color="primary"
+                                />
+                                <v-radio
+                                    :label="i18n.or"
+                                    :disabled="disableLinkOperatorRadio"
+                                    hide-details
+                                    value="$or"
+                                    color="primary"
+                                />
+                            </v-radio-group>
+                        </fieldset>
                     </v-flex>
                 </v-layout>
                 <v-layout
@@ -241,22 +252,23 @@
                     color="primary"
                     indeterminate
                 />
-                <field-widget
-                    v-for="(fieldQuery, index) in fieldQueries"
-                    v-else
-                    :ref="'fieldWidget_' + index"
-                    :key="index"
-                    :locale="locale"
-                    :field-query="fieldQuery"
-                    :index="index"
-                    :active-tool="activeTool"
-                    :enable-distinct-values="enableDistinctValues"
-                    :show-field-infos="visibleElements.fieldInfos"
-                    :i18n="i18n"
-                    :operators="operators"
-                    @remove="removeField"
-                    @add="addField"
-                />
+                <div v-else>
+                    <field-widget
+                        v-for="(fieldQuery, index) in fieldQueries"
+                        :ref="'fieldWidget_' + index"
+                        :key="index"
+                        :locale="locale"
+                        :field-query="fieldQuery"
+                        :index="index"
+                        :active-tool="activeTool"
+                        :enable-distinct-values="enableDistinctValues"
+                        :show-field-infos="visibleElements.fieldInfos"
+                        :i18n="i18n"
+                        :operators="operators"
+                        @remove="removeField"
+                        @add="addField"
+                    />
+                </div>
                 <v-btn
                     v-if="!editable && !processing"
                     :aria-label="i18n.aria.add"
@@ -369,6 +381,8 @@
                             and: "and",
                             or: "or",
                             enterValue: "enter value",
+                            conditionFieldsetLegend: "Condition",
+                            conditionFieldNameLabel: "Field name",
                             relationalOperators: {
                                 is: "is",
                                 exists: "exists",
@@ -431,7 +445,7 @@
                 ariaLabelAdded: false,
                 textToRead: "",
                 replaceOpenedTables: false,
-                operators: {default:{default:[]}}
+                operators: {default: {default: []}}
             };
         },
         computed: {

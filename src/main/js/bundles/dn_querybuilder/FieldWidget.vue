@@ -21,238 +21,255 @@
             v-if="!fieldQuery.disableField || !fieldQuery.disableRelationalOperator || !fieldQuery.disableValue"
             class="mb-2"
         >
-            <v-container
-                fluid
-                grid-list-md
-                class="pa-1"
-            >
-                <v-layout
-                    row
-                    wrap
-                    align-center
+            <fieldset>
+                <legend class="visually-hidden">
+                    {{ i18n.conditionFieldsetLegend }}
+                </legend>
+                <v-container
+                    fluid
+                    grid-list-md
+                    class="pa-1"
                 >
-                    <v-flex
-                        xs7
-                        md4
+                    <v-layout
+                        row
+                        wrap
+                        align-center
                     >
-                        <v-text-field
-                            v-if="fieldQuery.label"
-                            :value="fieldQuery.label"
-                            class="pa-0 ma-0"
-                            disabled
-                            single-line
-                            hide-details
-                            :aria-label="firstSelectAriaLabel"
-                        />
-                        <v-select
-                            v-else
-                            :id="'selectedFieldId' + index"
-                            ref="selectedFieldIdSelect"
-                            v-model="fieldQuery.selectedFieldId"
-                            :items="fieldQuery.fields"
-                            :disabled="fieldQuery.disableField"
-                            class="pa-0 ma-0"
-                            item-value="id"
-                            single-line
-                            hide-details
-                            :aria-label="firstSelectAriaLabel"
-                            @change="fieldChanged($event, fieldQuery)"
+                        <v-flex
+                            xs7
+                            md4
                         >
-                            <template
-                                slot="selection"
-                                slot-scope="data"
-                            >
-                                <div v-if="showFieldInfos">
-                                    {{ data.item.title }} {{ data.item.infos }}
-                                </div>
-                                <div v-else>
-                                    {{ data.item.title }}
-                                </div>
-                            </template>
-                            <template
-                                slot="item"
-                                slot-scope="data"
-                            >
-                                <div v-if="showFieldInfos">
-                                    {{ data.item.title }} {{ data.item.infos }}
-                                </div>
-                                <div v-else>
-                                    {{ data.item.title }}
-                                </div>
-                            </template>
-                        </v-select>
-                    </v-flex>
-                    <v-flex
-                        xs5
-                        md3
-                    >
-                        <v-select
-                            ref="relationalOperatorSelect"
-                            v-model="fieldQuery.relationalOperator"
-                            :items="getRelationalOperators(selectedField)"
-                            :disabled="fieldQuery.disableRelationalOperator"
-                            class="pa-0 ma-0"
-                            single-line
-                            hide-details
-                            :aria-label="relationalOperatorAriaLabel"
-                            @change="relationalOperatorChanged($event, fieldQuery)"
-                        />
-                    </v-flex>
-                    <v-flex
-                        :class="{ xs12: $root.editable || $root.fieldQueries.length < 2, md5: $root.editable
-                            || $root.fieldQueries.length < 2}"
-                        xs10
-                        md4
-                    >
-                        <v-menu
-                            v-if="selectedField && selectedField.type === 'date'
-                                && fieldQuery.relationalOperator !== '$exists'"
-                            ref="dateMenu"
-                            :close-on-content-click="false"
-                            transition="scale-transition"
-                            lazy
-                            offset-y
-                            full-width
-                            max-width="290px"
-                            min-width="290px"
-                        >
-                            <template #activator="{ on }">
-                                <v-text-field
-                                    v-model="dateString"
-                                    :disabled="fieldQuery.disableValue"
-                                    :placeholder="i18n.enterValue"
-                                    class="pa-0 ma-0"
-                                    required
-                                    hide-details
-                                    :aria-label="i18n.enterValue"
-                                    readonly
-                                    v-on="on"
-                                />
-                            </template>
-                            <v-date-picker
-                                v-model="dateString"
-                                color="primary"
-                                :locale="locale"
-                                full-width
-                                scrollable
+                            <!-- This label is correctly defined but the rule triggers a false positive -->
+                            <!--eslint-disable-next-line vuejs-accessibility/label-has-for -->
+                            <label
+                                v-if="fieldQuery.label"
+                                :for="'fieldQueryLabel' + index"
+                                class="visually-hidden"
+                            >{{ i18n.conditionFieldNameLabel }}</label>
+                            <v-text-field
+                                v-if="fieldQuery.label"
+                                :id="'fieldQueryLabel' + index"
+                                :value="fieldQuery.label"
+                                class="pa-0 ma-0"
+                                disabled
+                                single-line
+                                hide-details
                             />
-                        </v-menu>
-                        <v-select
-                            v-else-if="selectedField && selectedField.type === 'boolean'
-                                || fieldQuery.relationalOperator === '$exists'"
-                            ref="valueBooleanSelect"
-                            v-model="fieldQuery.value"
-                            :items="getBooleanItems()"
-                            :disabled="fieldQuery.disableValue"
-                            class="pa-0 ma-0"
-                            single-line
-                            hide-details
-                        />
-                        <v-select
-                            v-else-if="selectedField && selectedField.codedValues.length > 0"
-                            ref="valueCodedValueSelect"
-                            v-model="fieldQuery.value"
-                            :items="selectedField && selectedField.codedValues"
-                            :disabled="fieldQuery.disableValue"
-                            class="pa-0 ma-0"
-                            item-value="code"
-                            item-text="name"
-                            single-line
-                            hide-details
-                            :multiple="fieldQuery.relationalOperator==='$in'"
-                        />
-                        <v-combobox
-                            v-else-if="selectedField && enableDistinctValues && selectedField.type === 'number'"
-                            ref="valueNumberDistinctValuesCombobox"
-                            v-model="fieldQuery.value"
-                            :items="selectedField.distinctValues"
-                            :disabled="fieldQuery.disableValue"
-                            :rules="[rules.required, rules.number]"
-                            :loading="selectedField.loading"
-                            :placeholder="i18n.enterValue"
-                            class="pa-0 ma-0"
-                            required
-                            single-line
-                            hide-details
-                            hide-no-data
-                            clearable
-                            :search-input.sync="search"
-                            :multiple="fieldQuery.relationalOperator==='$in'"
-                        />
-                        <v-combobox
-                            v-else-if="selectedField && enableDistinctValues && (selectedField.type === 'string'
-                                || selectedField.type === 'guid' || selectedField.type === 'global-id')"
-                            ref="valueStringDistinctValuesCombobox"
-                            v-model="fieldQuery.value"
-                            :items="selectedField.distinctValues"
-                            :disabled="fieldQuery.disableValue"
-                            :rules="[rules.required]"
-                            :loading="selectedField.loading"
-                            :placeholder="i18n.enterValue"
-                            class="pa-0 ma-0"
-                            required
-                            single-line
-                            hide-details
-                            hide-no-data
-                            clearable
-                            :search-input.sync="search"
-                            :multiple="fieldQuery.relationalOperator==='$in'"
-                        />
-                        <v-text-field
-                            v-else-if="selectedField && selectedField.type === 'number'"
-                            v-model="fieldQuery.value"
-                            :disabled="fieldQuery.disableValue"
-                            :rules="[rules.required]"
-                            :loading="selectedField.loading"
-                            :placeholder="i18n.enterValue"
-                            :aria-label="i18n.enterValue"
-                            type="number"
-                            class="pa-0 ma-0"
-                            required
-                            hide-details
-                            clearable
-                        />
-                        <v-text-field
-                            v-else
-                            v-model="fieldQuery.value"
-                            :disabled="fieldQuery.disableValue"
-                            :loading="selectedField.loading"
-                            :placeholder="i18n.enterValue"
-                            :aria-label="i18n.enterValue"
-                            :rules="[rules.required]"
-                            class="pa-0 ma-0"
-                            required
-                            hide-details
-                            clearable
-                        />
-                    </v-flex>
-                    <v-flex
-                        v-if="!$root.editable"
-                        xs2
-                        md1
-                    >
-                        <v-fab-transition>
-                            <v-tooltip right>
-                                <template #activator="{ on }">
-                                    <v-btn
-                                        v-if="$root.fieldQueries.length > 1"
-                                        :disabled="$root.editable"
-                                        :aria-label="i18n.aria.remove"
-                                        class="ma-0"
-                                        icon
-                                        small
-                                        v-on="on"
-                                        @click="$emit('remove', fieldQuery)"
-                                    >
-                                        <v-icon>delete</v-icon>
-                                    </v-btn>
+                            <label
+                                v-if="!fieldQuery.label"
+                                :for="'selectedFieldId' + index"
+                                class="visually-hidden"
+                            >{{ i18n.conditionFieldNameLabel }}</label>
+                            <v-select
+                                v-if="!fieldQuery.label"
+                                :id="'selectedFieldId' + index"
+                                ref="selectedFieldIdSelect"
+                                v-model="fieldQuery.selectedFieldId"
+                                :items="fieldQuery.fields"
+                                :disabled="fieldQuery.disableField"
+                                class="pa-0 ma-0"
+                                item-value="id"
+                                item-text="title"
+                                single-line
+                                hide-details
+                                @change="fieldChanged($event, fieldQuery)"
+                            >
+                                <template
+                                    slot="selection"
+                                    slot-scope="data"
+                                >
+                                    <div v-if="showFieldInfos">
+                                        {{ data.item.title }} {{ data.item.infos }}
+                                    </div>
+                                    <div v-else>
+                                        {{ data.item.title }}
+                                    </div>
                                 </template>
-                                <span>{{ i18n.removeQuery }}</span>
-                            </v-tooltip>
-                        </v-fab-transition>
-                    </v-flex>
-                </v-layout>
-            </v-container>
+                                <template
+                                    slot="item"
+                                    slot-scope="data"
+                                >
+                                    <div v-if="showFieldInfos">
+                                        {{ data.item.title }} {{ data.item.infos }}
+                                    </div>
+                                    <div v-else>
+                                        {{ data.item.title }}
+                                    </div>
+                                </template>
+                            </v-select>
+                        </v-flex>
+                        <v-flex
+                            xs5
+                            md3
+                        >
+                            <v-select
+                                ref="relationalOperatorSelect"
+                                v-model="fieldQuery.relationalOperator"
+                                :items="getRelationalOperators(selectedField)"
+                                :disabled="fieldQuery.disableRelationalOperator"
+                                class="pa-0 ma-0"
+                                single-line
+                                hide-details
+                                :aria-label="relationalOperatorAriaLabel"
+                                @change="relationalOperatorChanged($event, fieldQuery)"
+                            />
+                        </v-flex>
+                        <v-flex
+                            :class="{ xs12: $root.editable || $root.fieldQueries.length < 2, md5: $root.editable
+                                || $root.fieldQueries.length < 2}"
+                            xs10
+                            md4
+                        >
+                            <v-menu
+                                v-if="selectedField && selectedField.type === 'date'
+                                    && fieldQuery.relationalOperator !== '$exists'"
+                                ref="dateMenu"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                lazy
+                                offset-y
+                                full-width
+                                max-width="290px"
+                                min-width="290px"
+                            >
+                                <template #activator="{ on }">
+                                    <v-text-field
+                                        v-model="dateString"
+                                        :disabled="fieldQuery.disableValue"
+                                        :placeholder="i18n.enterValue"
+                                        class="pa-0 ma-0"
+                                        required
+                                        hide-details
+                                        :aria-label="i18n.enterValue"
+                                        readonly
+                                        v-on="on"
+                                    />
+                                </template>
+                                <v-date-picker
+                                    v-model="dateString"
+                                    color="primary"
+                                    :locale="locale"
+                                    full-width
+                                    scrollable
+                                />
+                            </v-menu>
+                            <v-select
+                                v-else-if="selectedField && selectedField.type === 'boolean'
+                                    || fieldQuery.relationalOperator === '$exists'"
+                                ref="valueBooleanSelect"
+                                v-model="fieldQuery.value"
+                                :items="getBooleanItems()"
+                                :disabled="fieldQuery.disableValue"
+                                class="pa-0 ma-0"
+                                single-line
+                                hide-details
+                            />
+                            <v-select
+                                v-else-if="selectedField && selectedField.codedValues.length > 0"
+                                ref="valueCodedValueSelect"
+                                v-model="fieldQuery.value"
+                                :items="selectedField && selectedField.codedValues"
+                                :disabled="fieldQuery.disableValue"
+                                class="pa-0 ma-0"
+                                item-value="code"
+                                item-text="name"
+                                single-line
+                                hide-details
+                                :multiple="fieldQuery.relationalOperator==='$in'"
+                            />
+                            <v-combobox
+                                v-else-if="selectedField && enableDistinctValues && selectedField.type === 'number'"
+                                ref="valueNumberDistinctValuesCombobox"
+                                v-model="fieldQuery.value"
+                                :items="selectedField.distinctValues"
+                                :disabled="fieldQuery.disableValue"
+                                :rules="[rules.required, rules.number]"
+                                :loading="selectedField.loading"
+                                :placeholder="i18n.enterValue"
+                                class="pa-0 ma-0"
+                                required
+                                single-line
+                                hide-details
+                                hide-no-data
+                                clearable
+                                :search-input.sync="search"
+                                :multiple="fieldQuery.relationalOperator==='$in'"
+                            />
+                            <v-combobox
+                                v-else-if="selectedField && enableDistinctValues && (selectedField.type === 'string'
+                                    || selectedField.type === 'guid' || selectedField.type === 'global-id')"
+                                ref="valueStringDistinctValuesCombobox"
+                                v-model="fieldQuery.value"
+                                :items="selectedField.distinctValues"
+                                :disabled="fieldQuery.disableValue"
+                                :rules="[rules.required]"
+                                :loading="selectedField.loading"
+                                :placeholder="i18n.enterValue"
+                                class="pa-0 ma-0"
+                                required
+                                single-line
+                                hide-details
+                                hide-no-data
+                                clearable
+                                :search-input.sync="search"
+                                :multiple="fieldQuery.relationalOperator==='$in'"
+                            />
+                            <v-text-field
+                                v-else-if="selectedField && selectedField.type === 'number'"
+                                v-model="fieldQuery.value"
+                                :disabled="fieldQuery.disableValue"
+                                :rules="[rules.required]"
+                                :loading="selectedField.loading"
+                                :placeholder="i18n.enterValue"
+                                :aria-label="i18n.enterValue"
+                                type="number"
+                                class="pa-0 ma-0"
+                                required
+                                hide-details
+                                clearable
+                            />
+                            <v-text-field
+                                v-else
+                                v-model="fieldQuery.value"
+                                :disabled="fieldQuery.disableValue"
+                                :loading="selectedField.loading"
+                                :placeholder="i18n.enterValue"
+                                :aria-label="i18n.enterValue"
+                                :rules="[rules.required]"
+                                class="pa-0 ma-0"
+                                required
+                                hide-details
+                                clearable
+                            />
+                        </v-flex>
+                        <v-flex
+                            v-if="!$root.editable"
+                            xs2
+                            md1
+                        >
+                            <v-fab-transition>
+                                <v-tooltip right>
+                                    <template #activator="{ on }">
+                                        <v-btn
+                                            v-if="$root.fieldQueries.length > 1"
+                                            :disabled="$root.editable"
+                                            :aria-label="i18n.aria.remove"
+                                            class="ma-0"
+                                            icon
+                                            small
+                                            v-on="on"
+                                            @click="$emit('remove', fieldQuery)"
+                                        >
+                                            <v-icon>delete</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>{{ i18n.removeQuery }}</span>
+                                </v-tooltip>
+                            </v-fab-transition>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </fieldset>
         </div>
     </v-scroll-y-transition>
 </template>
