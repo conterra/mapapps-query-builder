@@ -52,6 +52,13 @@ export default class MetadataAnalyzer {
                                 }
                             }
                         }
+                        if(metadata.typeIdField){
+                            if (domainsFromTypes[metadata.typeIdField]) {
+                                domainsFromTypes[metadata.typeIdField].push({code: type.id, name: type.name});
+                            } else {
+                                domainsFromTypes[metadata.typeIdField] = [{code: type.id, name: type.name}];
+                            }
+                        }
                     });
 
                     const fields = metadata.fields;
