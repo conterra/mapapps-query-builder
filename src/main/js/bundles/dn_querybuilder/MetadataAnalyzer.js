@@ -16,9 +16,7 @@
 import apprt_when from "apprt-core/when";
 import Promise from "apprt-core/Promise";
 import ServiceResolver from "apprt/ServiceResolver";
-import apprt_request from "apprt-request";
-// TODO: Replace apprt-request with apprt-fetch
-// https://demos.conterra.de/mapapps/resources/jsregistry/root/apprt-fetch/latest/README.md
+import { apprtFetchJson } from "apprt-fetch";
 
 export default class MetadataAnalyzer {
 
@@ -181,9 +179,8 @@ export default class MetadataAnalyzer {
                     } else if (fieldData.type === "number") {
                         query.where = "1=1";
                     }
-                    this.#distinctValueQuery = apprt_request(store.target + "/query", {
-                        query: query,
-                        handleAs: 'json'
+                    this.#distinctValueQuery = apprtFetchJson(store.target + "/query", {
+                        query: query
                     }).then((result) => {
                         const distinctValues = [];
                         result.features?.forEach((feature) => {
@@ -238,12 +235,11 @@ export default class MetadataAnalyzer {
     }
 
     queryMetadata(url) {
-        return apprt_request(url,
+        return apprtFetchJson(url,
             {
                 query: {
                     f: 'json'
-                },
-                handleAs: 'json'
+                }
             });
     }
 }
