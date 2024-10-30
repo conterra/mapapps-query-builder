@@ -68,10 +68,11 @@ export default class QueryController {
             fields[idProperty] = true;
         }
 
+        const definitionExpression = toSQLWhere(complexQuery);
         if (layer) {
             // reset previously applied or initial definitionExpression to allow filtering the entire layer
             if (layer._initialDefinitionExpression) {
-                layer.definitionExpression = layer._initialDefinitionExpression;
+                layer.definitionExpression = definitionExpression;
             }
             // save initial definitionExpression to enable reversion to initial state
             if (layer._initialDefinitionExpression === undefined) {
@@ -96,9 +97,8 @@ export default class QueryController {
 
                 // filter mode
                 if (layer) {
-                    this._setProcessing(tool, false, queryBuilderWidgetModel);
-                    const definitionExpression = toSQLWhere(complexQuery);
                     layer.definitionExpression = definitionExpression;
+                    this._setProcessing(tool, false, queryBuilderWidgetModel);
                     return;
                 } else {
                     // result-ui
@@ -132,6 +132,9 @@ export default class QueryController {
                 }
                 throw new Error("Could not process query result");
             } else {
+                if(layer){
+                    layer.definitionExpression = layer._initialDefinitionExpression;
+                }
                 this._logService.warn({
                     message: this.#i18n.errors.noResultsError
                 });
