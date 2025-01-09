@@ -68,11 +68,10 @@ export default class QueryController {
             fields[idProperty] = true;
         }
 
-        if (layer) {
-            // reset previously applied or initial definitionExpression to allow filtering the entire layer
-            if (layer._initialDefinitionExpression) {
-                layer.definitionExpression = layer._initialDefinitionExpression;
-            }
+        const definitionExpression = toSQLWhere(complexQuery);
+        if (layer) {// reset previously applied or initial definitionExpression to allow filtering the entire layer
+            layer.definitionExpression = definitionExpression;
+
             // save initial definitionExpression to enable reversion to initial state
             if (layer._initialDefinitionExpression === undefined) {
                 layer._initialDefinitionExpression = layer.definitionExpression ? layer.definitionExpression : "1=1";
@@ -81,12 +80,12 @@ export default class QueryController {
 
         let query = this.#query = countFilter.query({}, { count: 0 });
         let totalInQuery = true;
-        if(!query.total){
-            query.total= query;
+        if (!query.total) {
+            query.total = query;
             totalInQuery = false;
         }
         return apprt_when(query.total, async (res) => {
-            if (res && totalInQuery || res.total ) {
+            if (res && totalInQuery || res.total) {
                 // smartfinder
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
@@ -97,8 +96,6 @@ export default class QueryController {
                 // filter mode
                 if (layer) {
                     this._setProcessing(tool, false, queryBuilderWidgetModel);
-                    const definitionExpression = toSQLWhere(complexQuery);
-                    layer.definitionExpression = definitionExpression;
                     return;
                 } else {
                     // result-ui
