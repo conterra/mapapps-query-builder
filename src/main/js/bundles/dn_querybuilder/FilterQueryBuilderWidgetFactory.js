@@ -44,7 +44,7 @@ export default class FilterQueryBuilderWidgetFactory {
 
         this._agsStoreFactory.createStore(storeProps).then((store) => {
             store.title = filterTitle;
-            store.useIn = ["querybuilder"];
+            store.useIn = [];
             store.load().then(() => {
                 this.registerStore(store);
                 if (this.widget) {

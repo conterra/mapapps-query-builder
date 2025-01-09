@@ -687,6 +687,19 @@
                             ]
                         },
                         {
+                            "id": "koeln_no_children",
+                            "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
+                            "type": "AGS_DYNAMIC",
+                            "title": "${map.cologne}",
+                            "listMode": "hide-children",
+                            "sublayers": [
+                                {
+                                    "id": 1,
+                                    "visible": true
+                                }
+                            ]
+                        },
+                        {
                             "id": "earthquakes",
                             "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
                             "type": "AGS_DYNAMIC",
