@@ -248,7 +248,10 @@
                             md1
                         >
                             <v-fab-transition>
-                                <v-tooltip right>
+                                <v-tooltip
+                                    right
+                                    bottom
+                                >
                                     <template #activator="{ on }">
                                         <v-btn
                                             v-if="$root.fieldQueries.length > 1"
