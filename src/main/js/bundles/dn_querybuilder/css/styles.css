@@ -26,6 +26,54 @@
     flex: 1 1 auto
 }
 
+.ctAppRoot .querybuilder-window .querybuilder-widget__setting-div {
+    display: flex;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__setting-div-header {
+    flex: 0 1 auto;
+    min-width: 140px;
+    height: 40px;
+    padding: 0 0 0 8px;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__store-select {
+    padding: 0;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__one-store {
+    margin: 0;
+    padding: 0;
+    height: 40px;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__spatial-input,
+.ctAppRoot .querybuilder-window .querybuilder-widget__link-operator {
+    padding: 0;
+    margin-top: 8px;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__sort-select {
+    flex: 1 1 auto;
+    padding: 0;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__sort-button {
+    flex: 0 1 auto;
+    margin: 0;
+    margin-left: 8px;
+    padding: 0 8px;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__sort-button .v-icon {
+    margin-right: 8px;
+}
+
+.ctAppRoot .querybuilder-window .querybuilder-widget__replace-opened-tables {
+    margin: 0;
+    padding: 4px 0;
+}
+
 .ctAppRoot .querybuilder-window .v-text-field--single-line .v-select__selection {
     display: -webkit-box;
     -webkit-line-clamp: 1;

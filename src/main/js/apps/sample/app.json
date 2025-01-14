@@ -47,7 +47,7 @@
                         "spatialRelation": true,
                         "spatialInputActions": false,
                         "linkOperator": true,
-                        "sortSelect": false,
+                        "sortSelect": true,
                         "fieldInfos": false,
                         "replaceOpenedTables": true
                     },

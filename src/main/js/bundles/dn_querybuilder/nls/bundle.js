@@ -25,8 +25,8 @@ export default {
             tooltip: "Build your own Query"
         },
         ui: {
-            selectStore: "What do you want to search?",
-            spatialRelation: "Where do you want to search?",
+            selectStore: "What to search for?",
+            spatialRelation: "Where to search?",
             linkOperator: "What is valid?",
             sorting: "Sorting",
             sortOptions: "How to sort?",

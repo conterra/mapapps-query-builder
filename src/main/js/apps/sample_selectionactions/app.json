@@ -47,15 +47,17 @@
                     "defaultMode": {
                         "spatialRelation": true,
                         "spatialInputActions": true,
-                        "sortSelect": false,
+                        "linkOperator": true,
+                        "sortSelect": true,
                         "fieldInfos": false,
-                        "replaceOpenedTables": false
+                        "replaceOpenedTables": true
                     },
                     "predefinedMode": {
-                        "spatialRelation": true,
+                        "spatialRelation": false,
+                        "linkOperator": false,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": false
+                        "replaceOpenedTables": true
                     },
                     "filterMode": {
                         "spatialRelation": true,
