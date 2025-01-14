@@ -59,6 +59,13 @@
             <type>pom</type>
             <scope>test</scope>
         </dependency>
+
+        <!-- devnet -->
+        <dependency>
+            <groupId>de.conterra.devnet</groupId>
+            <artifactId>mapapps-selection-actions</artifactId>
+            <version>1.14.0</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -431,7 +438,8 @@
                             <goal>deployAppTemplate</goal>
                         </goals>
                         <configuration>
-                            <templateFile>${project.build.directory}/${project.artifactId}-sample-app.zip</templateFile>
+                            <templateFile>
+                                ${project.build.directory}/${project.artifactId}-sample-app.zip</templateFile>
                             <templateResources>
                                 <templateResource>
                                     <directory>${js.build.outputPath}/apps/sample</directory>

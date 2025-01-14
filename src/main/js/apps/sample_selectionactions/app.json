@@ -321,6 +321,51 @@
                 }
             ]
         },
+        "dn_selectionactions": {
+            "CircleSpatialInputWidgetModel": {
+                "enableDonut": true,
+                "minRadius": 0,
+                "maxRadius": 500,
+                "innerRadius": 0,
+                "outerRadius": 100,
+                "stepSize": 1,
+                "adjustStepSize": true,
+                "stepSizeRanges": [
+                    {
+                        "scaleRange": [
+                            1,
+                            100000
+                        ],
+                        "stepSize": 1
+                    },
+                    {
+                        "scaleRange": [
+                            100000,
+                            100000000
+                        ],
+                        "stepSize": 100
+                    }
+                ],
+                "unit": "meters"
+            },
+            "AreaSelectSpatialInputWidgetModel": {
+                "buffer": 0,
+                "minBuffer": 0,
+                "maxBuffer": 5000,
+                "stepSize": 100,
+                "unit": "meters"
+            },
+            "GraphicSpatialInputWidgetModel": {
+                "buffer": 0,
+                "minBuffer": 0,
+                "maxBuffer": 5000,
+                "stepSize": 100,
+                "unit": "meters"
+            },
+            "MultiPointSpatialInputAction": {
+                "clickTolerance": 5
+            }
+        },
         "banner": {
             "BannerWidget": {
                 "label": "Developer Network",
@@ -362,7 +407,9 @@
         "agssearch": {
             "AutoStoreRegistration": {
                 "componentEnabled": true,
-                "useIn": ["querybuilder"]
+                "useIn": [
+                    "querybuilder"
+                ]
             },
             "AGSStore": [
                 {
@@ -482,6 +529,38 @@
                     "popupEnabled": true,
                     "useIn": [
                         "querybuilder"
+                    ]
+                },
+                {
+                    "id": "kreise",
+                    "layerId": "kreise",
+                    "title": "Kreise",
+                    "description": "Kreise",
+                    "fetchIdProperty": true,
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "useIn": [
+                        "search",
+                        "selection",
+                        "selection-actions-area"
+                    ],
+                    "priority": 2,
+                    "searchLabel": "kreis_name",
+                    "searchAttribute": "kreis_name"
+                },
+                {
+                    "id": "bundeslaender",
+                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/FeatureServer/2",
+                    "title": "Bundesländer",
+                    "description": "Bundesländer",
+                    "fetchIdProperty": true,
+                    "filterOptions": {
+                        "suggestContains": true
+                    },
+                    "priority": 1,
+                    "useIn": [
+                        "selection-actions-area"
                     ]
                 }
             ]

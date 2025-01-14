@@ -28,6 +28,7 @@ import ProjectParameters from "esri/rest/support/ProjectParameters";
 const _replaceOpenedTablesBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
+const _oldSpatialInputActionId = Symbol("_oldSpatialInputActionId");
 
 export default declare({
 
@@ -82,48 +83,48 @@ export default declare({
     metadataDelay: 500,
     operators: {},
     defaultOperators: {
-        default : {
+        default: {
             codedvalue: [
-                {value: "$eq", text: "is"},
-                {value: "!$eq", text: "is_not"},
-                {value: "$gt", text: "is_greater_than"},
-                {value: "$gte", text: "is_greater_or_equal"},
-                {value: "$lt", text: "is_less_than"},
-                {value: "$lte", text: "is_less_or_equal"},
-                {value: "$exists", text: "exists"}
+                { value: "$eq", text: "is" },
+                { value: "!$eq", text: "is_not" },
+                { value: "$gt", text: "is_greater_than" },
+                { value: "$gte", text: "is_greater_or_equal" },
+                { value: "$lt", text: "is_less_than" },
+                { value: "$lte", text: "is_less_or_equal" },
+                { value: "$exists", text: "exists" }
             ],
             boolean: [
-                {value: "$eq", text: "is"},
-                {value: "!$eq", text: "is_not"},
-                {value: "$exists", text: "exists"}
+                { value: "$eq", text: "is" },
+                { value: "!$eq", text: "is_not" },
+                { value: "$exists", text: "exists" }
             ],
             string: [
-                {value: "$eq", text: "is"},
-                {value: "!$eq", text: "is_not"},
-                {value: "$eqw", text: "eqw"},
-                {value: "$suggest", text: "suggest"},
-                {value: "$exists", text: "exists"},
-                {value: "$in", text: "in"}
+                { value: "$eq", text: "is" },
+                { value: "!$eq", text: "is_not" },
+                { value: "$eqw", text: "eqw" },
+                { value: "$suggest", text: "suggest" },
+                { value: "$exists", text: "exists" },
+                { value: "$in", text: "in" }
             ],
-            number:   [
-                {value: "$eq", text: "is"},
-                {value: "!$eq", text: "is_not"},
-                {value: "$gt", text: "is_greater_than"},
-                {value: "$gte", text: "is_greater_or_equal"},
-                {value: "$lt", text: "is_less_than"},
-                {value: "$lte", text: "is_less_or_equal"},
-                {value: "$exists", text: "exists"},
-                {value: "$in", text: "in"}
+            number: [
+                { value: "$eq", text: "is" },
+                { value: "!$eq", text: "is_not" },
+                { value: "$gt", text: "is_greater_than" },
+                { value: "$gte", text: "is_greater_or_equal" },
+                { value: "$lt", text: "is_less_than" },
+                { value: "$lte", text: "is_less_or_equal" },
+                { value: "$exists", text: "exists" },
+                { value: "$in", text: "in" }
             ],
             date: [
-                {value: "$lte", text: "before"},
-                {value: "$gte", text: "after"},
-                {value: "$exists", text: "exists"}
+                { value: "$lte", text: "before" },
+                { value: "$gte", text: "after" },
+                { value: "$exists", text: "exists" }
             ],
             default: [
-                {value: "$eq", text: "is"},
-                {value: "!$eq", text: "is_not"},
-                {value: "$exists", text: "exists"}
+                { value: "$eq", text: "is" },
+                { value: "!$eq", text: "is_not" },
+                { value: "$exists", text: "exists" }
             ]
         }
     },
@@ -206,17 +207,25 @@ export default declare({
 
     selectSpatialInputAction(id) {
         const spatialInputActionService = this._spatialInputActionService;
-        const oldSpatialInputAction = this[_spatialInputActionPromise];
-        if (oldSpatialInputAction) {
-            oldSpatialInputAction.cancel();
+        const oldSpatialInputActionPromise = this[_spatialInputActionPromise];
+        const oldSpatialInputActionId = this[_oldSpatialInputActionId];
+        if (oldSpatialInputActionPromise) {
+            oldSpatialInputActionPromise.cancel();
             this[_spatialInputActionPromise] = null;
+        }
+        if (oldSpatialInputActionId) {
+            const oldSpatialInputAction = spatialInputActionService.getById(oldSpatialInputActionId);
+            oldSpatialInputAction.disable?.();
+            this[_oldSpatialInputActionId] = null;
         }
         if (!id) {
             this.activeSpatialInputAction = null;
             this.activeSpatialInputActionDescription = null;
             return;
         }
+        this[_oldSpatialInputActionId] = id;
         const spatialInputAction = spatialInputActionService.getById(id);
+        spatialInputAction.enable?.();
         const promise = this[_spatialInputActionPromise] = spatialInputAction.trigger({ queryBuilderSelection: true });
         promise.then((geometry) => {
             this.activeSpatialInputAction = null;
@@ -640,10 +649,10 @@ export default declare({
         return;
     },
 
-    prepareOperators(operators){
-        const completeOperators = {...this.defaultOperators};
+    prepareOperators(operators) {
+        const completeOperators = { ...this.defaultOperators };
         Object.keys(operators).forEach(configuration => {
-            completeOperators[configuration] = {...this.defaultOperators.default};
+            completeOperators[configuration] = { ...this.defaultOperators.default };
             Object.keys(operators[configuration]).forEach(type => {
                 completeOperators[configuration][type] = operators[configuration][type];
             });
