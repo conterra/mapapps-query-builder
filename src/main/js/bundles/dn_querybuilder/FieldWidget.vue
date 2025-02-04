@@ -33,7 +33,8 @@
                     <v-layout
                         row
                         wrap
-                        align-center
+                        pt-3
+                        align-start
                     >
                         <v-flex
                             xs7
@@ -189,7 +190,6 @@
                                 class="pa-0 ma-0"
                                 required
                                 single-line
-                                hide-details
                                 hide-no-data
                                 clearable
                                 :search-input.sync="search"
@@ -208,7 +208,6 @@
                                 class="pa-0 ma-0"
                                 required
                                 single-line
-                                hide-details
                                 hide-no-data
                                 clearable
                                 :search-input.sync="search"
@@ -225,7 +224,6 @@
                                 type="number"
                                 class="pa-0 ma-0"
                                 required
-                                hide-details
                                 clearable
                             />
                             <v-text-field
@@ -238,7 +236,6 @@
                                 :rules="[rules.required]"
                                 class="pa-0 ma-0"
                                 required
-                                hide-details
                                 clearable
                             />
                         </v-flex>
