@@ -48,6 +48,7 @@ export default {
             resetSpatialInput: "Remove spatial restriction",
             negateSpatialInput: "Search outside of selected geometry",
             filterTitle: "Filter",
+            tempStoreTitle: "Results of the previous search",
             setFilterActionLabel: "Filter map content",
             changeFilterActionLabel: "Change filter",
             conditionFieldsetLegend: "Condition",
