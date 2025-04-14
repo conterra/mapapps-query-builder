@@ -703,8 +703,7 @@
                             "id": "earthquakes",
                             "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
                             "type": "AGS_DYNAMIC",
-                            "title": "${map.earthquakes}",
-                            "listMode": "hide-children"
+                            "title": "${map.earthquakes}"
                         }
                     ],
                     "ground": {
