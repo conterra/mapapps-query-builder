@@ -70,13 +70,14 @@ export default class QueryController {
         }
 
         const definitionExpression = toSQLWhere(complexQuery);
-        if (layer) {// reset previously applied or initial definitionExpression to allow filtering the entire layer
-            layer.definitionExpression = definitionExpression;
-
+        if (layer) {
             // save initial definitionExpression to enable reversion to initial state
             if (layer._initialDefinitionExpression === undefined) {
                 layer._initialDefinitionExpression = layer.definitionExpression ? layer.definitionExpression : "1=1";
             }
+
+            // reset previously applied or initial definitionExpression to allow filtering the entire layer
+            layer.definitionExpression = definitionExpression;
         }
 
         let query = this.#query = countFilter.query({}, { count: 0 });
