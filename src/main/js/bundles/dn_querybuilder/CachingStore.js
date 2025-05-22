@@ -38,7 +38,7 @@ export default declare([], {
     idList: null,
     masterStore: null,
     initialQuery: null,
-    querySequenz: null,
+    querySequence: null,
 
     constructor(args) {
         args = args || {};
