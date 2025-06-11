@@ -66,6 +66,7 @@
                 "pid": "dn_querybuilder-Config",
                 "id": "propertiesWidget",
                 "defaultProperties": {
+                    "closeOnQuery": true,
                     "enableDistinctValues": true,
                     "defaultLinkOperator": "$or",
                     "defaultSpatialRelation": "everywhere",

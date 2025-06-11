@@ -139,6 +139,7 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 ### Config:
 ```json
 "Config": {
+    "closeOnQuery": true,
     "enableDistinctValues": true,
     "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",

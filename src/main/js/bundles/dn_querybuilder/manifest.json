@@ -187,6 +187,7 @@
             "provides": "dn_querybuilder.QueryBuilderWidgetModel",
             "propertiesConstructor": true,
             "properties": {
+                "closeOnQuery": true,
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -405,6 +406,11 @@
                     "name": "_resultViewerService",
                     "providing": "result-api.ResultViewerService",
                     "cardinality": "0..1"
+                },
+                {
+                    "name": "_queryBuilderToggleTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=queryBuilderToggleTool)"
                 }
             ]
         },
