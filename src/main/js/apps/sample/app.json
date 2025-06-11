@@ -50,14 +50,16 @@
                         "linkOperator": true,
                         "sortSelect": true,
                         "fieldInfos": false,
-                        "replaceOpenedTables": true
+                        "replaceOpenedTables": true,
+                        "closeOnQueryCheckbox": true
                     },
                     "predefinedMode": {
                         "spatialRelation": false,
                         "linkOperator": false,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": true
+                        "replaceOpenedTables": true,
+                        "closeOnQueryCheckbox": true
                     },
                     "filterMode": {
                         "spatialRelation": true,

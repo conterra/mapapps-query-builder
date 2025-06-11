@@ -59,7 +59,8 @@ export default class QueryBuilderWidgetFactory {
             linkOperator: model.visibleElements.defaultMode.linkOperator,
             spatialInputActions: model.visibleElements.defaultMode.spatialInputActions,
             sortSelect: model.visibleElements.defaultMode.sortSelect,
-            replaceOpenedTables: model.visibleElements.defaultMode.replaceOpenedTables
+            replaceOpenedTables: model.visibleElements.defaultMode.replaceOpenedTables,
+            closeOnQueryCheckbox: model.visibleElements.defaultMode.closeOnQueryCheckbox
         };
 
         // listen to view model methods

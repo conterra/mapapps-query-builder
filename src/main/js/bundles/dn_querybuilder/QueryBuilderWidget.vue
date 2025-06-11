@@ -259,6 +259,15 @@
                     color="primary"
                 />
             </div>
+            <div v-if="visibleElements.closeOnQueryCheckbox">
+                <v-checkbox
+                    v-model="closeOnQuery"
+                    :label="i18n.closeOnQueryCheckbox"
+                    class="querybuilder-widget__replace-opened-tables"
+                    hide-details
+                    color="primary"
+                />
+            </div>
             <div v-if="!filter">
                 <v-btn
                     v-if="!processing"
@@ -398,7 +407,8 @@
                     spatialInputActions: false,
                     sortSelect: false,
                     fieldInfos: false,
-                    replaceOpenedTables: false
+                    replaceOpenedTables: false,
+                    closeOnQueryCheckbox: true
                 },
                 disableSpatialRelationRadio: false,
                 fieldQueries: [],
@@ -416,6 +426,7 @@
                 ariaLabelAdded: false,
                 textToRead: "",
                 replaceOpenedTables: false,
+                closeOnQuery: true,
                 operators: {default: {default: []}}
             };
         },
