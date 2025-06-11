@@ -37,6 +37,7 @@
     "bundles": {
         "dn_querybuilder": {
             "Config": {
+                "closeOnQuery": true,
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",

@@ -90,6 +90,12 @@ export default class QueryController {
         }
         return apprt_when(query.total, async (res) => {
             if (res && totalInQuery || res.total) {
+
+                // close widget on query
+                if(queryBuilderWidgetModel.closeOnQuery){
+                    this._queryBuilderToggleTool.set("active", false);
+                }
+
                 // smartfinder
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);

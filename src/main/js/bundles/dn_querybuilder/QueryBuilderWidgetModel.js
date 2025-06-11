@@ -51,6 +51,7 @@ export default declare({
     spatialRelation: null,
 
     // properties
+    closeOnQuery: true,
     enableDistinctValues: true,
     enableInitialDistinctValues: true,
     defaultLinkOperator: "$or",
