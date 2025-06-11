@@ -202,14 +202,16 @@
                         "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": false
+                        "replaceOpenedTables": false,
+                        "closeOnQueryCheckbox": true
                     },
                     "predefinedMode": {
                         "spatialRelation": true,
                         "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": false
+                        "replaceOpenedTables": false,
+                        "closeOnQueryCheckbox": true
                     },
                     "filterMode": {
                         "spatialRelation": true,

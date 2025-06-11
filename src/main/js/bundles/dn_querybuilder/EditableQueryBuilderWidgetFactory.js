@@ -64,7 +64,8 @@ export default class EditableQueryBuilderWidgetFactory {
             linkOperator: model.visibleElements.predefinedMode.linkOperator,
             spatialInputActions: false,
             sortSelect: model.visibleElements.predefinedMode.sortSelect,
-            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables
+            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables,
+            closeOnQueryCheckbox: model.visibleElements.predefinedMode.closeOnQueryCheckbox
         };
         vm.replaceOpenedTables = model.replaceOpenedTables;
         vm.closeOnQuery = model.closeOnQuery;
