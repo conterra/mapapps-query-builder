@@ -32,6 +32,7 @@ export default {
         everywhere: "Überall",
         currentExtent: "Aktueller Kartenausschnitt",
         delete: "Löschen",
+        closeOnQueryCheckbox: "Fenster nach erfolgreicher Suche schließen",
         replaceOpenedTables: "Vorhandene Ergebnisse ersetzen",
         search: "Suche starten",
         cancelSearch: "Suche abbrechen",

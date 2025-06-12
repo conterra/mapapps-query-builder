@@ -64,9 +64,11 @@ export default class EditableQueryBuilderWidgetFactory {
             linkOperator: model.visibleElements.predefinedMode.linkOperator,
             spatialInputActions: false,
             sortSelect: model.visibleElements.predefinedMode.sortSelect,
-            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables
+            replaceOpenedTables: model.visibleElements.predefinedMode.replaceOpenedTables,
+            closeOnQueryCheckbox: model.visibleElements.predefinedMode.closeOnQueryCheckbox
         };
         vm.replaceOpenedTables = model.replaceOpenedTables;
+        vm.closeOnQuery = model.closeOnQuery;
         model.addFieldQueries(complexQuery[linkOperator], editOptions.editFields, properties.storeId, vm.fieldQueries);
 
         // listen to view model methods
@@ -81,7 +83,7 @@ export default class EditableQueryBuilderWidgetFactory {
             model.getDistinctValues(args.value, args.selectedField, vm.selectedStoreId);
         });
         this.#queryBuilderWidgetModelBinding = Binding.for(vm, model)
-            .syncAll("replaceOpenedTables", "operators")
+            .syncAll("replaceOpenedTables", "operators", "closeOnQuery")
             .enable()
             .syncToLeftNow();
 

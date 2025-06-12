@@ -139,6 +139,7 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 ### Config:
 ```json
 "Config": {
+    "closeOnQuery": true,
     "enableDistinctValues": true,
     "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",
@@ -155,14 +156,16 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
             "linkOperator": true,
             "sortSelect": false,
             "fieldInfos": false,
-            "replaceOpenedTables": false
+            "replaceOpenedTables": false,
+            "closeOnQueryCheckbox": true
         },
         "predefinedMode": {
             "spatialRelation": true,
             "linkOperator": true,
             "sortSelect": false,
             "fieldInfos": false,
-            "replaceOpenedTables": false
+            "replaceOpenedTables": false,
+            "closeOnQueryCheckbox": true
         },
         "filterMode": {
             "spatialRelation": true,
