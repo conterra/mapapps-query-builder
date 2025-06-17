@@ -15,6 +15,7 @@
 ///
 
 import type {InjectedReference} from "apprt-core/InjectedReference";
+import { ActionDefinition, TocItem } from "toc/api";
 
 const ID = "querybuilder-filter";
 
@@ -28,7 +29,7 @@ export default class FilterActionDefinitionFactory {
         this.supportedIds = [ID];
     }
 
-    createDefinitionById(id: string): any {
+    createDefinitionById(id: string): ActionDefinition | undefined {
         if (ID !== id) {
             return;
         }
@@ -39,8 +40,9 @@ export default class FilterActionDefinitionFactory {
             type: "button",
             label: i18n.setFilterActionLabel,
             icon: "icon-filter",
-            isVisibleForItem(tocItem) {
-                const ref = tocItem.ref;
+            async isVisibleForItem(tocItem: TocItem) {
+                const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
+                await ref.load();
                 const parent = ref && ref.layer;
                 const capabilities = parent && parent.capabilities;
                 if (ref && ref.type !== "group") {
@@ -55,9 +57,9 @@ export default class FilterActionDefinitionFactory {
                     return false;
                 }
             },
-            isDisabledForItem(tocItem) {
+            isDisabledForItem(tocItem: TocItem) {
                 // use this method to change the action title since isVisibleForItem is only called once
-                const ref = tocItem.ref;
+                const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
                 if (ref._initialDefinitionExpression !== undefined
                     && ref._initialDefinitionExpression !== ref.definitionExpression
                     && ref.definitionExpression !== "1=1") {
@@ -67,8 +69,8 @@ export default class FilterActionDefinitionFactory {
                 }
                 return false;
             },
-            trigger(tocItem) {
-                const ref = tocItem.ref;
+            trigger(tocItem: TocItem) {
+                const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
                 if (ref._initialDefinitionExpression !== undefined
                     && ref._initialDefinitionExpression !== ref.definitionExpression) {
                     ref.definitionExpression = ref._initialDefinitionExpression;

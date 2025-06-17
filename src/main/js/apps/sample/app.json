@@ -37,6 +37,7 @@
     "bundles": {
         "dn_querybuilder": {
             "Config": {
+                "closeOnQuery": true,
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -49,14 +50,16 @@
                         "linkOperator": true,
                         "sortSelect": true,
                         "fieldInfos": false,
-                        "replaceOpenedTables": true
+                        "replaceOpenedTables": true,
+                        "closeOnQueryCheckbox": true
                     },
                     "predefinedMode": {
                         "spatialRelation": false,
                         "linkOperator": false,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": true
+                        "replaceOpenedTables": true,
+                        "closeOnQueryCheckbox": true
                     },
                     "filterMode": {
                         "spatialRelation": true,
@@ -703,8 +706,7 @@
                             "id": "earthquakes",
                             "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/MapServer",
                             "type": "AGS_DYNAMIC",
-                            "title": "${map.earthquakes}",
-                            "listMode": "hide-children"
+                            "title": "${map.earthquakes}"
                         }
                     ],
                     "ground": {

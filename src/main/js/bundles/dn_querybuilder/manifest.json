@@ -1,6 +1,6 @@
 {
     "name": "dn_querybuilder",
-    "version": "5.3.5-SNAPSHOT",
+    "version": "5.3.8-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -215,6 +215,7 @@
             "provides": "dn_querybuilder.QueryBuilderWidgetModel",
             "propertiesConstructor": true,
             "properties": {
+                "closeOnQuery": true,
                 "enableDistinctValues": true,
                 "enableInitialDistinctValues": true,
                 "defaultLinkOperator": "$or",
@@ -231,14 +232,16 @@
                         "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": false
+                        "replaceOpenedTables": false,
+                        "closeOnQueryCheckbox": true
                     },
                     "predefinedMode": {
                         "spatialRelation": true,
                         "linkOperator": true,
                         "sortSelect": false,
                         "fieldInfos": false,
-                        "replaceOpenedTables": false
+                        "replaceOpenedTables": false,
+                        "closeOnQueryCheckbox": true
                     },
                     "filterMode": {
                         "spatialRelation": true,
@@ -474,6 +477,11 @@
                 {
                     "name": "_agsStoreFactory",
                     "providing": "agssearch.AGSStoreFactory"
+                },
+                {
+                    "name": "_queryBuilderToggleTool",
+                    "providing": "ct.tools.Tool",
+                    "filter": "(id=queryBuilderToggleTool)"
                 }
             ]
         },

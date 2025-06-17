@@ -139,6 +139,7 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 ### Config:
 ```json
 "Config": {
+    "closeOnQuery": true,
     "enableDistinctValues": true,
     "enableInitialDistinctValues": true,
     "defaultLinkOperator": "$or",
@@ -155,14 +156,16 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
             "linkOperator": true,
             "sortSelect": false,
             "fieldInfos": false,
-            "replaceOpenedTables": false
+            "replaceOpenedTables": false,
+            "closeOnQueryCheckbox": true
         },
         "predefinedMode": {
             "spatialRelation": true,
             "linkOperator": true,
             "sortSelect": false,
             "fieldInfos": false,
-            "replaceOpenedTables": false
+            "replaceOpenedTables": false,
+            "closeOnQueryCheckbox": true
         },
         "filterMode": {
             "spatialRelation": true,
@@ -281,7 +284,7 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 | hiddenFields                     | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the field select                                                                                               |
 | hiddenSortFields                 | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the sort field select                                                                                          |
 | symbols                          | Object  |                                                         |                  | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
-| operators | Object |  | | Specify the allowed operators when formulating a costum query. All provided information is option, if no information is given the default will be chosen. You could also provide additional field types. Further, you can add a specififc `operatorClass` to the fieds ans specify the opertors here like: `{"operators": {default {...}, operatorClass: {...}}}`
+| operators | Object |  | | Specify the allowed operators when formulating a custom query. All provided information is optional; if no information is given the default will be chosen. You could also provide additional field types. Further, you can add a specific `operatorClass` to the fields and specify the operators here like: `{"operators": {default {...}, operatorClass: {...}}}`
 
 ### QueryTools:
 ```

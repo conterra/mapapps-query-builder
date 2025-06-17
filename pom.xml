@@ -22,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.conterra.devnet</groupId>
     <artifactId>mapapps-query-builder</artifactId>
-    <version>5.3.5-SNAPSHOT</version>
+    <version>5.3.8-SNAPSHOT</version>
     <packaging>jar</packaging>
     <repositories>
         <repository>
@@ -540,6 +540,7 @@
         <skip.apps.upload>true</skip.apps.upload>
         <!-- enable this if "upload" profile should pre-optimize apps -->
         <triggerPreOptimization>false</triggerPreOptimization>
+        <client.config.warnOnSlowGraphicsPerformance>false</client.config.warnOnSlowGraphicsPerformance>
     </properties>
     <profiles>
         <profile>

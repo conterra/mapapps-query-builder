@@ -33,6 +33,7 @@ export default {
             everywhere: "everywhere",
             currentExtent: "current extent",
             delete: "Delete",
+            closeOnQueryCheckbox: "Close window after successful query",
             replaceOpenedTables: "Replace opened tables",
             search: "Search",
             cancelSearch: "Cancel search",

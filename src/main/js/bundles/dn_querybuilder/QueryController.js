@@ -20,6 +20,7 @@ import Filter from "ct/store/Filter";
 import { MemoryStore } from "./MemoryStore";
 import CachingStore from "./CachingStore";
 import { toSQLWhere } from "store-api/rest/ComplexQueryToSQL";
+import semver from "apprt/semver";
 
 const DELAY = 500;
 
@@ -69,13 +70,14 @@ export default class QueryController {
         }
 
         const definitionExpression = toSQLWhere(complexQuery);
-        if (layer) {// reset previously applied or initial definitionExpression to allow filtering the entire layer
-            layer.definitionExpression = definitionExpression;
-
+        if (layer) {
             // save initial definitionExpression to enable reversion to initial state
             if (layer._initialDefinitionExpression === undefined) {
                 layer._initialDefinitionExpression = layer.definitionExpression ? layer.definitionExpression : "1=1";
             }
+
+            // reset previously applied or initial definitionExpression to allow filtering the entire layer
+            layer.definitionExpression = definitionExpression;
         }
 
         let query = this.#query = countFilter.query({}, { count: 0 });
@@ -86,6 +88,12 @@ export default class QueryController {
         }
         return apprt_when(query.total, async (res) => {
             if (res && totalInQuery || res.total) {
+
+                // close widget on query
+                if(queryBuilderWidgetModel.closeOnQuery){
+                    this._queryBuilderToggleTool.set("active", false);
+                }
+
                 // smartfinder
                 if (this._smartfinderComplexQueryHandler && store.coreName) {
                     this._smartfinderComplexQueryHandler.setComplexQuery(complexQuery);
@@ -148,6 +156,16 @@ export default class QueryController {
     }
 
     async _openResultUi(tool, store, complexQuery, queryOptions, queryBuilderWidgetModel) {
+        // workaround for MAPAPPS-7336
+        // fixed in map.apps 4.19.1
+        const bundleContext = this.#bundleContext;
+        const apprtCore = bundleContext.getBundleBySymbolicName("apprt-core");
+        const apprtCoreVersion = apprtCore.getVersion();
+        const checkVersion = semver("4.19.1");
+        if (apprtCoreVersion.compare(checkVersion) < 0) {
+            queryOptions.count = undefined;
+        }
+
         const dataTableFactory = this._resultViewerService.dataTableFactory;
         const storeProperties = this._metadataAnalyzer.getStoreProperties(store.id);
         let dataTableTitle = storeProperties.title || store.id;

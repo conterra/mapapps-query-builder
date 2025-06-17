@@ -1,6 +1,6 @@
 {
     "name": "dn_querybuilder-config",
-    "version": "5.3.5-SNAPSHOT",
+    "version": "5.3.8-SNAPSHOT",
     "title": "${bundleName}",
     "description": "${bundleDescription}",
     "vendor": "con terra GmbH",
@@ -66,6 +66,7 @@
                 "pid": "dn_querybuilder-Config",
                 "id": "propertiesWidget",
                 "defaultProperties": {
+                    "closeOnQuery": true,
                     "enableDistinctValues": true,
                     "defaultLinkOperator": "$or",
                     "defaultSpatialRelation": "everywhere",
