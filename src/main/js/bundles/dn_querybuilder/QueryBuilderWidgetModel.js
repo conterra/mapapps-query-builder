@@ -79,6 +79,7 @@ export default declare({
         "OBJECTID",
         "shape"
     ],
+    enableTempStore: false,
     replaceOpenedTables: false,
     metadataQuery: null,
     metadataDelay: 500,
