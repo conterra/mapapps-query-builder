@@ -92,7 +92,7 @@ export default class QueryController {
             if (res && totalInQuery || res.total) {
 
                 // close widget on query
-                if(queryBuilderWidgetModel.closeOnQuery){
+                if (queryBuilderWidgetModel.closeOnQuery) {
                     this._queryBuilderToggleTool.set("active", false);
                 }
 
@@ -109,7 +109,9 @@ export default class QueryController {
                     return;
                 } else {
                     if (queryBuilderWidgetModel.enableTempStore) {
-                        this._registerTempStore(store, complexQuery, queryBuilderWidgetModel);
+                        this._registerTempStore(
+                            store, complexQuery, queryBuilderWidgetModel, queryBuilderWidgetModel?.tempStoreUseIn
+                        );
                     }
 
                     // result-ui
@@ -232,7 +234,7 @@ export default class QueryController {
         });
     }
 
-    async _registerTempStore(store, complexQuery, queryBuilderWidgetModel) {
+    async _registerTempStore(store, complexQuery, queryBuilderWidgetModel, useIn) {
         let tempStore;
         if (store.url) {
             tempStore = await this._agsStoreFactory.createStore({
@@ -261,7 +263,7 @@ export default class QueryController {
         const serviceProperties = {
             id: "querybuilder_temp",
             title: title,
-            useIn: ["querybuilder"]
+            useIn: useIn || ["querybuilder"]
         };
         const interfaces = ["ct.api.Store"];
         this.#serviceRegistration = this.#bundleContext.registerService(interfaces, filter, serviceProperties);

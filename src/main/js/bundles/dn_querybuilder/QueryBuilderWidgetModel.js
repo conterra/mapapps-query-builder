@@ -80,6 +80,7 @@ export default declare({
         "shape"
     ],
     enableTempStore: false,
+    tempStoreUseIn: ["querybuilder"],
     replaceOpenedTables: false,
     metadataQuery: null,
     metadataDelay: 500,
