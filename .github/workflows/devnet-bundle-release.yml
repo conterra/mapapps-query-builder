@@ -22,9 +22,9 @@ jobs:
          nexus_url: ${{secrets.NEXUS_URL}}
          nexus_url_release: ${{secrets.NEXUS_URL_RELEASE}}
          nexus_url_snapshots: ${{secrets.NEXUS_URL_SNAPSHOTS}}
-         release_token: ${{secrets.RELEASE_TOKEN}}
-         git_mail: ${{secrets.GIT_MAIL}}
-         git_user: ${{secrets.GIT_USER}}
+         release_token: ${{secrets.TECHNICAL_USER_RELEASE_TOKEN}}
+         git_mail: ${{secrets.TECHNICAL_USER_MAIL}}
+         git_user: ${{secrets.TECHNICAL_USER_NAME}}
          release_version: ${{ github.event.inputs.releaseVersion }}
          next_dev_version: ${{ github.event.inputs.nextDevVersion }}
          ms_teams_webhook_uri: ${{secrets.MS_TEAMS_WEBHOOK_URI}}
