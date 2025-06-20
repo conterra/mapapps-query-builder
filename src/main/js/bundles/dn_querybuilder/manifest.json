@@ -224,6 +224,8 @@
                 "availableSpatialInputActions": [
                     "*"
                 ],
+                "enableTempStore": false,
+                "tempStoreUseIn": ["querybuilder"],
                 "allowMultipleSpatialInputs": true,
                 "visibleElements": {
                     "defaultMode": {
@@ -266,7 +268,6 @@
                     "OBJECTID",
                     "shape"
                 ],
-                "enableTempStore": false,
                 "symbols": {
                     "point": {
                         "type": "simple-marker",

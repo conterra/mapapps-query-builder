@@ -43,6 +43,7 @@
                 "defaultLinkOperator": "$or",
                 "defaultSpatialRelation": "everywhere",
                 "useCurrentMapExtent": false,
+                "enableTempStore": false,
                 "visibleElements": {
                     "defaultMode": {
                         "spatialRelation": true,
