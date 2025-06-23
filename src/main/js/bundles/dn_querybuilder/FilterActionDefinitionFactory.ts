@@ -14,7 +14,7 @@
 /// limitations under the License.
 ///
 
-import type {InjectedReference} from "apprt-core/InjectedReference";
+import type { InjectedReference } from "apprt-core/InjectedReference";
 import { ActionDefinition, TocItem } from "toc/api";
 
 const ID = "querybuilder-filter";
@@ -60,10 +60,8 @@ export default class FilterActionDefinitionFactory {
             isDisabledForItem(tocItem: TocItem) {
                 // use this method to change the action title since isVisibleForItem is only called once
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
-                if (ref._initialDefinitionExpression !== undefined
-                    && ref._initialDefinitionExpression !== ref.definitionExpression
-                    && ref.definitionExpression !== "1=1") {
-                    this.label = i18n.resetFilterActionLabel;
+                if (ref._complexQuery) {
+                    this.label = i18n.changeFilterActionLabel;
                 } else {
                     this.label = i18n.setFilterActionLabel;
                 }
@@ -71,13 +69,8 @@ export default class FilterActionDefinitionFactory {
             },
             trigger(tocItem: TocItem) {
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
-                if (ref._initialDefinitionExpression !== undefined
-                    && ref._initialDefinitionExpression !== ref.definitionExpression) {
-                    ref.definitionExpression = ref._initialDefinitionExpression;
-                } else {
-                    const title = ref.title;
-                    filterQueryBuilderWidgetFactory.showFilter(title, ref);
-                }
+                const title = ref.title;
+                filterQueryBuilderWidgetFactory.showFilter(title, ref);
             }
         };
     }

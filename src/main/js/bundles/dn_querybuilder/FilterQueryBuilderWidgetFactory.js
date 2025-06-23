@@ -81,7 +81,7 @@ export default class FilterQueryBuilderWidgetFactory {
         const model = this._queryBuilderWidgetModel;
         const vm = this.widget.getVM();
         this.#listenToViewModelEvents(vm, layer, model);
-        this.#initializeFilterUI(vm, store, model);
+        this.#initializeFilterUI(vm, store, model, layer._complexQuery);
     }
 
     showWidget(store, layer) {
@@ -90,7 +90,7 @@ export default class FilterQueryBuilderWidgetFactory {
         const widget = this.widget = this.getWidget(store);
         const vm = widget.getVM();
         this.#listenToViewModelEvents(vm, layer, model);
-        this.#initializeFilterUI(vm, store, model);
+        this.#initializeFilterUI(vm, store, model, layer._complexQuery);
         const serviceProperties = {
             "widgetRole": "filterQueryBuilderWidget"
         };
@@ -171,10 +171,20 @@ export default class FilterQueryBuilderWidgetFactory {
         });
     }
 
-    #initializeFilterUI(vm, store, model) {
+    #initializeFilterUI(vm, store, model, complexQuery) {
         vm.selectedStoreId = store.id;
         vm.storeData = model.getStoreDataFromMetadata();
         vm.fieldQueries = [];
-        model.addFieldQuery(store.id, vm.fieldQueries);
+        if (complexQuery) {
+            let linkOperator;
+            if (complexQuery.$and) {
+                linkOperator = "$and";
+            } else if (complexQuery.$or) {
+                linkOperator = "$or";
+            }
+            model.addFieldQueries(complexQuery[linkOperator], undefined, store.id, vm.fieldQueries);
+        } else {
+            model.addFieldQuery(store.id, vm.fieldQueries);
+        }
     }
 }

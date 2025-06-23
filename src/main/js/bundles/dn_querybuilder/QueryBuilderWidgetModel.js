@@ -378,16 +378,25 @@ export default declare({
             this.loading = true;
             const fieldData = this._getSelectedFieldData(selectedStoreId, true);
             apprt_when(fieldData, (fields) => {
-                fieldQueries.push({
-                    fields: fields,
-                    selectedFieldId: fieldId,
-                    relationalOperator: relationalOperator,
-                    value: value || "",
-                    disableField: !editOptions.field,
-                    disableRelationalOperator: !editOptions.relationalOperator,
-                    disableValue: !editOptions.value,
-                    label: editOptions.label
-                });
+                if (editOptions) {
+                    fieldQueries.push({
+                        fields: fields,
+                        selectedFieldId: fieldId,
+                        relationalOperator: relationalOperator,
+                        value: value || "",
+                        disableField: !editOptions.field,
+                        disableRelationalOperator: !editOptions.relationalOperator,
+                        disableValue: !editOptions.value,
+                        label: editOptions.label
+                    });
+                } else {
+                    fieldQueries.push({
+                        fields: fields,
+                        selectedFieldId: fieldId,
+                        relationalOperator: relationalOperator,
+                        value: value || ""
+                    });
+                }
                 this.loading = false;
             }, this);
         }, this);

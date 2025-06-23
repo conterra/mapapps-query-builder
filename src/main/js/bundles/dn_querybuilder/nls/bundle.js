@@ -49,7 +49,7 @@ export default {
             negateSpatialInput: "Search outside of selected geometry",
             filterTitle: "Filter",
             setFilterActionLabel: "Filter map content",
-            resetFilterActionLabel: "Reset filter",
+            changeFilterActionLabel: "Change filter",
             conditionFieldsetLegend: "Condition",
             conditionFieldNameLabel: "Field name",
             relationalOperators: {

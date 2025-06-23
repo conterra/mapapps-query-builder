@@ -74,10 +74,12 @@ export default class QueryController {
             // save initial definitionExpression to enable reversion to initial state
             if (layer._initialDefinitionExpression === undefined) {
                 layer._initialDefinitionExpression = layer.definitionExpression ? layer.definitionExpression : "1=1";
+                layer._complexQuery = undefined;
             }
 
             // reset previously applied or initial definitionExpression to allow filtering the entire layer
             layer.definitionExpression = definitionExpression;
+            layer._complexQuery = complexQuery;
         }
 
         let query = this.#query = countFilter.query({}, { count: 0 });
