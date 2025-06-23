@@ -50,7 +50,7 @@ export default {
         filterTitle: "Filter",
         tempStoreTitle: "Ergebnisse der vorherigen Suche",
         setFilterActionLabel: "Karteninhalt filtern",
-        resetFilterActionLabel: "Filter zurücksetzen",
+        changeFilterActionLabel: "Filter anpassen",
         conditionFieldsetLegend: "Bedingung",
         conditionFieldNameLabel: "Feldname",
         relationalOperators: {
