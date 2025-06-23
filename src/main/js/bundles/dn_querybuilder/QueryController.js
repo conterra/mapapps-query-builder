@@ -246,6 +246,9 @@ export default class QueryController {
                 layerId: store.layerId
             });
         }
+        if(useIn?.includes("selection")) {
+            tempStore?.load();
+        }
         const filter = new Filter(tempStore, complexQuery);
         const storeTitle = queryBuilderWidgetModel.getSelectedStoreTitle(store.id);
         if (this.#serviceRegistration) {
