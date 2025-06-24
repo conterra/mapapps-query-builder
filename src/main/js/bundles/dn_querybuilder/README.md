@@ -17,7 +17,7 @@ The Query Builder uses the Complex Query Language: [https://docs.conterra.de/en/
 To make the functions of this bundle available to the user, the following tool can be added to a toolset:
 
 | Tool ID                | Component              | Description              |
-| ---------------------- | ---------------------- | ------------------------ |
+|------------------------|------------------------|--------------------------|
 | queryBuilderToggleTool | QueryBuilderToggleTool | Show or hide the widget. |
 
 Use a toolset:
@@ -149,6 +149,8 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
         "*"
     ],
     "allowMultipleSpatialInputs": true,
+    "enableTempStore": true,
+    "tempStoreUseIn": ["querybuilder"],
     "visibleElements": {
         "defaultMode": {
             "spatialRelation": true,
@@ -271,19 +273,21 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
 }
 ```
 
-| Property                         | Type    | Possible Values                                         | Default          | Description                                                                                                                                             |
-|----------------------------------|---------|---------------------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| enableDistinctValues             | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried by the service.                                                                                                             |
-| enableInitialDistinctValues      | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried after a new field was selected.                                                                                             |
-| defaultLinkOperator              | String  | ```or``` &#124; ```and```                               | ```or```         | Defines the default link operator.                                                                                                                      |
-| defaultSpatialRelation           | String  | ```everywhere``` &#124; ```current_extent```            | ```everywhere``` | Defines the default spatial relation.                                                                                                                   |
-| useCurrentMapExtent              | Boolean | ```true``` &#124; ```false```                           | ```false```      | Use the current user extent to filter predefined queries.                                                                                               |
-| availableSpatialInputActions     | Array   | ```point``` &#124; ```rectangle``` &#124; ```polygon``` | ```["*"]```      | IDs of allowed spatial input actions. More actions are available in the selection-actions bundle: https://github.com/conterra/mapapps-selection-actions |
-| allowMultipleSpatialInputs       | Boolean | ```true``` &#124; ```false```                           | ```true```       | Allow multiple selection of geometries via the selection actions.                                                                                       |
-| visibleElements                  | Object  |                                                         |                  | Select visible elements in default mode, predefined mode and filter mode.                                                                               |
-| hiddenFields                     | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the field select                                                                                               |
-| hiddenSortFields                 | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the sort field select                                                                                          |
-| symbols                          | Object  |                                                         |                  | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
+| Property                     | Type    | Possible Values                                         | Default          | Description                                                                                                                                             |
+|------------------------------|---------|---------------------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| enableDistinctValues         | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried by the service.                                                                                                             |
+| enableInitialDistinctValues  | Boolean | ```true``` &#124; ```false```                           | ```true```       | Distinct values are queried after a new field was selected.                                                                                             |
+| defaultLinkOperator          | String  | ```or``` &#124; ```and```                               | ```or```         | Defines the default link operator.                                                                                                                      |
+| defaultSpatialRelation       | String  | ```everywhere``` &#124; ```current_extent```            | ```everywhere``` | Defines the default spatial relation.                                                                                                                   |
+| useCurrentMapExtent          | Boolean | ```true``` &#124; ```false```                           | ```false```      | Use the current user extent to filter predefined queries.                                                                                               |
+| availableSpatialInputActions | Array   | ```point``` &#124; ```rectangle``` &#124; ```polygon``` | ```["*"]```      | IDs of allowed spatial input actions. More actions are available in the selection-actions bundle: https://github.com/conterra/mapapps-selection-actions |
+| allowMultipleSpatialInputs   | Boolean | ```true``` &#124; ```false```                           | ```true```       | Allow multiple selection of geometries via the selection actions.                                                                                       |
+| enableTempStore              | Boolean | ```true``` &#124; ```false```                           | ```true```       | Allow registration of an additional store containing the query results.                                                                                 |
+| tempStoreUseIn               | Array   |                                                         | ["querybuilder"] | OPTIONAL Set useins of tempstore, e.g. "selection".                                                                                                     |
+| visibleElements              | Object  |                                                         |                  | Select visible elements in default mode, predefined mode and filter mode.                                                                               |
+| hiddenFields                 | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the field select                                                                                               |
+| hiddenSortFields             | Array   |                                                         | ```[]```         | Names of fields that should be hidden in the sort field select                                                                                          |
+| symbols                      | Object  |                                                         |                  | Symbols that will be used for the presentation of geometries that are selected via the spatial input actions.                                           |
 | operators | Object |  | | Specify the allowed operators when formulating a custom query. All provided information is optional; if no information is given the default will be chosen. You could also provide additional field types. Further, you can add a specific `operatorClass` to the fields and specify the operators here like: `{"operators": {default {...}, operatorClass: {...}}}`
 
 ### QueryTools:
