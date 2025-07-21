@@ -25,6 +25,9 @@ test('Create Screenshot for GitHub Page', async ({ page }) => {
     const canvas = new MapCanvas(page);
     await canvas.loaded();
 
+    await page.getByRole('button', { name: 'Questions and Answers' }).click();
+    await page.getByLabel('uniqName_6_2').getByText('Build Query').click();
+
     await expectToMatchScreenshot(page, "screenshot.png", {
         timeout: 10000
     });
