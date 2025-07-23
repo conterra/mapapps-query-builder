@@ -13,7 +13,7 @@ https://github.com/conterra/mapapps-query-builder/tree/3.x
 [![devnet-bundle-snapshot](https://github.com/conterra/mapapps-query-builder/actions/workflows/devnet-bundle-snapshot.yml/badge.svg)](https://github.com/conterra/mapapps-query-builder/actions/workflows/devnet-bundle-snapshot.yml)
 
 ## Sample App
-https://demos.conterra.de/mapapps/resources/apps/downloads_query_builder/index.html
+https://demos.conterra.de/mapapps/resources/apps/public_demo_querybuilder/index.html
 
 ## Installation Guide
 
