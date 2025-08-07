@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { declare } from "apprt-core/Mutable";
+import { Mutable } from "apprt-core/Mutable";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import Locale from "ct/Locale";
@@ -30,107 +30,31 @@ const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBind
 const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
 const _oldSpatialInputActionId = Symbol("_oldSpatialInputActionId");
 
-export default declare({
+export default class QueryBuilderWidgetModel extends Mutable {
 
-    locale: "en",
-    stores: [],
-    storeData: [],
-    sortFieldData: [],
-    selectedStoreId: null,
-    selectedSortFieldName: null,
-    sortDescending: false,
-    fieldQueries: [],
-    loading: false,
-    processing: false,
-    activeTool: false,
-    geometry: null,
-    activeSpatialInputAction: null,
-    activeSpatialInputActionDescription: null,
-    negateSpatialInput: false,
-    linkOperator: null,
-    spatialRelation: null,
+    locale = "en";
+    stores = [];
+    storeData = [];
 
-    // properties
-    closeOnQuery: true,
-    enableDistinctValues: true,
-    enableInitialDistinctValues: true,
-    defaultLinkOperator: "$or",
-    defaultSpatialRelation: "everywhere",
-    useCurrentMapExtent: false,
-    visibleElements: {},
-    availableSpatialInputActions: ["*"],
-    spatialInputActions: [],
-    allowMultipleSpatialInputs: true,
-    defaultQueryOptions: {
-        ignoreCase: false
-    },
-    hiddenFields: [
-        "objectid",
-        "OBJECTID",
-        "shape"
-    ],
-    hiddenFieldTypes: [
-        "oid",
-        "guid",
-        "global-id"
-    ],
-    hiddenSortFields: [
-        "objectid",
-        "OBJECTID",
-        "shape"
-    ],
-    enableTempStore: false,
-    tempStoreUseIn: ["querybuilder"],
-    replaceOpenedTables: false,
-    metadataQuery: null,
-    metadataDelay: 500,
-    operators: {},
-    defaultOperators: {
-        default: {
-            codedvalue: [
-                { value: "$eq", text: "is" },
-                { value: "!$eq", text: "is_not" },
-                { value: "$gt", text: "is_greater_than" },
-                { value: "$gte", text: "is_greater_or_equal" },
-                { value: "$lt", text: "is_less_than" },
-                { value: "$lte", text: "is_less_or_equal" },
-                { value: "$exists", text: "exists" }
-            ],
-            boolean: [
-                { value: "$eq", text: "is" },
-                { value: "!$eq", text: "is_not" },
-                { value: "$exists", text: "exists" }
-            ],
-            string: [
-                { value: "$eq", text: "is" },
-                { value: "!$eq", text: "is_not" },
-                { value: "$eqw", text: "eqw" },
-                { value: "$suggest", text: "suggest" },
-                { value: "$exists", text: "exists" },
-                { value: "$in", text: "in" }
-            ],
-            number: [
-                { value: "$eq", text: "is" },
-                { value: "!$eq", text: "is_not" },
-                { value: "$gt", text: "is_greater_than" },
-                { value: "$gte", text: "is_greater_or_equal" },
-                { value: "$lt", text: "is_less_than" },
-                { value: "$lte", text: "is_less_or_equal" },
-                { value: "$exists", text: "exists" },
-                { value: "$in", text: "in" }
-            ],
-            date: [
-                { value: "$lte", text: "before" },
-                { value: "$gte", text: "after" },
-                { value: "$exists", text: "exists" }
-            ],
-            default: [
-                { value: "$eq", text: "is" },
-                { value: "!$eq", text: "is_not" },
-                { value: "$exists", text: "exists" }
-            ]
-        }
-    },
+    sortFieldData = [];
+    selectedStoreId = null;
+    selectedSortFieldName = null;
+    sortDescending = false;
+    fieldQueries = [];
+    loading = false;
+    processing = false;
+    activeTool = false;
+    geometry = null;
+    activeSpatialInputAction = null;
+    activeSpatialInputActionDescription = null;
+    negateSpatialInput = false;
+    linkOperator = null;
+    spatialRelation = null;
+    spatialInputActions = [];
+    replaceOpenedTables = false;
+    metadataQuery = null;
+    metadataDelay = 500;
+    operators = {};
 
     activate() {
         this.locale = Locale.getCurrent().getLanguage();
@@ -194,7 +118,7 @@ export default declare({
             .sync("replaceOpenedTables", "replace-opened-tables")
             .enable()
             .syncToLeftNow();
-    },
+    }
 
     deactivate() {
         this.locale = null;
@@ -206,7 +130,7 @@ export default declare({
             oldSpatialInputAction.cancel();
             this[_spatialInputActionPromise] = null;
         }
-    },
+    }
 
     selectSpatialInputAction(id) {
         const spatialInputActionService = this._spatialInputActionService;
@@ -250,7 +174,7 @@ export default declare({
             }
         });
         this.activeSpatialInputActionDescription = spatialInputAction.description;
-    },
+    }
 
     negateGeometry(geometry) {
         const worldExtent = new Extent({
@@ -266,13 +190,13 @@ export default declare({
         const geometryService = this._geometryService;
         const promise = geometryService.project(params);
         return promise.then((projectedGeometries) => difference(projectedGeometries[0], geometry));
-    },
+    }
 
     resetSpatialInput() {
         this.geometry = null;
         this.activeSpatialInputAction = null;
         this.activeSpatialInputActionDescription = null;
-    },
+    }
 
     getActionFilter() {
         const allowedMethods = this.availableSpatialInputActions;
@@ -283,7 +207,7 @@ export default declare({
         const actionIdLookup = {};
         allowedMethods.forEach((id) => actionIdLookup[id] = true);
         return ({ id }) => actionIdLookup[id];
-    },
+    }
 
     getStoreDataFromMetadata() {
         const stores = this.stores;
@@ -294,7 +218,7 @@ export default declare({
         }
         this.getFieldData();
         return data;
-    },
+    }
 
     getFieldData(selectedStoreId) {
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
@@ -304,7 +228,7 @@ export default declare({
                 this.selectedSortFieldName = data[0].id;
             }
         });
-    },
+    }
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable, layer) {
         let filter = false;
@@ -323,11 +247,11 @@ export default declare({
             opts.sort = sortOptions;
         }
         this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this, layer);
-    },
+    }
 
     cancelSearch() {
         this._queryController.cancelQuery();
-    },
+    }
 
     addFieldQuery(selectedStoreId = this.selectedStoreId, fieldQueries = this.fieldQueries) {
         this.loading = true;
@@ -358,7 +282,7 @@ export default declare({
             }
             this.loading = false;
         }, this);
-    },
+    }
 
     addFieldQueries(fields, editFields, selectedStoreId, fieldQueries) {
         fields.forEach((field, i) => {
@@ -394,7 +318,7 @@ export default declare({
                 this.loading = false;
             }, this);
         }, this);
-    },
+    }
 
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this._metadataAnalyzer.getStore(selectedStoreId || this.selectedStoreId);
@@ -416,7 +340,7 @@ export default declare({
                 }
                 return distinctValues;
             });
-    },
+    }
 
     _getSelectedFieldData(selectedStoreId, editable) {
         let hiddenFields = null;
@@ -430,7 +354,7 @@ export default declare({
         }
         const hiddenFieldTypes = this.hiddenFieldTypes;
         return this._getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes);
-    },
+    }
 
     _getSelectedSortFieldData(selectedStoreId) {
         let hiddenSortFields = null;
@@ -441,7 +365,7 @@ export default declare({
         }
         const hiddenFieldTypes = this.hiddenFieldTypes;
         return this._getFilteredFieldData(selectedStoreId, hiddenSortFields, hiddenFieldTypes);
-    },
+    }
 
     _getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes) {
         const store = this._metadataAnalyzer.getStore(selectedStoreId);
@@ -454,11 +378,11 @@ export default declare({
                 const fieldTypeAllowed = !hiddenFieldTypes.includes(field.type);
                 return fieldNameAllowed && fieldTypeAllowed;
             }));
-    },
+    }
 
     checkDecimalSeparator(value) {
         return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
-    },
+    }
 
     getComplexQuery(linkOperator, spatialRelation, fieldQueries, filter) {
         const complexQuery = {};
@@ -518,7 +442,7 @@ export default declare({
             complexQuery[linkOperator].push(obj2);
         });
         return complexQuery;
-    },
+    }
 
     getSortOptions() {
         const attribute = this.selectedSortFieldName;
@@ -528,20 +452,20 @@ export default declare({
                 "descending": this.sortDescending
             }
         ];
-    },
+    }
 
     removeFieldQuery(fieldQuery, fieldQueries = this.fieldQueries) {
         const index = fieldQueries.indexOf(fieldQuery);
         if (index > -1) {
             fieldQueries.splice(index, 1);
         }
-    },
+    }
 
     removeFieldQueries(fieldQueries = this.fieldQueries) {
         while (fieldQueries.length > 0) {
             fieldQueries.pop();
         }
-    },
+    }
 
     addGraphicToView(geometry) {
         this.removeGraphicFromView();
@@ -552,14 +476,14 @@ export default declare({
             symbol: symbol
         });
         view.graphics.add(graphic);
-    },
+    }
 
     removeGraphicFromView() {
         if (this.graphic) {
             const view = this._mapWidgetModel.get("view");
             view.graphics.remove(this.graphic);
         }
-    },
+    }
 
     getGraphicSymbol(type) {
         switch (type) {
@@ -569,12 +493,12 @@ export default declare({
             case "point":
                 return this.symbols.point;
         }
-    },
+    }
 
     getSelectedStoreTitle(selectedStoreId) {
         const storeData = this.storeData.find((data) => data.id === selectedStoreId);
         return storeData?.text || null;
-    },
+    }
 
     addStore(store, properties) {
         properties = properties || {};
@@ -596,7 +520,7 @@ export default declare({
         });
         this.stores = newStores;
         return this.getStoreDataFromMetadata();
-    },
+    }
 
     removeStore(store) {
         const id = store?.id;
@@ -615,7 +539,7 @@ export default declare({
             this.selectedStoreId = null;
         }
         this._deferredMetadata();
-    },
+    }
 
     _deferredMetadata() {
         let metadataQuery;
@@ -626,11 +550,11 @@ export default declare({
                 AsyncTask(this.getStoreDataFromMetadata.bind(this)).delay.bind(this, this.metadataDelay);
         }
         metadataQuery();
-    },
+    }
 
     _selectedStoreStillAvailable(stores) {
         return stores.find((store) => store.id === this.selectedStoreId);
-    },
+    }
 
     loadi18nText(operators) {
         if (typeof operators === 'object' && operators !== null) {
@@ -650,7 +574,7 @@ export default declare({
             }
         }
         return;
-    },
+    }
 
     prepareOperators(operators) {
         const completeOperators = { ...this.defaultOperators };
@@ -663,4 +587,4 @@ export default declare({
         this.operators = completeOperators;
         return;
     }
-});
+}

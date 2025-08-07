@@ -225,7 +225,9 @@
                     "*"
                 ],
                 "enableTempStore": false,
-                "tempStoreUseIn": ["querybuilder"],
+                "tempStoreUseIn": [
+                    "querybuilder"
+                ],
                 "allowMultipleSpatialInputs": true,
                 "visibleElements": {
                     "defaultMode": {
@@ -252,6 +254,142 @@
                 },
                 "defaultQueryOptions": {
                     "ignoreCase": false
+                },
+                "defaultOperators": {
+                    "default": {
+                        "codedvalue": [
+                            {
+                                "value": "$eq",
+                                "text": "is"
+                            },
+                            {
+                                "value": "!$eq",
+                                "text": "is_not"
+                            },
+                            {
+                                "value": "$gt",
+                                "text": "is_greater_than"
+                            },
+                            {
+                                "value": "$gte",
+                                "text": "is_greater_or_equal"
+                            },
+                            {
+                                "value": "$lt",
+                                "text": "is_less_than"
+                            },
+                            {
+                                "value": "$lte",
+                                "text": "is_less_or_equal"
+                            },
+                            {
+                                "value": "$exists",
+                                "text": "exists"
+                            }
+                        ],
+                        "boolean": [
+                            {
+                                "value": "$eq",
+                                "text": "is"
+                            },
+                            {
+                                "value": "!$eq",
+                                "text": "is_not"
+                            },
+                            {
+                                "value": "$exists",
+                                "text": "exists"
+                            }
+                        ],
+                        "string": [
+                            {
+                                "value": "$eq",
+                                "text": "is"
+                            },
+                            {
+                                "value": "!$eq",
+                                "text": "is_not"
+                            },
+                            {
+                                "value": "$eqw",
+                                "text": "eqw"
+                            },
+                            {
+                                "value": "$suggest",
+                                "text": "suggest"
+                            },
+                            {
+                                "value": "$exists",
+                                "text": "exists"
+                            },
+                            {
+                                "value": "$in",
+                                "text": "in"
+                            }
+                        ],
+                        "number": [
+                            {
+                                "value": "$eq",
+                                "text": "is"
+                            },
+                            {
+                                "value": "!$eq",
+                                "text": "is_not"
+                            },
+                            {
+                                "value": "$gt",
+                                "text": "is_greater_than"
+                            },
+                            {
+                                "value": "$gte",
+                                "text": "is_greater_or_equal"
+                            },
+                            {
+                                "value": "$lt",
+                                "text": "is_less_than"
+                            },
+                            {
+                                "value": "$lte",
+                                "text": "is_less_or_equal"
+                            },
+                            {
+                                "value": "$exists",
+                                "text": "exists"
+                            },
+                            {
+                                "value": "$in",
+                                "text": "in"
+                            }
+                        ],
+                        "date": [
+                            {
+                                "value": "$lte",
+                                "text": "before"
+                            },
+                            {
+                                "value": "$gte",
+                                "text": "after"
+                            },
+                            {
+                                "value": "$exists",
+                                "text": "exists"
+                            }
+                        ],
+                        "default": [
+                            {
+                                "value": "$eq",
+                                "text": "is"
+                            },
+                            {
+                                "value": "!$eq",
+                                "text": "is_not"
+                            },
+                            {
+                                "value": "$exists",
+                                "text": "exists"
+                            }
+                        ]
+                    }
                 },
                 "hiddenFields": [
                     "objectid",
