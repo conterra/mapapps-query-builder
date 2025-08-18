@@ -62,6 +62,10 @@ export default class FilterActionDefinitionFactory {
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
                 if (ref._complexQuery) {
                     this.label = i18n.changeFilterActionLabel;
+                } else if (ref._initialDefinitionExpression !== undefined
+                    && ref._initialDefinitionExpression !== ref.definitionExpression
+                    && ref.definitionExpression !== "1=1") {
+                    this.label = i18n.resetFilterActionLabel;
                 } else {
                     this.label = i18n.setFilterActionLabel;
                 }
@@ -70,7 +74,16 @@ export default class FilterActionDefinitionFactory {
             trigger(tocItem: TocItem) {
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
                 const title = ref.title;
-                filterQueryBuilderWidgetFactory.showFilter(title, ref);
+                if (ref._complexQuery) {
+                    filterQueryBuilderWidgetFactory.showFilter(title, ref);
+                }
+                // fallback for old filter reset for layer definitions that are saved in appstates
+                else if (ref._initialDefinitionExpression !== undefined
+                    && ref._initialDefinitionExpression !== ref.definitionExpression) {
+                    ref.definitionExpression = ref._initialDefinitionExpression;
+                } else {
+                    filterQueryBuilderWidgetFactory.showFilter(title, ref);
+                }
             }
         };
     }

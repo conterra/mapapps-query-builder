@@ -51,6 +51,7 @@ export default {
             filterTitle: "Filter",
             tempStoreTitle: "Results of the previous search",
             setFilterActionLabel: "Filter map content",
+            resetFilterActionLabel: "Reset filter",
             changeFilterActionLabel: "Change filter",
             conditionFieldsetLegend: "Condition",
             conditionFieldNameLabel: "Field name",
