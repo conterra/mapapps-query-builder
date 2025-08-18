@@ -33,7 +33,7 @@
                     <v-layout
                         row
                         wrap
-                        pt-3
+                        pt-1
                         align-start
                     >
                         <v-flex

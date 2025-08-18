@@ -338,7 +338,9 @@
         "agssearch": {
             "AutoStoreRegistration": {
                 "componentEnabled": true,
-                "useIn": ["querybuilder"]
+                "useIn": [
+                    "querybuilder"
+                ]
             },
             "AGSStore": [
                 {
@@ -963,7 +965,6 @@
         },
         "templates": {
             "TemplateModel": {
-                "_selectedTemplate": "seasons",
                 "widgets": [
                     {
                         "widgetRole": "queryBuilderWidget",
@@ -973,7 +974,7 @@
                         "window": {
                             "marginBox": {
                                 "w": 600,
-                                "h": 400,
+                                "h": 600,
                                 "l": 20,
                                 "t": 120
                             }
@@ -987,7 +988,7 @@
                         "window": {
                             "marginBox": {
                                 "w": 600,
-                                "h": 400,
+                                "h": 600,
                                 "l": 20,
                                 "t": 120
                             }

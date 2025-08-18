@@ -51,7 +51,7 @@
             "window": {
                 "marginBox": {
                     "w": 600,
-                    "h": 500
+                    "h": 600
                 },
                 "minSize": {
                     "w": 600,
@@ -70,7 +70,7 @@
                 "draggable": false,
                 "marginBox": {
                     "w": 600,
-                    "h": 500
+                    "h": 600
                 }
             }
         },
@@ -110,7 +110,7 @@
             "window": {
                 "marginBox": {
                     "w": 600,
-                    "h": 500
+                    "h": 600
                 },
                 "minSize": {
                     "w": 600,
@@ -129,7 +129,7 @@
                 "draggable": false,
                 "marginBox": {
                     "w": 600,
-                    "h": 500
+                    "h": 600
                 },
                 "windowClass": "querybuilder-window"
             }
