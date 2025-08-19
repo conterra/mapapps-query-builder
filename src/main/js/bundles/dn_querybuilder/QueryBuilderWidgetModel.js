@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Mutable } from "apprt-core/Mutable";
+import { declare } from "apprt-core/Mutable";
 import apprt_when from "apprt-core/when";
 import ct_lang from "ct/_lang";
 import Locale from "ct/Locale";
@@ -30,31 +30,31 @@ const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBind
 const _spatialInputActionPromise = Symbol("_spatialInputActionPromise");
 const _oldSpatialInputActionId = Symbol("_oldSpatialInputActionId");
 
-export default class QueryBuilderWidgetModel extends Mutable {
+export default declare({
 
-    locale = "en";
-    stores = [];
-    storeData = [];
+    locale: "en",
+    stores: [],
+    storeData: [],
 
-    sortFieldData = [];
-    selectedStoreId = null;
-    selectedSortFieldName = null;
-    sortDescending = false;
-    fieldQueries = [];
-    loading = false;
-    processing = false;
-    activeTool = false;
-    geometry = null;
-    activeSpatialInputAction = null;
-    activeSpatialInputActionDescription = null;
-    negateSpatialInput = false;
-    linkOperator = null;
-    spatialRelation = null;
-    spatialInputActions = [];
-    replaceOpenedTables = false;
-    metadataQuery = null;
-    metadataDelay = 500;
-    operators = {};
+    sortFieldData: [],
+    selectedStoreId: null,
+    selectedSortFieldName: null,
+    sortDescending: false,
+    fieldQueries: [],
+    loading: false,
+    processing: false,
+    activeTool: false,
+    geometry: null,
+    activeSpatialInputAction: null,
+    activeSpatialInputActionDescription: null,
+    negateSpatialInput: false,
+    linkOperator: null,
+    spatialRelation: null,
+    spatialInputActions: [],
+    replaceOpenedTables: false,
+    metadataQuery: null,
+    metadataDelay: 500,
+    operators: {},
 
     activate() {
         this.locale = Locale.getCurrent().getLanguage();
@@ -118,7 +118,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             .sync("replaceOpenedTables", "replace-opened-tables")
             .enable()
             .syncToLeftNow();
-    }
+    },
 
     deactivate() {
         this.locale = null;
@@ -130,7 +130,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             oldSpatialInputAction.cancel();
             this[_spatialInputActionPromise] = null;
         }
-    }
+    },
 
     selectSpatialInputAction(id) {
         const spatialInputActionService = this._spatialInputActionService;
@@ -174,7 +174,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             }
         });
         this.activeSpatialInputActionDescription = spatialInputAction.description;
-    }
+    },
 
     negateGeometry(geometry) {
         const worldExtent = new Extent({
@@ -190,13 +190,13 @@ export default class QueryBuilderWidgetModel extends Mutable {
         const geometryService = this._geometryService;
         const promise = geometryService.project(params);
         return promise.then((projectedGeometries) => difference(projectedGeometries[0], geometry));
-    }
+    },
 
     resetSpatialInput() {
         this.geometry = null;
         this.activeSpatialInputAction = null;
         this.activeSpatialInputActionDescription = null;
-    }
+    },
 
     getActionFilter() {
         const allowedMethods = this.availableSpatialInputActions;
@@ -207,7 +207,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
         const actionIdLookup = {};
         allowedMethods.forEach((id) => actionIdLookup[id] = true);
         return ({ id }) => actionIdLookup[id];
-    }
+    },
 
     getStoreDataFromMetadata() {
         const stores = this.stores;
@@ -218,7 +218,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
         }
         this.getFieldData();
         return data;
-    }
+    },
 
     getFieldData(selectedStoreId) {
         const sortFieldData = this._getSelectedSortFieldData(selectedStoreId || this.selectedStoreId);
@@ -228,7 +228,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
                 this.selectedSortFieldName = data[0].id;
             }
         });
-    }
+    },
 
     search(selectedStoreId, linkOperator, spatialRelation, fieldQueries, tool, options, editable, layer) {
         let filter = false;
@@ -247,11 +247,11 @@ export default class QueryBuilderWidgetModel extends Mutable {
             opts.sort = sortOptions;
         }
         this._queryController.query(selectedStore, complexQuery, opts, tool || this._tool, this, layer);
-    }
+    },
 
     cancelSearch() {
         this._queryController.cancelQuery();
-    }
+    },
 
     addFieldQuery(selectedStoreId = this.selectedStoreId, fieldQueries = this.fieldQueries) {
         this.loading = true;
@@ -282,7 +282,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             }
             this.loading = false;
         }, this);
-    }
+    },
 
     addFieldQueries(fields, editFields, selectedStoreId, fieldQueries) {
         fields.forEach((field, i) => {
@@ -327,7 +327,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
                 this.loading = false;
             }, this);
         }, this);
-    }
+    },
 
     getDistinctValues(value, fieldData, selectedStoreId) {
         const selectedStore = this._metadataAnalyzer.getStore(selectedStoreId || this.selectedStoreId);
@@ -349,7 +349,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
                 }
                 return distinctValues;
             });
-    }
+    },
 
     _getSelectedFieldData(selectedStoreId, editable) {
         let hiddenFields = null;
@@ -363,7 +363,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
         }
         const hiddenFieldTypes = this.hiddenFieldTypes;
         return this._getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes);
-    }
+    },
 
     _getSelectedSortFieldData(selectedStoreId) {
         let hiddenSortFields = null;
@@ -374,7 +374,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
         }
         const hiddenFieldTypes = this.hiddenFieldTypes;
         return this._getFilteredFieldData(selectedStoreId, hiddenSortFields, hiddenFieldTypes);
-    }
+    },
 
     _getFilteredFieldData(selectedStoreId, hiddenFields, hiddenFieldTypes) {
         const store = this._metadataAnalyzer.getStore(selectedStoreId);
@@ -387,11 +387,11 @@ export default class QueryBuilderWidgetModel extends Mutable {
                 const fieldTypeAllowed = !hiddenFieldTypes.includes(field.type);
                 return fieldNameAllowed && fieldTypeAllowed;
             }));
-    }
+    },
 
     checkDecimalSeparator(value) {
         return typeof value === 'string' && value.includes(",") ? value.replace(",", ".") : value;
-    }
+    },
 
     getComplexQuery(linkOperator, spatialRelation, fieldQueries, filter) {
         const complexQuery = {};
@@ -451,7 +451,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             complexQuery[linkOperator].push(obj2);
         });
         return complexQuery;
-    }
+    },
 
     getSortOptions() {
         const attribute = this.selectedSortFieldName;
@@ -461,20 +461,20 @@ export default class QueryBuilderWidgetModel extends Mutable {
                 "descending": this.sortDescending
             }
         ];
-    }
+    },
 
     removeFieldQuery(fieldQuery, fieldQueries = this.fieldQueries) {
         const index = fieldQueries.indexOf(fieldQuery);
         if (index > -1) {
             fieldQueries.splice(index, 1);
         }
-    }
+    },
 
     removeFieldQueries(fieldQueries = this.fieldQueries) {
         while (fieldQueries.length > 0) {
             fieldQueries.pop();
         }
-    }
+    },
 
     addGraphicToView(geometry) {
         this.removeGraphicFromView();
@@ -485,14 +485,14 @@ export default class QueryBuilderWidgetModel extends Mutable {
             symbol: symbol
         });
         view.graphics.add(graphic);
-    }
+    },
 
     removeGraphicFromView() {
         if (this.graphic) {
             const view = this._mapWidgetModel.get("view");
             view.graphics.remove(this.graphic);
         }
-    }
+    },
 
     getGraphicSymbol(type) {
         switch (type) {
@@ -502,12 +502,12 @@ export default class QueryBuilderWidgetModel extends Mutable {
             case "point":
                 return this.symbols.point;
         }
-    }
+    },
 
     getSelectedStoreTitle(selectedStoreId) {
         const storeData = this.storeData.find((data) => data.id === selectedStoreId);
         return storeData?.text || null;
-    }
+    },
 
     addStore(store, properties) {
         properties = properties || {};
@@ -529,7 +529,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
         });
         this.stores = newStores;
         return this.getStoreDataFromMetadata();
-    }
+    },
 
     removeStore(store) {
         const id = store?.id;
@@ -548,7 +548,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             this.selectedStoreId = null;
         }
         this._deferredMetadata();
-    }
+    },
 
     _deferredMetadata() {
         let metadataQuery;
@@ -559,11 +559,11 @@ export default class QueryBuilderWidgetModel extends Mutable {
                 AsyncTask(this.getStoreDataFromMetadata.bind(this)).delay.bind(this, this.metadataDelay);
         }
         metadataQuery();
-    }
+    },
 
     _selectedStoreStillAvailable(stores) {
         return stores.find((store) => store.id === this.selectedStoreId);
-    }
+    },
 
     loadi18nText(operators) {
         if (typeof operators === 'object' && operators !== null) {
@@ -583,7 +583,7 @@ export default class QueryBuilderWidgetModel extends Mutable {
             }
         }
         return;
-    }
+    },
 
     prepareOperators(operators) {
         const completeOperators = { ...this.defaultOperators };
@@ -596,4 +596,4 @@ export default class QueryBuilderWidgetModel extends Mutable {
         this.operators = completeOperators;
         return;
     }
-}
+});
