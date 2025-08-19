@@ -52,7 +52,6 @@ export default class FilterActionDefinitionFactory {
             id: ID,
             type: "button-row",
             label: i18n.filterAction.filterActionLabel,
-            icon: "icon-filter",
             icons: Object.keys(ACTIONS).map(k => ACTIONS[k].icon),
             actionLabels: Object.keys(ACTIONS).map(k => {
                 const name = ACTIONS[k].name;
