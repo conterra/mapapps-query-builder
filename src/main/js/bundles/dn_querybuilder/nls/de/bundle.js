@@ -49,9 +49,13 @@ export default {
         negateSpatialInput: "Außerhalb der ausgewählten Geometrie suchen",
         filterTitle: "Filter",
         tempStoreTitle: "Ergebnisse der vorherigen Suche",
-        setFilterActionLabel: "Karteninhalt filtern",
-        resetFilterActionLabel: "Filter zurücksetzen",
-        changeFilterActionLabel: "Filter anpassen",
+        filterAction: {
+            filterActionLabel: "Inhaltsfilter",
+            tooltips: {
+                setFilterAction: "Filter anpassen",
+                resetFilterAction: "Filter zurücksetzen"
+            }
+        },
         conditionFieldsetLegend: "Bedingung",
         conditionFieldNameLabel: "Feldname",
         relationalOperators: {

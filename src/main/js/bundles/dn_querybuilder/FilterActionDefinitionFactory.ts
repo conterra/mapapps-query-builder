@@ -19,6 +19,17 @@ import { ActionDefinition, TocItem } from "toc/api";
 
 const ID = "querybuilder-filter";
 
+const ACTIONS = {
+    0: {
+        icon: "icon-filter",
+        name: "setFilterAction"
+    },
+    1: {
+        icon: "icon-trashcan",
+        name: "resetFilterAction"
+    }
+};
+
 export default class FilterActionDefinitionFactory {
 
     private _i18n!: InjectedReference<any>;
@@ -34,12 +45,19 @@ export default class FilterActionDefinitionFactory {
             return;
         }
         const i18n = this._i18n.get().ui;
+        const reorderLayerToolTips = i18n.filterAction.tooltips || {};
         const filterQueryBuilderWidgetFactory = this._filterQueryBuilderWidgetFactory;
+
         return {
             id: ID,
-            type: "button",
-            label: i18n.setFilterActionLabel,
+            type: "button-row",
+            label: i18n.filterAction.filterActionLabel,
             icon: "icon-filter",
+            icons: Object.keys(ACTIONS).map(k => ACTIONS[k].icon),
+            actionLabels: Object.keys(ACTIONS).map(k => {
+                const name = ACTIONS[k].name;
+                return reorderLayerToolTips[name] || name;
+            }),
             async isVisibleForItem(tocItem: TocItem) {
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
                 await ref.load();
@@ -58,31 +76,25 @@ export default class FilterActionDefinitionFactory {
                 }
             },
             isDisabledForItem(tocItem: TocItem) {
-                // use this method to change the action title since isVisibleForItem is only called once
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
-                if (ref._complexQuery) {
-                    this.label = i18n.changeFilterActionLabel;
-                } else if (ref._initialDefinitionExpression !== undefined
+                if (ref._initialDefinitionExpression !== undefined
                     && ref._initialDefinitionExpression !== ref.definitionExpression
                     && ref.definitionExpression !== "1=1") {
-                    this.label = i18n.resetFilterActionLabel;
-                } else {
-                    this.label = i18n.setFilterActionLabel;
+                    return [false, false];
                 }
-                return false;
+                return [false, true];
             },
-            trigger(tocItem: TocItem) {
+            trigger(tocItem: TocItem, actionIndex: number) {
                 const ref = tocItem.ref as __esri.FeatureLayer | __esri.MapImageLayer | __esri.GroupLayer;
                 const title = ref.title;
-                if (ref._complexQuery) {
-                    filterQueryBuilderWidgetFactory.showFilter(title, ref);
-                }
-                // fallback for old filter reset for layer definitions that are saved in appstates
-                else if (ref._initialDefinitionExpression !== undefined
-                    && ref._initialDefinitionExpression !== ref.definitionExpression) {
-                    ref.definitionExpression = ref._initialDefinitionExpression;
-                } else {
-                    filterQueryBuilderWidgetFactory.showFilter(title, ref);
+
+                switch (ACTIONS[actionIndex].name) {
+                    case "setFilterAction":
+                        filterQueryBuilderWidgetFactory.showFilter(title, ref);
+                        break;
+                    case "resetFilterAction":
+                        ref.definitionExpression = ref._initialDefinitionExpression;
+                        break;
                 }
             }
         };
