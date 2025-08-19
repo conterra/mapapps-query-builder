@@ -34,8 +34,14 @@
             "theme-autumn",
             "toc",
             "toolset",
+            "sdi_appstate",
+            "sdi_appstate-ui",
+            "sdi_appstate-map",
+            "sdi_appstate-layout",
+            "sdi_appstate-share",
             "dn_imprintprivacy",
-            "dn_querybuilder"
+            "dn_querybuilder",
+            "console"
         ],
         "i18n": [
             "bundle"
@@ -338,7 +344,9 @@
         "agssearch": {
             "AutoStoreRegistration": {
                 "componentEnabled": true,
-                "useIn": ["querybuilder"]
+                "useIn": [
+                    "querybuilder"
+                ]
             },
             "AGSStore": [
                 {
@@ -1060,7 +1068,9 @@
                             "selection-ui-tool",
                             "sketchToggleTool",
                             "measuring_tools",
-                            "printingToggleTool"
+                            "printingToggleTool",
+                            "sdi_appstate_share_Tool",
+                            "sdi_stateManagementTool"
                         ],
                         "registerWidget": {
                             "widgetRole": "drawer_button"
