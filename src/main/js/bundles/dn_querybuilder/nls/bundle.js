@@ -53,7 +53,7 @@ export default {
             filterAction: {
                 filterActionLabel: "Filter",
                 tooltips: {
-                    setFilterAction: "Edit filter",
+                    setFilterAction: "Create/adjust filter",
                     resetFilterAction: "Reset filter to initial state"
                 }
             },

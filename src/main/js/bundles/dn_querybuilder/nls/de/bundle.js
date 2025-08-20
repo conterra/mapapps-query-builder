@@ -52,7 +52,7 @@ export default {
         filterAction: {
             filterActionLabel: "Inhaltsfilter",
             tooltips: {
-                setFilterAction: "Filter anpassen",
+                setFilterAction: "Filter anlegen/anpassen",
                 resetFilterAction: "Filter zurücksetzen"
             }
         },
