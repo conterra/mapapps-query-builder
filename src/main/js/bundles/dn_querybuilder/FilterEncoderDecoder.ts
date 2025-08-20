@@ -54,7 +54,7 @@ export default class FilterEncoderDecoder implements EncoderDecoder {
                 const obj = {
                     id: layerIdPath
                 };
-                obj.defintionExpression = definitionExpression;
+                obj.definitionExpression = definitionExpression;
                 obj.initialDefinitionExpression = initialDefinitionExpression;
                 obj.complexQuery = complexQuery;
                 layers.push(obj);
