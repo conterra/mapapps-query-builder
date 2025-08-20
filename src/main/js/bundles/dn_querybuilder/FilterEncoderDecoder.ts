@@ -115,7 +115,8 @@ export default class FilterEncoderDecoder implements EncoderDecoder {
 
     private replaceDefinitionExpression(layer: __esri.Layer, layerConfig: any): void {
         if (layer && layerConfig?.defintionExpression) {
-            layer.definitionExpression = layerConfig.defintionExpression;
+        if (layer && layerConfig?.definitionExpression) {
+            layer.definitionExpression = layerConfig.definitionExpression;
             layer._initialDefinitionExpression = layerConfig.initialDefinitionExpression;
             layer._complexQuery = layerConfig.complexQuery;
         }
