@@ -60,6 +60,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- sdi -->
+        <dependency>
+            <groupId>de.conterra.sdi-extension</groupId>
+            <artifactId>ct-sdi-extension-js</artifactId>
+            <version>5.7.1</version>
+        </dependency>
+
         <!-- devnet -->
         <dependency>
             <groupId>de.conterra.devnet</groupId>
