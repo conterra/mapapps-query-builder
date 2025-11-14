@@ -12,15 +12,16 @@
         "bundle"
     ],
     "dependencies": {
-        "agssearch": "^4.13.0",
-        "apprt-binding": "^4.13.0",
-        "apprt-vue": "^4.13.0",
-        "apprt-vuetify": "^4.13.0",
-        "coordinatetransformer": "^4.13.0",
+        "agssearch": "^4.20.0",
+        "apprt-binding": "^4.20.0",
+        "apprt-vue": "^4.20.0",
+        "apprt-vuetify": "^4.20.0",
+        "coordinatetransformer": "^4.20.0",
         "dn_queryplaceholder": "^5.0.0",
-        "map-init": "^4.13.0",
-        "selection-services": "^4.13.0",
-        "store-api": "^4.13.0",
+        "map-init": "^4.20.0",
+        "selection-services": "^4.20.0",
+        "geometryservice": "^4.20.0",
+        "store-api": "^4.20.0",
         "@arcgis/core": "^4.33.0"
     },
     "CSS-Themes-Extension": [

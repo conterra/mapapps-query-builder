@@ -4,7 +4,7 @@ The Query Builder Bundle allows you to create your own Query Tools that perform 
 
 As an admin, it is possible to create complex queries using an interactive graphical user interface, or manually in a text format. If you enable the editing of a tool, the users will be able to change selected parts of the query. They can create their own queries if you add a special tool to your app.
 
-**Requirement: map.apps 4.13.0**
+**Requirement: map.apps 4.20.0**
 
 ## Usage
 
@@ -117,7 +117,7 @@ To use a store with the Query Builder bundle, add the value _querybuilder_ to th
     "id": "countries",
     "title": "Countries",
     "description": "Countries of the world",
-    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
+    "url": "https://services.conterra.de/server/rest/services/common/grenzen/MapServer/3",
     "popupEnabled": true,
     "useIn": [
         "querybuilder"
