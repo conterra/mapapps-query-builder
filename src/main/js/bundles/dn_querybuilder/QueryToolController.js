@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Extent from "esri/geometry/Extent";
+import Extent from "@arcgis/core/geometry/Extent";
 import ct_util from "ct/ui/desktop/util";
 
 const DELAY = 200;

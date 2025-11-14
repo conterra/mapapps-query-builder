@@ -26,7 +26,7 @@ import apprt_when from "apprt-core/when";
 import {apprtFetchJson} from "apprt-fetch";
 import ct_css from "ct/util/css";
 
-import {executeQueryJSON} from "esri/rest/query";
+import {executeQueryJSON} from "@arcgis/core/rest/query";
 
 import _WidgetBase from "dijit/_WidgetBase";
 import _TemplatedMixin from "dijit/_TemplatedMixin";

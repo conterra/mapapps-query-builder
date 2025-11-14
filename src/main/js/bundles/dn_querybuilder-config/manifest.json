@@ -11,7 +11,8 @@
     "dependencies": {
         "dataform": "^4.2.0",
         "wizard": "^4.2.0",
-        "agssearch": "^4.2.0"
+        "agssearch": "^4.2.0",
+        "@arcgis/core": "^4.33.0"
     },
     "CSS-Themes-Extension": [
         {

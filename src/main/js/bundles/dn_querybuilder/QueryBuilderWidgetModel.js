@@ -19,11 +19,11 @@ import ct_lang from "ct/_lang";
 import Locale from "ct/Locale";
 import Connect from "ct/_Connect";
 import AsyncTask from "apprt-core/AsyncTask";
-import Graphic from "esri/Graphic";
-import Extent from "esri/geometry/Extent";
-import { union, difference } from "esri/geometry/geometryEngine";
+import Graphic from "@arcgis/core/Graphic";
+import Extent from "@arcgis/core/geometry/Extent";
+import { union, difference } from "@arcgis/core/geometry/geometryEngine";
 import Binding from "apprt-binding/Binding";
-import ProjectParameters from "esri/rest/support/ProjectParameters";
+import ProjectParameters from "@arcgis/core/rest/support/ProjectParameters";
 
 const _replaceOpenedTablesBinding = Symbol("_spatialInputActionServiceBinding");
 const _spatialInputActionServiceBinding = Symbol("_spatialInputActionServiceBinding");

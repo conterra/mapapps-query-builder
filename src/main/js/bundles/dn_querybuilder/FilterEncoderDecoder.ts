@@ -19,7 +19,7 @@ import type { InjectedReference } from "apprt-core/InjectedReference";
 import MapWidgetModel from "map-widget/MapWidgetModel";
 import { JSONValue, EncoderDecoder } from "sdi_appstate-api/api";
 import type { EsriLayer } from "./api";
-import Collection from "esri/core/Collection";
+import Collection from "@arcgis/core/core/Collection";
 
 export default class FilterEncoderDecoder implements EncoderDecoder {
     readonly name: string = "querybuilder";
