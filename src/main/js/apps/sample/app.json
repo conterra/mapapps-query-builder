@@ -362,7 +362,7 @@
                     "id": "countries",
                     "title": "Countries",
                     "description": "Countries of the world",
-                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/MapServer/3",
+                    "url": "https://services.conterra.de/server/rest/services/mapapps/grenzen/MapServer/3",
                     "popupEnabled": true,
                     "legacyImplementation": true,
                     "useIn": [
@@ -391,7 +391,7 @@
                     "id": "baumkataster",
                     "title": "Baumkataster",
                     "description": "Baumkataster",
-                    "url": "https://services.conterra.de/arcgis/rest/services/mapapps/Baumkataster_Zustand/FeatureServer/0",
+                    "url": "https://services.conterra.de/server/rest/services/mapapps/baumkataster_zustand/FeatureServer/0",
                     "popupEnabled": true,
                     "useIn": [
                         "querybuilder"
@@ -440,7 +440,7 @@
                     "title": "Störungen",
                     "description": "Störungen",
                     "idProperty": "objectid",
-                    "url": "https://services.conterra.de/arcgis/rest/services/training/stoerungen/MapServer/0",
+                    "url": "https://services.conterra.de/server/rest/services/mapapps/stoerung/MapServer/0",
                     "popupEnabled": true,
                     "useIn": [
                         "querybuilder"
@@ -462,7 +462,7 @@
                     "title": "Gemeinden",
                     "description": "Gemeinden",
                     "idProperty": "objectid",
-                    "url": "https://services.conterra.de/arcgis/rest/services/common/grenzen/FeatureServer/0",
+                    "url": "https://services.conterra.de/server/rest/services/mapapps/grenzen/FeatureServer/0",
                     "popupEnabled": true,
                     "useIn": [
                         "querybuilder"
@@ -903,7 +903,7 @@
                         },
                         {
                             "id": "koeln",
-                            "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
+                            "url": "https://services.conterra.de/server/rest/services/mapapps/koeln/MapServer",
                             "type": "AGS_DYNAMIC",
                             "title": "${map.cologne}",
                             "initiallyExpandedInToc": true,
@@ -939,7 +939,7 @@
                         },
                         {
                             "id": "koeln_no_children",
-                            "url": "https://services.conterra.de/arcgis/rest/services/common/koeln/MapServer",
+                            "url": "https://services.conterra.de/server/rest/services/mapapps/koeln/MapServer",
                             "type": "AGS_DYNAMIC",
                             "title": "${map.cologne}",
                             "listMode": "hide-children",
