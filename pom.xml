@@ -50,7 +50,7 @@
         <dependency>
             <groupId>de.conterra.sdi-extension</groupId>
             <artifactId>ct-sdi-extension-js</artifactId>
-            <version>5.7.1</version>
+            <version>5.8.0</version>
         </dependency>
 
         <!-- devnet -->
