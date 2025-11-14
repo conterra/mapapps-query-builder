@@ -5,7 +5,7 @@
          version="3.0">
 
     <display-name>map.apps sample</display-name>
-
+    
     <!-- NOTE: a META-INF/web-fragment.xml from ct-jsregistry-embedded is also loaded together with this specification ! -->
 
     <servlet>
@@ -18,7 +18,7 @@
         <servlet-name>ProxyServlet</servlet-name>
         <url-pattern>/proxy</url-pattern>
     </servlet-mapping>
-
+         
     <servlet>
         <!-- Override init parameter to avoid nasty -->
         <!-- file locking issue on windows.
@@ -30,5 +30,5 @@
            <param-value>false</param-value>
         </init-param>
     </servlet>
-
+    
 </web-app>

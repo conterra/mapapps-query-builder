@@ -1,8 +1,5 @@
 {
 	"extends": "eslint-config-ct-prodeng",
-	"rules": {
-		"vuejs-accessibility/label-has-for": "off"
-	},
 	"plugins": [
 		"vue"
 	]

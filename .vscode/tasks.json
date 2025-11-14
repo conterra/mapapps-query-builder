@@ -51,6 +51,13 @@
             "script": "watch-types",
             "group": "build",
             "problemMatcher": [],
+        },
+        {
+            "label": "Init playwright tests",
+            "detail": "Initialize playwright tests for this bundle",
+            "type": "npm",
+            "script": "npm init playwright@latest",
+            "group": "build"
         }
     ]
 }
