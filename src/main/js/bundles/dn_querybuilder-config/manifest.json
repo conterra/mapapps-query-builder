@@ -14,7 +14,7 @@
         "agssearch": "^4.2.0",
         "@arcgis/core": "^4.33.0"
     },
-    "CSS-Themes-Extension": [
+    "cssThemesExtension": [
         {
             "name": "*",
             "files": ["./styles/styles.css"]
