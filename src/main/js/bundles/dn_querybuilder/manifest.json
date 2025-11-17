@@ -24,7 +24,7 @@
         "store-api": "^4.20.0",
         "@arcgis/core": "^4.33.0"
     },
-    "CSS-Themes-Extension": [
+    "cssThemesExtension": [
         {
             "name": "*",
             "files": [
