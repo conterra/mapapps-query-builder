@@ -179,6 +179,7 @@ export default class QueryController {
         const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery(
             {
                 dataTableTitle: dataTableTitle,
+                dataSourceProperties: storeProperties,
                 dataSource: store,
                 queryExpression: complexQuery,
                 queryOptions: queryOptions
