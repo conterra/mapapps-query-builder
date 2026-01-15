@@ -93,6 +93,7 @@ export default class FilterActionDefinitionFactory {
                         break;
                     case "resetFilterAction":
                         ref.definitionExpression = ref._initialDefinitionExpression;
+                        ref._complexQuery = undefined;
                         break;
                 }
             }
