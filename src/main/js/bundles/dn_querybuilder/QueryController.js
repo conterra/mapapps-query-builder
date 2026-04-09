@@ -21,6 +21,7 @@ import { MemoryStore } from "./MemoryStore";
 import CachingStore from "./CachingStore";
 import { toSQLWhere } from "store-api/rest/ComplexQueryToSQL";
 import semver from "apprt/semver";
+import { table } from "console";
 
 const DELAY = 500;
 
@@ -192,8 +193,17 @@ export default class QueryController {
                 this._setProcessing(tool, false, queryBuilderWidgetModel);
             }
         });
-        const tableCollection = dataTableFactory.createDataTableCollection([dataTable]);
-        const resultViewerServiceHandle = this._resultViewerService.open(tableCollection);
+        let tableCollection = this._resultViewerService.currentDataTables;
+        let resultViewerServiceHandle;
+        if (tableCollection) {
+
+            tableCollection.add(dataTable);
+            tableCollection.selectTables([dataTable.id]);
+            tableCollection.clickTable(dataTable.id);
+        } else {
+            tableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+            resultViewerServiceHandle = this._resultViewerService.open(tableCollection);
+        }
 
         const that = this;
         this.#resultUiHandle = {
@@ -249,7 +259,7 @@ export default class QueryController {
                 layerId: store.layerId
             });
         }
-        if(useIn?.includes("selection")) {
+        if (useIn?.includes("selection")) {
             tempStore?.load();
         }
         const filter = new Filter(tempStore, complexQuery);
