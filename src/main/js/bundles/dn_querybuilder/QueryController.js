@@ -21,7 +21,6 @@ import { MemoryStore } from "./MemoryStore";
 import CachingStore from "./CachingStore";
 import { toSQLWhere } from "store-api/rest/ComplexQueryToSQL";
 import semver from "apprt/semver";
-import { table } from "console";
 
 const DELAY = 500;
 
