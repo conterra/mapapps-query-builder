@@ -48,6 +48,11 @@
         ]
     },
     "bundles": {
+        "result-api": {
+            "Config": {
+                "remove-empty-tables": false
+            }
+        },
         "dn_querybuilder": {
             "Config": {
                 "closeOnQuery": true,

@@ -105,6 +105,18 @@ The filter function supports FeatureLayer and MapImageLayer, which are queryable
     }
 }
 ```
+### result-api
+
+The query builder can select the used table in the result UI to show the query results.
+To enable this, add the following configuration to the result-api bundle:
+
+```json
+"result-api": {
+    "Config": {
+        "remove-empty-tables": false
+    }
+}
+```
 
 ## Configuration Reference
 
