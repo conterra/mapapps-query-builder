@@ -176,7 +176,7 @@ export default class QueryController {
         if (tool.id !== "queryBuilderToggleTool") {
             dataTableTitle = tool.title;
         }
-        const dataTable = await dataTableFactory.createDataTableFromStoreAndQuery(
+        const newDataTable = await dataTableFactory.createDataTableFromStoreAndQuery(
             {
                 dataTableTitle: dataTableTitle,
                 dataSourceProperties: storeProperties,
@@ -185,22 +185,39 @@ export default class QueryController {
                 queryOptions: queryOptions
             }
         );
-        const dataset = dataTable.dataset;
-        const datasetStateHandle = dataset.watch("state", (event) => {
+
+        const watchDatasetReady = (dataset) => dataset.watch("state", (event) => {
             const newState = event.value;
             if (newState === "initialized" || newState === "init-error") {
                 this._setProcessing(tool, false, queryBuilderWidgetModel);
             }
         });
+
         let tableCollection = this._resultViewerService.currentDataTables;
+        let datasetStateHandle;
         let resultViewerServiceHandle;
         if (tableCollection) {
-
-            tableCollection.add(dataTable);
-            tableCollection.selectTables([dataTable.id]);
-            tableCollection.clickTable(dataTable.id);
+            const existingTable = tableCollection.getById(newDataTable.id);
+            if (existingTable && existingTable.dataset.state !== "init-error") {
+                // update the existing table's items in place instead of adding a duplicate
+                datasetStateHandle = watchDatasetReady(existingTable.dataset);
+                await existingTable.dataset.replaceItemsByIdsProvider(newDataTable.dataset.initialIdsProvider);
+                newDataTable.destroy();
+                tableCollection.selectTables([existingTable.id]);
+                tableCollection.clickTable(existingTable.id);
+            } else {
+                if (existingTable) {
+                    // previous table failed to initialize - replace it instead of updating it
+                    tableCollection.deleteAndDestroyById(existingTable.id);
+                }
+                datasetStateHandle = watchDatasetReady(newDataTable.dataset);
+                tableCollection.add(newDataTable);
+                tableCollection.selectTables([newDataTable.id]);
+                tableCollection.clickTable(newDataTable.id);
+            }
         } else {
-            tableCollection = dataTableFactory.createDataTableCollection([dataTable]);
+            datasetStateHandle = watchDatasetReady(newDataTable.dataset);
+            tableCollection = dataTableFactory.createDataTableCollection([newDataTable]);
             resultViewerServiceHandle = this._resultViewerService.open(tableCollection);
         }
 
@@ -209,7 +226,7 @@ export default class QueryController {
             cancel() {
                 that._setProcessing(tool, false, queryBuilderWidgetModel);
                 datasetStateHandle.remove();
-                resultViewerServiceHandle.remove();
+                resultViewerServiceHandle?.remove();
             }
         };
     }
