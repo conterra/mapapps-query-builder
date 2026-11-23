@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 const gulp = require("gulp");
+const path = require("path");
 const mapapps = require('ct-mapapps-gulp-js');
 const mapappsBrowserSync = require("ct-mapapps-browser-sync");
 const dotEnv = require("dotenv");
@@ -116,7 +117,19 @@ mapappsBrowserSync.registerTask({
         ]
     },
     // prevent reload by browser sync (reload triggered on watch end)
-    externalReloadTrigger: true
+    externalReloadTrigger: true,
+    // Set Content-Security-Policy header in dev server to mirror deployment.
+    // Disable locally via gulpfile.overrides.js (csp: false) or override the
+    // policy string via env CSP_POLICY. See csp.middleware.js.
+    middleware: (localOverrides?.csp ?? true)
+        ? [path.resolve(__dirname, "csp.middleware.js")]
+        : [],
+    // Make browsersync inject its live-reload client as an EXTERNAL script
+    // (.../browser-sync/browser-sync-client.js) instead of an inline snippet, so
+    // it is covered by CSP script-src 'self' and no 'unsafe-inline' is needed.
+    rawOptions: {
+        localOnly: true,
+    },
 }, gulp);
 
 gulp.task("build",
